@@ -4,8 +4,8 @@
   '(
     ; なぜか1つ目のパッケージがエラー、`packagename-`とハイフンがついた
     ; パッケージが無いと怒られる、手動で入れるとOK
-    ; なので、dummyとして既に入っているbuilt-inパッケージを記述する
-    json
+    ; 初回起動はlist-packageの更新が間に合ってない？
+    ; initialize-packageを一度しないといけない？
     ;; ocaml
     flycheck-ocaml tuareg yasnippet
     ;; arduino

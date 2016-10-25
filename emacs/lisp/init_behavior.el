@@ -38,14 +38,6 @@
 ;;; 画像ファイルを表示する
 (auto-image-file-mode t)
 
-;;; 常に自動でインデントを行うようにする。
-;; (defun set-newline-and-indent ()
-;;   (local-set-key (kbd "RET") 'newline-and-indent))
-
-;;; 自動的に共通する括弧を入力する。
-;(require 'mirror-mode)
-;(add-hook 'c++-mode-hook 'mirror-mode)
-
 ;;; grep-modeなどdefaultをjp utf-8にする
 (set-language-environment 'Japanese)
 (prefer-coding-system 'utf-8-unix)

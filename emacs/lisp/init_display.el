@@ -2,20 +2,6 @@
 (add-hook 'comint-output-filter-functions
           'comint-watch-for-password-prompt)
 
-;;; ステータスラインに時計を表示する、カスタム設定
-;; (if (or (and (>= emacs-major-version 20)
-;;              (not (equal (getenv "LANG") "ja_JP.UTF-8")))
-;;         (>= emacs-major-version 22))
-;;     (progn
-;;       (setq display-time-string-forms
-;;             '((format "%s/%s/%s(%s) %s:%s"
-;;                       year month day
-;;                       dayname
-;;                       24-hours minutes
-;;                       load)))
-;;       ))
-;; (display-time)
-
 ;;; 行番号と列番号を表示する
 (line-number-mode t)
 (column-number-mode t)
