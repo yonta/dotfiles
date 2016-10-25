@@ -1,0 +1,25 @@
+[user]
+        name = SAITOU Keita
+        email = keita44.f4@gmail.com
+[color]
+        ui = always
+        status = always
+        diff = always
+        log = always
+        branch = always
+[alias]
+        h = help
+        co = checkout
+        ci = commit -v
+        st = status
+        br = branch
+        l = log --graph
+        a = add .
+        addw = !"git diff -w --no-color | git apply --cached"
+        aw = !"git diff -w --no-color | git apply --cached"
+        diffs = diff --staged
+[core]
+        editor = emacsclient
+        excludesfile = ~/.gitignore_global
+[push]
+        default = simple

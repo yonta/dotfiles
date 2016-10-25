@@ -1,0 +1,12 @@
+syntax: glob
+
+emacs/auto-save-list
+emacs/server
+emacs/backup
+emacs/icons.gz
+emacs/twittering-mode.gpg
+emacs/ac-comphist.dat
+emacs/abbrev_defs
+emacs/*.elc
+emacs/lisp/*.elc
+emacs/elpa

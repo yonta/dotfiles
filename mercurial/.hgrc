@@ -1,0 +1,26 @@
+[ui]
+username=SAITOU Keita <keita44.f4@gmail.com>
+ignore=~/.hgignore_global
+merge = internal:merge
+editor = emacsclient
+
+[alias]
+h = help
+co = checkout
+ci = commit
+st = status
+br = branch
+brs = branches
+l = glog --limit 5
+up = update
+
+[extensions]
+color =
+graphlog =
+eol=
+hgext.bookmarks =
+record =
+histedit =
+shelve =
+rebase =
+strip =
