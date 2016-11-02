@@ -40,7 +40,8 @@
 
 ;; elpa以下
 (defvar my-elpa-dir "elpa")
-(unless (file-directory-p my-elpa-dir) (make-directory my-elpa-dir t))
+(defvar my-elpa-path (concat "~/.emacs.d/" my-elpa-dir))
+(unless (file-directory-p my-elpa-path) (make-directory my-elpa-path t))
 (add-to-load-path my-elpa-dir)
 
 ;;; 設定ファイルの読み込み
