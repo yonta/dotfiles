@@ -8,3 +8,4 @@ emacs/server
 emacs/twittering-mode.gpg
 emacs/*.elc
 emacs/lisp/*.elc
+emacs/srecode-map.el
