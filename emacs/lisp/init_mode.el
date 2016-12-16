@@ -350,12 +350,6 @@ Creates a buffer if necessary."
         (completion-list-mode :noselect t)
         ))
 
-;;; octave-mode
-;; .mファイルを関連付け
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
-
 ;;; quickrun mode
 ; タイムアウトで処理を中止させない
 (setq quickrun-timeout-seconds -1)
