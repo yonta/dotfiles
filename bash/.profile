@@ -36,6 +36,7 @@ alias ll='ls -lh'
 alias l='ls -CF'
 alias vi='vim'
 alias grep='grep --color=auto'
+alias hg='LANG=C hg'
 
 # 色付きlessコマンドオプション`less -R`を使う
 # -X: less終了時に画面をクリアしない
