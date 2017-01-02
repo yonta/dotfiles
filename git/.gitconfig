@@ -19,6 +19,7 @@
         aw = !"git diff -w --no-color | git apply --cached"
         diffs = diff --staged
         diffw = diff --color-words
+        pushf = push --force-with-lease
 [core]
         editor = emacsclient
         excludesfile = ~/.gitignore_global
