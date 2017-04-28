@@ -19,8 +19,11 @@ function show_branch {
 # source
 #-------------------------------------
 
-source /usr/share/git/completion/git-completion.bash
-source /usr/share/git/completion/git-prompt.sh
+# not on SouceTree only
+if echo "$EXEPATH" | grep -v 'SourceTree' > /dev/null ; then
+    source /usr/share/git/completion/git-completion.bash
+    source /usr/share/git/completion/git-prompt.sh
+fi
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWSTASHSTATE=true
