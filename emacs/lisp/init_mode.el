@@ -40,6 +40,7 @@
              (setq tab-width c-basic-offset)
              (setq indent-tabs-mode nil)
              (setq flycheck-gcc-language-standard "c++11")
+             (setq flycheck-clang-language-standard "c++11")
              ))
 
 ;;; dired-mode
