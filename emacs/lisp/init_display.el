@@ -80,7 +80,10 @@
 (require 'whitespace)
 
 ;; 対象はタブ、カラムオーバー、行末スペース、カスタムスペース（全角スペース）
-(setq whitespace-style '(face tabs lines-tail trailing spaces empty))
+;; ただし、シェルで-nw起動したときは、見づらい文字背景色の設定をオフ
+(if (window-system)
+    (setq whitespace-style '(face tabs lines-tail trailing spaces empty))
+  (setq whitespace-style '(face tabs trailing spaces empty)))
 
 ;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
 (setq whitespace-action '(auto-cleanup))
