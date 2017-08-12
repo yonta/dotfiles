@@ -42,8 +42,10 @@
 (set-language-environment 'Japanese)
 (prefer-coding-system 'utf-8-unix)
 
-;;; dired-modeでshift jisを使う
-(setq default-file-name-coding-system 'shift_jis)
+;;; dired-modeでOSによってutf-8/shift-jisを使う
+(if (equal system-type 'windows-nt)
+    (setq default-file-name-coding-system 'shift_jis)
+  (setq default-file-name-coding-system 'utf-8))
 
 ;;; Emacsサーバーを起動する
 (require 'server)
