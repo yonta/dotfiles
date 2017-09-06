@@ -177,6 +177,7 @@ Creates a buffer if necessary."
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
   (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+  (define-key company-active-map (kbd "C-h") 'backward-delete-char)
   )
 
 ;;; smartparens-modeを自動オンにする
