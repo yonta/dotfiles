@@ -1,3 +1,8 @@
+;;; init-keybinding.el --- settings about keybindigns
+
+;;; Commentary:
+;; This file contains settings set of keybindings for Emacs.
+
 ;;; C-hをバックスペースにする
 (global-set-key (kbd "C-h") 'backward-delete-char)
 ;;; M-&を正規表現置換にする
@@ -72,3 +77,5 @@
 (if (window-system)
     (global-set-key (kbd "C-M-:") 'my-insert-repeat-numbers)
   (global-set-key (kbd "C-c M-:") 'my-insert-repeat-numbers))
+
+;;; init_keybind.el ends here
