@@ -5,7 +5,7 @@
     ; なぜか1つ目のパッケージがエラー、`packagename-`とハイフンがついた
     ; パッケージが無いと怒られる、手動で入れるとOK
     ; 初回起動はlist-packageの更新が間に合ってない？
-    ; initialize-packageを一度しないといけない？
+    ; 一度list-packageを実行すると治る
     ;; ocaml
     flycheck-ocaml tuareg yasnippet
     ;; arduino
@@ -16,7 +16,7 @@
     ;; python
     python-mode elpy py-autopep8 flymake-python-pyflakes flymake-cursor quickrun
     ;; other mode
-    markdown-mode csv-mode csv-nav sml-mode twittering-mode gnuplot-mode dos
+    markdown-mode csv-mode csv-nav sml-mode twittering-mode gnuplot-mode
     google-translate bash-completion
     ;; view
     popwin image-dired+ image+
