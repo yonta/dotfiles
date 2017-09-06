@@ -132,7 +132,7 @@ Creates a buffer if necessary."
               (kill-buffer (current-buffer))
               (dired up))
           (dired-goto-file dir))))))
-(define-key dired-mode-map "\C-m" 'dired-my-advertised-find-file)
+(define-key dired-mode-map (kbd "C-m") 'dired-my-advertised-find-file)
 (define-key dired-mode-map "^" 'dired-my-up-directory)
 
 ;; ユーザ名とグループの非表示、ディレクトリに「/」の表示、「.」と「..」を非表示
@@ -175,7 +175,7 @@ Creates a buffer if necessary."
   ;; (setq company-idle-delay nil) ; 自動補完をしない
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
-  (define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
+  (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
   (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
   )
 
@@ -336,8 +336,8 @@ Creates a buffer if necessary."
 ;(require 'google-translate-smooth-ui)
 (autoload 'google-translate "google-translate" nil t)
 (autoload 'google-translate-smooth-ui "google-translate-smooth-ui" nil t)
-(global-set-key "\C-c\C-t" 'google-translate-smooth-translate)
-(global-set-key "\C-ct" 'google-translate-query-translate)
+(global-set-key (kbd "C-c C-t") 'google-translate-smooth-translate)
+(global-set-key (kbd "C-c t") 'google-translate-query-translate)
 (setq google-translate-translation-directions-alist
       '(("en" . "ja") ("ja" . "en")))
 
@@ -411,8 +411,8 @@ Creates a buffer if necessary."
 ;; エラー箇所に背景色をつける
 (set-face-background 'flycheck-error "pink")
 ;; キーバインド設定
-(define-key flycheck-mode-map "\M-p" 'flycheck-previous-error)
-(define-key flycheck-mode-map "\M-n" 'flycheck-next-error)
+(define-key flycheck-mode-map (kbd "M-p") 'flycheck-previous-error)
+(define-key flycheck-mode-map (kbd "M-n") 'flycheck-next-error)
 
 ;;; doxymacsの設定
 ;; 専用パーサ(doxymacs_parser.exe等)をビルドするため、ソースから

@@ -1,20 +1,20 @@
 ;;; C-hをバックスペースにする
-(global-set-key "\C-h" 'backward-delete-char)
+(global-set-key (kbd "C-h") 'backward-delete-char)
 ;;; M-&を正規表現置換にする
-(global-set-key "\M-&" 'replace-regexp)
+(global-set-key (kbd "M-&") 'replace-regexp)
 ;;; M-?をヘルプに
-(global-set-key "\M-?" 'help-for-help)
+(global-set-key (kbd "M-?") 'help-for-help)
 ;;; C-cgをgrep-findに
-(global-set-key "\C-cg" 'grep-find)
+(global-set-key (kbd "C-c g") 'grep-find)
 (setq grep-find-command
       `("find . -type f -print0 | xargs -0 -e grep -nHE " . 48))
 ;;; terminal(-nw)で起動した場合は、C-SPCが使えないので、C-]にする
 (if (not window-system) (global-set-key (kbd "C-]") 'set-mark-command))
 ;;; C-x oの代わりのバッファ移動
-(global-set-key "\C-cl" 'windmove-right)
-(global-set-key "\C-ch" 'windmove-left)
-(global-set-key "\C-cj" 'windmove-down)
-(global-set-key "\C-ck" 'windmove-up)
+(global-set-key (kbd "C-c l") 'windmove-right)
+(global-set-key (kbd "C-c h") 'windmove-left)
+(global-set-key (kbd "C-c j") 'windmove-down)
+(global-set-key (kbd "C-c k") 'windmove-up)
 
 ;;; Shift + カーソル で分割ウィンドウ間を移動
 (windmove-default-keybindings)
@@ -34,10 +34,10 @@
         (nextbuf (window-buffer (next-window))))
     (set-window-buffer (next-window) (window-buffer))
     (set-window-buffer thiswin nextbuf)))
-(global-set-key "\C-xO" 'swap-screen)
+(global-set-key (kbd "C-x O") 'swap-screen)
 
 ;;; C-xC-bでbufferじゃなくibufferを使用する
-(global-set-key "\C-x\C-b" 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;;; 分割ウィンドウのサイズを変更するwindow-resizer
 ; window-resizer関数
@@ -61,7 +61,7 @@
               ;; otherwise
               (t (message "Quit") (throw 'end-flag t)))))))
 ; window-resizerをC-crにセット
-(global-set-key "\C-cr" 'window-resizer)
+(global-set-key (kbd "C-c r") 'window-resizer)
 
 ;;; C-M-:に連番Evalを割り当て、ただしterminalならM-*
 (setq my-repeat-num-command
