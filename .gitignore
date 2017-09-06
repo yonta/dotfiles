@@ -10,4 +10,5 @@
 .emacs.d/srecode-map.el
 .emacs.d/network-security.data
 .emacs.d/url/*
+.emacs.d/.python-environments
 .emacs.d/kkcrc

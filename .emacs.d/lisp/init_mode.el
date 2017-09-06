@@ -391,44 +391,24 @@ Creates a buffer if necessary."
              (setq indent-level 4)
              (setq python-indent 4)
              (setq tab-width 4)
-             (elpy-enable)
-             (elpy-mode)
+             (local-set-key (kbd "C-c c") 'quickrun)
              ))
 
-;;; elpy mode
-;; pythonのrope、jediのパッケージを入れておくこと
-;; 公式はさらにflake8、importmagic、autopep8、yapfを推奨している
-(add-hook 'elpy-mode-hook
-          '(lambda ()
-             (elpy-use-ipython)
-             ;; quickrunをC-cC-cに設定
-             (define-key elpy-mode-map "\C-c\C-c" 'quickrun)
-             ;; elpy-doc
-             (define-key elpy-mode-map (kbd "\C-cd") 'elpy-doc)
-             ))
+;; company-jedi
+;; 初回にM-x jedi:install-serverを実行する
+;; pipのjediはいらない
+(setq jedi:complete-on-dot t)
+(setq jedi:use-shortcuts t) ; 定義ジャンプM-.とM-,
+(add-to-list 'company-backends 'company-jedi)
+(add-hook 'python-mode-hook 'jedi:setup)
 
 ;; py-autopep8
 ;; pythonのautopep8のパッケージを入れておくこと
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
-;; python flymake
-;; pythonのpyflakesのパッケージを入れておくこと
-(require 'tramp-cmds)
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-     ; Make sure it's not a remote buffer or flymake would not work
-     (when (not (subsetp (list (current-buffer)) (tramp-list-remote-buffers)))
-      (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                         'flymake-create-temp-inplace))
-             (local-file (file-relative-name
-                          temp-file
-                          (file-name-directory buffer-file-name))))
-        (list "pyflakes" (list local-file)))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
-(add-hook 'python-mode-hook
-          (lambda ()
-            (flymake-mode t)))
+;; flycheck-pyflakes
+;; pipでflake8を入れておく
+(require 'flycheck-pyflakes)
 
 ;;; flycheck modeの設定
 ;; 対応するメジャーモードでオート起動する

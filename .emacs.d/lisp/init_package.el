@@ -13,10 +13,9 @@
     ;; arduino
     company-arduino arduino-mode
     ;; C++
-    rtags flycheck flycheck-irony irony
-    auto-complete-clang auto-complete-c-headers
+    rtags flycheck flycheck-irony irony company-irony-c-headers
     ;; python
-    python-mode elpy py-autopep8 flymake-python-pyflakes flymake-cursor quickrun
+    python-mode py-autopep8 quickrun company-jedi flycheck-pyflakes
     ;; markdown
     ;; コードブロックの編集のため、edit-indirectが必要
     markdown-mode edit-indirect
