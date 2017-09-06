@@ -8,6 +8,8 @@
 (global-set-key "\C-cg" 'grep-find)
 (setq grep-find-command
       `("find . -type f -print0 | xargs -0 -e grep -nHE " . 48))
+;;; terminal(-nw)で起動した場合は、C-SPCが使えないので、C-]にする
+(if (not window-system) (global-set-key (kbd "C-]") 'set-mark-command))
 ;;; C-x oの代わりのバッファ移動
 (global-set-key "\C-cl" 'windmove-right)
 (global-set-key "\C-ch" 'windmove-left)
@@ -61,10 +63,12 @@
 ; window-resizerをC-crにセット
 (global-set-key "\C-cr" 'window-resizer)
 
-;;; C-M-:に連番Evalを割り当て
+;;; C-M-:に連番Evalを割り当て、ただしterminalならM-*
 (setq my-repeat-num-command
       "(loop for i from 1 to 10 do (insert (format \"%d\\n\" i)))")
 (defun my-insert-repeat-numbers ()
   (interactive)
   (eval (read-from-minibuffer "Enter: " my-repeat-num-command nil t)))
-(global-set-key (kbd "C-M-:") 'my-insert-repeat-numbers)
+(if (window-system)
+    (global-set-key (kbd "C-M-:") 'my-insert-repeat-numbers)
+  (global-set-key (kbd "C-c M-:") 'my-insert-repeat-numbers))
