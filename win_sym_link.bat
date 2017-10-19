@@ -7,7 +7,7 @@ set current=%CD%
 set home=e:\home
 set repopath=%current%
 
-mklink %home%\.profile %repopath%\bash\.profile
+mklink %home%\.profile %repopath%\bash-win\.profile
 mklink %home%\.gitconfig %repopath%\git\.gitconfig
 mklink %home%\.gitignore_global %repopath%\git\.gitignore_global
 mklink %home%\.hgrc %repopath%\mercurial\.hgrc

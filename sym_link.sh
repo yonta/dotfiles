@@ -35,6 +35,15 @@ function make_dir_link () {
     ln -s -d ${1} ${2}
 }
 
+# Bash
+if [ ${1} = "copy" ]; then
+    copy_original .bashrc ${HOME}
+elif [ ${1} = "force" ]; then
+    remove_original .bashrc ${HOME}
+fi
+make_dir_link ${PWD}/bash-ubuntu/.bashrc ${HOME}/.bashrc
+
+# Git
 git_srcs=".gitconfig .gitignore_global"
 for file in ${git_srcs}
 do
@@ -46,6 +55,7 @@ do
     make_file_link ${PWD}/git/${file} ${HOME}
 done
 
+# Mercurial
 mercurial_srcs=".hgignore_global .hgrc"
 for file in ${mercurial_srcs}
 do
@@ -57,6 +67,7 @@ do
     make_file_link ${PWD}/mercurial/${file} ${HOME}
 done
 
+# Emacs
 if [ ${1} = "copy" ]; then
     copy_original .emacs.d ${HOME}
 elif [ ${1} = "force" ]; then
