@@ -13,7 +13,7 @@ fi
 
 # arg1: file (full path)
 function copy_original () {
-    if [ -e "${1}" ]; then
+    if [ -e "${1}" ] || [ -L "${1}" ]; then
         echo "Message: copy existing \"${1}\" to \"${1}.orig\""
         mv ${1} ${1}.orig
     fi
@@ -22,7 +22,7 @@ function copy_original () {
 # arg1: file (full path)
 # The pattern of '-e' is file or directory, and '-L' is symbolic link.
 function remove_original () {
-    if [ -e "${1}" ] || [ -L "$1" ]; then
+    if [ -e "${1}" ] || [ -L "${1}" ]; then
         echo "Message: remove existing \"${1}\""
         rm -rf ${1}
     fi
