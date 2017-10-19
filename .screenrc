@@ -1,0 +1,25 @@
+# 文字コードをutf-8に
+defutf8 on
+defencoding utf8
+encoding utf-8 utf-8
+
+# escapeをC-zに
+escape ^z^z
+
+# escapeをC-tに
+# escape ^Ta
+
+# 起動時のメッセージオフ
+startup_message off
+
+# スクロールバックを大きくする
+5000
+
+# ターミナルが落ちたら自動でデタッチ
+autodetach on
+
+# キャプション
+caption
+
+# ベルを可視化
+vbell on

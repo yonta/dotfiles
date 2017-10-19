@@ -1,0 +1,5 @@
+# 音を鳴らさない
+set bell-style none
+
+# 補完の大文字小文字を無視
+set completion-ignore-case on

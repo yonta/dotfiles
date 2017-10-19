@@ -48,7 +48,8 @@ function nice_make_link () {
 }
 
 # $1はcopy or force
-files=".bashrc .gitconfig .gitignore_global .hgrc .hgignore_global .emacs.d"
+files=".bashrc .gitconfig .gitignore_global .hgrc .hgignore_global .emacs.d
+.inputrc .screenrc .vimrc"
 for file in ${files}
 do
     nice_make_link ${file} ${1}

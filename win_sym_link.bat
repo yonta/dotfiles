@@ -13,3 +13,6 @@ mklink %home%\.gitignore_global %repopath%\.gitignore_global
 mklink %home%\.hgrc %repopath%\.hgrc
 mklink %home%\.hgignore_global %repopath%\.hgignore_global
 mklink /D %home%\.emacs.d %repopath%\.emacs.d
+mklink %home%\.inputrc %repopath%\.inputrc
+mklink %home%\.screenrc %repopath%\.screenrc
+mklink %home%\.vimrc %repopath%\.vimrc
