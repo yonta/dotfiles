@@ -144,11 +144,11 @@ GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUPSTREAM=auto
 
 # Change default file and directory permission for WSL
-if uname -a | grep 'Microsoft'; then
+if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
     umask 0022
 fi
 
 # 起動時にホームディレクトリに移動 for WSL
-if uname -a | grep 'Microsoft'; then
-cd
+if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
+    cd
 fi
