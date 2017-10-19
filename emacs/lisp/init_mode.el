@@ -171,7 +171,7 @@ Creates a buffer if necessary."
   (global-company-mode 1)
   (if (window-system)
       (global-set-key (kbd "C-M-i") 'company-complete)
-    (global-set-key (kbd "C-i") 'company-complete))
+    (global-set-key (kbd "C-c M-i") 'company-complete))
   ;; (setq company-idle-delay nil) ; 自動補完をしない
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
