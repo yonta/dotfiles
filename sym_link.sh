@@ -11,14 +11,14 @@ fi
 # arg1: file, arg2: target dir
 function copy_original () {
     if [ -e ${2}/${1} ]; then
-        echo "Message: exist \"${2}${1}\", copy to \"${1}.orig\""
+        echo "Message: exist \"${2}/${1}\", copy to \"${1}.orig\""
         mv ${2}/${1} ${2}/${1}.orig
     fi
 }
 
 function remove_original () {
     if [ -e ${2}/${1} ]; then
-        echo "Message: exist \"${2}${1}\", remove"
+        echo "Message: exist \"${2}/${1}\", remove"
         rm -rf ${2}/${1}
     fi
 }
