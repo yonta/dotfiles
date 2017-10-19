@@ -23,16 +23,14 @@ function remove_original () {
     fi
 }
 
-# arg1: file, arg2: target dir
-function make_file_link () {
+# arg1: file or dir, arg2: target dir
+function make_link () {
     echo "Message: make link to \"${1}\""
-    ln -s ${1} ${2}
-}
-
-# arg1: file, arg2: target dir
-function make_dir_link () {
-    echo "Message: make link to \"${1}\""
-    ln -s -d ${1} ${2}
+    if [ -f ${1} ]; then
+        ln -s ${1} ${2}
+    elif [ -d ${1} ]; then
+        ln -s -d ${1} ${2}
+    fi
 }
 
 # Bash
@@ -41,7 +39,7 @@ if [ ${1} = "copy" ]; then
 elif [ ${1} = "force" ]; then
     remove_original .bashrc ${HOME}
 fi
-make_dir_link ${PWD}/bash-ubuntu/.bashrc ${HOME}/.bashrc
+make_link ${PWD}/bash-ubuntu/.bashrc ${HOME}/.bashrc
 
 # Git
 git_srcs=".gitconfig .gitignore_global"
@@ -52,7 +50,7 @@ do
     elif [ ${1} = "force" ]; then
         remove_original ${file} ${HOME}
     fi
-    make_file_link ${PWD}/git/${file} ${HOME}
+    make_link ${PWD}/git/${file} ${HOME}
 done
 
 # Mercurial
@@ -64,7 +62,7 @@ do
     elif [ ${1} = "force" ]; then
         remove_original ${file} ${HOME}
     fi
-    make_file_link ${PWD}/mercurial/${file} ${HOME}
+    make_link ${PWD}/mercurial/${file} ${HOME}
 done
 
 # Emacs
@@ -73,4 +71,4 @@ if [ ${1} = "copy" ]; then
 elif [ ${1} = "force" ]; then
     remove_original .emacs.d ${HOME}
 fi
-make_dir_link ${PWD}/emacs ${HOME}/.emacs.d
+make_link ${PWD}/emacs ${HOME}/.emacs.d
