@@ -59,7 +59,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck-google-cpplint google-c-style image-dired+ yasnippet company-arduino flycheck-irony irony rtags arduino-mode w3m twittering-mode swiper sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 popwin markdown-mode image+ hiwin highlight-current-line google-translate flymake-python-pyflakes flymake-cursor flycheck esup elpy dos doctags csv-nav csv-mode browse-kill-ring bash-completion))))
+    (edit-indirect graphviz-dot-mode flycheck-google-cpplint google-c-style image-dired+ yasnippet company-arduino flycheck-irony irony rtags arduino-mode w3m twittering-mode swiper sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 popwin markdown-mode image+ hiwin highlight-current-line google-translate flymake-python-pyflakes flymake-cursor flycheck esup elpy dos doctags csv-nav csv-mode browse-kill-ring bash-completion))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
