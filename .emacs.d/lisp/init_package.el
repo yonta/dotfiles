@@ -15,8 +15,11 @@
     auto-complete-clang auto-complete-c-headers
     ;; python
     python-mode elpy py-autopep8 flymake-python-pyflakes flymake-cursor quickrun
+    ;; markdown
+    ;; コードブロックの編集のため、edit-indirectが必要
+    markdown-mode edit-indirect
     ;; other mode
-    markdown-mode csv-mode csv-nav sml-mode twittering-mode gnuplot-mode
+    csv-mode csv-nav sml-mode twittering-mode gnuplot-mode
     google-translate bash-completion
     ;; view
     popwin image-dired+ image+
