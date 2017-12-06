@@ -148,7 +148,29 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
     umask 0022
 fi
 
-# 起動時にホームディレクトリに移動 for WSL
+# WSL
 if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
+    # 起動時にホームディレクトリに移動 for WSL
     cd
+
+    # WSLでのXとIME設定
+    export DISPLAY=localhost:0.0
+    export XIM=uim
+    export UIM_CANDWIN_PROG=uim-candwin-gtk
+
+    export GTK_IM_MODULE=uim
+    export QT_IM_MODULE=uim
+    export XMODIFIERS=@im=uim
+
+    export NO_AT_BRIDGE=1
+
+    export LANG=ja_JP.UTF-8
+    export LANGUAGE=ja
+
+    # if ps ax | grep "0:00 uim-xim" > /dev/null 2>&1 ; then
+    #    echo "uim-xim is already existing"
+    # else
+    # uim-xim & > /dev/null 2>&1
+    # fi
+    uim-xim &
 fi
