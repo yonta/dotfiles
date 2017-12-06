@@ -1,3 +1,6 @@
+;;; 起動時のメッセージを表示しない
+(setq inhibit-startup-message t)
+
 ;;; emacs lispの変数評価結果の表示桁数制限をなくす，デフォルトは(12,4)
 (setq eval-expression-print-length nil)
 (setq eval-expression-print-level nil)
