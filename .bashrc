@@ -172,5 +172,5 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
     # else
     # uim-xim & > /dev/null 2>&1
     # fi
-    uim-xim &
+    uim-xim > /dev/null 2>&1 &
 fi
