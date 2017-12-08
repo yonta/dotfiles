@@ -67,7 +67,20 @@ function show_branch {
 }
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[35m\]$(show_branch)\[\033[00m\]\$ '
+    PS1_1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h'
+    OSNAME=''
+    PS1_2='\[\033[00m\]:\[\033[01;34m\]\w\[\033[35m\]$(show_branch)\[\033[00m\]\$ '
+    # WSLでubuntu/openSUSEの両方がある場合、OS名をいれる
+    if uname -a | grep '\-Microsoft' > /dev/null 2>&1 &&
+           type "ubuntu.exe" > /dev/null 2>&1 &&
+           type "openSUSE-42.exe" > /dev/null 2>&1 ; then
+        if grep 'Ubuntu' /etc/os-release > /dev/null 2>&1; then
+            OSNAME='-ubuntu'
+        elif grep 'openSUSE' /etc/os-release > /dev/null 2>&1; then
+            OSNAME='-openSUSE'
+        fi
+    fi
+    PS1="${PS1_1}${OSNAME}${PS1_2}"
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
