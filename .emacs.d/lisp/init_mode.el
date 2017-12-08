@@ -136,10 +136,10 @@ Creates a buffer if necessary."
 (define-key dired-mode-map "^" 'dired-my-up-directory)
 
 ;; ユーザ名とグループの非表示、ディレクトリに「/」の表示、「.」と「..」を非表示
-;; 長い表示、kbyte・Mbyteの使用、隠しファイルも表示
+;; 長い表示、kbyte・Mbyteの使用、隠しファイル非表示
 ;;   ※lsコマンドのオプションで設定する
 ;;(setq dired-listing-switches "-gGhFA")
-(setq dired-listing-switches "-lgGhFA")
+(setq dired-listing-switches "-lgGhF")
 
 ;;; OMakerootをmakefile-modeに追加
 (setq auto-mode-alist (cons '("^OMakeroot$" . makefile-mode) auto-mode-alist))
