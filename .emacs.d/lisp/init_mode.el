@@ -183,8 +183,9 @@ Creates a buffer if necessary."
 ;;; smartparens-modeを自動オンにする
 (require 'smartparens-config)
 (smartparens-global-mode t)
-; sml-modeでは'での補完を行わない
-(sp-local-pair '(sml-mode) "'" "'" :actions nil)
+; sml-mode/run-sml(inferior-sml-mode)では'での補完を行わない
+(sp-local-pair '(sml-mode) "'" nil :actions nil)
+(sp-local-pair '(inferior-sml-mode) "'" nil :actions nil)
 
 ;;; rainbow-modeを自動オンにする
 (setq rainbow-r-colors t) ; R color listを使う
