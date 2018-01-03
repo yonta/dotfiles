@@ -180,6 +180,8 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
     export LANG=ja_JP.UTF-8
     export LANGUAGE=ja
 
+    xset -r 49
+
     # if ps ax | grep "0:00 uim-xim" > /dev/null 2>&1 ; then
     #    echo "uim-xim is already existing"
     # else
