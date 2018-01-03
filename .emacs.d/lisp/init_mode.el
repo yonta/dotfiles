@@ -431,3 +431,8 @@ Creates a buffer if necessary."
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 ;; DoxygenコメントスタイルはQt /*! */ 方式を使う
 (setq doxymacs-doxygen-style "Qt")
+
+;;; help-modeの設定
+;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
+(define-key help-mode-map (kbd "M-<left>") 'help-go-back)
+(define-key help-mode-map (kbd "M-<right>") 'help-go-forward)
