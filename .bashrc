@@ -163,9 +163,6 @@ fi
 
 # WSL
 if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
-    # 起動時にホームディレクトリに移動 for WSL
-    cd
-
     # WSLでのXとIME設定
     export DISPLAY=localhost:0.0
     export XIM=uim
