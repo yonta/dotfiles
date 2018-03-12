@@ -12,9 +12,8 @@
              '("elpy" . "https://jorgenschaefer.github.io/packages/"))
 
 ;; Marmaladeを追加
-;; よく鯖落ちするのでオフ
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("marmalade" . "https://marmalade-repo.org/packages/"))
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
