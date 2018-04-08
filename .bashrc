@@ -165,28 +165,28 @@ fi
 if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
     # WSLでのXとIME設定
     export DISPLAY=localhost:0.0
-    export XIM=uim
-    export UIM_CANDWIN_PROG=uim-candwin-gtk
-
-    export GTK_IM_MODULE=uim
-    export QT_IM_MODULE=uim
-    export XMODIFIERS=@im=uim
-
-    export NO_AT_BRIDGE=1
-
-    export LANG=ja_JP.UTF-8
-    export LANGUAGE=ja
-
     # xrandrでディスプレイが存在するか判定する
     if xrandr > /dev/null 2>&1 ; then
+        export XIM=uim
+        export UIM_CANDWIN_PROG=uim-candwin-gtk
+
+        export GTK_IM_MODULE=uim
+        export QT_IM_MODULE=uim
+        export XMODIFIERS=@im=uim
+
+        export NO_AT_BRIDGE=1
+
+        export LANG=ja_JP.UTF-8
+        export LANGUAGE=ja
+
         # 全角半角キーが連打されるのを防ぐ
         xset -r 49
 
-    # if ps ax | grep "0:00 uim-xim" > /dev/null 2>&1 ; then
-    #    echo "uim-xim is already existing"
-    # else
-    # uim-xim & > /dev/null 2>&1
-    # fi
+        # if ps ax | grep "0:00 uim-xim" > /dev/null 2>&1 ; then
+        #    echo "uim-xim is already existing"
+        # else
+        # uim-xim & > /dev/null 2>&1
+        # fi
         # uim-ximを起動
         uim-xim > /dev/null 2>&1 &
     fi
