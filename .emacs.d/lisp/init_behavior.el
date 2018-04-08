@@ -6,7 +6,8 @@
 (setq eval-expression-print-level nil)
 
 ;;; file名補完で大文字・小文字を区別しない
-(setq completion-ignore-case t)
+(setq read-buffer-completion-ignore-case t)
+(setq read-file-name-completion-ignore-case t)
 
 ;;; 問い合わせを簡略化 yes/no を y/n
 (fset 'yes-or-no-p 'y-or-n-p)
