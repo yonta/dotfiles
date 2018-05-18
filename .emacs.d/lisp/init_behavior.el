@@ -16,19 +16,8 @@
 ; backupフォルダの作成
 (defvar my-backup-dir "~/.emacs.d/backup")
 (unless (file-directory-p my-backup-dir) (make-directory my-backup-dir t))
-; バックアップファイルを設定
-(setq make-backup-file t)
-(if (and (boundp 'my-backup-dir)
-         (not (fboundp 'make-backup-file-name-original)))
-    (progn
-      (fset 'make-backup-file-name-original
-            (symbol-function 'make-backup-file-name))
-      (defun make-backup-file-name (filename)
-        (if (and (file-exists-p (expand-file-name my-backup-dir))
-                 (file-directory-p (expand-file-name my-backup-dir)))
-            (concat (expand-file-name my-backup-dir)
-                    "/" (file-name-nondirectory filename))
-          (make-backup-file-name-original filename)))))
+; バックアップファイルの保存先の指定
+(setq backup-directory-alist '((".*" . "~/.emacs.d/backup")))
 
 ;;; バージョンコントロールでバックアップファイルを作らないようにする
 ;;; 現在はなぜか効果がでない
