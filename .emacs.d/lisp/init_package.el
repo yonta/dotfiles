@@ -19,7 +19,7 @@
     ;; コードブロックの編集のため、edit-indirectが必要
     markdown-mode edit-indirect
     ;; other mode
-    csv-mode csv-nav sml-mode twittering-mode gnuplot-mode graphviz-dot-mode
+    csv-mode sml-mode twittering-mode gnuplot-mode graphviz-dot-mode
     google-translate bash-completion
     ;; view
     popwin image-dired+ image+
