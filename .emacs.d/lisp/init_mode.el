@@ -416,22 +416,6 @@ Creates a buffer if necessary."
 (define-key flycheck-mode-map (kbd "M-p") 'flycheck-previous-error)
 (define-key flycheck-mode-map (kbd "M-n") 'flycheck-next-error)
 
-;;; doxymacsの設定
-;; 専用パーサ(doxymacs_parser.exe等)をビルドするため、ソースから
-;; 各環境でインストールする
-;; source url: http://doxymacs.sourceforge.net/
-(require 'doxymacs)
-;; c/c++-modeで起動
-(add-hook 'c-mode-common-hook 'doxymacs-mode)
-(add-hook 'c++-mode-common-hook 'doxymacs-mode)
-;; doxygenコメントのシンタクスハイライト
-(defun my-doxymacs-font-lock-hook ()
-  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-      (doxymacs-font-lock)))
-(add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
-;; DoxygenコメントスタイルはQt /*! */ 方式を使う
-(setq doxymacs-doxygen-style "Qt")
-
 ;;; help-modeの設定
 ;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
 (define-key help-mode-map (kbd "M-<left>") 'help-go-back)
