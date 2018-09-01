@@ -175,10 +175,6 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
         export XMODIFIERS=@im=uim
 
         export NO_AT_BRIDGE=1
-
-        export LANG=ja_JP.UTF-8
-        export LANGUAGE=ja
-
         # 全角半角キーが連打されるのを防ぐ
         xset -r 49
 
