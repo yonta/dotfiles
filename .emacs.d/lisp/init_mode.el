@@ -420,3 +420,15 @@ Creates a buffer if necessary."
 ;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
 (define-key help-mode-map (kbd "M-<left>") 'help-go-back)
 (define-key help-mode-map (kbd "M-<right>") 'help-go-forward)
+
+;;; haxe-modeの設定
+(require 'haxe-mode)
+(add-hook 'haxe-mode-hook
+          (function (lambda () (c-add-style "haxe" my-haxe-style t))))
+(add-hook 'haxe-mode-hook
+          (function
+           (lambda ()
+             (setq tab-width 4)
+             (setq indent-tabs-mode nil)
+             (setq fill-column 80)
+             )))
