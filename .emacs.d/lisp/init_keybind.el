@@ -9,6 +9,8 @@
 (global-set-key (kbd "M-&") 'replace-regexp)
 ;;; M-?をヘルプに
 (global-set-key (kbd "M-?") 'help-for-help)
+;;; C-c dでカーソル位置のシンボルのヘルプを表示
+(global-set-key (kbd "C-c d") 'describe-symbol)
 ;;; C-cgをgrep-findに
 (global-set-key (kbd "C-c g") 'grep-find)
 (setq grep-find-command
