@@ -15,6 +15,9 @@
 ;;; スクロールバーを右側に配置する
 (set-scroll-bar-mode 'right)
 
+;;; フリンジのサイズを調整する
+(fringe-mode '(15 . 5))
+
 ;;; 対応する括弧を光らせる
 (show-paren-mode t)
 
