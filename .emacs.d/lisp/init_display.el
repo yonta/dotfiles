@@ -56,7 +56,7 @@
        ))
 
 ;;; hiwin mode
-;; アクティブウィンドウ以外の色を変える
+;; アクティブかどうかでバッファーのモードラインの色を変える
 ;; (hiwin-activate)
 ;; (set-face-background 'hiwin-face "gray92")
 (set-face-attribute 'mode-line nil :background "light sky blue")
