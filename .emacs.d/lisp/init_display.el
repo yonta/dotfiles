@@ -68,11 +68,8 @@
 ;; 空白・カラムオーバーの可視化と不要な空白や改行の自動削除をする
 (require 'whitespace)
 
-;; 対象はタブ、カラムオーバー、行末スペース、カスタムスペース（全角スペース）
-;; ただし、シェルで-nw起動したときは、見づらい文字背景色の設定をオフ
-(if (window-system)
-    (setq whitespace-style '(face tabs lines-tail trailing spaces empty))
-  (setq whitespace-style '(face tabs trailing spaces empty)))
+;; 対象はタブ、行末スペース、カスタムスペース（全角スペース）
+(setq whitespace-style '(face tabs trailing spaces empty))
 
 ;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
 (setq whitespace-action '(auto-cleanup))
@@ -95,11 +92,7 @@
 ;; 空行の色
 (set-face-attribute 'whitespace-empty nil :background nil)
 
-;; 80文字オーバーの色
-(set-face-attribute 'whitespace-line nil :foreground nil :background "Lavender")
-
-;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
-(defun set-whitespace-line-column-80 () (setq whitespace-line-column 80))
-(defun set-whitespace-line-column-100 () (setq whitespace-line-column 100))
-(add-hook 'java-mode-hook 'set-whitespace-line-column-100)
-(add-hook 'change-major-mode-hook 'set-whitespace-line-column-80)
+;;; fci-modeで80文字の箇所に線を引く
+(require 'fill-column-indicator nil t)
+(add-hook 'prog-mode-hook 'fci-mode)
+(setq fci-rule-column 80)

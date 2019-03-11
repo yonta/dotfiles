@@ -22,7 +22,7 @@
     csv-mode sml-mode twittering-mode gnuplot-mode graphviz-dot-mode
     google-translate bash-completion haxe-mode proof-general
     ;; view
-    popwin image-dired+ image+
+    popwin image-dired+ image+ fill-column-indicator
     hiwin highlight-current-line rainbow-mode
     w3m swiper smartparens
     browse-kill-ring
