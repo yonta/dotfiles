@@ -23,11 +23,6 @@
 ;;; 現在はなぜか効果がでない
 (setq version-control nil)
 
-;;; タイムスタンプを自動で書き込む [Time-stamp: <##Time##>]
-(if (not (memq 'time-stamp write-file-hooks))
-(setq write-file-hooks
-(cons 'time-stamp write-file-hooks)))
-
 ;;; 画像ファイルを表示する
 (auto-image-file-mode t)
 
