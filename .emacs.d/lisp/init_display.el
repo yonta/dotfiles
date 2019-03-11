@@ -21,17 +21,6 @@
 ;;; マークセット部分を色付けする
 (transient-mark-mode t)
 
-;;; ファイル末尾を<EOF>で表示する
-;;; <EOF>のnilを(face color)でcolor色の背景色をつける
-(defun set-buffer-end-mark()
-  (let ((overlay (make-overlay (point-max) (point-max))))
-    (overlay-put overlay 'before-string #("<EOF>" 0 5 nil))
-    (overlay-put overlay 'insert-behind-hooks
-                 '((lambda (overlay after beg end &optional len)
-                     (when after
-                       (move-overlay overlay (point-max) (point-max))))))))
-(add-hook 'find-file-hooks 'set-buffer-end-mark)
-
 ;;; ビープ音を消し、画面がフラッシュしないようにする
 (setq ring-bell-function 'ignore)
 
