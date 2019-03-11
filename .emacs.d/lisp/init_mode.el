@@ -135,9 +135,13 @@ Creates a buffer if necessary."
 (define-key dired-mode-map (kbd "C-m") 'dired-my-advertised-find-file)
 (define-key dired-mode-map "^" 'dired-my-up-directory)
 
-;; ユーザ名とグループの非表示、ディレクトリに「/」の表示、「.」と「..」を非表示
-;; 長い表示、kbyte・Mbyteの使用、隠しファイル非表示
-;;   ※lsコマンドのオプションで設定する
+;; dired-modeがlsコマンドに渡すオプションを設定する
+;; l: 長い表示、dired-modeに必須のオプション
+;; g: ユーザ名を非表示
+;; G: グループ名を非表示
+;; h: kbyte・Mbyteの使用
+;; F: ディレクトリに「/」を表示
+;; A: 「.」と「..」を非表示でドットファイルを表示
 ;;(setq dired-listing-switches "-gGhFA")
 (setq dired-listing-switches "-lgGhF")
 
