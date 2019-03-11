@@ -110,7 +110,7 @@
 (defun dired-my-advertised-find-file ()
   (interactive)
   (let ((kill-target (current-buffer))
-        (check-file (dired-get-filename)))
+        (check-file (dired-get-filename nil t)))
     (funcall 'dired-advertised-find-file)
     (if (file-directory-p check-file)
         (kill-buffer kill-target))))
