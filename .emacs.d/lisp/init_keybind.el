@@ -35,7 +35,7 @@
 
 ;;; swap-screenで上下や左右のバッファを入れ替え，これをC-Oにする
 (defun swap-screen()
-  "Swap two screen,leaving cursor at current window."
+  "Swap two screen, leaving cursor at current window."
   (interactive)
   (let ((thiswin (selected-window))
         (nextbuf (window-buffer (next-window))))
