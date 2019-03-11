@@ -20,7 +20,7 @@
     markdown-mode edit-indirect
     ;; other mode
     csv-mode sml-mode twittering-mode gnuplot-mode graphviz-dot-mode
-    google-translate bash-completion haxe-mode
+    google-translate bash-completion haxe-mode proof-general
     ;; view
     popwin image-dired+ image+
     hiwin highlight-current-line rainbow-mode
