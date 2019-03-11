@@ -71,11 +71,13 @@
 (global-set-key (kbd "C-c r") 'window-resizer)
 
 ;;; C-M-:に連番Evalを割り当て、ただしterminalならM-*
-(setq my-repeat-num-command
-      "(loop for i from 1 to 10 do (insert (format \"%d\\n\" i)))")
 (defun my-insert-repeat-numbers ()
+  "Insert ordered number with formatt.
+A default format is start with 1, end with 10, and only number string."
   (interactive)
-  (eval (read-from-minibuffer "Enter: " my-repeat-num-command nil t)))
+  (let* ((my-repeat-num-command
+          "(loop for i from 1 to 10 do (insert (format \"%d\\n\" i)))"))
+    (eval (read-from-minibuffer "Enter: " my-repeat-num-command nil t))))
 (if (window-system)
     (global-set-key (kbd "C-M-:") 'my-insert-repeat-numbers)
   (global-set-key (kbd "C-c M-:") 'my-insert-repeat-numbers))
