@@ -1,13 +1,13 @@
 ;;; Emacs23以降のフォント設定
 (cond ((>= (string-to-number emacs-version) 23)
         (cond (window-system
-;               (set-default-font "Bitstream Vera Sans Mono-11")
-;               (set-default-font "VL ゴシック-10")
-               (set-default-font "VL ゴシック-14")
-;               (set-default-font "M+2VM+IPAG circle-12")
-;               (set-default-font "Migu 1M-7")
-;               (set-default-font "MigMix 1M-7")
-;               (set-default-font "MigMix 2M-7")
+;               (set-frame-font "Bitstream Vera Sans Mono-11")
+;               (set-frame-font "VL ゴシック-10")
+               (set-frame-font "VL ゴシック-12")
+;               (set-frame-font "M+2VM+IPAG circle-12")
+;               (set-frame-font "Migu 1M-7")
+;               (set-frame-font "MigMix 1M-7")
+;               (set-frame-font "MigMix 2M-7")
                (set-fontset-font
                 (frame-parameter nil 'font)
                 'japanese-jisx0208
