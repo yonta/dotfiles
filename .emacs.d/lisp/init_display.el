@@ -27,17 +27,21 @@
 ;;; ビープ音を消し、画面がフラッシュしないようにする
 (setq ring-bell-function 'ignore)
 
-;;; ウィンドウについての設定
-(setq default-frame-alist
-      (append (list '(top . 0) ; 起動時の表示位置（上から）
-                    '(left . 0) ; 起動時の表示位置（左から）
-                    '(width . 194) ; 起動時のサイズ（幅）
-                    '(height . 47) ; 起動時のサイズ（縦）
-                    ;'(foreground-color . "#FFFFFF") ; 文字の色
-                    ;'(background-color . "gray30") ; 背景の色
-                    ;'(cursor-color . "gray") ; カーソルの色
-                    )
-              default-frame-alist))
+;;; フォントカラーの変更
+(if window-system
+    (progn
+      (set-face-foreground 'font-lock-comment-face "Sienna") ; comment
+      (set-face-foreground 'font-lock-string-face "forest green") ; string
+      (set-face-foreground 'font-lock-keyword-face "purple") ; reserved word
+      (set-face-foreground 'font-lock-function-name-face "blue") ; fun name
+      (set-face-foreground 'font-lock-variable-name-face "dodger blue") ; val
+      (set-face-foreground 'font-lock-type-face "chocolate") ; type
+      (set-face-foreground 'font-lock-builtin-face "deep pink") ; ex.macro in C
+      (set-face-foreground 'font-lock-constant-face "slate gray") ; ex.NULL in C
+      ; (set-face-bold 'font-lock-constant-face t)
+      (set-face-foreground 'font-lock-warning-face "red") ; warning
+      ;(set-face-bold-p 'font-lock-warning-face nil)
+      ))
 
 ;;; 長い行を折り返して表示する
 (setq truncate-partial-width-windows nil)

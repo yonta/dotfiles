@@ -45,8 +45,8 @@
 
 ;;; 設定ファイルの読み込み
 (load "init_package")
-(load "init_font")
 (load "init_display")
+(load "init_custom")
 (load "init_keybind")
 (load "init_behavior")
 (load "init_mode")
