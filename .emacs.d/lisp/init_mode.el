@@ -145,6 +145,22 @@ Creates a buffer if necessary."
 ;;(setq dired-listing-switches "-gGhFA")
 (setq dired-listing-switches "-lgGhF")
 
+;; C-.でドットファイルの表示と非表示を切り替える
+(defun reload-current-dired-buffer ()
+  "Reload current `dired-mode' buffer."
+  (let* ((dir (dired-current-directory)))
+    (progn (kill-buffer (current-buffer))
+           (dired dir))))
+(defun toggle-dired-listing-switches ()
+  "Toggle `dired-mode' switch between with and without 'A' option to show or hide dot files."
+  (interactive)
+  (if (string-match "[Aa]" dired-listing-switches)
+      (progn (setq dired-listing-switches "-lgGhF")
+             (reload-current-dired-buffer))
+    (progn (setq dired-listing-switches "-lgGhFA")
+           (reload-current-dired-buffer))))
+(define-key dired-mode-map (kbd "C-.") 'toggle-dired-listing-switches)
+
 ;;; OMakerootをmakefile-modeに追加
 (setq auto-mode-alist (cons '("^OMakeroot$" . makefile-mode) auto-mode-alist))
 
