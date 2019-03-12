@@ -16,7 +16,7 @@
 (set-scroll-bar-mode 'right)
 
 ;;; フリンジのサイズを調整する
-(fringe-mode '(15 . 5))
+(fringe-mode '(15 . 10))
 
 ;;; 対応する括弧を光らせる
 (show-paren-mode t)
