@@ -107,7 +107,10 @@
 (setq fci-handle-truncate-lines nil)
 (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
 (global-fci-mode 1)
-(defun auto-fci-mode (&optional unused)
+(defun auto-fci-mode (&optional UNUSED)
+  "Enable and disable fci-mode automatically by window width.
+All arguments UNUSED is ignored."
   (if (> (window-width) (+ fci-rule-column 1)) (fci-mode 1) (fci-mode 0)))
 (add-hook 'after-change-major-mode-hook 'auto-fci-mode)
 (add-hook 'window-configuration-change-hook 'auto-fci-mode)
+(add-hook 'buffer-list-update-hook 'auto-fci-mode)
