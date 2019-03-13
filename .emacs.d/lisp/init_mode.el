@@ -1,6 +1,3 @@
-;;; Proof General
-;(load-file "/usr/share/emacs/site-lisp/proofgeneral/generic/proof-site.el")
-
 ;;; ansi-term
 ;; コマンドラインと同じ色付けを使う
 (autoload 'ansi-color-for-comint-mode-on "ansi-color"
@@ -111,7 +108,7 @@
   (interactive)
   (let ((kill-target (current-buffer))
         (check-file (dired-get-filename nil t)))
-    (funcall 'dired-advertised-find-file)
+    (funcall 'dired-find-file)
     (if (file-directory-p check-file)
         (kill-buffer kill-target))))
 (defun dired-my-up-directory (&optional other-window)
@@ -212,8 +209,6 @@ Creates a buffer if necessary."
 (setq rainbow-r-colors t) ; R color listを使う
 (setq rainbow-html-colors t) ; html color listを使う
 (autoload 'rainbow-mode "rainbow-mode" nil t)
-;(require 'rainbow-mode)
-;(rainbow-mode t)
 ; 各modeでrainbow modeを起動
 (add-hook 'c++-mode-hook 'rainbow-mode)
 (add-hook 'arduino-mode-hook 'rainbow-mode)
@@ -355,8 +350,6 @@ Creates a buffer if necessary."
 (setq twittering-edit-skeleton 'inherit-mentions)
 
 ;;; Google Translate mode
-;(require 'google-translate)
-;(require 'google-translate-smooth-ui)
 (autoload 'google-translate "google-translate" nil t)
 (autoload 'google-translate-smooth-ui "google-translate-smooth-ui" nil t)
 (global-set-key (kbd "C-c C-t") 'google-translate-smooth-translate)
