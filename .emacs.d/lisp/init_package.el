@@ -38,9 +38,10 @@
     highlight-current-line
     rainbow-mode
     w3m
-    swiper
     smartparens
     browse-kill-ring
+    counsel
+    swiper
     ; 起動時間測定
     esup
     ;; doctags
