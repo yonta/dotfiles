@@ -437,3 +437,8 @@ Creates a buffer if necessary."
              (setq indent-tabs-mode nil)
              (setq fill-column 80)
              )))
+
+;;; swiper
+(global-set-key (kbd "C-s") 'swiper)
+(global-set-key (kbd "C-c s") 'isearch)
+(setq swiper-include-line-number-in-search t)
