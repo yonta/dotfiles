@@ -47,7 +47,6 @@
 (setq truncate-partial-width-windows nil)
 
 ;;; 同じ名前のバッファをわかりやすく名前付けする
-(require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
 ;;; 行番号を常に表示する
@@ -73,8 +72,6 @@
 
 ;;; whitespace mode
 ;; 空白・カラムオーバーの可視化と不要な空白や改行の自動削除をする
-(require 'whitespace)
-
 ;; 対象はタブ、行末スペース、カスタムスペース（全角スペース）
 (setq whitespace-style '(face tabs trailing spaces empty))
 

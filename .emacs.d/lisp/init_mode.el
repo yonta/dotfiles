@@ -103,7 +103,6 @@
              ))
 
 ;; diredでディレクトリを移動してもバッファを新規に作成しない
-(require 'dired)
 (defun dired-my-advertised-find-file ()
   (interactive)
   (let ((kill-target (current-buffer))
@@ -211,7 +210,6 @@ Creates a buffer if necessary."
 (setq company-transformers '(company-sort-by-backend-importance))
 
 ;;; smartparens-modeを自動オンにする
-(require 'smartparens-config)
 (smartparens-global-mode t)
 ; sml-mode/run-sml(inferior-sml-mode)/tuareg-mode(OCaml)では'での補完を行わない
 (sp-local-pair '(sml-mode) "'" nil :actions nil)
@@ -251,7 +249,6 @@ Creates a buffer if necessary."
             (set-buffer-process-coding-system 'undecided-dos 'sjis-unix)))
 ; shell-modeでのファイル名補完
 (setq shell-file-name-chars "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
-(require 'bash-completion)
 (bash-completion-setup)
 
 ;;; autoinsertを使ってファイル作成時にテンプレートを使う
@@ -371,7 +368,6 @@ Creates a buffer if necessary."
       '(("en" . "ja") ("ja" . "en")))
 
 ;;; popwin mode
-(require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
 (setq popwin:popup-window-position 'bottom)
 ; popwin対象
