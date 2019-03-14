@@ -6,6 +6,8 @@
     ; パッケージが無いと怒られる。
     ; 初回起動はlist-packageの更新が間に合ってない？
     ; 一度list-packageを実行すると治る。
+    ;; company
+    company company-quickhelp
     ;; ocaml
     flycheck-ocaml tuareg yasnippet
     ;; arduino

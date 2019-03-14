@@ -186,16 +186,29 @@ Creates a buffer if necessary."
 ;;; company-mode
 (when (locate-library "company")
   (global-company-mode 1)
+  (company-quickhelp-mode t)
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t)
+  (setq completion-ignore-case t)
   (if (window-system)
       (global-set-key (kbd "C-M-i") 'company-complete)
     (global-set-key (kbd "C-c M-i") 'company-complete))
   ;; (setq company-idle-delay nil) ; 自動補完をしない
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key
+    company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+  (define-key company-active-map (kbd "C-f") 'company-complete-selection)
   (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
-  (define-key company-active-map (kbd "C-i") 'company-complete-selection)
+  (define-key company-active-map (kbd "C-s") 'company-filter-candidates)
   (define-key company-active-map (kbd "C-h") 'backward-delete-char)
   )
+
+;;; company-quickhelp
+(setq company-quickhelp-delay 1)
+(setq company-transformers '(company-sort-by-backend-importance))
 
 ;;; smartparens-modeを自動オンにする
 (require 'smartparens-config)
