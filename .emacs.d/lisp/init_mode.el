@@ -211,7 +211,9 @@ Creates a buffer if necessary."
 
 ;;; smartparens-modeを自動オンにする
 (smartparens-global-mode t)
-; sml-mode/run-sml(inferior-sml-mode)/tuareg-mode(OCaml)では'での補完を行わない
+; 一部のモードでは'での補完を行わない
+(sp-local-pair '(emacs-lisp-mode) "'" nil :actions nil)
+(sp-local-pair '(lisp-mode) "'" nil :actions nil)
 (sp-local-pair '(sml-mode) "'" nil :actions nil)
 (sp-local-pair '(inferior-sml-mode) "'" nil :actions nil)
 (sp-local-pair '(tuareg-mode) "'" nil :actions nil)
