@@ -137,15 +137,6 @@ Creates a buffer if necessary."
     (set-window-dedicated-p (selected-window) sticky-buffer-mode)
     (setq header-line-format sticky-buffer-previous-header-line-format)))
 
-;;; smartparens-modeを自動オンにする
-(smartparens-global-mode t)
-; 一部のモードでは'での補完を行わない
-(sp-local-pair '(emacs-lisp-mode) "'" nil :actions nil)
-(sp-local-pair '(lisp-mode) "'" nil :actions nil)
-(sp-local-pair '(sml-mode) "'" nil :actions nil)
-(sp-local-pair '(inferior-sml-mode) "'" nil :actions nil)
-(sp-local-pair '(tuareg-mode) "'" nil :actions nil)
-
 ;;; rainbow-modeを自動オンにする
 (setq rainbow-r-colors t) ; R color listを使う
 (setq rainbow-html-colors t) ; html color listを使う
