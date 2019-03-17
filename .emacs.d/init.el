@@ -34,12 +34,6 @@
 ;; 自分のカスタムemacs-lispを自動でバイトコンパイルする
 ;(byte-recompile-directory "~/.emacs.d/lisp" 0)
 
-;; elpa以下
-(defvar my-elpa-dir "elpa")
-(defvar my-elpa-path (concat "~/.emacs.d/" my-elpa-dir))
-(unless (file-directory-p my-elpa-path) (make-directory my-elpa-path t))
-(add-to-load-path my-elpa-dir)
-
 ;;; 設定ファイルの読み込み
 (load "init_package")
 (load "init_display")
