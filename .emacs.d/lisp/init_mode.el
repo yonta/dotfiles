@@ -137,21 +137,6 @@ Creates a buffer if necessary."
     (set-window-dedicated-p (selected-window) sticky-buffer-mode)
     (setq header-line-format sticky-buffer-previous-header-line-format)))
 
-;;; markdown-modeの設定
-; プレビューコマンドのパス追加
-; msys2でmsys/markdownパッケージをインストールする
-(setq markdown-command "markdown")
-; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
-(setq markdown-css-paths '("style.css"))
-; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
-; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
-(defun leo-markdown-fontify-buffer-wiki-links-empty ()
-  "Empty replacement for `markdown-fontify-buffer-wiki-links` due to hanging bug."
-  (interactive))
-(eval-after-load "markdown-mode"
-  '(progn (fset 'markdown-fontify-buffer-wiki-links
-                'leo-markdown-fontify-buffer-wiki-links-empty)))
-
 ;;; shell-modeの設定
 ; Emacsを起動したshellを使用する（bashからの起動を前提）
 (setq explicit-shell-file-name (getenv "SHELL"))

@@ -15,9 +15,6 @@
     rtags
     ;; python
     python-mode py-autopep8 quickrun company-jedi
-    ;; markdown
-    ;; コードブロックの編集のため、edit-indirectが必要
-    markdown-mode edit-indirect
     ;; other mode
     csv-mode
     twittering-mode

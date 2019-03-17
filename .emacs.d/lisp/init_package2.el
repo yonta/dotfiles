@@ -128,12 +128,29 @@
 ;; (use-package company-jedi
 ;;   :ensure t
 ;;   )
-;; (use-package markdown-mode
-;;   :ensure t
-;;   )
-;; (use-package edit-indirect
-;;   :ensure t
-;;   )
+
+;; markdownコマンドをいれておく
+(use-package markdown-mode
+  :ensure t
+  :init
+  (setq markdown-command "markdown")
+  ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
+  (setq markdown-css-paths '("style.css"))
+  ;; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
+  ;; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
+  (defun leo-markdown-fontify-buffer-wiki-links-empty ()
+    "Empty replacement for `markdown-fontify-buffer-wiki-links` due to hanging bug."
+    (interactive))
+  (eval-after-load "markdown-mode"
+    '(progn (fset 'markdown-fontify-buffer-wiki-links
+                  'leo-markdown-fontify-buffer-wiki-links-empty)))
+  )
+
+;; markdownでコードブロックの編集のために必要
+(use-package edit-indirect
+  :ensure t
+  )
+
 ;; (use-package csv-mode
 ;;   :ensure t
 ;;   )
