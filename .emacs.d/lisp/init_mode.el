@@ -7,20 +7,6 @@
 ;;; タブ文字を禁止してスペースを使う
 (setq-default tab-width 4 indent-tabs-mode nil)
 
-;;; sml-mode
-(add-hook 'sml-mode-hook
-          '(lambda()
-             ;; sml-modeのインデント幅を2にする
-             (setq sml-indent-level 2)
-             (setq sml-indent-args 2)
-             ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
-             (setq sml-program-name "smlsharp")
-             ))
-
-;; SML#ファイルを関連付ける
-(setq auto-mode-alist
-      (cons '("\\.\\(smi\\|ppg\\)$" . sml-mode) auto-mode-alist))
-
 ;;; c/c++-mode
 ;; K&Rスタイルを使う
 (add-hook 'c-mode-hook

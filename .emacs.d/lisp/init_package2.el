@@ -112,9 +112,19 @@
 ;; (use-package csv-mode
 ;;   :ensure t
 ;;   )
-;; (use-package sml-mode
-;;   :ensure t
-;;   )
+
+(use-package sml-mode
+  :ensure t
+  :mode "\\.smi\\'"
+  :mode "\\.ppg\\'"
+  :init
+  (setq sml-indent-level 2)
+  (setq sml-indent-args 2)
+  ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
+  (setq sml-program-name "smlsharp")
+  :config
+  )
+
 ;; (use-package twittering-mode
 ;;   :ensure t
 ;;   )
