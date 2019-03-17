@@ -4,10 +4,14 @@
 
 (package-install 'use-package)
 
-; clangがあるとより便利
+;; use-packageの:diminishを有効にし、モードラインをスッキリさせる
+(use-package diminish :ensure t)
+
+;; clangがあるとより便利
 (use-package company
   :ensure t
   :if (locate-library "company")
+  :diminish company-mode
   :init
   (global-company-mode 1)
   (setq company-idle-delay 0)
@@ -47,6 +51,7 @@
 
 (use-package flycheck
    :ensure t
+   :diminish flycheck-mode
    :init
    ;; 対応するメジャーモードでオート起動する
    (global-flycheck-mode)
@@ -187,7 +192,7 @@
 
 (use-package rainbow-mode
   :ensure t
-  :deminish rainbow-mode
+  :diminish rainbow-mode
   :commands rainbow-mode
   :hook (c++-mode arduino-mode)
   :init
@@ -201,6 +206,7 @@
 
 (use-package smartparens
   :ensure t
+  :diminish smartparens-mode
   :init
   (smartparens-global-mode t)
   ; 一部のモードでは'での補完を行わない
