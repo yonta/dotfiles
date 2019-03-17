@@ -77,7 +77,7 @@
 (use-package flycheck-pyflakes
   :ensure t
   :init
-  ; (require 'flycheck-pyflakes)
+  ;; (require 'flycheck-pyflakes)
   )
 
 (use-package flycheck-ocaml
@@ -226,7 +226,7 @@
   :diminish smartparens-mode
   :init
   (smartparens-global-mode t)
-  ; 一部のモードでは'での補完を行わない
+  ;; 一部のモードでは'での補完を行わない
   (sp-local-pair '(emacs-lisp-mode) "'" nil :actions nil)
   (sp-local-pair '(lisp-mode) "'" nil :actions nil)
   (sp-local-pair '(sml-mode) "'" nil :actions nil)
