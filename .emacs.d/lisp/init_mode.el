@@ -453,5 +453,6 @@ Creates a buffer if necessary."
 
 ;;; swiper
 (global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "C-c s") 'isearch)
+(global-set-key (kbd "C-c s") 'isearch-forward)
+
 (setq swiper-include-line-number-in-search t)
