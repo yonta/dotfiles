@@ -166,12 +166,37 @@
 ;; (use-package browse-kill-ring
 ;;   :ensure t
 ;;   )
-;; (use-package counsel
-;;   :ensure t
-;;   )
-;; (use-package swiper
-;;   :ensure t
-;;   )
+
+(use-package ivy
+  :ensure t
+  :init
+  (setq ivy-count-format "(%d/%d) ")
+  )
+
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)
+         ("M-r" . counsel-command-history)
+         ("C-x C-f" . counsel-find-file)
+         ("C-x C-b" . counsel-ibuffer)
+         ("C-x b" . counsel-switch-buffer)
+         ("C-c C-d" . counsel-describe-function)
+         )
+  :bind (:map counsel-find-file-map
+              ("C-h" . counsel-up-directory)
+              ))
+
+(use-package swiper
+  :ensure t
+  :init
+  (setq swiper-include-line-number-in-search t)
+  :bind (("C-s" . swiper)
+         ("C-c s" . isearch-forward)
+         )
+  :bind (:map swiper-map
+              ("M-%" . swiper-query-replace))
+  )
+
 ;; (use-package esup
 ;;   :ensure t
 ;;   )

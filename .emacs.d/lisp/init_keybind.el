@@ -43,9 +43,6 @@
     (set-window-buffer thiswin nextbuf)))
 (global-set-key (kbd "C-x O") 'swap-screen)
 
-;;; C-xC-bでbufferじゃなくibufferを使用する
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
 ;;; 分割ウィンドウのサイズを変更するwindow-resizer
 ; window-resizer関数
 (defun window-resizer ()

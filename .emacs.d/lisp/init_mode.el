@@ -397,23 +397,3 @@ Creates a buffer if necessary."
              (setq indent-tabs-mode nil)
              (setq fill-column 80)
              )))
-
-;;; ivy
-(setq ivy-count-format "(%d/%d) ")
-;(setq ivy-extra-directories nil)
-
-;;; counsel
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "M-r") 'counsel-command-history)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(require 'counsel)
-(define-key counsel-find-file-map (kbd "C-h") 'counsel-up-directory)
-(global-set-key (kbd "C-x C-b") 'counsel-ibuffer)
-(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
-(global-set-key (kbd "C-c C-d") 'counsel-describe-function)
-
-;;; swiper
-(global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "C-c s") 'isearch-forward)
-
-(setq swiper-include-line-number-in-search t)
