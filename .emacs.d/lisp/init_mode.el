@@ -450,6 +450,7 @@ Creates a buffer if necessary."
 (define-key counsel-find-file-map (kbd "C-h") 'counsel-up-directory)
 (global-set-key (kbd "C-x C-b") 'counsel-ibuffer)
 (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+(global-set-key (kbd "C-c C-d") 'counsel-describe-function)
 
 ;;; swiper
 (global-set-key (kbd "C-s") 'swiper)
