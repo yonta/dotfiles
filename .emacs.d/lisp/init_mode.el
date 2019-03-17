@@ -7,25 +7,6 @@
 ;;; タブ文字を禁止してスペースを使う
 (setq-default tab-width 4 indent-tabs-mode nil)
 
-;;; c/c++-mode
-;; K&Rスタイルを使う
-(add-hook 'c-mode-hook
-          '(lambda()
-             (c-set-style "k&r")
-             (setq c-basic-offset 2)
-             (setq tab-width c-basic-offset)
-             (setq indent-tabs-mode nil)
-             ))
-(add-hook 'c++-mode-hook
-          '(lambda()
-             (c-set-style "k&r")
-             (setq c-basic-offset 2)
-             (setq tab-width c-basic-offset)
-             (setq indent-tabs-mode nil)
-             (setq flycheck-gcc-language-standard "c++11")
-             (setq flycheck-clang-language-standard "c++11")
-             ))
-
 ;;; dired-mode
 ;; サイズや拡張子による並び替えを追加する．
 ;; http://d.hatena.ne.jp/mooz/20091207/p1

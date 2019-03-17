@@ -79,6 +79,24 @@
   :ensure t
   )
 
+(use-package c-mode
+  :init
+  (c-set-style "k&r")
+  (setq c-basic-offset 2)
+  (setq tab-width c-basic-offset)
+  (setq indent-tabs-mode nil)
+  )
+
+(use-package c++-mode
+  :init
+  (c-set-style "k&r")
+  (setq c-basic-offset 2)
+  (setq tab-width c-basic-offset)
+  (setq indent-tabs-mode nil)
+  (setq flycheck-gcc-language-standard "c++11")
+  (setq flycheck-clang-language-standard "c++11")
+  )
+
 ;; (use-package tuareg
 ;;   :ensure t
 ;;   )
