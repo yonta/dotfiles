@@ -124,15 +124,6 @@ Creates a buffer if necessary."
            (reload-current-dired-buffer))))
 (define-key dired-mode-map (kbd "C-.") 'toggle-dired-listing-switches)
 
-;;; Delphi-mode
-(autoload 'delphi-mode "delphi")
-(setq auto-mode-alist
-      (cons '("\\.\\(pas\\|dpr\\|dpk\\)$" . delphi-mode) auto-mode-alist))
-(add-hook 'delphi-mode-hook 'turn-on-font-lock)
-;; (autoload 'font-lock-mode "font-lock")
-;; (autoload 'turn-on-font-lock "font-lock")
-;; (setq font-lock-support-mode 'lazy-lock-mode)
-
 ;;; Sticky Buffer Mode (minor mode)、バッファを固定する
 (defvar sticky-buffer-previous-header-line-format)
 (define-minor-mode sticky-buffer-mode
