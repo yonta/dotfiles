@@ -137,14 +137,6 @@ Creates a buffer if necessary."
     (set-window-dedicated-p (selected-window) sticky-buffer-mode)
     (setq header-line-format sticky-buffer-previous-header-line-format)))
 
-;;; rainbow-modeを自動オンにする
-(setq rainbow-r-colors t) ; R color listを使う
-(setq rainbow-html-colors t) ; html color listを使う
-(autoload 'rainbow-mode "rainbow-mode" nil t)
-; 各modeでrainbow modeを起動
-(add-hook 'c++-mode-hook 'rainbow-mode)
-(add-hook 'arduino-mode-hook 'rainbow-mode)
-
 ;;; markdown-modeの設定
 ; プレビューコマンドのパス追加
 ; msys2でmsys/markdownパッケージをインストールする

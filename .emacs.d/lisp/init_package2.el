@@ -184,9 +184,17 @@
 ;; (use-package highlight-current-line
 ;;   :ensure t
 ;;   )
-;; (use-package rainbow-mode
-;;   :ensure t
-;;   )
+
+(use-package rainbow-mode
+  :ensure t
+  :deminish rainbow-mode
+  :commands rainbow-mode
+  :hook (c++-mode arduino-mode)
+  :init
+  (setq rainbow-r-colors t) ; R color listを使う
+  (setq rainbow-html-colors t) ; html color listを使う
+  )
+
 ;; (use-package w3m
 ;;   :ensure t
 ;;   )
