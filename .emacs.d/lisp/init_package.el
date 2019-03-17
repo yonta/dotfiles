@@ -7,22 +7,19 @@
     ; 初回起動はlist-packageの更新が間に合ってない？
     ; 一度list-packageを実行すると治る。
     use-package
-    ;; company
-    company company-quickhelp
     ;; ocaml
-    flycheck-ocaml tuareg yasnippet
+    tuareg yasnippet
     ;; arduino
-    company-arduino arduino-mode
+    arduino-mode
     ;; C++
-    rtags flycheck flycheck-irony irony company-irony-c-headers
+    rtags
     ;; python
-    python-mode py-autopep8 quickrun company-jedi flycheck-pyflakes
+    python-mode py-autopep8 quickrun company-jedi
     ;; markdown
     ;; コードブロックの編集のため、edit-indirectが必要
     markdown-mode edit-indirect
     ;; other mode
     csv-mode
-    sml-mode
     twittering-mode
     gnuplot-mode
     graphviz-dot-mode
@@ -37,12 +34,8 @@
     fill-column-indicator
     hiwin
     highlight-current-line
-    rainbow-mode
     w3m
-    smartparens
     browse-kill-ring
-    counsel
-    swiper
     ; 起動時間測定
     esup
     ;; doctags
