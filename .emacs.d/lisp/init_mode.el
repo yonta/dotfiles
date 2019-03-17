@@ -124,9 +124,6 @@ Creates a buffer if necessary."
            (reload-current-dired-buffer))))
 (define-key dired-mode-map (kbd "C-.") 'toggle-dired-listing-switches)
 
-;;; OMakerootをmakefile-modeに追加
-(setq auto-mode-alist (cons '("^OMakeroot$" . makefile-mode) auto-mode-alist))
-
 ;;; Delphi-mode
 (autoload 'delphi-mode "delphi")
 (setq auto-mode-alist
