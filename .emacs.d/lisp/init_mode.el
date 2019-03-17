@@ -440,7 +440,7 @@ Creates a buffer if necessary."
 
 ;;; ivy
 (setq ivy-count-format "(%d/%d) ")
-(setq ivy-extra-directories nil)
+;(setq ivy-extra-directories nil)
 
 ;;; counsel
 (global-set-key (kbd "M-x") 'counsel-M-x)
