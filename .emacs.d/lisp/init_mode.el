@@ -446,6 +446,8 @@ Creates a buffer if necessary."
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "M-r") 'counsel-command-history)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(require 'counsel)
+(define-key counsel-find-file-map (kbd "C-h") 'counsel-up-directory)
 (global-set-key (kbd "C-x C-b") 'counsel-ibuffer)
 (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
 
