@@ -273,4 +273,18 @@
 ;;   :ensure t
 ;;   )
 
+(use-package shell
+  :init
+  ;; Emacsを起動したshellを使用する（bashからの起動を前提）
+  (setq explicit-shell-file-name (getenv "SHELL"))
+  (setq explicit-bash-args '("--login" "-i"))
+  ;; SHELL で ^M が付く場合は ^M を削除する
+  (add-hook 'shell-mode-hook
+            (lambda ()
+              (set-buffer-process-coding-system 'undecided-dos 'sjis-unix)))
+  ;; shell-modeでのファイル名補完
+  (setq shell-file-name-chars "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
+  (bash-completion-setup)
+)
+
 ;;; init_package2.el

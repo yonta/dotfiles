@@ -137,18 +137,6 @@ Creates a buffer if necessary."
     (set-window-dedicated-p (selected-window) sticky-buffer-mode)
     (setq header-line-format sticky-buffer-previous-header-line-format)))
 
-;;; shell-modeの設定
-; Emacsを起動したshellを使用する（bashからの起動を前提）
-(setq explicit-shell-file-name (getenv "SHELL"))
-(setq explicit-bash-args '("--login" "-i"))
-; SHELL で ^M が付く場合は ^M を削除します。
-(add-hook 'shell-mode-hook
-          (lambda ()
-            (set-buffer-process-coding-system 'undecided-dos 'sjis-unix)))
-; shell-modeでのファイル名補完
-(setq shell-file-name-chars "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
-(bash-completion-setup)
-
 ;;; autoinsertを使ってファイル作成時にテンプレートを使う
 (require 'autoinsert)
 (add-hook 'find-file-hooks 'auto-insert)
