@@ -36,6 +36,7 @@
 
 ;;; 設定ファイルの読み込み
 (load "init_package")
+(load "init_package2")
 (load "init_display")
 (load "init_custom")
 (load "init_keybind")
@@ -49,7 +50,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (counsel flycheck-pyflakes company-irony-c-headers flycheck-ocaml gnuplot-mode tuareg company-jedi company company-quickhelp fill-column-indicator proof-general haxe-mode edit-indirect graphviz-dot-mode flycheck-google-cpplint google-c-style image-dired+ yasnippet company-arduino flycheck-irony irony rtags arduino-mode w3m twittering-mode swiper sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 popwin markdown-mode image+ hiwin highlight-current-line google-translate flymake-python-pyflakes flymake-cursor flycheck esup elpy dos doctags csv-mode browse-kill-ring bash-completion))))
+    (use-package counsel flycheck-pyflakes company-irony-c-headers flycheck-ocaml gnuplot-mode tuareg company-jedi company company-quickhelp fill-column-indicator proof-general haxe-mode edit-indirect graphviz-dot-mode flycheck-google-cpplint google-c-style image-dired+ yasnippet company-arduino flycheck-irony irony rtags arduino-mode w3m twittering-mode swiper sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 popwin markdown-mode image+ hiwin highlight-current-line google-translate flymake-python-pyflakes flymake-cursor flycheck esup elpy dos doctags csv-mode browse-kill-ring bash-completion))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
