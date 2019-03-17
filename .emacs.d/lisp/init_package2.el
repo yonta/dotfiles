@@ -79,22 +79,24 @@
   :ensure t
   )
 
-(use-package c-mode
+(use-package cc-mode
   :init
-  (c-set-style "k&r")
-  (setq c-basic-offset 2)
-  (setq tab-width c-basic-offset)
-  (setq indent-tabs-mode nil)
-  )
-
-(use-package c++-mode
-  :init
-  (c-set-style "k&r")
-  (setq c-basic-offset 2)
-  (setq tab-width c-basic-offset)
-  (setq indent-tabs-mode nil)
-  (setq flycheck-gcc-language-standard "c++11")
-  (setq flycheck-clang-language-standard "c++11")
+  (defun my-c-mode-hook ()
+    "Setting for c-mode."
+    (c-set-style "k&r")
+    (setq c-basic-offset 2)
+    (setq tab-width c-basic-offset)
+    (setq indent-tabs-mode nil))
+  (add-hook 'c-mode-hook 'my-c-mode-hook)
+  (defun my-c++-mode-hook ()
+    "Setting for c++-mode."
+    (c-set-style "k&r")
+    (setq c-basic-offset 2)
+    (setq tab-width c-basic-offset)
+    (setq indent-tabs-mode nil)
+    (setq flycheck-gcc-language-standard "c++11")
+    (setq flycheck-clang-language-standard "c++11"))
+  (add-hook 'c++-mode-hook 'my-c++-mode-hook)
   )
 
 ;; (use-package tuareg
