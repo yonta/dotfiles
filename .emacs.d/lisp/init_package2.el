@@ -4,6 +4,7 @@
 
 (package-install 'use-package)
 
+; clangがあるとより便利
 (use-package company
   :ensure t
   :if (locate-library "company")
@@ -27,15 +28,57 @@
 
 (use-package company-quickhelp
   :ensure t
+  :after company
   :init
   (company-quickhelp-mode t)
   (setq company-quickhelp-delay 1)
   (setq company-transformers '(company-sort-by-backend-importance))
   )
 
-;; (use-package flycheck-ocaml
-;;   :ensure t
-;;   )
+(use-package company-irony-c-headers
+  :ensure t
+  :after (company irony)
+  )
+
+(use-package company-irony
+  :ensure t
+  :after (company irony)
+  )
+
+(use-package flycheck
+   :ensure t
+   :init
+   ;; 対応するメジャーモードでオート起動する
+   (global-flycheck-mode)
+   ;; エラー箇所に背景色をつける
+   (set-face-background 'flycheck-error "pink")
+   :bind (:map flycheck-mode-map
+               ("M-p" . flycheck-previous-error)
+               ("M-n" . flycheck-next-error)
+               )
+)
+
+;; libclangが必要
+(use-package irony
+  :ensure t
+  )
+
+(use-package flycheck-irony
+  :ensure t
+  :after (flycheck irony)
+  )
+
+;; pipでflake8を入れておく
+(use-package flycheck-pyflakes
+  :ensure t
+  :init
+  ; (require 'flycheck-pyflakes)
+  )
+
+(use-package flycheck-ocaml
+  :ensure t
+  )
+
 ;; (use-package tuareg
 ;;   :ensure t
 ;;   )
@@ -48,18 +91,6 @@
 ;; (use-package rtags
 ;;   :ensure t
 ;;   )
-;; (use-package flycheck
-;;   :ensure t
-;;   )
-;; (use-package flycheck-irony
-;;   :ensure t
-;;   )
-;; (use-package irony
-;;   :ensure t
-;;   )
-;; (use-package company-irony-c-headers
-;;   :ensure t
-;;   )
 ;; (use-package python-mode
 ;;   :ensure t
 ;;   )
@@ -70,9 +101,6 @@
 ;;   :ensure t
 ;;   )
 ;; (use-package company-jedi
-;;   :ensure t
-;;   )
-;; (use-package flycheck-pyflakes
 ;;   :ensure t
 ;;   )
 ;; (use-package markdown-mode

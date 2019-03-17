@@ -381,19 +381,6 @@ Creates a buffer if necessary."
 ;; pythonのautopep8のパッケージを入れておくこと
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 
-;; flycheck-pyflakes
-;; pipでflake8を入れておく
-(require 'flycheck-pyflakes)
-
-;;; flycheck modeの設定
-;; 対応するメジャーモードでオート起動する
-(global-flycheck-mode)
-;; エラー箇所に背景色をつける
-(set-face-background 'flycheck-error "pink")
-;; キーバインド設定
-(define-key flycheck-mode-map (kbd "M-p") 'flycheck-previous-error)
-(define-key flycheck-mode-map (kbd "M-n") 'flycheck-next-error)
-
 ;;; help-modeの設定
 ;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
 (define-key help-mode-map (kbd "M-<left>") 'help-go-back)
