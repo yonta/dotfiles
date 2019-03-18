@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(package-install 'use-package)
+(unless (package-installed-p 'use-package) (package-install 'use-package))
 
 ;; use-packageの:diminishを有効にし、モードラインをスッキリさせる
 (use-package diminish :ensure t :defer t)
