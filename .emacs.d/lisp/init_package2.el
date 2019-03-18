@@ -13,10 +13,11 @@
   :diminish company-mode
   :init
   (global-company-mode 1)
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 2)
-  (setq company-selection-wrap-around t)
   (setq completion-ignore-case t)
+  :custom
+  (company-idle-delay 0)
+  (company-minimum-prefix-length 2)
+  (company-selection-wrap-around t)
   :bind (("C-M-i" . company-complete)
          (:map company-active-map
                ("C-n" . company-select-next)
@@ -35,8 +36,9 @@
   :after company
   :init
   (company-quickhelp-mode t)
-  (setq company-quickhelp-delay 1)
-  (setq company-transformers '(company-sort-by-backend-importance))
+  :custom
+  (company-quickhelp-delay 1)
+  (company-transformers '(company-sort-by-backend-importance))
   )
 
 (use-package company-irony-c-headers
@@ -155,9 +157,6 @@
   :defer t
   :if (= 0 (shell-command "markdown --version 1>/dev/null 2>/dev/null"))
   :init
-  (setq markdown-command "markdown")
-  ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
-  (setq markdown-css-paths '("style.css"))
   ;; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
   ;; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
   (defun leo-markdown-fontify-buffer-wiki-links-empty ()
@@ -166,7 +165,12 @@
   (eval-after-load "markdown-mode"
     '(progn (fset 'markdown-fontify-buffer-wiki-links
                   'leo-markdown-fontify-buffer-wiki-links-empty)))
+  :custom
+  (markdown-command "markdown")
+  ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
+  (markdown-css-paths '("style.css"))
   )
+
 
 ;; markdownでコードブロックの編集のために必要
 (use-package edit-indirect
@@ -182,27 +186,29 @@
   :ensure t
   :mode ("\\.smi\\'" "\\.ppg\\'")
   :interpreter "smlsharp"
-  :init
-  (setq sml-indent-level 2)
-  (setq sml-indent-args 2)
+  :custom
+  (sml-indent-level 2)
+  (sml-indent-args 2)
   ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
-  (setq syml-program-name "smlsharp")
-  :config
+  (sml-program-name "smlsharp")
   )
 
+;; aptでgnupgを入れておく
+;; alpaca.elが必要
 (use-package twittering-mode
   :ensure t
   :init
+  ;;(setq twittering-suffix-space-size 8)
+  ;; URLを青文字にする
+  (add-hook 'twittering-mode-hook
+            (lambda () (set-face-foreground 'twittering-uri-face "blue")))
+  :custom
   ;; use master passworad compressed by GnuPG
-  (setq twittering-use-master-password t)
-  (setq twittering-private-info-file "~/.emacs.d/twittering-mode.gpg")
-  ;; use icon
-  (setq twittering-icon-mode t)
-  ;;(setq twittering-convert-fix-size 24)
-  (setq twittering-use-icon-storage t)
-  (setq twittering-icon-storage-file "~/.emacs.d/icons.gz")
-  (setq
-   twittering-status-format
+  (twittering-use-master-password t)
+  (twittering-private-info-file "~/.emacs.d/twittering-mode.gpg")
+  (twittering-use-icon-storage t)
+  (twittering-icon-storage-file "~/.emacs.d/icons.gz")
+  (twittering-status-format
    (concat
     "%i %S(@%s) "
     "[%FACE[underline]{%@{%Y-%m-%d %H:%M}}]"
@@ -214,25 +220,24 @@
     "%RT{ %FACE[bold]{RT} by %S(@%s)\n}"
     "%FOLD[]{%T}\n"
     "-------------------------------------------------------------------------------"))
-  (setq twittering-timer-interval 600)
-  (setq twittering-number-of-tweets-on-retrieval 100)
-  (setq twittering-display-remaining t)
-  (setq twittering-initial-timeline-spec-string
-        '(
-          "keita44_f4/friend"
-          ":replies"
-          ":home"
-          ))
-  ;;(setq twittering-tinyurl-service 'goo.gl)
-  ;;(setq twittering-retweet-format " RT @%s %t")
-  (setq twittering-retweet-format " %u")
-  (setq twittering-fill-column 80)
-  ;;(setq twittering-suffix-space-size 8)
-  (setq twittering-edit-skeleton 'inherit-mentions)
+  ;;(twittering-convert-fix-size 24)
+  (twittering-timer-interval 600)
+  (twittering-number-of-tweets-on-retrieval 100)
+  (twittering-display-remaining t)
+  (twittering-initial-timeline-spec-string
+   '(
+     "keita44_f4/friend"
+     ":replies"
+     ":home"
+     ))
+  ;;(twittering-tinyurl-service 'goo.gl)
+  ;;(twittering-retweet-format " RT @%s %t")
+  (twittering-retweet-format " %u")
+  (twittering-fill-column 80)
+  (twittering-edit-skeleton 'inherit-mentions)
   :config
-  ;; URLを青文字にする
-  (add-hook 'twittering-mode-hook
-            (lambda () (set-face-foreground 'twittering-uri-face "blue")))
+  ;; use icon
+  (twittering-icon-mode t)
   :bind (:map twittering-mode-map
               ("R" . twittering-native-retweet)
               ("r" . twittering-enter)
@@ -287,9 +292,9 @@
   :diminish rainbow-mode
   :commands rainbow-mode
   :hook (c++-mode arduino-mode)
-  :init
-  (setq rainbow-r-colors t) ; R color listを使う
-  (setq rainbow-html-colors t) ; html color listを使う
+  :custom
+  (rainbow-r-colors t)    ; R color listを使う
+  (rainbow-html-colors t) ; html color listを使う
   )
 
 ;; (use-package w3m
@@ -317,8 +322,8 @@
 (use-package ivy
   :ensure t
   :defer t
-  :init
-  (setq ivy-count-format "(%d/%d) ")
+  :custom
+  (ivy-count-format "(%d/%d) ")
   )
 
 (use-package counsel
@@ -337,8 +342,8 @@
 
 (use-package swiper
   :ensure t
-  :init
-  (setq swiper-include-line-number-in-search t)
+  :custom
+  (swiper-include-line-number-in-search t)
   :bind (("C-s" . swiper)
          ("C-c s" . isearch-forward)
          )
@@ -352,12 +357,13 @@
 
 (use-package shell
   :init
-  ;; Emacsを起動したshellを使用する（bashからの起動を前提）
-  (setq explicit-shell-file-name (getenv "SHELL"))
-  (setq explicit-bash-args '("--login" "-i"))
-  ;; shell-modeでのファイル名補完
-  (setq shell-file-name-chars "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
   (bash-completion-setup)
+  :custom
+  ;; Emacsを起動したshellを使用する（bashからの起動を前提）
+  (explicit-shell-file-name (getenv "SHELL"))
+  (explicit-bash-args '("--login" "-i"))
+  ;; shell-modeでのファイル名補完
+  (shell-file-name-chars "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
   :hook (shell-mode . (lambda ()
                         ;; SHELL で ^M が付く場合は ^M を削除する
                         (set-buffer-process-coding-system
