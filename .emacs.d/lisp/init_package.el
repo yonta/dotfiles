@@ -9,12 +9,10 @@
     use-package
     ;; ocaml
     tuareg yasnippet
-    ;; arduino
-    arduino-mode
     ;; C++
     rtags
     ;; python
-    python-mode py-autopep8 quickrun company-jedi
+    python-mode py-autopep8 quickrun
     ;; other mode
     csv-mode
     twittering-mode

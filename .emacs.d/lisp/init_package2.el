@@ -48,6 +48,17 @@
   :after (company irony)
   )
 
+(use-package company-arduino
+  :ensure t
+  :after company
+  )
+
+;; aptかpipでjediを入れておく
+;; aptでpython3-jediをいれておき、初回起動時にjedi:install-serverする
+(use-package company-jedi
+  :ensure t
+   )
+
 (use-package flycheck
    :ensure t
    :diminish flycheck-mode
@@ -112,7 +123,7 @@
 ;; (use-package yasnippet
 ;;   :ensure t
 ;;   )
-;; (use-package company-arduino arduino-mode
+;; (use-package arduino-mode
 ;;   :ensure t
 ;;   )
 ;; (use-package rtags
@@ -125,9 +136,6 @@
 ;;   :ensure t
 ;;   )
 ;; (use-package quickrun
-;;   :ensure t
-;;   )
-;; (use-package company-jedi
 ;;   :ensure t
 ;;   )
 
