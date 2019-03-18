@@ -15,7 +15,6 @@
     python-mode py-autopep8 quickrun
     ;; other mode
     csv-mode
-    twittering-mode
     gnuplot-mode
     graphviz-dot-mode
     google-translate

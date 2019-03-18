@@ -178,9 +178,61 @@
   :config
   )
 
-;; (use-package twittering-mode
-;;   :ensure t
-;;   )
+(use-package twittering-mode
+  :ensure t
+  :init
+  ;; use master passworad compressed by GnuPG
+  (setq twittering-use-master-password t)
+  (setq twittering-private-info-file "~/.emacs.d/twittering-mode.gpg")
+  ;; use icon
+  (setq twittering-icon-mode t)
+  ;;(setq twittering-convert-fix-size 24)
+  (setq twittering-use-icon-storage t)
+  (setq twittering-icon-storage-file "~/.emacs.d/icons.gz")
+  (setq
+   twittering-status-format
+   (concat
+    "%i %S(@%s) "
+    "[%FACE[underline]{%@{%Y-%m-%d %H:%M}}]"
+    "%FACE[twittering-timeline-footer-face]{"
+    "%FIELD-IF-NONZERO[  ↩%s]{retweet_count}"
+    " %FIELD-IF-NONZERO[♡%s]{favorite_count}"
+    "}"
+    "\n"
+    "%RT{ %FACE[bold]{RT} by %S(@%s)\n}"
+    "%FOLD[]{%T}\n"
+    "-------------------------------------------------------------------------------"))
+  (setq twittering-timer-interval 600)
+  (setq twittering-number-of-tweets-on-retrieval 100)
+  (setq twittering-display-remaining t)
+  (setq twittering-initial-timeline-spec-string
+        '(
+          "keita44_f4/friend"
+          ":replies"
+          ":home"
+          ))
+  ;;(setq twittering-tinyurl-service 'goo.gl)
+  ;;(setq twittering-retweet-format " RT @%s %t")
+  (setq twittering-retweet-format " %u")
+  (setq twittering-fill-column 80)
+  ;;(setq twittering-suffix-space-size 8)
+  (setq twittering-edit-skeleton 'inherit-mentions)
+  :config
+  ;; URLを青文字にする
+  (add-hook 'twittering-mode-hook
+            (lambda () (set-face-foreground 'twittering-uri-face "blue")))
+  :bind (:map twittering-mode-map
+              ("R" . twittering-native-retweet)
+              ("r" . twittering-enter)
+              ("T" . twittering-organic-retweet)
+              ("t" . twittering-update-status-interactive)
+              ("o" . twittering-goto-next-uri)
+              ("O" . twittering-push-uri-onto-kill-ring)
+              ("J" . end-of-buffer)
+              ("K" . twittering-goto-first-status)
+              ("u" . twittering-toggle-show-replied-statuses)
+              ))
+
 ;; (use-package gnuplot-mode
 ;;   :ensure t
 ;;   )
