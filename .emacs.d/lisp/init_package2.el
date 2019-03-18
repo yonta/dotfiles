@@ -350,4 +350,109 @@
   (bash-completion-setup)
 )
 
+(use-package dired
+  :init
+  ;; サイズや拡張子による並び替えを追加する．
+  ;; http://d.hatena.ne.jp/mooz/20091207/p1
+  (defvar dired-various-sort-type
+    '(("S" . "size")
+      ("X" . "extension")
+      ("v" . "version")
+      ("t" . "date")
+      (""  . "name")))
+  (defun dired-various-sort-change (sort-type-alist &optional prior-pair)
+    "Dired various sort change by SORT-TYPE-ALIST and PRIOR-PAIR."
+    (when (eq major-mode 'dired-mode)
+      (let* (case-fold-search
+             get-next
+             (options
+              (mapconcat 'car sort-type-alist ""))
+             (opt-desc-pair
+              (or prior-pair
+                  (catch 'found
+                    (dolist (pair sort-type-alist)
+                      (when get-next
+                        (throw 'found pair))
+                      (setq get-next
+                            (string-match (car pair) dired-actual-switches)))
+                    (car sort-type-alist)))))
+        (setq dired-actual-switches
+              (concat "-l" (dired-replace-in-string (concat "[l" options "-]")
+                                                    ""
+                                                    dired-actual-switches)
+                      (car opt-desc-pair)))
+        (setq mode-name
+              (concat "Dired by " (cdr opt-desc-pair)))
+        (force-mode-line-update)
+        (revert-buffer))))
+  (defun dired-various-sort-change-or-edit (&optional arg)
+    "Dired various sort change or edit by ARG."
+    (interactive "P")
+    (when dired-sort-inhibit
+      (error "Cannot sort this dired buffer"))
+    (if arg
+        (dired-sort-other
+         (read-string "ls switches (must contain -l): " dired-actual-switches))
+      (dired-various-sort-change dired-various-sort-type)))
+
+  ;; diredでディレクトリを移動してもバッファを新規に作成しない
+  (defun dired-my-advertised-find-file ()
+    (interactive)
+    (let ((kill-target (current-buffer))
+          (check-file (dired-get-filename nil t)))
+      (funcall 'dired-find-file)
+      (if (file-directory-p check-file)
+          (kill-buffer kill-target))))
+  (defun dired-my-up-directory (&optional other-window)
+    "Run dired on parent directory of current directory.
+Find the parent directory either in this buffer or another buffer.
+Creates a buffer if necessary."
+    (interactive "P")
+    (let* ((dir (dired-current-directory))
+           (up (file-name-directory (directory-file-name dir))))
+      (or (dired-goto-file (directory-file-name dir))
+          ;; Only try dired-goto-subdir if buffer has more than one dir.
+          (and (cdr dired-subdir-alist)
+               (dired-goto-subdir up))
+          (progn
+            (if other-window
+                (dired-other-window up)
+              (progn
+                (kill-buffer (current-buffer))
+                (dired up))
+              (dired-goto-file dir))))))
+
+  ;; dired-modeがlsコマンドに渡すオプションを設定する
+  ;; l: 長い表示、dired-modeに必須のオプション
+  ;; g: ユーザ名を非表示
+  ;; G: グループ名を非表示
+  ;; h: kbyte・Mbyteの使用
+  ;; F: ディレクトリに「/」を表示
+  ;; A: 「.」と「..」を非表示でドットファイルを表示
+  ;;(setq dired-listing-switches "-gGhFA")
+  (setq dired-listing-switches "-lgGhF")
+
+  ;; C-.でドットファイルの表示と非表示を切り替える
+  (defun reload-current-dired-buffer ()
+    "Reload current `dired-mode' buffer."
+    (let* ((dir (dired-current-directory)))
+      (progn (kill-buffer (current-buffer))
+             (dired dir))))
+  (defun toggle-dired-listing-switches ()
+    "Toggle `dired-mode' switch between with and without 'A' option to show or hide dot files."
+    (interactive)
+    (progn
+      (if (string-match "[Aa]" dired-listing-switches)
+          (setq dired-listing-switches "-lgGhF")
+        (setq dired-listing-switches "-lgGhFA"))
+      (reload-current-dired-buffer))
+    )
+
+  :bind (:map dired-mode-map
+              ("s" . dired-various-sort-change-or-edit)
+              ("C-m" . dired-my-advertised-find-file)
+              ("^" . dired-my-up-directory)
+              ("C-." . toggle-dired-listing-switches)
+              ))
+
 ;;; init_package2.el
