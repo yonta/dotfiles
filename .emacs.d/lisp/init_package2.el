@@ -7,10 +7,9 @@
 ;; use-packageの:diminishを有効にし、モードラインをスッキリさせる
 (use-package diminish :ensure t)
 
-;; clangがあるとより便利
+;; clangがあるとより便利らしいので、aptでclangをいれておく
 (use-package company
   :ensure t
-  :if (locate-library "company")
   :diminish company-mode
   :init
   (global-company-mode 1)
@@ -73,9 +72,12 @@
   :after (flycheck irony)
   )
 
-;; pipでflake8を入れておく
+;; aptかpipでflake8を入れておく
+;; どちらを使うかを選択しないといけない、闇
+;; aptでflake8をいれておく
 (use-package flycheck-pyflakes
   :ensure t
+  :if (= 0 (shell-command "flake8 --version 1>/dev/null 2>/dev/null"))
   :init
   ;; (require 'flycheck-pyflakes)
   )
@@ -132,6 +134,7 @@
 ;; markdownコマンドをいれておく
 (use-package markdown-mode
   :ensure t
+  :if (= 0 (shell-command "markdown --version 1>/dev/null 2>/dev/null"))
   :init
   (setq markdown-command "markdown")
   ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
