@@ -5,7 +5,7 @@
 (package-install 'use-package)
 
 ;; use-packageの:diminishを有効にし、モードラインをスッキリさせる
-(use-package diminish :ensure t)
+(use-package diminish :ensure t :defer t)
 
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
 (use-package company
@@ -31,6 +31,7 @@
 
 (use-package company-quickhelp
   :ensure t
+  :defer t
   :after company
   :init
   (company-quickhelp-mode t)
@@ -40,16 +41,19 @@
 
 (use-package company-irony-c-headers
   :ensure t
+  :defer t
   :after (company irony)
   )
 
 (use-package company-irony
   :ensure t
+  :defer t
   :after (company irony)
   )
 
 (use-package company-arduino
   :ensure t
+  :defer t
   :after company
   )
 
@@ -57,6 +61,7 @@
 ;; aptでpython3-jediをいれておき、初回起動時にjedi:install-serverする
 (use-package company-jedi
   :ensure t
+  :defer t
    )
 
 (use-package flycheck
@@ -76,10 +81,12 @@
 ;; libclangが必要
 (use-package irony
   :ensure t
+  :defer t
   )
 
 (use-package flycheck-irony
   :ensure t
+  :defer t
   :after (flycheck irony)
   )
 
@@ -88,6 +95,7 @@
 ;; aptでflake8をいれておく
 (use-package flycheck-pyflakes
   :ensure t
+  :defer t
   :if (= 0 (shell-command "flake8 --version 1>/dev/null 2>/dev/null"))
   :init
   ;; (require 'flycheck-pyflakes)
@@ -95,9 +103,11 @@
 
 (use-package flycheck-ocaml
   :ensure t
+  :defer t
   )
 
 (use-package cc-mode
+  :defer t
   :init
   (defun my-c-mode-hook ()
     "Setting for c-mode."
@@ -142,6 +152,7 @@
 ;; markdownコマンドをいれておく
 (use-package markdown-mode
   :ensure t
+  :defer t
   :if (= 0 (shell-command "markdown --version 1>/dev/null 2>/dev/null"))
   :init
   (setq markdown-command "markdown")
@@ -160,6 +171,7 @@
 ;; markdownでコードブロックの編集のために必要
 (use-package edit-indirect
   :ensure t
+  :defer t
   )
 
 ;; (use-package csv-mode
@@ -286,6 +298,7 @@
 
 (use-package smartparens
   :ensure t
+  :defer t
   :diminish smartparens-mode
   :init
   (smartparens-global-mode t)
@@ -303,6 +316,7 @@
 
 (use-package ivy
   :ensure t
+  :defer t
   :init
   (setq ivy-count-format "(%d/%d) ")
   )
@@ -337,6 +351,7 @@
 ;;   )
 
 (use-package shell
+  :defer t
   :init
   ;; Emacsを起動したshellを使用する（bashからの起動を前提）
   (setq explicit-shell-file-name (getenv "SHELL"))
