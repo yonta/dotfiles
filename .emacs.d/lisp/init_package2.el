@@ -160,13 +160,13 @@
 
 (use-package sml-mode
   :ensure t
-  :mode "\\.smi\\'"
-  :mode "\\.ppg\\'"
+  :mode ("\\.smi\\'" "\\.ppg\\'")
+  :interpreter "smlsharp"
   :init
   (setq sml-indent-level 2)
   (setq sml-indent-args 2)
   ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
-  (setq sml-program-name "smlsharp")
+  (setq syml-program-name "smlsharp")
   :config
   )
 
