@@ -109,7 +109,6 @@
   )
 
 (use-package cc-mode
-  :defer t
   :init
   (defun my-c-mode-hook ()
     "Setting for c-mode."
