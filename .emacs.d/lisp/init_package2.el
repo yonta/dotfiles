@@ -18,17 +18,17 @@
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t)
   (setq completion-ignore-case t)
-  :bind (("C-M-i" . company-complete))
-  :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)
-              ("<tab>" . company-complete-common-or-cycle)
-              ("<backtab>" . company-select-previous)
-              ("C-f" . company-complete-selection)
-              ("C-d" . company-show-doc-buffer)
-              ("C-s" . company-filter-candidates)
-              ("C-h" . backward-delete-char)
-              ))
+  :bind (("C-M-i" . company-complete)
+         (:map company-active-map
+               ("C-n" . company-select-next)
+               ("C-p" . company-select-previous)
+               ("<tab>" . company-complete-common-or-cycle)
+               ("<backtab>" . company-select-previous)
+               ("C-f" . company-complete-selection)
+               ("C-d" . company-show-doc-buffer)
+               ("C-s" . company-filter-candidates)
+               ("C-h" . backward-delete-char)
+               )))
 
 (use-package company-quickhelp
   :ensure t
