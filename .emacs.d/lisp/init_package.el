@@ -21,7 +21,6 @@
     haxe-mode
     proof-general
     ;; view
-    popwin
     image-dired+
     image+
     fill-column-indicator

@@ -273,9 +273,22 @@
 ;; (use-package proof-general
 ;;   :ensure t
 ;;   )
-;; (use-package popwin
-;;   :ensure t
-;;   )
+
+(use-package popwin
+  :ensure t
+  :config
+  (popwin-mode 1)
+  ;; popwin対象
+  (setq popwin:special-display-config
+        '(
+          ("*quickrun*" :stick t)
+          ("*Google Translate*")
+          ("*Completions*")
+          ;; (completion-list-mode :noselect t)
+          ("*Warning*")
+          ))
+  )
+
 ;; (use-package image-dired+
 ;;   :ensure t
 ;;   )

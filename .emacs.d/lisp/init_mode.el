@@ -68,19 +68,6 @@
 (setq google-translate-translation-directions-alist
       '(("en" . "ja") ("ja" . "en")))
 
-;;; popwin mode
-(setq display-buffer-function 'popwin:display-buffer)
-(setq popwin:popup-window-position 'bottom)
-; popwin対象
-(setq popwin:special-display-config
-      '(
-        ("*quickrun*" :stick t)
-        ("*Google Translate*")
-        ("*Completions*")
-        ("*Ibuffer*")
-        (completion-list-mode :noselect t)
-        ))
-
 ;;; quickrun mode
 ; タイムアウトで処理を中止させない
 (setq quickrun-timeout-seconds -1)
