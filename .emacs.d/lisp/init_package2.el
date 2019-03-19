@@ -327,6 +327,7 @@
           ("*Google Translate*")
           (completion-list-mode :noselect t) ;; 全completionを対象
           ("*Warning*")
+          ("*auto-async-byte-compile*")
           ))
   )
 
@@ -419,6 +420,13 @@
   ;; (auto-package-update-hide-results t)
   :config
   (auto-package-update-maybe)
+  )
+
+(use-package auto-async-byte-compile
+  :ensure t
+  :hook (emacs-lisp-mode . enable-auto-async-byte-compile-mode)
+  ;; :custom
+  ;; (auto-async-byte-compile-exclude-files-regexp "init*")
   )
 
 (use-package shell
