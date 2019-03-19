@@ -67,15 +67,3 @@
 (global-set-key (kbd "C-c t") 'google-translate-query-translate)
 (setq google-translate-translation-directions-alist
       '(("en" . "ja") ("ja" . "en")))
-
-;;; haxe-modeの設定
-(require 'haxe-mode)
-(add-hook 'haxe-mode-hook
-          (function (lambda () (c-add-style "haxe" my-haxe-style t))))
-(add-hook 'haxe-mode-hook
-          (function
-           (lambda ()
-             (setq tab-width 4)
-             (setq indent-tabs-mode nil)
-             (setq fill-column 80)
-             )))

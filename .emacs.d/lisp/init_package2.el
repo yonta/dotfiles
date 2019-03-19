@@ -293,9 +293,16 @@
 ;; (use-package bash-completion
 ;;   :ensure t
 ;;   )
-;; (use-package haxe-mode
-;;   :ensure t
-;;   )
+
+(use-package haxe-mode
+  :ensure t
+  :defer t
+  :custom
+  (tab-width 4)
+  (indent-tabs-mode nil)
+  (fill-column 80)
+  )
+
 ;; (use-package proof-general
 ;;   :ensure t
 ;;   )

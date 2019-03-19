@@ -16,7 +16,6 @@
     graphviz-dot-mode
     google-translate
     bash-completion
-    haxe-mode
     proof-general
     ;; view
     image-dired+
