@@ -98,7 +98,9 @@
 (use-package flycheck-pyflakes
   :ensure t
   :defer t
-  :if (= 0 (shell-command "flake8 --version 1>/dev/null 2>/dev/null"))
+  :if (= 0 (shell-command "flake8 --version 1>/dev/null 2>/dev/null"
+                          (get-buffer-create "*Messages*")
+                          (get-buffer-create "*Messages*")))
   :init
   ;; (require 'flycheck-pyflakes)
   )
@@ -154,7 +156,9 @@
 (use-package markdown-mode
   :ensure t
   :defer t
-  :if (= 0 (shell-command "markdown --version 1>/dev/null 2>/dev/null"))
+  :if (= 0 (shell-command "markdown --version 1>/dev/null 2>/dev/null"
+                          (get-buffer-create "*Messages*")
+                          (get-buffer-create "*Messages*")))
   :init
   ;; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
   ;; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
