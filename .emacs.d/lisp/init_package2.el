@@ -527,4 +527,11 @@ Creates a buffer if necessary."
               ("C-." . toggle-dired-listing-switches)
               ))
 
+(use-package help-modehelp-mode
+  ;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
+  :bind (:map help-mode-map
+              ("M-<left>" . help-go-back)
+              ("M-<right>". help-go-forward)
+              ))
+
 ;;; init_package2.el

@@ -68,11 +68,6 @@
 (setq google-translate-translation-directions-alist
       '(("en" . "ja") ("ja" . "en")))
 
-;;; help-modeの設定
-;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
-(define-key help-mode-map (kbd "M-<left>") 'help-go-back)
-(define-key help-mode-map (kbd "M-<right>") 'help-go-forward)
-
 ;;; haxe-modeの設定
 (require 'haxe-mode)
 (add-hook 'haxe-mode-hook
