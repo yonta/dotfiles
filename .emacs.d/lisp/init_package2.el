@@ -353,6 +353,15 @@
 ;;   :ensure t
 ;;   )
 
+(use-package auto-package-update
+  :ensure t
+  :custom
+  (auto-package-update-delete-old-versions t)
+  ;; (auto-package-update-hide-results t)
+  :config
+  (auto-package-update-maybe)
+  )
+
 (use-package shell
   :init
   (bash-completion-setup)
