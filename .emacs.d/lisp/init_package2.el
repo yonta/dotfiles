@@ -395,9 +395,7 @@
          ("C-c C-d" . counsel-describe-function)
          ("C-c C-g" . counsel-git-grep)
          )
-  :bind (:map counsel-find-file-map
-              ("C-h" . counsel-up-directory)
-              ))
+  )
 
 (use-package swiper
   :ensure t
