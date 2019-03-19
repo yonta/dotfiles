@@ -21,6 +21,7 @@
   (company-idle-delay 0)
   (company-minimum-prefix-length 2)
   (company-selection-wrap-around t)
+  (company-require-match 'never)
   :bind (("C-M-i" . company-complete)
          (:map company-active-map
                ("C-n" . company-select-next)
