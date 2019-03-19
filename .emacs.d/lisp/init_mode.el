@@ -68,10 +68,6 @@
 (setq google-translate-translation-directions-alist
       '(("en" . "ja") ("ja" . "en")))
 
-;;; quickrun mode
-; タイムアウトで処理を中止させない
-(setq quickrun-timeout-seconds -1)
-
 ;;; python mode
 (add-hook 'python-mode-hook
           '(lambda ()

@@ -151,9 +151,14 @@
 ;; (use-package py-autopep8
 ;;   :ensure t
 ;;   )
-;; (use-package quickrun
-;;   :ensure t
-;;   )
+
+(use-package quickrun
+  :ensure t
+  :defer t
+  :custom
+  ;; タイムアウトで処理を中止させない
+  (quickrun-timeout-seconds -1)
+  )
 
 ;; markdownコマンドをいれておく
 (use-package markdown-mode

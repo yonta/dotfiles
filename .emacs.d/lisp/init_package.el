@@ -11,7 +11,7 @@
     ;; C++
     rtags
     ;; python
-    python-mode py-autopep8 quickrun
+    python-mode py-autopep8
     ;; other mode
     csv-mode
     gnuplot-mode
