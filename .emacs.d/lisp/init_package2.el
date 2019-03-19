@@ -287,9 +287,18 @@
 ;; (use-package graphviz-dot-mode
 ;;   :ensure t
 ;;   )
-;; (use-package google-translate
-;;   :ensure t
-;;   )
+
+(use-package google-translate
+  :ensure t
+  :commands (google-translate google-translate-smooth-ui)
+  :bind (("C-c C-t" . google-translate-smooth-translate)
+         ("C-c t" . google-translate-query-translate)
+         )
+  :config
+  (setq google-translate-translation-directions-alist
+        '(("en" . "ja") ("ja" . "en")))
+  )
+
 ;; (use-package bash-completion
 ;;   :ensure t
 ;;   )

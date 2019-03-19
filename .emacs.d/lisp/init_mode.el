@@ -59,11 +59,3 @@
   (goto-char (point-max))
   (message "done."))
 (add-hook 'find-file-not-found-hooks 'auto-insert)
-
-;;; Google Translate mode
-(autoload 'google-translate "google-translate" nil t)
-(autoload 'google-translate-smooth-ui "google-translate-smooth-ui" nil t)
-(global-set-key (kbd "C-c C-t") 'google-translate-smooth-translate)
-(global-set-key (kbd "C-c t") 'google-translate-query-translate)
-(setq google-translate-translation-directions-alist
-      '(("en" . "ja") ("ja" . "en")))

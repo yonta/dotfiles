@@ -14,7 +14,6 @@
     csv-mode
     gnuplot-mode
     graphviz-dot-mode
-    google-translate
     bash-completion
     proof-general
     ;; view
