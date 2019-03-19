@@ -1,9 +1,3 @@
-;;; ansi-term
-;; コマンドラインと同じ色付けを使う
-(autoload 'ansi-color-for-comint-mode-on "ansi-color"
-          "Set `ansi-color-for-comint-mode' to t." t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
 ;;; タブ文字を禁止してスペースを使う
 (setq-default tab-width 4 indent-tabs-mode nil)
 

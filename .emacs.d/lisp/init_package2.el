@@ -556,4 +556,10 @@ Creates a buffer if necessary."
               ("M-<right>". help-go-forward)
               ))
 
+;; コマンドラインと同じ色付けを使う
+(use-package ansi-color
+  :commands ansi-color-for-comint-mode-on
+  :hook (shell-mode . ansi-color-for-comint-mode-on)
+  )
+
 ;;; init_package2.el
