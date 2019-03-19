@@ -196,11 +196,10 @@
 ;; alpaca.elが必要
 (use-package twittering-mode
   :ensure t
-  :init
-  ;;(setq twittering-suffix-space-size 8)
   ;; URLを青文字にする
-  (add-hook 'twittering-mode-hook
-            (lambda () (set-face-foreground 'twittering-uri-face "blue")))
+  :custom-face (twittering-uri-face ((t (:foreground "blue"))))
+  ;; :init
+  ;; (setq twittering-suffix-space-size 8)
   :custom
   ;; use master passworad compressed by GnuPG
   (twittering-use-master-password t)
