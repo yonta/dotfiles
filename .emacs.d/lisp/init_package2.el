@@ -68,6 +68,12 @@
 (use-package company-jedi
   :ensure t
   :defer t
+  :custom
+  ;;(jedi:complete-on-dot t)
+  (jedi:use-shortcuts t) ; 定義ジャンプM-.とM-,
+  :config
+  (add-to-list 'company-backends 'company-jedi)
+  :hook (python-mode . jedi:setup)
    )
 
 (use-package flycheck
@@ -146,12 +152,26 @@
 ;; (use-package rtags
 ;;   :ensure t
 ;;   )
-;; (use-package python-mode
-;;   :ensure t
-;;   )
-;; (use-package py-autopep8
-;;   :ensure t
-;;   )
+
+(use-package python-mode
+  :ensure t
+  :custom
+  (indent-tabs-mode nil)
+  (indent-level 4)
+  (python-indent 4)
+  (tab-width 4)
+  :bind (:map python-mode-map ("C-c c" . quickrun))
+  )
+
+;; aptかpipでautopep8を入れておく
+;; aptでautopep8をいれておく
+(use-package py-autopep8
+  :ensure t
+  :if (= 0 (shell-command "autopep8 --version 1>/dev/null 2>/dev/null"
+                          (get-buffer-create "*Messages*")
+                          (get-buffer-create "*Messages*")))
+  :hook (python-mode . py-autopep8-enable-on-save)
+  )
 
 (use-package quickrun
   :ensure t
@@ -289,8 +309,7 @@
         '(
           ("*quickrun*" :stick t)
           ("*Google Translate*")
-          ("*Completions*")
-          ;; (completion-list-mode :noselect t)
+          (completion-list-mode :noselect t) ;; 全completionを対象
           ("*Warning*")
           ))
   )

@@ -68,28 +68,6 @@
 (setq google-translate-translation-directions-alist
       '(("en" . "ja") ("ja" . "en")))
 
-;;; python mode
-(add-hook 'python-mode-hook
-          '(lambda ()
-             (setq indent-tabs-mode nil)
-             (setq indent-level 4)
-             (setq python-indent 4)
-             (setq tab-width 4)
-             (local-set-key (kbd "C-c c") 'quickrun)
-             ))
-
-;; company-jedi
-;; 初回にM-x jedi:install-serverを実行する
-;; pipのjediはいらない
-(setq jedi:complete-on-dot t)
-(setq jedi:use-shortcuts t) ; 定義ジャンプM-.とM-,
-(add-to-list 'company-backends 'company-jedi)
-(add-hook 'python-mode-hook 'jedi:setup)
-
-;; py-autopep8
-;; pythonのautopep8のパッケージを入れておくこと
-(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-
 ;;; help-modeの設定
 ;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
 (define-key help-mode-map (kbd "M-<left>") 'help-go-back)
