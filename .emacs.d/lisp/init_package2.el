@@ -404,8 +404,10 @@
          ("C-c s" . isearch-forward)
          )
   :bind (:map swiper-map
-              ("M-%" . swiper-query-replace))
-  )
+              ("M-%" . swiper-query-replace)
+              ("C-w" . ivy-yank-word)
+              ("C-M-y" . ivy-yank-char)
+              ))
 
 ;; (use-package esup
 ;;   :ensure t
