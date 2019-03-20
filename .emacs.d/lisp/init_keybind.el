@@ -5,6 +5,7 @@
 
 ;;; C-hをバックスペースにする
 (global-set-key (kbd "C-h") 'backward-delete-char)
+(define-key isearch-mode-map (kbd "C-h") 'isearch-del-char)
 ;;; M-hをバックスペース＆インデント削除にする
 (global-set-key (kbd "M-h") 'delete-indentation)
 ;;; M-&を正規表現置換にする
