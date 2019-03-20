@@ -388,10 +388,14 @@
 
 (use-package counsel
   :ensure t
+  ;; dotファイルとコンパイルファイルなどを無視する
+  ;; .キーを押せばdotスタートファイルは表示される
+  :custom (counsel-find-file-ignore-regexp
+           (concat "\\(\\`\\.\\)\\|"
+                   (regexp-opt completion-ignored-extensions)))
   :bind (("M-x" . counsel-M-x)
          ("M-r" . counsel-command-history)
          ("C-x C-f" . counsel-find-file)
-         ("C-x C-b" . counsel-ibuffer)
          ("C-x b" . counsel-switch-buffer)
          ("C-c C-d" . counsel-describe-function)
          ("C-c C-g" . counsel-git-grep)
@@ -561,5 +565,8 @@ Creates a buffer if necessary."
   :commands ansi-color-for-comint-mode-on
   :hook (shell-mode . ansi-color-for-comint-mode-on)
   )
+
+(use-package ibuf-ext
+  :bind (("C-x C-b" . ibuffer)))
 
 ;;; init_package2.el
