@@ -551,6 +551,7 @@ Creates a buffer if necessary."
               ("C-m" . dired-my-advertised-find-file)
               ("^" . dired-my-up-directory)
               ("C-." . toggle-dired-listing-switches)
+              ("r" . wdired-change-to-wdired-mode)
               ))
 
 (use-package help-modehelp-mode
