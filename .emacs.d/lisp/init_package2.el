@@ -108,9 +108,7 @@
 (use-package flycheck-pyflakes
   :ensure t
   :defer t
-  :if (= 0 (shell-command "flake8 --version 1>/dev/null 2>/dev/null"
-                          (get-buffer-create "*Messages*")
-                          (get-buffer-create "*Messages*")))
+  :if (executable-find "flake8")
   :init
   ;; (require 'flycheck-pyflakes)
   )
@@ -167,9 +165,7 @@
 ;; aptでautopep8をいれておく
 (use-package py-autopep8
   :ensure t
-  :if (= 0 (shell-command "autopep8 --version 1>/dev/null 2>/dev/null"
-                          (get-buffer-create "*Messages*")
-                          (get-buffer-create "*Messages*")))
+  :if (executable-find "autopep8")
   :hook (python-mode . py-autopep8-enable-on-save)
   )
 
@@ -185,9 +181,7 @@
 (use-package markdown-mode
   :ensure t
   :defer t
-  :if (= 0 (shell-command "markdown --version 1>/dev/null 2>/dev/null"
-                          (get-buffer-create "*Messages*")
-                          (get-buffer-create "*Messages*")))
+  :if (executable-find "markdown")
   :init
   ;; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
   ;; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
