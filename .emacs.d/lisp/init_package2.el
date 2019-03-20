@@ -429,6 +429,18 @@
   ;; (auto-async-byte-compile-exclude-files-regexp "init*")
   )
 
+;; cmigemoをいれておく
+;; https://github.com/koron/cmigemo
+(use-package migemo
+  :ensure t
+  :if (executable-find "cmigemo")
+  :custom
+  (migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+  (migemo-user-dictionary nil)
+  (migemo-regex-dictionary nil)
+  (migemo-init)
+  )
+
 (use-package shell
   :init
   (bash-completion-setup)
