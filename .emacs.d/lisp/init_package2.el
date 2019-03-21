@@ -223,8 +223,7 @@
 ;; alpaca.elが必要
 (use-package twittering-mode
   :ensure t
-  ;; URLを青文字にする
-  :custom-face (twittering-uri-face ((t (:foreground "blue"))))
+  :commands twit
   ;; :init
   ;; (setq twittering-suffix-space-size 8)
   :custom
@@ -263,6 +262,9 @@
   :config
   ;; use icon
   (twittering-icon-mode t)
+  ;; URLを青文字にする
+  (add-hook 'twittering-mode-hook
+            (lambda () (set-face-foreground 'twittering-uri-face "blue")))
   :bind (:map twittering-mode-map
               ("R" . twittering-native-retweet)
               ("r" . twittering-enter)
@@ -321,7 +323,7 @@
           ("*Google Translate*")
           (completion-list-mode :noselect t) ;; 全completionを対象
           ("*Warning*")
-          ("*auto-async-byte-compile*")
+          (" *auto-async-byte-compile*")
           ))
   )
 
@@ -373,6 +375,41 @@
 ;;   :ensure t
 ;;   )
 
+;; cmigemoをいれておく
+;; https://github.com/koron/cmigemo
+(use-package migemo
+  :ensure t
+  :if (executable-find "cmigemo")
+  :custom
+  (migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+  (migemo-user-dictionary nil)
+  (migemo-regex-dictionary nil)
+  (migemo-init)
+  )
+
+(use-package avy-migemo
+  :ensure t
+  :config
+  ;; 各modenoの設定ではなく、統合するここでmode onとbindする必要がある
+  ;; e.g.*.elのrequireは各設定にて行う必要がある
+  (avy-migemo-mode 1)
+  :bind (("M-x" . counsel-M-x)
+         ("M-r" . counsel-command-history)
+         ("C-x C-f" . counsel-find-file)
+         ("C-x b" . counsel-switch-buffer)
+         ("C-c C-d" . counsel-describe-function)
+         ("C-c C-g" . counsel-git-grep)
+         )
+  :bind (("C-s" . swiper)
+         ("C-c s" . isearch-forward)
+         )
+  :bind (:map swiper-map
+              ("M-%" . swiper-query-replace)
+              ("C-w" . ivy-yank-word)
+              ("C-M-y" . ivy-yank-char)
+              )
+  )
+
 (use-package ivy
   :ensure t
   :defer t
@@ -382,32 +419,26 @@
 
 (use-package counsel
   :ensure t
+  :defer t
+  :after ivy swiper
   ;; dotファイルとコンパイルファイルなどを無視する
   ;; .キーを押せばdotスタートファイルは表示される
   :custom (counsel-find-file-ignore-regexp
            (concat "\\(\\`\\.\\)\\|"
                    (regexp-opt completion-ignored-extensions)))
-  :bind (("M-x" . counsel-M-x)
-         ("M-r" . counsel-command-history)
-         ("C-x C-f" . counsel-find-file)
-         ("C-x b" . counsel-switch-buffer)
-         ("C-c C-d" . counsel-describe-function)
-         ("C-c C-g" . counsel-git-grep)
-         )
+  :config
+  (require 'avy-migemo-e.g.counsel)
   )
 
 (use-package swiper
   :ensure t
+  :after ivy
+  :defer t
   :custom
   (swiper-include-line-number-in-search t)
-  :bind (("C-s" . swiper)
-         ("C-c s" . isearch-forward)
-         )
-  :bind (:map swiper-map
-              ("M-%" . swiper-query-replace)
-              ("C-w" . ivy-yank-word)
-              ("C-M-y" . ivy-yank-char)
-              ))
+  :config
+  (require 'avy-migemo-e.g.swiper)
+  )
 
 ;; (use-package esup
 ;;   :ensure t
@@ -427,18 +458,6 @@
   :hook (emacs-lisp-mode . enable-auto-async-byte-compile-mode)
   ;; :custom
   ;; (auto-async-byte-compile-exclude-files-regexp "init*")
-  )
-
-;; cmigemoをいれておく
-;; https://github.com/koron/cmigemo
-(use-package migemo
-  :ensure t
-  :if (executable-find "cmigemo")
-  :custom
-  (migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
-  (migemo-user-dictionary nil)
-  (migemo-regex-dictionary nil)
-  (migemo-init)
   )
 
 (use-package shell
