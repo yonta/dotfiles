@@ -493,9 +493,9 @@ All arguments UNUSED is ignored."
   (require 'avy-migemo-e.g.swiper)
   )
 
-;; (use-package esup
-;;   :ensure t
-;;   )
+;; バグで動かない
+;; https://github.com/jschaf/esup/issues/54
+(use-package esup :disabled)
 
 (use-package auto-package-update
   :ensure t
