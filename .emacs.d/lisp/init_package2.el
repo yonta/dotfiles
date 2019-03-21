@@ -328,6 +328,7 @@
           (completion-list-mode :noselect t) ;; 全completionを対象
           ("*Warnings*")
           (" *auto-async-byte-compile*")
+          ("*Kill Ring*")
           )))
 
 ;; ImageMagickをaptでいれておく
@@ -423,9 +424,10 @@ All arguments UNUSED is ignored."
   (sp-local-pair '(tuareg-mode) "'" nil :actions nil)
   )
 
-;; (use-package browse-kill-ring
-;;   :ensure t
-;;   )
+(use-package browse-kill-ring
+  :ensure t
+  :bind (("C-M-y" . browse-kill-ring))
+  )
 
 ;; cmigemoをいれておく
 ;; https://github.com/koron/cmigemo

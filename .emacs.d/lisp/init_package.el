@@ -7,8 +7,6 @@
     ; 初回起動はlist-packageの更新が間に合ってない？
     ; 一度list-packageを実行すると治る。
     yasnippet
-    ;; view
-    browse-kill-ring
     ; 起動時間測定
     esup
     ;; doctags
