@@ -21,7 +21,6 @@
     image+
     fill-column-indicator
     hiwin
-    highlight-current-line
     w3m
     browse-kill-ring
     ; 起動時間測定

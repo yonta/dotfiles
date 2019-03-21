@@ -337,7 +337,6 @@
 ;;   :ensure t
 ;;   )
 
-;;; カーソルがいる行をハイライトする
 (use-package highlight-current-line
   :ensure t
   :if window-system ; '-nw'で起動時は文字が見えなくなるのでオフにする
