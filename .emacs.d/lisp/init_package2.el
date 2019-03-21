@@ -330,12 +330,33 @@
           (" *auto-async-byte-compile*")
           )))
 
-;; (use-package image-dired+
-;;   :ensure t
-;;   )
-;; (use-package image+
-;;   :ensure t
-;;   )
+;; ImageMagickをaptでいれておく
+(use-package image-dired+
+  ;; 非同期でimage-diredを動作させ、大量画像でフリーズしないようにする
+  :ensure t
+  :if (executable-find "convert")
+  :commands image-dired
+  :config
+  (image-diredx-async-mode 1)
+  (image-diredx-adjust-mode 1)
+  :bind (:map image-dired-thumbnail-mode-map
+              ("C-n" . image-diredx-next-line)
+              ("C-p" . image-diredx-previous-line)
+              ("g" . revert-buffer) ; 更新
+              ))
+
+(use-package image+
+  :ensure t
+  :if (executable-find "convert")
+  :commands image-mode
+  :config
+  (imagex-global-sticky-mode 1)
+  (imagex-auto-adjust-mode 1)
+  :bind (:map imagex-sticky-binding
+              ("+" . imagex-sticky-zoom-in)
+              ("-" . imagex-sticky-zoom-out)
+              ("0" . imagex-sticky-maximize)
+              ))
 
 (use-package fill-column-indicator
   :ensure t

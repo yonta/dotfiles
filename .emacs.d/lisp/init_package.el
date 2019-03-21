@@ -8,8 +8,6 @@
     ; 一度list-packageを実行すると治る。
     yasnippet
     ;; view
-    image-dired+
-    image+
     w3m
     browse-kill-ring
     ; 起動時間測定
