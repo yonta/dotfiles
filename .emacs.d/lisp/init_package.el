@@ -6,8 +6,7 @@
     ; パッケージが無いと怒られる。
     ; 初回起動はlist-packageの更新が間に合ってない？
     ; 一度list-packageを実行すると治る。
-    ;; ocaml
-    tuareg yasnippet
+    yasnippet
     ;; C++
     rtags
     ;; other mode

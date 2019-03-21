@@ -137,9 +137,11 @@
   (add-hook 'c++-mode-hook 'my-c++-mode-hook)
   )
 
-;; (use-package tuareg
-;;   :ensure t
-;;   )
+(use-package tuareg
+  :ensure t
+  :mode ("\\.ml[ip]?\\'" "\\.eliomi?\\'")
+  )
+
 ;; (use-package yasnippet
 ;;   :ensure t
 ;;   )
