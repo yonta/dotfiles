@@ -607,4 +607,26 @@ Creates a buffer if necessary."
   :bind (("C-x C-b" . ibuffer))
   )
 
+(use-package whitespace
+  :custom
+  ;; 空白・カラムオーバーの可視化と不要な空白や改行の自動削除をする
+  ;; 対象はタブ、行末スペース、カスタムスペース（全角スペース）
+  (whitespace-style '(face tabs trailing spaces empty))
+  ;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
+  (whitespace-action '(auto-cleanup))
+  ;; spacesの対象は全角スペースのみ
+  (whitespace-space-regexp "\\(　+\\)")
+  :config
+  ;; white spaceをオン
+  (global-whitespace-mode t)
+  ;; 行末スペースの色
+  (set-face-attribute 'whitespace-trailing nil :background "Lavender")
+  ;; 全角スペースの色
+  (set-face-attribute 'whitespace-space nil :background "DarkSeaGreen1")
+  ;; タブの色
+  (set-face-attribute 'whitespace-tab nil :background "LightGoldenrodYellow")
+  ;; 空行の色
+  (set-face-attribute 'whitespace-empty nil :background nil)
+)
+
 ;;; init_package2.el

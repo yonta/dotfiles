@@ -53,32 +53,6 @@
 (global-linum-mode t)
 (setq linum-format "%4d ")
 
-;;; whitespace mode
-;; 空白・カラムオーバーの可視化と不要な空白や改行の自動削除をする
-;; 対象はタブ、行末スペース、カスタムスペース（全角スペース）
-(setq whitespace-style '(face tabs trailing spaces empty))
-
-;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
-(setq whitespace-action '(auto-cleanup))
-
-;; white spaceをオン
-(global-whitespace-mode t)
-
-;; spacesの対象は全角スペースのみ
-(setq whitespace-space-regexp "\\(　+\\)")
-
-;; 行末スペースの色
-(set-face-attribute 'whitespace-trailing nil :background "Lavender")
-
-;; 全角スペースの色
-(set-face-attribute 'whitespace-space nil :background "DarkSeaGreen1")
-
-;; タブの色
-(set-face-attribute 'whitespace-tab nil :background "LightGoldenrodYellow")
-
-;; 空行の色
-(set-face-attribute 'whitespace-empty nil :background nil)
-
 ;;; fci-modeで80文字の箇所に線を引く
 ;; fci-modeとtruncateによる折り返しが相性悪いので対処する
 ;; https://www.emacswiki.org/emacs/FillColumnIndicator#toc17
