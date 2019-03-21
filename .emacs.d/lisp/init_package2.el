@@ -336,9 +336,15 @@
 ;; (use-package hiwin
 ;;   :ensure t
 ;;   )
-;; (use-package highlight-current-line
-;;   :ensure t
-;;   )
+
+;;; カーソルがいる行をハイライトする
+(use-package highlight-current-line
+  :ensure t
+  :if window-system ; '-nw'で起動時は文字が見えなくなるのでオフにする
+  :config
+  (highlight-current-line-on t)
+  (set-face-background 'highlight-current-line-face "gray92")
+  )
 
 (use-package rainbow-mode
   :ensure t

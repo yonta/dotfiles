@@ -53,14 +53,6 @@
 (global-linum-mode t)
 (setq linum-format "%4d ")
 
-;;; カーソルがいる行をハイライトする
-;; '-nw'で起動時は文字が見えなくなるのでオフにする
-(cond (window-system
-       (require 'highlight-current-line)
-       (highlight-current-line-on t)
-       (set-face-background 'highlight-current-line-face "gray92")
-       ))
-
 ;;; hiwin mode
 ;; アクティブかどうかでバッファーのモードラインの色を変える
 ;; (hiwin-activate)
