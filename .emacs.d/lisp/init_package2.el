@@ -87,8 +87,7 @@
    :bind (:map flycheck-mode-map
                ("M-p" . flycheck-previous-error)
                ("M-n" . flycheck-next-error)
-               )
-)
+               ))
 
 ;; libclangが必要
 (use-package irony
@@ -196,7 +195,6 @@
   ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
   (markdown-css-paths '("style.css"))
   )
-
 
 ;; markdownでコードブロックの編集のために必要
 (use-package edit-indirect
@@ -324,8 +322,7 @@
           (completion-list-mode :noselect t) ;; 全completionを対象
           ("*Warning*")
           (" *auto-async-byte-compile*")
-          ))
-  )
+          )))
 
 ;; (use-package image-dired+
 ;;   :ensure t
@@ -407,8 +404,7 @@
               ("M-%" . swiper-query-replace)
               ("C-w" . ivy-yank-word)
               ("C-M-y" . ivy-yank-char)
-              )
-  )
+              ))
 
 (use-package ivy
   :ensure t
@@ -473,7 +469,7 @@
                         ;; SHELL で ^M が付く場合は ^M を削除する
                         (set-buffer-process-coding-system
                          'undecided-dos 'sjis-unix)))
-)
+  )
 
 (use-package dired
   :init
@@ -595,6 +591,7 @@ Creates a buffer if necessary."
   )
 
 (use-package ibuf-ext
-  :bind (("C-x C-b" . ibuffer)))
+  :bind (("C-x C-b" . ibuffer))
+  )
 
 ;;; init_package2.el
