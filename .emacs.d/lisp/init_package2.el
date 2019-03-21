@@ -201,9 +201,10 @@
   :defer t
   )
 
-;; (use-package csv-mode
-;;   :ensure t
-;;   )
+(use-package csv-mode
+  :ensure t
+  :mode "\\.csv\\'"
+  )
 
 (use-package sml-mode
   :ensure t
@@ -274,12 +275,16 @@
               ("u" . twittering-toggle-show-replied-statuses)
               ))
 
-;; (use-package gnuplot-mode
-;;   :ensure t
-;;   )
-;; (use-package graphviz-dot-mode
-;;   :ensure t
-;;   )
+(use-package gnuplot-mode
+  :ensure t
+  ;; .gp .gpl .gnuplot .plt
+  :mode ("\\.gpl?\\'" "\\.gnuplot\\'" "\\.plt\\'")
+  )
+
+(use-package graphviz-dot-mode
+  :ensure t
+  :mode "\\.gv\\'"
+  )
 
 (use-package google-translate
   :ensure t
@@ -292,9 +297,10 @@
         '(("en" . "ja") ("ja" . "en")))
   )
 
-;; (use-package bash-completion
-;;   :ensure t
-;;   )
+(use-package bash-completion
+  :ensure t
+  :commands shell
+  )
 
 (use-package haxe-mode
   :ensure t
@@ -305,9 +311,10 @@
   (fill-column 80)
   )
 
-;; (use-package proof-general
-;;   :ensure t
-;;   )
+(use-package proof-general
+  :ensure t
+  :mode "\\.v\\'"
+  )
 
 (use-package popwin
   :ensure t

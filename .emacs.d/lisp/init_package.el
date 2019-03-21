@@ -7,12 +7,6 @@
     ; 初回起動はlist-packageの更新が間に合ってない？
     ; 一度list-packageを実行すると治る。
     yasnippet
-    ;; other mode
-    csv-mode
-    gnuplot-mode
-    graphviz-dot-mode
-    bash-completion
-    proof-general
     ;; view
     image-dired+
     image+
