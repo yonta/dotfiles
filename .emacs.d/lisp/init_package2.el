@@ -148,9 +148,6 @@
 ;; (use-package arduino-mode
 ;;   :ensure t
 ;;   )
-;; (use-package rtags
-;;   :ensure t
-;;   )
 
 (use-package python-mode
   :ensure t
