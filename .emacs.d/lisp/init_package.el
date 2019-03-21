@@ -8,7 +8,6 @@
     ; 一度list-packageを実行すると治る。
     yasnippet
     ;; view
-    w3m
     browse-kill-ring
     ; 起動時間測定
     esup

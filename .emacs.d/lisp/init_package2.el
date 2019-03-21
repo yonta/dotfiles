@@ -409,10 +409,6 @@ All arguments UNUSED is ignored."
   (rainbow-html-colors t) ; html color listを使う
   )
 
-;; (use-package w3m
-;;   :ensure t
-;;   )
-
 (use-package smartparens
   :ensure t
   :defer t
