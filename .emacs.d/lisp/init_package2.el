@@ -333,9 +333,17 @@
 ;; (use-package fill-column-indicator
 ;;   :ensure t
 ;;   )
-;; (use-package hiwin
-;;   :ensure t
-;;   )
+
+(use-package hiwin
+  :ensure t
+  :init
+  ;; (set-face-background 'hiwin-face "gray92")
+  ;; アクティブかどうかでバッファーのモードラインの色を変える
+  (set-face-attribute 'mode-line nil :background "light sky blue")
+  (set-face-attribute 'mode-line-inactive nil
+                      :background "light gray"
+                      :foreground "dim gray")
+  )
 
 (use-package highlight-current-line
   :ensure t

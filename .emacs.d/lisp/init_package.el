@@ -20,7 +20,6 @@
     image-dired+
     image+
     fill-column-indicator
-    hiwin
     w3m
     browse-kill-ring
     ; 起動時間測定
