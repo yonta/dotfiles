@@ -145,9 +145,12 @@
 ;; (use-package yasnippet
 ;;   :ensure t
 ;;   )
-;; (use-package arduino-mode
-;;   :ensure t
-;;   )
+
+(use-package arduino-mode
+  :ensure t
+  :mode "\\.ino\\'"
+  ;; TODO: set compiler and libraries path by environment
+  )
 
 (use-package python-mode
   :ensure t
