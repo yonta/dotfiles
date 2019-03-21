@@ -655,6 +655,7 @@ Creates a buffer if necessary."
   )
 
 (use-package whitespace
+  :diminish
   :custom
   ;; 空白・カラムオーバーの可視化と不要な空白や改行の自動削除をする
   ;; 対象はタブ、行末スペース、カスタムスペース（全角スペース）
