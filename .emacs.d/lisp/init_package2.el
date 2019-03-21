@@ -320,7 +320,7 @@
           ("*quickrun*" :stick t)
           ("*Google Translate*")
           (completion-list-mode :noselect t) ;; 全completionを対象
-          ("*Warning*")
+          ("*Warnings*")
           (" *auto-async-byte-compile*")
           )))
 
