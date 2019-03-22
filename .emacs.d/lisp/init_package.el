@@ -487,7 +487,6 @@ All arguments UNUSED is ignored."
 
 (use-package counsel
   :ensure t
-  :defer t
   :after ivy swiper
   ;; dotファイルとコンパイルファイルなどを無視する
   ;; .キーを押せばdotスタートファイルは表示される
@@ -496,7 +495,9 @@ All arguments UNUSED is ignored."
                    (regexp-opt completion-ignored-extensions)))
   :config
   (require 'avy-migemo-e.g.counsel)
-  )
+  :bind (:map counsel-find-file-map
+              ("^" . counsel-up-directory)
+              ))
 
 (use-package swiper
   :ensure t
