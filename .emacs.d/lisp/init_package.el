@@ -696,6 +696,13 @@ Creates a buffer if necessary."
   (set-face-attribute 'whitespace-tab nil :background "LightGoldenrodYellow")
   ;; 空行の色
   (set-face-attribute 'whitespace-empty nil :background nil)
-)
+  )
+
+(use-package elisp-mode
+  :config
+  ;; emacs-lisp-modeだとcompletion-at-pointにバインドされてるので、
+  ;; companyを優先する。
+  (local-unset-key (kbd "C-M-i"))
+  )
 
 ;;; init_package2.el
