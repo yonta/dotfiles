@@ -31,8 +31,6 @@
 
 ;; 自分のカスタムemacs-lisp path
 (add-to-load-path "lisp")
-;; 自分のカスタムemacs-lispを自動でバイトコンパイルする
-;(byte-recompile-directory "~/.emacs.d/lisp" 0)
 
 ;;; 設定ファイルの読み込み
 (load "init_package")
@@ -49,7 +47,12 @@
  ;; If there is more than one, they won't work right.
  '(avy-migemo-function-names
    (quote
-    (swiper--add-overlays-migemo
+    ((counsel-clj :around avy-migemo-disable-around)
+     (counsel-grep :around counsel-grep-migemo-around)
+     counsel-grep-function-migemo counsel-grep-occur-migemo
+     (counsel-git-occur :around counsel-git-occur-migemo-around)
+     (counsel-find-file-occur :around counsel-find-file-occur-migemo-around)
+     swiper--add-overlays-migemo
      (swiper--re-builder :around swiper--re-builder-migemo-around)
      (ivy--regex :around ivy--regex-migemo-around)
      (ivy--regex-ignore-order :around ivy--regex-ignore-order-migemo-around)
@@ -57,7 +60,7 @@
      ivy--highlight-default-migemo ivy-occur-revert-buffer-migemo ivy-occur-press-migemo avy-migemo-goto-char avy-migemo-goto-char-2 avy-migemo-goto-char-in-line avy-migemo-goto-char-timer avy-migemo-goto-subword-1 avy-migemo-goto-word-1 avy-migemo-isearch avy-migemo-org-goto-heading-timer avy-migemo--overlay-at avy-migemo--overlay-at-full)))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets auto-async-byte-compile auto-package-update avy-migemo migemo diminish use-package counsel flycheck-pyflakes company-irony-c-headers flycheck-ocaml gnuplot-mode tuareg company-jedi company company-quickhelp fill-column-indicator proof-general haxe-mode edit-indirect graphviz-dot-mode flycheck-google-cpplint google-c-style image-dired+ yasnippet company-arduino flycheck-irony irony arduino-mode twittering-mode swiper sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 popwin markdown-mode image+ hiwin highlight-current-line google-translate flymake-python-pyflakes flymake-cursor flycheck dos doctags csv-mode browse-kill-ring bash-completion))))
+    (yasnippet-snippets use-package twittering-mode tuareg sml-mode smartparens s rainbow-mode quickrun pyvenv python-mode py-autopep8 proof-general popwin markdown-mode image-dired+ image+ hiwin highlight-indentation highlight-current-line haxe-mode graphviz-dot-mode google-translate gnuplot-mode flymake-python-pyflakes flymake-cursor flycheck-pyflakes flycheck-ocaml flycheck-irony find-file-in-project fill-column-indicator edit-indirect diminish csv-mode counsel company-quickhelp company-jedi company-irony-c-headers company-arduino browse-kill-ring bash-completion avy-migemo auto-package-update auto-async-byte-compile))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
