@@ -142,9 +142,20 @@
   :mode ("\\.ml[ip]?\\'" "\\.eliomi?\\'")
   )
 
-;; (use-package yasnippet
-;;   :ensure t
-;;   )
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :config
+  (yas-global-mode 1)
+  (add-to-list 'company-backends 'company-yasnippet)
+  )
+
+;; elpa/yasnippet-snippets-20190316.1019/snippets/ に以下をcloneしておく
+;; https://github.com/jasperla/yasnippet-sml-mode
+;; 使いづらいので、今後自作したい
+(use-package yasnippet-snippets
+  :ensure t
+  )
 
 (use-package arduino-mode
   :ensure t
