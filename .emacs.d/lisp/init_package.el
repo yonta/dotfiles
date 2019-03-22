@@ -465,7 +465,7 @@ All arguments UNUSED is ignored."
   :bind (("M-x" . counsel-M-x)
          ("M-r" . counsel-command-history)
          ("C-x C-f" . counsel-find-file)
-         ("C-x b" . counsel-switch-buffer)
+         ("C-x b" . ivy-switch-buffer)
          ("C-c C-d" . counsel-describe-function)
          ("C-c C-g" . counsel-git-grep)
          )
@@ -526,6 +526,14 @@ All arguments UNUSED is ignored."
   :hook (emacs-lisp-mode . enable-auto-async-byte-compile-mode)
   ;; :custom
   ;; (auto-async-byte-compile-exclude-files-regexp "init*")
+  )
+
+(use-package ivy-rich
+  :ensure t
+  :custom
+  (ivy-format-function #'ivy-format-function-line)
+  :config
+  (ivy-rich-mode 1)
   )
 
 (use-package shell
