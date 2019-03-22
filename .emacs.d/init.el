@@ -36,7 +36,6 @@
 
 ;;; 設定ファイルの読み込み
 (load "init_package")
-(load "init_package2")
 (load "init_display")
 (load "init_custom")
 (load "init_keybind")
