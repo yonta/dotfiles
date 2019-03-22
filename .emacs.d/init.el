@@ -35,10 +35,10 @@
 ;;; 設定ファイルの読み込み
 (load "init_package")
 (load "init_display")
-(load "init_custom")
 (load "init_keybind")
 (load "init_behavior")
 (load "init_mode")
+(load "init_custom")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
