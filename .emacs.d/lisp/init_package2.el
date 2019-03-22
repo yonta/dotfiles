@@ -139,8 +139,9 @@
 
 (use-package tuareg
   :ensure t
-  :mode ("\\.ml[ip]?\\'" "\\.eliomi?\\'")
-  )
+  :mode (("\\.ml[ip]?\\'" . tuareg-mode)
+         ("\\.eliomi?\\'" . tuareg-mode)
+         ))
 
 (use-package yasnippet
   :ensure t
