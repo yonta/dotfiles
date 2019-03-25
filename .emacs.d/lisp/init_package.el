@@ -374,28 +374,6 @@
               ("0" . imagex-sticky-maximize)
               ))
 
-(use-package fill-column-indicator
-  :ensure t
-  ;; 80文字の箇所に線を引く
-  ;; fci-modeとtruncateによる折り返しが相性悪いので対処する
-  ;; https://www.emacswiki.org/emacs/FillColumnIndicator#toc17
-  ;; fci-modeの不具合回避のため、幅81からfciをオンではなく、幅82からにした。
-  :custom
-  (fci-rule-column 80)
-  (fci-handle-truncate-lines nil)
-  :config
-  (define-globalized-minor-mode
-    global-fci-mode fci-mode (lambda () (fci-mode 1)))
-  (global-fci-mode 1)
-  (defun auto-fci-mode (&optional UNUSED)
-    "Enable and disable fci-mode automatically by window width.
-All arguments UNUSED is ignored."
-    (if (> (window-width) (+ fci-rule-column 1)) (fci-mode 1) (fci-mode 0)))
-  (add-hook 'after-change-major-mode-hook 'auto-fci-mode)
-  (add-hook 'window-configuration-change-hook 'auto-fci-mode)
-  (add-hook 'buffer-list-update-hook 'auto-fci-mode)
-  )
-
 (use-package hiwin
   :ensure t
   :init
@@ -712,9 +690,8 @@ Creates a buffer if necessary."
 (use-package whitespace
   :diminish global-whitespace-mode
   :custom
-  ;; 空白・カラムオーバーの可視化と不要な空白や改行の自動削除をする
-  ;; 対象はタブ、行末スペース、カスタムスペース（全角スペース）
-  (whitespace-style '(face tabs trailing spaces empty))
+  ;; 空白などの可視化、対象はタブ文字、80文字超え部、行末の空白、全角スペース
+  (whitespace-style '(face tabs lines-tail trailing spaces empty))
   ;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
   (whitespace-action '(auto-cleanup))
   ;; spacesの対象は全角スペースのみ
@@ -730,6 +707,14 @@ Creates a buffer if necessary."
   (set-face-attribute 'whitespace-tab nil :background "LightGoldenrodYellow")
   ;; 空行の色
   (set-face-attribute 'whitespace-empty nil :background nil)
+  ;; 80文字オーバーの色
+  (set-face-attribute 'whitespace-line nil :foreground nil
+                                           :background "khaki")
+  ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
+  (defun set-whitespace-line-column-80 () (setq whitespace-line-column 80))
+  (defun set-whitespace-line-column-100 () (setq whitespace-line-column 100))
+  (add-hook 'java-mode-hook 'set-whitespace-line-column-100)
+  (add-hook 'change-major-mode-hook 'set-whitespace-line-column-80)
   )
 
 (use-package elisp-mode
