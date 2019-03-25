@@ -60,7 +60,7 @@
      ivy--highlight-default-migemo ivy-occur-revert-buffer-migemo ivy-occur-press-migemo avy-migemo-goto-char avy-migemo-goto-char-2 avy-migemo-goto-char-in-line avy-migemo-goto-char-timer avy-migemo-goto-subword-1 avy-migemo-goto-word-1 avy-migemo-isearch avy-migemo-org-goto-heading-timer avy-migemo--overlay-at avy-migemo--overlay-at-full)))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets use-package twittering-mode tuareg sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 proof-general popwin markdown-mode ivy-rich image-dired+ image+ hiwin highlight-current-line haxe-mode graphviz-dot-mode google-translate gnuplot-mode flymake-python-pyflakes flymake-cursor flycheck-pyflakes flycheck-ocaml flycheck-irony fill-column-indicator edit-indirect diminish csv-mode counsel company-quickhelp company-jedi company-irony-c-headers company-arduino browse-kill-ring bash-completion avy-migemo auto-package-update auto-async-byte-compile))))
+    (git-gutter-fringe+ yasnippet-snippets use-package twittering-mode tuareg sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 proof-general popwin markdown-mode ivy-rich image-dired+ image+ hiwin highlight-current-line haxe-mode graphviz-dot-mode google-translate gnuplot-mode flymake-python-pyflakes flymake-cursor flycheck-pyflakes flycheck-ocaml flycheck-irony fill-column-indicator edit-indirect diminish csv-mode counsel company-quickhelp company-jedi company-irony-c-headers company-arduino browse-kill-ring bash-completion avy-migemo auto-package-update auto-async-byte-compile))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

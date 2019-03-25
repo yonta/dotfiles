@@ -537,6 +537,24 @@ All arguments UNUSED is ignored."
   (ivy-rich-mode 1)
   )
 
+(use-package git-gutter-fringe+
+  :ensure t
+  :diminish git-gutter+-mode
+  :config
+  (global-git-gutter+-mode)
+  (git-gutter+-toggle-fringe)
+  (set-face-foreground 'git-gutter+-modified "orange")
+  (fringe-helper-define 'git-gutter-fr+-modified nil
+  "XXXXXXXX"
+  "XXXXXXXX"
+  "XXXXXXXX"
+  "XXXXXXXX"
+  "XXXXXXXX"
+  "XXXXXXXX"
+  "XXXXXXXX"
+  "XXXXXXXX")
+  )
+
 (use-package shell
   :init
   (bash-completion-setup)
