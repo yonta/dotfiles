@@ -684,7 +684,11 @@ Creates a buffer if necessary."
   )
 
 (use-package ibuf-ext
-  :bind (("C-x C-b" . ibuffer))
+  :bind (("C-x C-b" . ibuffer)
+         :map ibuffer-mode-map ("C-x f" . ibuffer-find-file))
+  :config
+  ;; ibuffer-find-fileを使わずにswiperを使う
+  (define-key ibuffer-mode-map (kbd "C-x C-f") nil)
   )
 
 (use-package whitespace
