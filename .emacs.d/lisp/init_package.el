@@ -564,6 +564,13 @@ All arguments UNUSED is ignored."
   (setq dumb-jump-selector 'ivy)
   )
 
+(use-package volatile-highlights
+  :ensure t
+  :diminish volatile-highlights-mode
+  :config
+  (volatile-highlights-mode t)
+  )
+
 (use-package shell
   :init
   (bash-completion-setup)
