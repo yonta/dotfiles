@@ -555,6 +555,15 @@ All arguments UNUSED is ignored."
   "XXXXXXXX")
   )
 
+(use-package dumb-jump
+  :ensure t
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g i" . dumb-jump-go-prompt))
+  :config
+  (setq dumb-jump-selector 'ivy)
+  )
+
 (use-package shell
   :init
   (bash-completion-setup)
