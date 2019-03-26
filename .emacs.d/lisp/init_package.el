@@ -125,7 +125,7 @@
     (setq c-basic-offset 2)
     (setq tab-width c-basic-offset)
     (setq indent-tabs-mode nil))
-  (add-hook 'c-mode-hook 'my-c-mode-hook)
+  (add-hook 'c-mode-hook #'my-c-mode-hook)
   (defun my-c++-mode-hook ()
     "Setting for c++-mode."
     (c-set-style "k&r")
@@ -134,7 +134,7 @@
     (setq indent-tabs-mode nil)
     (setq flycheck-gcc-language-standard "c++11")
     (setq flycheck-clang-language-standard "c++11"))
-  (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+  (add-hook 'c++-mode-hook #'my-c++-mode-hook)
   )
 
 (use-package tuareg
@@ -148,7 +148,7 @@
   :diminish yas-minor-mode
   :config
   (yas-global-mode 1)
-  (add-to-list 'company-backends 'company-yasnippet)
+  (add-to-list 'company-backends #'company-yasnippet)
   )
 
 ;; elpa/yasnippet-snippets-20190316.1019/snippets/ に以下をcloneしておく
@@ -202,8 +202,8 @@
     "Empty replacement for `markdown-fontify-buffer-wiki-links` due to hanging bug."
     (interactive))
   (eval-after-load "markdown-mode"
-    '(progn (fset 'markdown-fontify-buffer-wiki-links
-                  'leo-markdown-fontify-buffer-wiki-links-empty)))
+    '(progn (fset #'markdown-fontify-buffer-wiki-links
+                  #'leo-markdown-fontify-buffer-wiki-links-empty)))
   :custom
   (markdown-command "markdown")
   ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
@@ -614,7 +614,7 @@
     (interactive)
     (let ((kill-target (current-buffer))
           (check-file (dired-get-filename nil t)))
-      (funcall 'dired-find-file)
+      (funcall #'dired-find-file)
       (if (file-directory-p check-file)
           (kill-buffer kill-target))))
   (defun dired-my-up-directory (&optional other-window)
@@ -717,8 +717,8 @@ Creates a buffer if necessary."
   ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
   (defun set-whitespace-line-column-80 () (setq whitespace-line-column 80))
   (defun set-whitespace-line-column-100 () (setq whitespace-line-column 100))
-  (add-hook 'java-mode-hook 'set-whitespace-line-column-100)
-  (add-hook 'change-major-mode-hook 'set-whitespace-line-column-80)
+  (add-hook 'java-mode-hook #'set-whitespace-line-column-100)
+  (add-hook 'change-major-mode-hook #'set-whitespace-line-column-80)
   )
 
 (use-package elisp-mode
