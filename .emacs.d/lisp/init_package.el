@@ -31,7 +31,6 @@
                ("C-f" . company-complete-selection)
                ("C-d" . company-show-doc-buffer)
                ("C-s" . company-filter-candidates)
-               ("C-h" . backward-delete-char)
                )))
 
 (use-package company-quickhelp

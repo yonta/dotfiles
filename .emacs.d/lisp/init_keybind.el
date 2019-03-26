@@ -4,8 +4,10 @@
 ;; This file contains settings set of keybindings for Emacs.
 
 ;;; C-hをバックスペースにする
-(global-set-key (kbd "C-h") 'backward-delete-char)
-(define-key isearch-mode-map (kbd "C-h") 'isearch-del-char)
+;; global-set-keyより、key自体を交換するのがよい
+;; https://qiita.com/takc923/items/e279f223dbb4040b1157
+;; http://www.geocities.co.jp/SiliconValley-Bay/9285/EMACS-JA/emacs_461.html
+(define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 ;;; M-hをバックスペース＆インデント削除にする
 (global-set-key (kbd "M-h") 'delete-indentation)
 ;;; M-&を正規表現置換にする
