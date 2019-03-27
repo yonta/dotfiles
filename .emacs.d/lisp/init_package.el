@@ -138,9 +138,8 @@
 
 (use-package tuareg
   :ensure t
-  :mode (("\\.ml[ip]?\\'" . tuareg-mode)
-         ("\\.eliomi?\\'" . tuareg-mode)
-         ))
+  :defer t
+  )
 
 (use-package yasnippet
   :ensure t
@@ -159,7 +158,7 @@
 
 (use-package arduino-mode
   :ensure t
-  :mode "\\.ino\\'"
+  :defer t
   ;; TODO: set compiler and libraries path by environment
   )
 
@@ -217,7 +216,7 @@
 
 (use-package csv-mode
   :ensure t
-  :mode "\\.csv\\'"
+  :defer t
   )
 
 (use-package sml-mode
@@ -291,13 +290,13 @@
 
 (use-package gnuplot-mode
   :ensure t
-  ;; .gp .gpl .gnuplot .plt
-  :mode ("\\.gpl?\\'" "\\.gnuplot\\'" "\\.plt\\'")
+  ;; .gpl .plt、.gp .gnuplotはautoloadで登録済み
+  :mode ("\\.gpl\\'" "\\.plt\\'")
   )
 
 (use-package graphviz-dot-mode
   :ensure t
-  :mode "\\.gv\\'"
+  :defer t
   )
 
 (use-package google-translate
