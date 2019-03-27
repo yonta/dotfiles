@@ -519,17 +519,26 @@
   :diminish git-gutter+-mode
   :config
   (global-git-gutter+-mode)
-  (git-gutter+-toggle-fringe)
-  (set-face-foreground 'git-gutter+-modified "orange")
+  (set-face-foreground 'git-gutter+-added "lime green")
+  (set-face-foreground 'git-gutter+-modified "blue")
   (fringe-helper-define 'git-gutter-fr+-modified nil
+  "X......."
+  "XXXX...."
+  "XXXXXX.."
+  "XXXXXXXX"
+  "XXXXXXXX"
+  "XXXXXX.."
+  "XXXX...."
+  "XX......")
+  (fringe-helper-define 'git-gutter-fr+-deleted nil
+  "........"
+  "........"
+  "........"
   "XXXXXXXX"
   "XXXXXXXX"
   "XXXXXXXX"
-  "XXXXXXXX"
-  "XXXXXXXX"
-  "XXXXXXXX"
-  "XXXXXXXX"
-  "XXXXXXXX")
+  "........"
+  "........")
   )
 
 (use-package dumb-jump
