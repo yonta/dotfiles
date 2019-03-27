@@ -108,6 +108,7 @@
          '((company-clang
             :with company-c-headers company-files company-dabbrev-code
             company-yasnippet)))
+    (local-set-key (kbd "C-c C-c") #'quickrun)
     )
   (add-hook 'c-mode-hook #'my-c-mode-hook)
   (defun my-c++-mode-hook ()
@@ -122,7 +123,7 @@
          '((company-clang
             :with company-c-headers company-files company-dabbrev-code
             company-yasnippet)))
-    (local-set-key (kbd "C-c c") #'quickrun)
+    (local-set-key (kbd "C-c C-c") #'quickrun)
     )
   (add-hook 'c++-mode-hook #'my-c++-mode-hook)
   )
