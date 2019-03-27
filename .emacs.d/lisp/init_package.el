@@ -15,13 +15,20 @@
   :ensure t
   :diminish company-mode
   :init
-  (global-company-mode 1)
   (setq completion-ignore-case t)
   :custom
   (company-idle-delay 0)
   (company-minimum-prefix-length 2)
   (company-selection-wrap-around t)
   (company-require-match 'never)
+  (company-dabbrev-ignore-case t)
+  (company-dabbrev-code-ignore-case t)
+  (company-etags-ignore-case t)
+  (company-transformers '(company-sort-by-occurrence))
+  :config
+  (global-company-mode 1)
+  (bind-key [remap completion-at-point] #'company-complete company-mode-map)
+  (setq company-tooltip-align-annotations t)
   :bind (("C-M-i" . company-complete)
          (:map company-active-map
                ("C-n" . company-select-next)
@@ -37,23 +44,16 @@
   :ensure t
   :defer t
   :after company
-  :init
+  :config
   (company-quickhelp-mode t)
   :custom
   (company-quickhelp-delay 1)
-  (company-transformers '(company-sort-by-backend-importance))
   )
 
-(use-package company-irony-c-headers
+(use-package company-c-headers
   :ensure t
   :defer t
-  :after (company irony)
-  )
-
-(use-package company-irony
-  :ensure t
-  :defer t
-  :after (company irony)
+  :after company
   )
 
 (use-package company-arduino
@@ -67,13 +67,8 @@
 (use-package company-jedi
   :ensure t
   :defer t
-  :custom
-  ;;(jedi:complete-on-dot t)
-  (jedi:use-shortcuts t) ; 定義ジャンプM-.とM-,
-  :config
-  (add-to-list 'company-backends 'company-jedi)
-  :hook (python-mode . jedi:setup)
-   )
+  :after (company jedi-core)
+  )
 
 (use-package flycheck
    :ensure t
@@ -87,18 +82,6 @@
                ("M-p" . flycheck-previous-error)
                ("M-n" . flycheck-next-error)
                ))
-
-;; libclangが必要
-(use-package irony
-  :ensure t
-  :defer t
-  )
-
-(use-package flycheck-irony
-  :ensure t
-  :defer t
-  :after (flycheck irony)
-  )
 
 ;; aptかpipでflake8を入れておく
 ;; どちらを使うかを選択しないといけない、闇
@@ -117,13 +100,20 @@
   )
 
 (use-package cc-mode
+  :defer t
+  :after (company-clang company-c-headers)
   :init
   (defun my-c-mode-hook ()
     "Setting for c-mode."
     (c-set-style "k&r")
     (setq c-basic-offset 2)
     (setq tab-width c-basic-offset)
-    (setq indent-tabs-mode nil))
+    (setq indent-tabs-mode nil)
+    (set (make-local-variable 'company-backends)
+         '((company-clang
+            :with company-c-headers company-files company-dabbrev-code
+            company-yasnippet)))
+    )
   (add-hook 'c-mode-hook #'my-c-mode-hook)
   (defun my-c++-mode-hook ()
     "Setting for c++-mode."
@@ -132,7 +122,13 @@
     (setq tab-width c-basic-offset)
     (setq indent-tabs-mode nil)
     (setq flycheck-gcc-language-standard "c++11")
-    (setq flycheck-clang-language-standard "c++11"))
+    (setq flycheck-clang-language-standard "c++11")
+    (set (make-local-variable 'company-backends)
+         '((company-clang
+            :with company-c-headers company-files company-dabbrev-code
+            company-yasnippet)))
+    (local-set-key (kbd "C-c c") #'quickrun)
+    )
   (add-hook 'c++-mode-hook #'my-c++-mode-hook)
   )
 
@@ -144,6 +140,7 @@
 (use-package yasnippet
   :ensure t
   :diminish yas-minor-mode
+  :after company
   :config
   (yas-global-mode 1)
   (add-to-list 'company-backends #'company-yasnippet)
@@ -164,13 +161,22 @@
 
 (use-package python-mode
   :ensure t
+  :mode "\\.py\\'"
   :custom
   (indent-tabs-mode nil)
   (indent-level 4)
   (python-indent 4)
   (tab-width 4)
-  :bind (:map python-mode-map ("C-c c" . quickrun))
-  )
+  :config
+  ;; local-variableだとうまくいかなかった
+  (add-to-list 'company-backends
+               '(company-jedi
+                 :with company-files company-dabbrev-code company-yasnippet))
+  :bind (:map python-mode-map
+              ("C-c C-c" . quickrun)
+              ("C-c c" . py-execute-buffer)
+              ("<tab>" . indent-for-tab-command)
+              ))
 
 ;; aptかpipでautopep8を入れておく
 ;; aptでautopep8をいれておく
@@ -222,12 +228,26 @@
 (use-package sml-mode
   :ensure t
   :mode ("\\.smi\\'" "\\.ppg\\'")
+  :after company-mlton
   :interpreter "smlsharp"
   :custom
   (sml-indent-level 2)
   (sml-indent-args 2)
   ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
   (sml-program-name "smlsharp")
+  :config
+  (add-hook 'sml-mode-hook
+            (lambda ()
+              (set (make-local-variable 'company-backends)
+                   '((company-mlton-keyword
+                      company-mlton-basis
+                      :with company-files company-dabbrev-code
+                      company-yasnippet)))))
+  )
+
+(use-package company-mlton
+  :config
+  (company-mlton-init)
   )
 
 ;; aptでgnupgを入れておく
@@ -730,9 +750,12 @@ Creates a buffer if necessary."
 
 (use-package elisp-mode
   :config
-  ;; emacs-lisp-modeだとcompletion-at-pointにバインドされてるので、
-  ;; companyを優先する。
-  (local-unset-key (kbd "C-M-i"))
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (set (make-local-variable 'company-backends)
+                   '((company-capf
+                      :with company-files company-dabbrev-code
+                      company-yasnippet)))))
   )
 
 ;;; init_package2.el

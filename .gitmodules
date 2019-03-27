@@ -1,0 +1,3 @@
+[submodule ".emacs.d/lisp/company-mlton"]
+	path = .emacs.d/lisp/company-mlton
+	url = git@github.com:MatthewFluet/company-mlton.git
