@@ -70,29 +70,24 @@
   :after (company jedi-core)
   )
 
+;; aptかpipでflake8を入れておく
+;; どちらを使うかを選択しないといけない、闇
+;; aptでflake8をいれておく
 (use-package flycheck
    :ensure t
    :diminish flycheck-mode
+   :custom
+   (flycheck-python-flake8-executable "flake8")
    :init
    ;; 対応するメジャーモードでオート起動する
    (global-flycheck-mode)
+   :config
    ;; エラー箇所に背景色をつける
    (set-face-background 'flycheck-error "pink")
    :bind (:map flycheck-mode-map
                ("M-p" . flycheck-previous-error)
                ("M-n" . flycheck-next-error)
                ))
-
-;; aptかpipでflake8を入れておく
-;; どちらを使うかを選択しないといけない、闇
-;; aptでflake8をいれておく
-(use-package flycheck-pyflakes
-  :ensure t
-  :defer t
-  :if (executable-find "flake8")
-  :init
-  ;; (require 'flycheck-pyflakes)
-  )
 
 (use-package flycheck-ocaml
   :ensure t
