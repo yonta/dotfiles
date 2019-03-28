@@ -754,4 +754,10 @@ Creates a buffer if necessary."
                       company-yasnippet)))))
   )
 
+(use-package winner-mode
+  :init
+  (winner-mode 1)
+  :bind (("C-M-<left>" . winner-undo)
+         ("C-M-<right>" . winner-redo)))
+
 ;;; init_package2.el
