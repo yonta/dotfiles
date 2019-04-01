@@ -37,7 +37,8 @@
                ("<backtab>" . company-select-previous)
                ("C-f" . company-complete-selection)
                ("C-d" . company-show-doc-buffer)
-               ("C-s" . company-filter-candidates))))
+               ("C-s" . company-filter-candidates)
+               ("C-o" . company-other-backend))))
 
 (use-package company-quickhelp
   :ensure t
