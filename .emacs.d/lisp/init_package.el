@@ -16,6 +16,7 @@
   :diminish company-mode
   :init
   (setq completion-ignore-case t)
+  (global-company-mode 1)
   :custom
   (company-idle-delay 0)
   (company-minimum-prefix-length 2)
@@ -26,7 +27,6 @@
   (company-etags-ignore-case t)
   (company-transformers '(company-sort-by-occurrence))
   :config
-  (global-company-mode 1)
   (bind-key [remap completion-at-point] #'company-complete company-mode-map)
   (setq company-tooltip-align-annotations t)
   :bind (("C-M-i" . company-complete)
