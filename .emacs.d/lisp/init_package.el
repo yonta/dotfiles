@@ -125,7 +125,7 @@
   :init
   (yas-global-mode 1)
   :config
-  (add-to-list 'company-backends #'company-yasnippet))
+  (add-to-list 'company-backends #'company-yasnippet t))
 
 ;; elpa/yasnippet-snippets-20190316.1019/snippets/ に以下をcloneしておく
 ;; https://github.com/jasperla/yasnippet-sml-mode
