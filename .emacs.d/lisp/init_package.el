@@ -217,7 +217,8 @@
                       company-yasnippet))))))
 
 (use-package company-mlton
-  :hook (sml-mode . company-mlton-init))
+  :config
+  (company-mlton-basis-autodetect))
 
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
