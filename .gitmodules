@@ -2,3 +2,7 @@
 	path = .emacs.d/lisp/company-mlton
 	url = git@github.com:MatthewFluet/company-mlton.git
 	ignore = dirty
+[submodule ".emacs.d/snippets/sml-mode"]
+	path = .emacs.d/snippets/sml-mode
+	url = git@github.com:yonta/yasnippet-sml-mode.git
+	ignore = dirty
