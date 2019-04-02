@@ -508,6 +508,10 @@
   :config
   (volatile-highlights-mode t))
 
+(use-package expand-region
+  :ensure t
+  :bind (("C-`" . er/expand-region)))
+
 (use-package shell
   :init
   (bash-completion-setup)
