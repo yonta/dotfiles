@@ -30,3 +30,6 @@
 ;;; Emacsサーバーを起動する
 (require 'server)
 (unless (server-running-p) (server-start))
+
+;;; Emacsのバッファ・ウィンドウ状態を保存・復元する
+(desktop-save-mode 1)
