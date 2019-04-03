@@ -76,8 +76,8 @@ to encrypt the buffer when saving.")
 (defvar alpaca-passphrase nil)
 
 (mapcar 'make-variable-buffer-local
-(list 'alpaca-rendezvous
-'alpaca-passphrase))
+        (list 'alpaca-rendezvous
+              'alpaca-passphrase))
 
 (defvar alpaca-process-encryption "*gpg encryption*")
 (defvar alpaca-process-decryption "*gpg decryption*")
@@ -93,9 +93,9 @@ to encrypt the buffer when saving.")
 (defun alpaca-file-newer (t1 t2)
   (and t1
        (or (null t2)
-(> (nth 0 t1) (nth 0 t2))
-(and (= (nth 0 t1) (nth 0 t2))
-(> (nth 1 t1) (nth 1 t2))))))
+           (> (nth 0 t1) (nth 0 t2))
+           (and (= (nth 0 t1) (nth 0 t2))
+                (> (nth 1 t1) (nth 1 t2))))))
 
 (defalias 'alpaca-make-temp-file
   (if (fboundp 'make-temp-file) 'make-temp-file 'make-temp-name))
@@ -116,12 +116,12 @@ to encrypt the buffer when saving.")
   (catch 'loop
     (while path
       (if (file-exists-p (expand-file-name file (car path)))
-(throw 'loop t)
-(setq path (cdr path))))))
+          (throw 'loop t)
+        (setq path (cdr path))))))
 
 (defun alpaca-buffer-hack ()
   (let ((pass alpaca-passphrase) ;; major mode kills local variables
-(buffer-file-name (file-name-sans-extension buffer-file-name)))
+        (buffer-file-name (file-name-sans-extension buffer-file-name)))
     (set-auto-mode)
     (hack-local-variables)
     ;; Since save-buffer() is not used, we don't have to take care of
@@ -133,11 +133,11 @@ to encrypt the buffer when saving.")
 (defun alpaca-after-find-file ()
   (when (string-match alpaca-regex-suffix (buffer-file-name))
     (if (alpaca-which alpaca-program exec-path)
-(if (= (buffer-size) 0)
-(progn
-(set-auto-mode)
-(alpaca-buffer-hack))
-(alpaca-insert-file-contents))
+        (if (= (buffer-size) 0)
+            (progn
+              (set-auto-mode)
+              (alpaca-buffer-hack))
+          (alpaca-insert-file-contents))
       (kill-buffer (current-buffer))
       (message "\"%s\" does not exist" alpaca-program))))
 
@@ -150,37 +150,37 @@ To save the buffer and encrypt the file, type \\<alpaca-map>\\[alpaca-save-buffe
 See also 'alpaca-save-buffer'."
   (interactive)
   (let* ((process-connection-type t) ;; 'pty
-(buf (current-buffer))
-(file (buffer-file-name))
-(tfile (alpaca-make-temp-file file))
-(oldt (alpaca-file-modified-time tfile))
-newt pro)
+         (buf (current-buffer))
+         (file (buffer-file-name))
+         (tfile (alpaca-make-temp-file file))
+         (oldt (alpaca-file-modified-time tfile))
+         newt pro)
     (unwind-protect
-(progn
-(setq pro (alpaca-start-process alpaca-process-decryption buf alpaca-program
-"-d" "--yes" "--output" tfile file))
-(set-process-filter pro 'alpaca-filter)
-(set-process-sentinel pro 'alpaca-sentinel)
-(setq alpaca-rendezvous t)
-(while alpaca-rendezvous
-(sit-for 0.1)
-(discard-input))
-(setq newt (alpaca-file-modified-time tfile))
-(cond
-((alpaca-file-newer newt oldt)
-(erase-buffer)
-(if (default-value 'enable-multibyte-characters)
-(set-buffer-multibyte t))
-(let ((coding-system-for-read 'undecided))
-(insert-file-contents tfile))
-(alpaca-buffer-hack)
-(set-buffer-file-coding-system last-coding-system-used)
-(setq buffer-undo-list nil)
-(set-buffer-modified-p nil))
-(t
-(switch-to-buffer (car (buffer-list)))
-(kill-buffer buf)))
-(set (make-variable-buffer-local 'alpaca-p) t))
+        (progn
+          (setq pro (alpaca-start-process alpaca-process-decryption buf alpaca-program
+                                          "-d" "--yes" "--output" tfile file))
+          (set-process-filter pro 'alpaca-filter)
+          (set-process-sentinel pro 'alpaca-sentinel)
+          (setq alpaca-rendezvous t)
+          (while alpaca-rendezvous
+            (sit-for 0.1)
+            (discard-input))
+          (setq newt (alpaca-file-modified-time tfile))
+          (cond
+           ((alpaca-file-newer newt oldt)
+            (erase-buffer)
+            (if (default-value 'enable-multibyte-characters)
+                (set-buffer-multibyte t))
+            (let ((coding-system-for-read 'undecided))
+              (insert-file-contents tfile))
+            (alpaca-buffer-hack)
+            (set-buffer-file-coding-system last-coding-system-used)
+            (setq buffer-undo-list nil)
+            (set-buffer-modified-p nil))
+           (t
+            (switch-to-buffer (car (buffer-list)))
+            (kill-buffer buf)))
+          (set (make-variable-buffer-local 'alpaca-p) t))
       (alpaca-delete-file tfile))))
 
 (defun alpaca-setup-keymap ()
@@ -204,31 +204,31 @@ See also 'alpaca-find-file'."
   (if (not (buffer-modified-p))
       (message "(No changes need to be saved)")
     (let* ((file (buffer-file-name))
-(oldt (alpaca-file-modified-time file))
-(tfile (alpaca-make-temp-file file))
-(buf (current-buffer))
-(process-connection-type t) ;; 'pty
-pro newt)
+           (oldt (alpaca-file-modified-time file))
+           (tfile (alpaca-make-temp-file file))
+           (buf (current-buffer))
+           (process-connection-type t) ;; 'pty
+           pro newt)
       (unwind-protect
-(progn
-(write-region (point-min) (point-max) tfile nil 'no-msg)
-(setq pro (alpaca-start-process alpaca-process-encryption buf alpaca-program
-"-c" "--cipher-algo" alpaca-cipher
-"--yes" "--output" file tfile))
-(set-process-filter pro 'alpaca-filter)
-(set-process-sentinel pro 'alpaca-sentinel)
-(setq alpaca-rendezvous t)
-(while alpaca-rendezvous
-(sit-for 0.1)
-(discard-input))
-(setq newt (alpaca-file-modified-time file))
-(if (not newt)
-(debug)
-(when (alpaca-file-newer newt oldt)
-(set-buffer-modified-p nil)
-(set-visited-file-modtime)
-(message (format "Wrote %s with GnuPG" file)))))
-(alpaca-delete-file tfile)))))
+          (progn
+            (write-region (point-min) (point-max) tfile nil 'no-msg)
+            (setq pro (alpaca-start-process alpaca-process-encryption buf alpaca-program
+                                            "-c" "--cipher-algo" alpaca-cipher
+                                            "--yes" "--output" file tfile))
+            (set-process-filter pro 'alpaca-filter)
+            (set-process-sentinel pro 'alpaca-sentinel)
+            (setq alpaca-rendezvous t)
+            (while alpaca-rendezvous
+              (sit-for 0.1)
+              (discard-input))
+            (setq newt (alpaca-file-modified-time file))
+            (if (not newt)
+                (debug)
+              (when (alpaca-file-newer newt oldt)
+                (set-buffer-modified-p nil)
+                (set-visited-file-modtime)
+                (message (format "Wrote %s with GnuPG" file)))))
+        (alpaca-delete-file tfile)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -238,11 +238,11 @@ pro newt)
 (defun alpaca-read-passwd (prompt &optional encrypt-p)
   (if (and alpaca-cache-passphrase alpaca-passphrase)
       (progn
-(sit-for 0.01) ;; Emacs 20.7
-alpaca-passphrase)
+        (sit-for 0.01) ;; Emacs 20.7
+        alpaca-passphrase)
     (let ((pass (read-passwd prompt)))
       (if (and alpaca-cache-passphrase (not encrypt-p))
-(setq alpaca-passphrase pass))
+          (setq alpaca-passphrase pass))
       pass)))
 
 (defun alpaca-debug (string)
@@ -253,27 +253,27 @@ alpaca-passphrase)
 
 (defun alpaca-filter (process string)
   (let* ((name (process-name process))
-(regex (concat "^" (regexp-quote alpaca-process-encryption)))
-(encrypt-p (string-match regex name))
-(buf (process-buffer process)))
+         (regex (concat "^" (regexp-quote alpaca-process-encryption)))
+         (encrypt-p (string-match regex name))
+         (buf (process-buffer process)))
     (when (get-buffer buf)
       (save-excursion
-(set-buffer buf)
-(cond
-((string-match "invalid passphrase" string)
-(message "Passphrase mismatch!")
-(setq alpaca-passphrase nil))
-((string-match "bad key" string)
-(message "Passphrase is wrong!")
-(setq alpaca-passphrase nil))
-((string-match "Enter passphrase:" string)
-(process-send-string process (alpaca-read-passwd "Passphrase: " encrypt-p))
-(process-send-string process "\n"))
-((string-match "Repeat passphrase:" string)
-(process-send-string process (alpaca-read-passwd "Passphrase again: "))
-(process-send-string process "\n"))
-((string-match "exiting" string)
-(setq alpaca-rendezvous nil)))))))
+        (set-buffer buf)
+        (cond
+         ((string-match "invalid passphrase" string)
+          (message "Passphrase mismatch!")
+          (setq alpaca-passphrase nil))
+         ((string-match "bad key" string)
+          (message "Passphrase is wrong!")
+          (setq alpaca-passphrase nil))
+         ((string-match "Enter passphrase:" string)
+          (process-send-string process (alpaca-read-passwd "Passphrase: " encrypt-p))
+          (process-send-string process "\n"))
+         ((string-match "Repeat passphrase:" string)
+          (process-send-string process (alpaca-read-passwd "Passphrase again: "))
+          (process-send-string process "\n"))
+         ((string-match "exiting" string)
+          (setq alpaca-rendezvous nil)))))))
 
 (defun alpaca-sentinel (process event)
   (let ((buf (process-buffer process)))
@@ -288,8 +288,8 @@ alpaca-passphrase)
 
 (defun alpaca-kill-buffer ()
   (when (and (boundp 'alpaca-p)
-(eq alpaca-p t)
-(buffer-modified-p))
+             (eq alpaca-p t)
+             (buffer-modified-p))
     (alpaca-save-buffer)))
 
 (add-hook 'kill-buffer-hook 'alpaca-kill-buffer)
@@ -303,12 +303,12 @@ alpaca-passphrase)
   (when (file-exists-p file)
     (with-temp-buffer
       (let ((coding-system-for-write 'binary)
-(size (nth 7 (file-attributes file)))
-(i 0))
-(while (< i size)
-(insert 0)
-(setq i (1+ i)))
-(write-region (point-min) (point-max) file nil 'no-msg)))
+            (size (nth 7 (file-attributes file)))
+            (i 0))
+        (while (< i size)
+          (insert 0)
+          (setq i (1+ i)))
+        (write-region (point-min) (point-max) file nil 'no-msg)))
     (delete-file file)))
 
 (provide 'alpaca)
