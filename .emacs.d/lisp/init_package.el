@@ -500,7 +500,8 @@
   :ensure t
   :diminish volatile-highlights-mode
   :config
-  (volatile-highlights-mode t))
+  (volatile-highlights-mode t)
+  (set-face-background 'vhl/default-face "light cyan"))
 
 (use-package expand-region
   :ensure t
