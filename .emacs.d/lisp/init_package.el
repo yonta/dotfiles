@@ -353,13 +353,6 @@
                       :background "light gray"
                       :foreground "dim gray"))
 
-(use-package highlight-current-line
-  :ensure t
-  :if window-system ; '-nw'で起動時は文字が見えなくなるのでオフにする
-  :config
-  (highlight-current-line-on t)
-  (set-face-background 'highlight-current-line-face "gray92"))
-
 ;; "#ff0000"などに色をつける
 (use-package rainbow-mode
   :ensure t
@@ -689,5 +682,13 @@ Creates a buffer if necessary."
   (winner-mode 1)
   :bind (("C-M-<left>" . winner-undo)
          ("C-M-<right>" . winner-redo)))
+
+;; hl-line+.elを手に入れてlispフォルダにいれておく
+;; https://www.emacswiki.org/emacs/download/hl-line%2b.el
+(use-package hl-line+
+  :config
+  (toggle-hl-line-when-idle 1)
+  (hl-line-when-idle-interval 4)
+  (set-face-background hl-line-face "light cyan"))
 
 ;;; init_package2.el
