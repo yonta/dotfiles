@@ -175,6 +175,7 @@
   :ensure t
   :defer t
   :if (executable-find "markdown")
+  :mode ("README\\.md\\'" . gfm-mode)
   :config
   ;; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
   ;; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
