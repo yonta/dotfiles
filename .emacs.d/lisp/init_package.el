@@ -507,6 +507,14 @@
   :ensure t
   :bind (("C-`" . er/expand-region)))
 
+(use-package async
+  :ensure t
+  :no-require
+  :custom
+  (async-bytecomp-allowed-packages '(all))
+  :config
+  (async-bytecomp-package-mode 1))
+
 (use-package shell
   :init
   (bash-completion-setup)
