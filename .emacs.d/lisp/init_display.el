@@ -1,7 +1,3 @@
-;;; パスワードを隠す
-(add-hook 'comint-output-filter-functions
-          'comint-watch-for-password-prompt)
-
 ;;; 行番号と列番号を表示する
 (line-number-mode t)
 (column-number-mode t)
