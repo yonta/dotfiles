@@ -12,8 +12,6 @@
 (global-set-key (kbd "M-h") 'delete-indentation)
 ;;; M-&を正規表現置換にする
 (global-set-key (kbd "M-&") 'replace-regexp)
-;;; M-?をヘルプに
-(global-set-key (kbd "M-?") 'help-for-help)
 ;;; C-c dでカーソル位置のシンボルのヘルプを表示
 (global-set-key (kbd "C-c d") 'describe-symbol)
 ;;; C-cgをgrep-findに
