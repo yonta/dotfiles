@@ -52,10 +52,4 @@
 ;;; 同じ名前のバッファをわかりやすく名前付けする
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
-;;; 行番号を常に表示する
-(if (version<= "26" emacs-version)
-    (progn (global-display-line-numbers-mode 1))
-  (progn (global-linum-mode t)
-         (setq linum-format "%4d ")))
-
 ;;; init_display.el ends here

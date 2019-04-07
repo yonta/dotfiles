@@ -728,4 +728,15 @@ at point."
   (hl-line-when-idle-interval 4)
   (set-face-background hl-line-face "light cyan"))
 
+(use-package display-line-numbers
+  :if (version<= "26" emacs-version) ; Emacs26以降
+  :init
+  (global-display-line-numbers-mode 1))
+
+(use-package linum
+  :if (version< emacs-version "26") ; Emacs25以下
+  :init
+  (global-linum-mode 1)
+  (setq linum-format "%4d "))
+
 ;;; init_package.el ends here
