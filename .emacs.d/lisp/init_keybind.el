@@ -1,7 +1,9 @@
 ;;; init-keybinding.el --- settings about keybindigns
 
 ;;; Commentary:
-;; This file contains settings set of keybindings for Emacs.
+;; This is settings about keybindings.
+
+;;; Code:
 
 ;;; C-hをバックスペースにする
 ;; global-set-keyより、key自体を交換するのがよい

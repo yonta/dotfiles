@@ -1,3 +1,10 @@
+;;; init_behavior.el --- settings about behavior
+
+;;; Commentary:
+;; This is settings about behavior
+
+;;; Code:
+
 ;;; 起動時のメッセージを表示しない
 (setq inhibit-startup-message t)
 
@@ -30,3 +37,5 @@
 
 ;;; Emacsのバッファ・ウィンドウ状態を保存・復元する
 (desktop-save-mode 1)
+
+;;; init_behavior.el ends here

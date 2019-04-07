@@ -1,3 +1,10 @@
+;;; init_display.el --- settings for display
+
+;;; Commentary:
+;; This is settings about display.
+
+;;; Code:
+
 ;;; 行番号と列番号を表示する
 (line-number-mode t)
 (column-number-mode t)
@@ -50,3 +57,5 @@
     (progn (global-display-line-numbers-mode 1))
   (progn (global-linum-mode t)
          (setq linum-format "%4d ")))
+
+;;; init_display.el ends here

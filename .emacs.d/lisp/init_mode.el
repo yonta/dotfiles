@@ -1,3 +1,11 @@
+;;; init_mode --- settings about mode
+
+;;; Commentary:
+;; This is settings about mode.
+;; It will be migrated to init_package.
+
+;;; Code:
+
 ;;; タブ文字を禁止してスペースを使う
 (setq-default tab-width 4 indent-tabs-mode nil)
 
@@ -49,3 +57,5 @@
   (goto-char (point-max))
   (message "done."))
 (add-hook 'find-file-not-found-hooks 'auto-insert)
+
+;;; init_mode.el ends here

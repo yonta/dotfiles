@@ -1,3 +1,10 @@
+;;; custom --- customization for each PC
+
+;;; Commentary:
+;; Customization for each PC to separate git diff.
+
+;;; Code:
+
 ;;; ウィンドウについての設定
 (setq default-frame-alist
       (append (list '(top . 0) ; 起動時の表示位置（上から）
@@ -19,3 +26,5 @@
        'japanese-jisx0208
        '("VL ゴシック" . "unicode-bmp")
        )))
+
+;;; init_custom.el ends here

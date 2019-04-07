@@ -1,5 +1,9 @@
 ;;; init_package --- settings about packages
+
 ;;; Commentary:
+;; This is settings about package.
+;; It is written using `use-package` package.
+
 ;;; Code:
 
 (unless (package-installed-p 'use-package) (package-install 'use-package))
@@ -724,4 +728,4 @@ at point."
   (hl-line-when-idle-interval 4)
   (set-face-background hl-line-face "light cyan"))
 
-;;; init_package2.el
+;;; init_package.el ends here
