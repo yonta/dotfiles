@@ -658,9 +658,19 @@ Creates a buffer if necessary."
                 (size-h 9 -1 :right) " " (mode 16 16 :left :elide) " "
                 filename-and-process)))
   ;; ibuffer-find-fileを使わずにcounselを使う
-  (define-key ibuffer-mode-map (kbd "C-x C-f") nil)
+  (defun ibuffer-find-file-by-counsel ()
+    "Like `counsel-find-file', but default to the directory of the buffer
+at point."
+    (interactive)
+    (let ((default-directory
+            (let ((buf (ibuffer-current-buffer)))
+              (if (buffer-live-p buf)
+                  (with-current-buffer buf
+                    default-directory)
+                default-directory))))
+      (counsel-find-file default-directory)))
   :bind (("C-x C-b" . ibuffer)
-         :map ibuffer-mode-map ("C-x f" . ibuffer-find-file)))
+         :map ibuffer-mode-map ("C-x C-f" . 'ibuffer-find-file-by-counsel)))
 
 (use-package whitespace
   :diminish global-whitespace-mode
