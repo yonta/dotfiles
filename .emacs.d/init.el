@@ -1,5 +1,5 @@
 (setq gc-cons-threshold 134217728)
-(require 'cl)
+(require 'cl-lib)
 
 ;;; package
 (require 'package)
