@@ -2,17 +2,13 @@
 (setq-default tab-width 4 indent-tabs-mode nil)
 
 ;;; Sticky Buffer Mode (minor mode)、バッファを固定する
-(defvar sticky-buffer-previous-header-line-format)
+;; 参考： https://www.emacswiki.org/emacs/StickyBufferMode
+;; sticky-windows.elがあるが、メンテナがいない状態らしい
+;; 参考： https://www.emacswiki.org/emacs/StickyWindows
 (define-minor-mode sticky-buffer-mode
   "Make the current window always display this buffer."
   nil " sticky" nil
-  (if sticky-buffer-mode
-      (progn
-        (set (make-local-variable 'sticky-buffer-previous-header-line-format)
-             header-line-format)
-        (set-window-dedicated-p (selected-window) sticky-buffer-mode))
-    (set-window-dedicated-p (selected-window) sticky-buffer-mode)
-    (setq header-line-format sticky-buffer-previous-header-line-format)))
+  (set-window-dedicated-p (selected-window) sticky-buffer-mode))
 
 ;;; autoinsertを使ってファイル作成時にテンプレートを使う
 (require 'autoinsert)
