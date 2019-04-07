@@ -641,7 +641,7 @@ Creates a buffer if necessary."
   :commands ansi-color-for-comint-mode-on
   :hook (shell-mode . ansi-color-for-comint-mode-on))
 
-(use-package ibuf-ext
+(use-package ibuffer
   :config
   ;; キロメガでサイズ表示する
   ;; 参考： https://www.emacswiki.org/emacs/IbufferMode
