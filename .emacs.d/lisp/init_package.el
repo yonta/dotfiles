@@ -8,11 +8,11 @@
 
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 
-;; use-packageの:diminishを有効にし、モードラインをスッキリさせる
-(use-package diminish :ensure t :defer t)
-
 ;; 起動時間を計測するには、以下を有効にして`use-package-report`を実行する
 ;; (setq use-package-compute-statistics t)
+
+;; use-packageの:diminishを有効にし、モードラインをスッキリさせる
+(use-package diminish :ensure t :defer t)
 
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
 (use-package company
