@@ -739,4 +739,41 @@ at point."
   (global-linum-mode 1)
   (setq linum-format "%4d "))
 
+(use-package autoinsert
+  :init
+  (auto-insert-mode 1)
+  (defvar template-replacements-alists
+    '(("%file%" . (lambda () (file-name-nondirectory (buffer-file-name))))
+      ("%without-test%" .
+       (lambda ()
+         ((lambda (arg)(replace-regexp-in-string "Test$" "" arg))
+          (file-name-sans-extension
+           (file-name-nondirectory (buffer-file-name))))))
+      ("%file-without-ext%" .
+       (lambda ()
+         (file-name-sans-extension
+          (file-name-nondirectory (buffer-file-name)))))
+      ("%include-guard%" .
+       (lambda ()
+         (format "%s_H"
+                 (upcase (file-name-sans-extension
+                          (file-name-nondirectory buffer-file-name))))))))
+  (defun my-template ()
+    "Add template string to file."
+    (mapc #'(lambda(c) (progn (goto-char (point-min))
+                              (replace-string (car c) (funcall (cdr c)) nil)))
+          template-replacements-alists)
+    (goto-char (point-min))
+    (message "done."))
+  (setq auto-insert-directory "~/.emacs.d/autoinsert/")
+  (setq auto-insert-alist
+        (nconc '(("Test\\.\\(cpp\\|cc\\|cxx\\)$" .
+                  ["templateTest.cpp" my-template])
+                 ("\\.\\(cpp\\|cc\\|cxx\\)$" . ["template.cpp" my-template])
+                 ("\\.\\(hpp\\|hh\\|hxx\\)$"   . ["template.hpp" my-template])
+                 ("\\.c$"   . ["template.c" my-template])
+                 ("\\.ino$" . ["template.ino" my-template])
+                 ("\\.py$" . ["template.py" my-template]))
+               auto-insert-alist)))
+
 ;;; init_package.el ends here
