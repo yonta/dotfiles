@@ -29,6 +29,7 @@
 (global-set-key (kbd "C-c k") 'windmove-up)
 
 ;;; Shift + カーソル で分割ウィンドウ間を移動
+(require 'windmove)
 (windmove-default-keybindings)
 (setq windmove-wrap-around t)
 
