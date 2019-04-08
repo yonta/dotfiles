@@ -326,29 +326,38 @@
 
 ;; ImageMagickをaptでいれておく
 ;; 非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ
+;; BUG: ディレクトリを開く初回時にサムネイル作成に失敗する。
+;;      diredバッファでimage-dired-create-thumbsを実行して手動でサムネイル
+;;      を作ると、image-diredが問題なく動くようになる。
+;;      --no-initを使って、image-dired+だけで動かすと問題は起こらない。
+;;      何らかの自分のinitファイルが問題を引き起こしている。
+;;      Error-log
+;;      image-diredx--invoke-process: Wrong type argument: processp, [nil 23723 12045 294055 nil image-dired-thumb-queue-run nil nil 600000]
 (use-package image-dired+
   :ensure t
   :if (executable-find "convert")
   :commands image-dired
   :config
-  (image-diredx-async-mode 1)
-  (image-diredx-adjust-mode 1)
+  ;; Emacs26からは非同期なimage-diredがあり、コンフリクトするのでオンしない
+  (if (version< emacs-version "26") ; Emacs25以下
+      (progn (image-diredx-async-mode 1)
+             (image-diredx-adjust-mode 1)))
+  ;; lrでサムネイルが回転するのを削除
+  (define-key image-map (kbd "r") nil)
+  (define-key image-dired-thumbnail-mode-map (kbd "r") nil)
   :bind (:map image-dired-thumbnail-mode-map
               ("C-n" . image-diredx-next-line)
               ("C-p" . image-diredx-previous-line)
-              ("g" . revert-buffer))) ; 更新
-
-(use-package image+
-  :ensure t
-  :if (executable-find "convert")
-  :commands image-mode
-  :config
-  (imagex-global-sticky-mode 1)
-  (imagex-auto-adjust-mode 1)
-  :bind (:map imagex-sticky-binding
-              ("+" . imagex-sticky-zoom-in)
-              ("-" . imagex-sticky-zoom-out)
-              ("0" . imagex-sticky-maximize)))
+              ("<down>" . image-diredx-next-line)
+              ("<up>" . image-diredx-previous-line)
+              ("j" . image-diredx-next-line)
+              ("k" . image-diredx-previous-line)
+              ("h" . image-dired-backward-image)
+              ("l" . image-dired-forward-image)
+              ("g" . revert-buffer) ; 更新
+         :map image-dired-display-image-mode-map
+              ("f" . image-dired-display-current-image-full)
+              ("0" . image-dired-display-current-image-sized)))
 
 ;; アクティブかどうかでバッファーのモードラインの色を変える
 (use-package hiwin
