@@ -464,8 +464,9 @@
 
 (use-package auto-async-byte-compile
   :ensure t
-  ;; :custom
-  ;; (auto-async-byte-compile-exclude-files-regexp "init*")
+  :custom
+  ;; (auto-async-byte-compile-init-file "~/.emacs.d/init.el")
+  (auto-async-byte-compile-exclude-files-regexp "init_package.el")
   :hook (emacs-lisp-mode . enable-auto-async-byte-compile-mode))
 
 (use-package ivy-rich
