@@ -125,7 +125,6 @@
 (use-package yasnippet
   :ensure t
   :diminish yas-minor-mode
-  :after company
   :init
   (yas-global-mode 1)
   :config
