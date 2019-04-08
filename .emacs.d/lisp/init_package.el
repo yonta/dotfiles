@@ -634,7 +634,7 @@ Creates a buffer if necessary."
               ("C-." . toggle-dired-listing-switches)
               ("r" . wdired-change-to-wdired-mode)))
 
-(use-package help-modehelp-mode
+(use-package help-mode
   ;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
   :bind (:map help-mode-map
               ("M-<left>" . help-go-back)
@@ -714,7 +714,7 @@ at point."
                       :with company-files company-dabbrev-code
                       company-yasnippet))))))
 
-(use-package winner-mode
+(use-package winner
   :init
   (winner-mode 1)
   :bind (("C-M-<left>" . winner-undo)
