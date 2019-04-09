@@ -743,7 +743,8 @@ at point."
 (use-package display-line-numbers
   :if (version<= "26" emacs-version) ; Emacs26以降
   :init
-  (global-display-line-numbers-mode 1))
+  (global-display-line-numbers-mode 1)
+  (set-face-background 'line-number "white smoke"))
 
 (use-package linum
   :if (version< emacs-version "26") ; Emacs25以下
