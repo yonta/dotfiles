@@ -42,4 +42,7 @@
 (setq global-mark-ring-max 128)
 (setq mark-ring-max 128)
 
+;;; 同じ内容を重複してkill-ringにいれない
+(setq kill-do-not-save-duplicates t)
+
 ;;; init_behavior.el ends here
