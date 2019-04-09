@@ -38,4 +38,8 @@
 ;;; Emacsのバッファ・ウィンドウ状態を保存・復元する
 (desktop-save-mode 1)
 
+;;; マーク記憶数を増やす
+(setq global-mark-ring-max 128)
+(setq mark-ring-max 128)
+
 ;;; init_behavior.el ends here
