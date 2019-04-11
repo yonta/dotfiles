@@ -432,6 +432,7 @@
   :bind (("M-x" . counsel-M-x)
          ("M-r" . counsel-command-history)
          ("C-x C-f" . counsel-find-file)
+         ("C-x f" . counsel-recentf)
          ("C-c C-d" . counsel-describe-function)
          ("C-c C-g" . counsel-git-grep)
          (:map counsel-find-file-map
@@ -530,6 +531,10 @@
   (async-bytecomp-allowed-packages '(all))
   :config
   (async-bytecomp-package-mode 1))
+
+(use-package recentf-ext
+  :ensure t
+  :after recentf)
 
 (use-package shell
   :init
@@ -788,5 +793,14 @@ at point."
                  ("\\.ino$" . ["template.ino" my-template])
                  ("\\.py$" . ["template.py" my-template]))
                auto-insert-alist)))
+
+(use-package recentf
+  :init
+  ;; 最近使ったファイルをrecentfファイルに保存する
+  ;; counsel-recentfで呼び出せる
+  (setq recentf-save-file "~/.emacs.d/.recentf")
+  (setq recentf-max-saved-items 100)
+  (setq recentf-auto-cleanup 'never)
+  (recentf-mode 1))
 
 ;;; init_package.el ends here
