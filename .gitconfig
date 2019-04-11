@@ -27,3 +27,5 @@
         default = simple
 [merge]
         conflictstyle = diff3
+[rebase]
+        autostash = true
