@@ -434,7 +434,7 @@
          ("C-x C-f" . counsel-find-file)
          ("C-x f" . counsel-recentf)
          ("C-c C-d" . counsel-describe-function)
-         ("C-c C-g" . counsel-git-grep)
+         ("C-c g" . counsel-git-grep)
          (:map counsel-find-file-map
                ("^" . counsel-up-directory))))
 

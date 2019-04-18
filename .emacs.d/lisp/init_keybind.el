@@ -17,7 +17,7 @@
 ;;; C-c dでカーソル位置のシンボルのヘルプを表示
 (global-set-key (kbd "C-c d") 'describe-symbol)
 ;;; C-cgをgrep-findに
-(global-set-key (kbd "C-c g") 'grep-find)
+(global-set-key (kbd "C-c f") #'grep-find)
 (setq grep-find-command
       `("find . -type f -print0 | xargs -0 -e grep -nHE " . 48))
 ;;; terminal(-nw)で起動した場合は、C-SPCが使えないので、C-]にする
