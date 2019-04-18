@@ -178,13 +178,12 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
         # 全角半角キーが連打されるのを防ぐ
         xset -r 49
 
-        # if ps ax | grep "0:00 uim-xim" > /dev/null 2>&1 ; then
-        #    echo "uim-xim is already existing"
-        # else
-        # uim-xim & > /dev/null 2>&1
-        # fi
         # uim-ximを起動
-        uim-xim > /dev/null 2>&1 &
+        if ps ax | grep -v 'grep' | grep "uim-xim" > /dev/null 2>&1 ; then
+            echo "uim-xim is already existing"
+        else
+            uim-xim > /dev/null 2>&1 &
+        fi
     fi
 
     # Docker on Windows10 from WSL
