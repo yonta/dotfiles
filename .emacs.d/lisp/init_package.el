@@ -757,6 +757,7 @@ at point."
 ;; hl-line+.elを手に入れてlispフォルダにいれておく
 ;; https://www.emacswiki.org/emacs/download/hl-line%2b.el
 (use-package hl-line+
+  :defines hl-line-face
   :config
   (toggle-hl-line-when-idle 1)
   (hl-line-when-idle-interval 4)
