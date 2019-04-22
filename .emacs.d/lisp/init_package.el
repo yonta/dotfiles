@@ -417,8 +417,7 @@
   :ensure t
   :after ivy-rich
   :custom
-  (ivy-count-format "(%d/%d) ")
-  :bind ("C-x b" . ivy-switch-buffer))
+  (ivy-count-format "(%d/%d) "))
 
 (use-package counsel
   :ensure t
@@ -435,6 +434,7 @@
          ("C-x f" . counsel-recentf)
          ("C-c C-d" . counsel-describe-function)
          ("C-c g" . counsel-git-grep)
+         ("C-x b" . counsel-switch-buffer)
          (:map counsel-find-file-map
                ("^" . counsel-up-directory))))
 
@@ -471,11 +471,28 @@
 
 (use-package ivy-rich
   :ensure t
-  :defer t
-  :init
-  (ivy-rich-mode 1)
   :custom
-  (ivy-format-function #'ivy-format-function-line))
+  (ivy-format-function #'ivy-format-function-line)
+  (ivy-rich-path-style 'abbrev)
+  :config
+  ;; ivy-switch-bufferと同じrichをcounsel-switch-bufferでも使う
+  (defun my-get-ivy-rich-switch-buffer-format (transformers)
+  "Get a format for ivy-switch-buffer."
+  (if (eq transformers nil) nil
+    (let* ((func (car transformers))
+           (next (cdr transformers))
+           (form (car next)))
+      (pcase func
+        (`ivy-switch-buffer form)
+        (_ (my-get-ivy-rich-switch-buffer-format (cdr next)))))))
+  (if (not (member #'counsel-switch-buffer ivy-rich-display-transformers-list))
+      (let* ((form
+              (my-get-ivy-rich-switch-buffer-format
+               ivy-rich-display-transformers-list))
+             (transformer (list #'counsel-switch-buffer form)))
+        (setq ivy-rich-display-transformers-list
+              (append transformer ivy-rich-display-transformers-list))))
+  (ivy-rich-mode 1))
 
 (use-package git-gutter-fringe+
   :ensure t
