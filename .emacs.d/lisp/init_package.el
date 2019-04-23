@@ -85,6 +85,11 @@
               ("M-p" . flycheck-previous-error)
               ("M-n" . flycheck-next-error)))
 
+(use-package flycheck-popup-tip
+  :ensure t
+  :after flycheck
+  :hook (flycheck-mode . flycheck-popup-tip-mode))
+
 (use-package flycheck-ocaml
   :ensure t
   :defer t)
