@@ -162,7 +162,7 @@
   (add-to-list 'company-backends
                '(company-jedi
                  :with company-files company-dabbrev-code company-yasnippet))
-  (define-key python-mode-map (kbd "C-c C-c") nil)
+  (unbind-key "C-c C-c" python-mode-map)
   :bind (:map python-mode-map
               ("C-c c" . py-execute-buffer)
               ("<tab>" . indent-for-tab-command)))
@@ -350,8 +350,8 @@
       (progn (image-diredx-async-mode 1)
              (image-diredx-adjust-mode 1)))
   ;; lrでサムネイルが回転するのを削除
-  (define-key image-map (kbd "r") nil)
-  (define-key image-dired-thumbnail-mode-map (kbd "r") nil)
+  (unbind-key "r" image-map)
+  (unbind-key "r" image-dired-thumbnail-mode-map)
   :bind (:map image-dired-thumbnail-mode-map
               ("C-n" . image-diredx-next-line)
               ("C-p" . image-diredx-previous-line)
