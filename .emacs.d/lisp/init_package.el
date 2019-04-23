@@ -128,7 +128,10 @@
   :init
   (yas-global-mode 1)
   :config
-  (add-to-list 'company-backends #'company-yasnippet t))
+  ;; yas-expandは使わず、companyからyasを使う。
+  (unbind-key "<tab>" yas-minor-mode-map)
+  (unbind-key "TAB" yas-minor-mode-map)
+  (add-to-list 'company-backends #'company-yasnippet))
 
 ;; elpa/yasnippet-snippets-20190316.1019/snippets/ に以下をcloneしておく
 ;; https://github.com/jasperla/yasnippet-sml-mode
