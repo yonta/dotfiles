@@ -494,9 +494,8 @@
       (let ((form (my-get-ivy-rich-switch-buffer-format
                    ivy-rich-display-transformers-list)))
         (setq ivy-rich-display-transformers-list
-              (append
-               `(counsel-switch-buffer ,form)
-               ivy-rich-display-transformers-list))))
+              `(counsel-switch-buffer ,form
+                ,@ivy-rich-display-transformers-list))))
   (ivy-rich-mode 1))
 
 (use-package git-gutter-fringe+
