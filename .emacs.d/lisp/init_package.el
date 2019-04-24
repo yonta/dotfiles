@@ -485,17 +485,10 @@
   (ivy-rich-path-style 'abbrev)
   :config
   ;; ivy-switch-bufferと同じrichをcounsel-switch-bufferでも使う
-  (defun my-get-ivy-rich-switch-buffer-format (transformers)
-    "Get a format for ivy-switch-buffer."
-    (pcase transformers
-      (`(ivy-switch-buffer . (,form . ,_)) form)
-      (`(,_ . (,_  . ,next)) (my-get-ivy-rich-switch-buffer-format next))))
-  (if (not (member #'counsel-switch-buffer ivy-rich-display-transformers-list))
-      (let ((form (my-get-ivy-rich-switch-buffer-format
-                   ivy-rich-display-transformers-list)))
-        (setq ivy-rich-display-transformers-list
-              `(counsel-switch-buffer ,form
-                ,@ivy-rich-display-transformers-list))))
+  (let ((plist ivy-rich-display-transformers-list))
+    (unless (plist-member plist #'counsel-switch-buffer)
+      (plist-put plist #'counsel-switch-buffer
+                 (plist-get plist #'ivy-switch-buffer))))
   (ivy-rich-mode 1))
 
 (use-package git-gutter-fringe+
