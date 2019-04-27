@@ -179,7 +179,7 @@
   :custom
   ;; タイムアウトで処理を中止させない
   (quickrun-timeout-seconds -1)
-  :bind (("C-c C-c" . quickrun)))
+  :bind ("C-c C-c" . quickrun))
 
 ;; markdownコマンドをいれておく
 (use-package markdown-mode
@@ -399,7 +399,7 @@
 
 (use-package browse-kill-ring
   :ensure t
-  :bind (("C-M-y" . browse-kill-ring)))
+  :bind ("C-M-y" . browse-kill-ring))
 
 ;; cmigemoをいれておく
 ;; https://github.com/koron/cmigemo
@@ -534,7 +534,7 @@
 
 (use-package expand-region
   :ensure t
-  :bind (("C-`" . er/expand-region)))
+  :bind ("C-`" . er/expand-region))
 
 (use-package async
   :ensure t
