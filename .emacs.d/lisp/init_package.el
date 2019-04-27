@@ -292,15 +292,13 @@
 
 (use-package google-translate
   :ensure t
-  :commands (google-translate google-translate-smooth-ui)
-  :bind (("C-c C-t" . google-translate-smooth-translate)
-         ("C-c t" . google-translate-query-translate)))
+  :bind ("C-c t" . google-translate-query-translate))
 
 (use-package google-translate-smooth-ui
-  :requires google-translate
   :config
   (setq google-translate-translation-directions-alist
-        '(("en" . "ja") ("ja" . "en"))))
+        '(("en" . "ja") ("ja" . "en")))
+  :bind ("C-c C-t" . google-translate-smooth-translate))
 
 (use-package bash-completion
   :ensure t
