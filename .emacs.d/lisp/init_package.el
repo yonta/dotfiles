@@ -397,10 +397,6 @@
   (sp-local-pair '(inferior-sml-mode) "'" nil :actions nil)
   (sp-local-pair '(tuareg-mode) "'" nil :actions nil))
 
-(use-package browse-kill-ring
-  :ensure t
-  :bind ("C-M-y" . browse-kill-ring))
-
 ;; cmigemoをいれておく
 ;; https://github.com/koron/cmigemo
 (use-package migemo
@@ -435,6 +431,10 @@
            (concat "\\(\\`\\.\\)\\|"
                    (regexp-opt completion-ignored-extensions)))
   :config
+  ;; counsel-yank-popの高さをデフォルト5から10に拡大する
+  (setq ivy-height-alist
+        (cons '(counsel-yank-pop . 10)
+              (assq-delete-all 'counsel-yank-pop ivy-height-alist)))
   :bind (("M-x" . counsel-M-x)
          ("M-r" . counsel-command-history)
          ("C-x C-f" . counsel-find-file)
@@ -442,6 +442,7 @@
          ("C-c C-d" . counsel-describe-function)
          ("C-c g" . counsel-git-grep)
          ("C-x b" . counsel-switch-buffer)
+         ("C-M-y" . counsel-yank-pop)
          (:map counsel-find-file-map
                ("^" . counsel-up-directory))))
 

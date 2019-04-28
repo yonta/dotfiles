@@ -59,7 +59,7 @@
      ivy--highlight-default-migemo ivy-occur-revert-buffer-migemo ivy-occur-press-migemo avy-migemo-goto-char avy-migemo-goto-char-2 avy-migemo-goto-char-in-line avy-migemo-goto-char-timer avy-migemo-goto-subword-1 avy-migemo-goto-word-1 avy-migemo-isearch avy-migemo-org-goto-heading-timer avy-migemo--overlay-at avy-migemo--overlay-at-full)))
  '(package-selected-packages
    (quote
-    (bind-key flycheck-popup-tip recentf-ext async expand-region company-c-headers volatile-highlights dumb-jump dump-jump git-gutter-fringe+ yasnippet-snippets use-package twittering-mode tuareg sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 proof-general popwin markdown-mode ivy-rich image-dired+ hiwin haxe-mode graphviz-dot-mode google-translate gnuplot-mode flycheck-ocaml edit-indirect diminish csv-mode counsel company-quickhelp company-jedi company-arduino browse-kill-ring bash-completion avy-migemo auto-package-update auto-async-byte-compile))))
+    (bind-key flycheck-popup-tip recentf-ext async expand-region company-c-headers volatile-highlights dumb-jump dump-jump git-gutter-fringe+ yasnippet-snippets use-package twittering-mode tuareg sml-mode smartparens rainbow-mode quickrun python-mode py-autopep8 proof-general popwin markdown-mode ivy-rich image-dired+ hiwin haxe-mode graphviz-dot-mode google-translate gnuplot-mode flycheck-ocaml edit-indirect diminish csv-mode counsel company-quickhelp company-jedi company-arduino bash-completion avy-migemo auto-package-update auto-async-byte-compile))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
