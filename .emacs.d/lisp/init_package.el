@@ -291,14 +291,35 @@
   :defer t)
 
 (use-package google-translate
-  :ensure t
-  :bind ("C-c t" . google-translate-query-translate))
+  :ensure t)
 
 (use-package google-translate-smooth-ui
   :config
+  (defun google-translate-smooth-translate-region (&optional text)
+    "Translate a text in selected region using translation directions.
+
+If optional argument TEXT is non-nil or region is active, translate text
+immediately. Otherwise, call `google-translate-smooth-translate`.
+
+A different between `google-translate-smooth-translate`, this function
+translates a text directly without enter key press. And, this function
+changes source and target language automaticaly."
+    (interactive)
+    (if (not (or (stringp text) (use-region-p))) ; if both empty
+        (google-translate-smooth-translate)
+      (let* ((text
+              (cond ((stringp text) text)
+                    ((use-region-p) (buffer-substring (region-beginning)
+                                                      (region-end)))))
+             (from-english (string-match "\\`[[:ascii:]‘’“”]+\\'" text))
+             (source (if from-english "en" "ja"))
+             (target (if from-english "ja" "en")))
+        (google-translate-translate source target text))))
+
   (setq google-translate-translation-directions-alist
         '(("en" . "ja") ("ja" . "en")))
-  :bind ("C-c C-t" . google-translate-smooth-translate))
+  :bind (("C-c C-t" . google-translate-smooth-translate-region)
+         ("C-c t" . google-translate-smooth-translate)))
 
 (use-package bash-completion
   :ensure t
