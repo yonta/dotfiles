@@ -549,6 +549,14 @@
   :ensure t
   :after recentf)
 
+(use-package which-key
+  :ensure t
+  :diminish which-key-mode
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom)
+  (setq which-key-side-window-max-height 0.4))
+
 (use-package shell
   :init
   (bash-completion-setup)
