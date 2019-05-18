@@ -431,7 +431,6 @@ changes source and target language automaticaly."
 
 (use-package avy-migemo
   :ensure t
-  :after migemo
   :init
   (avy-migemo-mode 1)
   (require 'avy-migemo-e.g.swiper)
@@ -439,13 +438,11 @@ changes source and target language automaticaly."
 
 (use-package ivy
   :ensure t
-  :after ivy-rich
   :custom
   (ivy-count-format "(%d/%d) "))
 
 (use-package counsel
   :ensure t
-  :after ivy swiper avy-migemo ivy-rich
   ;; dotファイルとコンパイルファイルなどを無視する
   ;; .キーを押せばdotスタートファイルは表示される
   :custom (counsel-find-file-ignore-regexp
@@ -469,7 +466,6 @@ changes source and target language automaticaly."
 
 (use-package swiper
   :ensure t
-  :after ivy avy-migemo migemo
   :custom
   (swiper-include-line-number-in-search t)
   :bind (("C-s" . swiper-isearch)
@@ -540,7 +536,6 @@ changes source and target language automaticaly."
 
 (use-package dumb-jump
   :ensure t
-  :after ivy
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go)
          ("M-g i" . dumb-jump-go-prompt))
