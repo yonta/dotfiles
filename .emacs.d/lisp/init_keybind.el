@@ -88,7 +88,7 @@
 A default format is start with 1, end with 10, and only number string."
   (interactive)
   (let* ((my-repeat-num-command
-          "(loop for i from 1 to 10 do (insert (format \"%d\\n\" i)))"))
+          "(let (r) (dotimes (i 10 r) (insert (format \"%d\\n\" i))))"))
     (eval (read-from-minibuffer "Enter: " my-repeat-num-command nil t))))
 (if (window-system)
     (global-set-key (kbd "C-M-:") #'my-insert-repeat-numbers)
