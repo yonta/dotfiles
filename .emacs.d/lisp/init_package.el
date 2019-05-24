@@ -162,7 +162,6 @@
   (add-to-list 'company-backends
                '(company-jedi
                  :with company-files company-dabbrev-code company-yasnippet))
-  (unbind-key "C-c C-c" python-mode-map)
   :bind (:map python-mode-map
               ("C-c c" . py-execute-buffer)
               ("<tab>" . indent-for-tab-command)))
@@ -179,7 +178,8 @@
   :custom
   ;; タイムアウトで処理を中止させない
   (quickrun-timeout-seconds -1)
-  :bind ("C-c C-c" . quickrun))
+  ;; python-mode-mapが定義するC-cC-cより優先度をあげるためbind*にする
+  :bind* ("C-c C-c" . quickrun))
 
 ;; markdownコマンドをいれておく
 (use-package markdown-mode
