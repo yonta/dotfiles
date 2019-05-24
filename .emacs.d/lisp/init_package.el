@@ -431,6 +431,7 @@ changes source and target language automaticaly."
 
 (use-package avy-migemo
   :ensure t
+  :if (executable-find "cmigemo")
   :init
   (avy-migemo-mode 1)
   (require 'avy-migemo-e.g.swiper)
