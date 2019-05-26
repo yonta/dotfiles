@@ -369,7 +369,7 @@ changes source and target language automaticaly."
       (progn (image-diredx-async-mode 1)
              (image-diredx-adjust-mode 1)))
   ;; lrでサムネイルが回転するのを削除
-  (unbind-key "r" image-map)
+  (if (version<= "26" emacs-version) (unbind-key "r" image-map)) ; Emacs26以上
   (unbind-key "r" image-dired-thumbnail-mode-map)
   :bind (:map image-dired-thumbnail-mode-map
               ("C-n" . image-diredx-next-line)
