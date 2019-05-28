@@ -138,9 +138,6 @@
   (unbind-key "TAB" yas-minor-mode-map)
   (add-to-list 'company-backends #'company-yasnippet))
 
-;; elpa/yasnippet-snippets-20190316.1019/snippets/ に以下をcloneしておく
-;; https://github.com/jasperla/yasnippet-sml-mode
-;; 使いづらいので、今後自作したい
 (use-package yasnippet-snippets
   :ensure t)
 
