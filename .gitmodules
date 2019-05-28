@@ -6,3 +6,7 @@
 	path = .emacs.d/snippets/sml-mode
 	url = git@github.com:yonta/yasnippet-sml-mode.git
 	ignore = dirty
+[submodule ".emacs.d/lisp/avy-migemo"]
+	path = .emacs.d/lisp/avy-migemo
+	url = git@github.com:yonta/avy-migemo
+	branch = fix-tam171ki-and-obsolute

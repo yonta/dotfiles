@@ -426,10 +426,12 @@ changes source and target language automaticaly."
   (migemo-regex-dictionary nil)
   (migemo-init))
 
+;; 2019/05/11のswiperアップデートでswiperとavy-migemoの関係が壊れている
+;; 暫定的にavy-migemoをpackageからアインストールし、PRのcommitを採用している。
 (use-package avy-migemo
-  :ensure t
+;;  :ensure t
   :if (executable-find "cmigemo")
-  :init
+  :config
   (avy-migemo-mode 1)
   (require 'avy-migemo-e.g.swiper)
   (require 'avy-migemo-e.g.counsel))
