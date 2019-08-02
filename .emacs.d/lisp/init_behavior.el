@@ -45,4 +45,10 @@
 ;;; 同じ内容を重複してkill-ringにいれない
 (setq kill-do-not-save-duplicates t)
 
+;;; カーソル移動時にページ送りを少しずつ行う
+(setq scroll-conservatively 1)
+
+;;; 画面スクロールでカーソル位置を変えないようにする
+(setq scroll-preserve-screen-position :always)
+
 ;;; init_behavior.el ends here
