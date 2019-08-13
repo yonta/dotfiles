@@ -19,12 +19,6 @@
 
 ;;; フォント設定
 (if window-system
-    (progn
-      (set-frame-font "VL ゴシック-12")
-      (set-fontset-font
-       (frame-parameter nil 'font)
-       'japanese-jisx0208
-       '("VL ゴシック" . "unicode-bmp")
-       )))
+    (add-to-list 'default-frame-alist '(font . "VL ゴシック-12" )))
 
 ;;; init_custom.el ends here
