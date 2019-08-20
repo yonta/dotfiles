@@ -155,6 +155,7 @@
   (indent-level 4)
   (python-indent 4)
   (tab-width 4)
+  (py-split-window-on-execute 'reuse)
   :config
   (add-hook 'python-mode-hook
             (lambda ()
