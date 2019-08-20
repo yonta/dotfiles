@@ -79,6 +79,7 @@
   (global-flycheck-mode)
   :custom
   (flycheck-python-flake8-executable "flake8")
+  (flycheck-checker-error-threshold 250)
   :config
   (set-face-background 'flycheck-error "pink") ; エラー箇所は背景色をつける
   :bind (:map flycheck-mode-map
