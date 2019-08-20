@@ -167,23 +167,17 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
     export DISPLAY=localhost:0.0
     # xrandrでディスプレイが存在するか判定する
     if xrandr > /dev/null 2>&1 ; then
-        export XIM=uim
-        export UIM_CANDWIN_PROG=uim-candwin-gtk
 
-        export GTK_IM_MODULE=uim
-        export QT_IM_MODULE=uim
-        export XMODIFIERS=@im=uim
+        # /etc/profile.d/fcitx.shでfcitx-autostartする
+        # https://github.com/WhitewaterFoundry/Pengwin/issues/492
+        export GTK_IM_MODULE=fcitx
+        export QT_IM_MODULE=fcitx
+        export XMODIFIERS=@im=fcitx
+        export DefaultIMModule=fcitx
 
         export NO_AT_BRIDGE=1
         # 全角半角キーが連打されるのを防ぐ
         xset -r 49
-
-        # uim-ximを起動
-        if ps ax | grep -v 'grep' | grep "uim-xim" > /dev/null 2>&1 ; then
-            echo "uim-xim is already existing"
-        else
-            uim-xim > /dev/null 2>&1 &
-        fi
     fi
 
     # Docker on Windows10 from WSL
