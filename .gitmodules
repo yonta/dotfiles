@@ -9,3 +9,7 @@
 	path = .emacs.d/lisp/avy-migemo
 	url = git@github.com:yonta/avy-migemo
 	branch = fix-tam171ki-and-obsolute
+[submodule ".emacs.d/snippets/python-mode"]
+	path = .emacs.d/snippets/python-mode
+	url = git@github.com:marubu/yasnippet-numpy-style.git
+	ignore = dirty

@@ -147,26 +147,6 @@
   :ensure t
   :defer t)
 
-(use-package python-mode
-  :ensure t
-  :defer t
-  :custom
-  (indent-tabs-mode nil)
-  (indent-level 4)
-  (python-indent 4)
-  (tab-width 4)
-  (py-split-window-on-execute 'reuse)
-  :config
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (setq-local company-backends
-                          '(company-jedi
-                            :with company-files company-dabbrev-code
-                            company-yasnippet))))
-  :bind (:map python-mode-map
-              ("C-c c" . py-execute-buffer)
-              ("<tab>" . indent-for-tab-command)))
-
 ;; aptかpipでautopep8を入れておく
 ;; aptでautopep8をいれておく
 (use-package py-autopep8
@@ -179,6 +159,13 @@
   :custom
   ;; タイムアウトで処理を中止させない
   (quickrun-timeout-seconds -1)
+  :config
+  ;; python-modeでpython3を使う
+  (quickrun-add-command "python"
+    '((:command . "python3")
+      (:exec . "%c %s")
+      (:compile-only . "pyflakes %s"))
+    :mode 'python-mode)
   ;; python-mode-mapが定義するC-cC-cより優先度をあげるためbind*にする
   :bind* ("C-c C-c" . quickrun))
 
@@ -845,5 +832,24 @@ at point."
   (setq recentf-max-saved-items 100)
   (setq recentf-auto-cleanup 'never)
   (recentf-mode 1))
+
+(use-package python
+  :custom
+  (python-shell-interpreter "python3")
+  :config
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (setq-local company-backends
+                          '((company-jedi
+                            :with company-files company-dabbrev-code
+                            company-yasnippet)
+                            ;; string内で補完する
+                            company-yasnippet))))
+  (add-hook 'inferior-python-mode-hook
+            (lambda ()
+              (setq-local company-backends
+                          '((company-capf
+                             :with company-files company-dabbrev-code
+                             company-yasnippet))))))
 
 ;;; init_package.el ends here
