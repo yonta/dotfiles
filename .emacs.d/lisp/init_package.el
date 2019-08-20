@@ -104,10 +104,10 @@
     (setq c-basic-offset 2)
     (setq tab-width c-basic-offset)
     (setq indent-tabs-mode nil)
-    (set (make-local-variable 'company-backends)
-         '((company-clang
-            :with company-c-headers company-files company-dabbrev-code
-            company-yasnippet))))
+    (setq-local company-backends
+                '((company-clang
+                   :with company-c-headers company-files company-dabbrev-code
+                   company-yasnippet))))
   (add-hook 'c-mode-hook #'my-c-mode-hook)
   (defun my-c++-mode-hook ()
     "Setting for c++-mode."
@@ -117,10 +117,10 @@
     (setq indent-tabs-mode nil)
     (setq flycheck-gcc-language-standard "c++11")
     (setq flycheck-clang-language-standard "c++11")
-    (set (make-local-variable 'company-backends)
-         '((company-clang
-            :with company-c-headers company-files company-dabbrev-code
-            company-yasnippet))))
+    (setq-local company-backends
+                '((company-clang
+                   :with company-c-headers company-files company-dabbrev-code
+                   company-yasnippet))))
   (add-hook 'c++-mode-hook #'my-c++-mode-hook))
 
 (use-package tuareg
@@ -155,10 +155,12 @@
   (python-indent 4)
   (tab-width 4)
   :config
-  ;; local-variableだとうまくいかなかった
-  (add-to-list 'company-backends
-               '(company-jedi
-                 :with company-files company-dabbrev-code company-yasnippet))
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (setq-local company-backends
+                          '(company-jedi
+                            :with company-files company-dabbrev-code
+                            company-yasnippet))))
   :bind (:map python-mode-map
               ("C-c c" . py-execute-buffer)
               ("<tab>" . indent-for-tab-command)))
@@ -219,11 +221,11 @@
   :config
   (add-hook 'sml-mode-hook
             (lambda ()
-              (set (make-local-variable 'company-backends)
-                   '((company-mlton-keyword
-                      company-mlton-basis
-                      :with company-files company-dabbrev-code
-                      company-yasnippet))))))
+              (setq-local company-backends
+                          '((company-mlton-keyword
+                             company-mlton-basis
+                             :with company-files company-dabbrev-code
+                             company-yasnippet))))))
 
 (use-package company-mlton
   :config
@@ -764,10 +766,10 @@ at point."
   :config
   (add-hook 'emacs-lisp-mode-hook
             (lambda ()
-              (set (make-local-variable 'company-backends)
-                   '((company-capf
-                      :with company-files company-dabbrev-code
-                      company-yasnippet))))))
+              (setq-local company-backends
+                          '((company-capf
+                             :with company-files company-dabbrev-code
+                             company-yasnippet))))))
 
 (use-package winner
   :init
