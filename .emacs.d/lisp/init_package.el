@@ -62,8 +62,9 @@
   :defer t
   :after company)
 
-;; aptかpipでjediを入れておく
-;; aptでpython3-jediをいれておき、初回起動時にjedi:install-serverする
+;; aptかpipでjediとvirtualenvを入れておく
+;; aptでpython3-jediとvirtualenvをいれておき、
+;; 初回起動時にjedi:install-serverする
 (use-package company-jedi
   :ensure t
   :defer t
@@ -148,7 +149,7 @@
   :defer t)
 
 ;; aptかpipでautopep8を入れておく
-;; aptでautopep8をいれておく
+;; aptでpython-autopep8をいれておく
 (use-package py-autopep8
   :ensure t
   :if (executable-find "autopep8")
