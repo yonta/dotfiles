@@ -6,6 +6,18 @@
 
 ;;; Code:
 
+;; ユーティリティ
+(defun call-with-region-or-line (func-symbol)
+  "Call FUNC-SYMBOL with marked region or current line.
+
+If the region is active, beggining and end of region is used for the function
+ arguments, othewise current line is used."
+  (if (region-active-p)
+      (funcall func-symbol (region-beginning) (region-end))
+    (let* ((begin (line-beginning-position))
+           (end (1+ (line-end-position))))
+      (funcall func-symbol begin end))))
+
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 
 ;; 起動時間を計測するには、以下を有効にして`use-package-report`を実行する
@@ -215,7 +227,11 @@
                           '((company-mlton-keyword
                              company-mlton-basis
                              :with company-files company-dabbrev-code
-                             company-yasnippet))))))
+                             company-yasnippet)))))
+  (defun sml-prog-proc-send-region-or-line ()
+    "Call REPL with active region or current line."
+    (interactive) (call-with-region-or-line #'sml-prog-proc-send-region))
+  :bind (:map sml-mode-map ("C-c C-r" . sml-prog-proc-send-region-or-line)))
 
 (use-package company-mlton
   :config
@@ -762,10 +778,14 @@ at point."
                           '((company-capf
                              :with company-files company-dabbrev-code
                              company-yasnippet)))))
+  (defun eval-region-or-line ()
+    "Eval active region or current line."
+    (interactive) (call-with-region-or-line #'eval-region))
   :bind (:map emacs-lisp-mode-map
-              ("C-c C-r" . eval-region))
+              ("C-c C-r" . eval-region-or-line))
         (:map lisp-interaction-mode-map
-              ("C-c C-r" . eval-region)))
+              ("C-c C-r" . eval-region-or-line)))
+
 
 (use-package winner
   :init
@@ -857,6 +877,10 @@ at point."
               (setq-local company-backends
                           '((company-capf
                              :with company-files company-dabbrev-code
-                             company-yasnippet))))))
+                             company-yasnippet)))))
+  (defun python-shell-send-region-or-line ()
+    "Call REPL with active region or current line."
+    (interactive) (call-with-region-or-line #'python-shell-send-region))
+  :bind (:map python-mode-map ("C-c C-r" . python-shell-send-region-or-line)))
 
 ;;; init_package.el ends here
