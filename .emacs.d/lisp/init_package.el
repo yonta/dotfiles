@@ -565,6 +565,8 @@ changes source and target language automaticaly."
   (which-key-setup-side-window-bottom)
   (setq which-key-side-window-max-height 0.4))
 
+(use-package sudo-edit :ensure t :defer t)
+
 (use-package shell
   :init
   (bash-completion-setup)
