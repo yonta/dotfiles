@@ -760,7 +760,11 @@ at point."
               (setq-local company-backends
                           '((company-capf
                              :with company-files company-dabbrev-code
-                             company-yasnippet))))))
+                             company-yasnippet)))))
+  :bind (:map emacs-lisp-mode-map
+              ("C-c C-r" . eval-region))
+        (:map lisp-interaction-mode-map
+              ("C-c C-r" . eval-region)))
 
 (use-package winner
   :init
