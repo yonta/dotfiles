@@ -584,6 +584,11 @@ changes source and target language automaticaly."
 
 (use-package sudo-edit :ensure t :defer t)
 
+(use-package visual-regexp
+  :ensure t
+  :bind (("M-%" . vr/replace)
+         ("M-&" . vr/query-replace)))
+
 (use-package shell
   :init
   (bash-completion-setup)
