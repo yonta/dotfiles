@@ -1,7 +1,7 @@
-diff --git a/defwithdoc b/defwithdoc
+diff --git defwithdoc defwithdoc
 index 6c8fa04..fea7afb 100644
---- a/defwithdoc
-+++ b/defwithdoc
+--- ./snippets/python-mode/defwithdoc
++++ ./snippets/python-mode/defwithdoc
 @@ -4,12 +4,16 @@
  #contributor : MATSUBARA Naoya
  # --
