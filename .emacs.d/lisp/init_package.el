@@ -1,4 +1,4 @@
-;;; init_package --- settings about packages
+;;; init_package --- settings about packages -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This is settings about package.
