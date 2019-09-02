@@ -872,11 +872,10 @@ at point."
   (add-hook 'python-mode-hook
             (lambda ()
               (setq-local company-backends
-                          '((company-jedi
-                            :with company-files company-dabbrev-code
-                            company-yasnippet)
+                          '((company-jedi :with company-yasnippet)
                             ;; string内で補完する
-                            company-yasnippet))))
+                            company-yasnippet
+                            company-files))))
   (add-hook 'inferior-python-mode-hook
             (lambda ()
               (setq-local company-backends
