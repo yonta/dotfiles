@@ -180,7 +180,7 @@ If the region is active, beggining and end of region is used for the function
       (:compile-only . "pyflakes %s"))
     :mode 'python-mode)
   ;; python-mode-mapが定義するC-cC-cより優先度をあげるためbind*にする
-  :bind* ("C-c C-c" . quickrun))
+  :bind* ("C-c c" . quickrun))
 
 ;; markdownコマンドをいれておく
 (use-package markdown-mode
