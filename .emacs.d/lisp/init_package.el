@@ -586,8 +586,7 @@ changes source and target language automaticaly."
 
 (use-package visual-regexp
   :ensure t
-  :bind (("M-%" . vr/replace)
-         ("M-&" . vr/query-replace)))
+  :bind ("M-&" . vr/query-replace))
 
 (use-package shell
   :init
