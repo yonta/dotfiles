@@ -12,8 +12,6 @@
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 ;;; M-hをバックスペース＆インデント削除にする
 (global-set-key (kbd "M-h") #'delete-indentation)
-;;; M-&を正規表現置換にする
-(global-set-key (kbd "M-&") #'replace-regexp)
 ;;; C-c dでカーソル位置のシンボルのヘルプを表示
 (global-set-key (kbd "C-c d") #'describe-symbol)
 ;;; C-cgをgrep-findに
