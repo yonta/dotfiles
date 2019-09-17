@@ -101,6 +101,16 @@ If the region is active, beggining and end of region is used for the function
               ("M-p" . flycheck-previous-error)
               ("M-n" . flycheck-next-error)))
 
+;; aptかpipでmypyを入れておく
+;; aptでmypyをいれておく
+(use-package flycheck-mypy
+  :ensure t
+  :after flycheck
+  ;; flake8よりエラーがうるさいので、必要なときにだけ
+  ;; flycheck-select-checkerで選択するとよい
+  ;; :hook (python-mode . (lambda ()
+  ;;                        (setq-local flycheck-checker 'python-mypy))))
+
 (use-package flycheck-popup-tip
   :ensure t
   :after flycheck
