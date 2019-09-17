@@ -80,7 +80,9 @@ If the region is active, beggining and end of region is used for the function
 (use-package company-jedi
   :ensure t
   :defer t
-  :after (company jedi-core))
+  :after (company jedi-core)
+  :custom
+  (jedi:complete-on-dot t))
 
 ;; aptかpipでflake8を入れておく
 ;; どちらを使うかを選択しないといけない、闇
