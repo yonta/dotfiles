@@ -48,6 +48,9 @@
 ;;; カーソル移動時にページ送りを少しずつ行う
 (setq scroll-conservatively 1)
 
+;;; カーソル移動のページ送りを、画面端2行前から行う
+(setq scroll-margin 2)
+
 ;;; 画面スクロールでカーソル位置を変えないようにする
 (setq scroll-preserve-screen-position :always)
 
