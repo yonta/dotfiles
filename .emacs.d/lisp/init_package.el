@@ -105,11 +105,13 @@ If the region is active, beggining and end of region is used for the function
 ;; aptでmypyをいれておく
 (use-package flycheck-mypy
   :ensure t
+  :defer t
   :after flycheck
-  ;; flake8よりエラーがうるさいので、必要なときにだけ
-  ;; flycheck-select-checkerで選択するとよい
+  ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
+  ;; 必要なときにだけflycheck-select-checkerで利用する
   ;; :hook (python-mode . (lambda ()
   ;;                        (setq-local flycheck-checker 'python-mypy))))
+  )
 
 (use-package flycheck-popup-tip
   :ensure t
