@@ -165,19 +165,22 @@ fi
 if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
     # WSLでのXとIME設定
     export DISPLAY=localhost:0.0
-    # xrandrでディスプレイが存在するか判定する
-    if xrandr > /dev/null 2>&1 ; then
+    # fcitxが起動してなければ
+    if ! ps aux | grep -v "grep" | grep "fcitx" > /dev/null 2>&1 ; then
+        export DISPLAY=localhost:0.0
+        # xrandrでディスプレイが存在するか判定する
+        if xrandr > /dev/null 2>&1 ; then
+            export GTK_IM_MODULE=fcitx
+            export QT_IM_MODULE=fcitx
+            export XMODIFIERS=@im=fcitx
+            export DefaultIMModule=fcitx
 
-        # /etc/profile.d/fcitx.shでfcitx-autostartする
-        # https://github.com/WhitewaterFoundry/Pengwin/issues/492
-        export GTK_IM_MODULE=fcitx
-        export QT_IM_MODULE=fcitx
-        export XMODIFIERS=@im=fcitx
-        export DefaultIMModule=fcitx
+            export NO_AT_BRIDGE=1
+            # 全角半角キーが連打されるのを防ぐ
+            xset -r 49
 
-        export NO_AT_BRIDGE=1
-        # 全角半角キーが連打されるのを防ぐ
-        xset -r 49
+            fcitx-autostart 1>/dev/null
+        fi
     fi
 
     # Docker on Windows10 from WSL
