@@ -167,7 +167,6 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
     export DISPLAY=localhost:0.0
     # fcitxが起動してなければ
     if ! ps aux | grep -v "grep" | grep "fcitx" > /dev/null 2>&1 ; then
-        export DISPLAY=localhost:0.0
         # xrandrでディスプレイが存在するか判定する
         if xrandr > /dev/null 2>&1 ; then
             export GTK_IM_MODULE=fcitx
