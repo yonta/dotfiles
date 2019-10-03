@@ -196,6 +196,20 @@ If the region is active, beggining and end of region is used for the function
   ;; python-mode-mapが定義するC-cC-cより優先度をあげるためbind*にする
   :bind* ("C-c c" . quickrun))
 
+(use-package jedi
+  :ensure t
+  :after python
+  :hook ((python-mode . jedi:setup)
+         ;; jedi-modeがauto-complete-modeをオンにするので、オフにする
+         (jedi-mode . (lambda () (auto-complete-mode -1))))
+  ;; 関数の引数の情報が便利なので、ミニバッファに表示する
+  :custom (jedi:tooltip-method nil))
+
+(use-package jedi-direx
+  :ensure t
+  :after jedi
+  :hook (jedi-mode . jedi-direx:setup))
+
 ;; markdownコマンドをいれておく
 (use-package markdown-mode
   :ensure t
