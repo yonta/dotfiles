@@ -354,7 +354,7 @@ changes source and target language automaticaly."
 
 (use-package proof-general
   :ensure t
-  :mode "\\.v\\'")
+  :defer t)
 
 (use-package popwin
   :ensure t
