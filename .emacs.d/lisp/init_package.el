@@ -490,9 +490,10 @@ changes source and target language automaticaly."
   :ensure t
   ;; dotファイルとコンパイルファイルなどを無視する
   ;; .キーを押せばdotスタートファイルは表示される
-  :custom (counsel-find-file-ignore-regexp
-           (concat "\\(\\`\\.\\)\\|"
-                   (regexp-opt completion-ignored-extensions)))
+  :custom
+  (counsel-find-file-ignore-regexp
+   (concat "\\(\\`\\.\\)\\|" (regexp-opt completion-ignored-extensions)))
+  (counsel-mark-ring-sort-selections nil)
   :config
   ;; counsel-yank-popの高さをデフォルト5から10に拡大する
   (setq ivy-height-alist
@@ -506,6 +507,7 @@ changes source and target language automaticaly."
          ("C-c g" . counsel-git-grep)
          ("C-x b" . counsel-switch-buffer)
          ("C-M-y" . counsel-yank-pop)
+         ("C-c C-SPC" . counsel-mark-ring)
          (:map counsel-find-file-map
                ("^" . counsel-up-directory))))
 

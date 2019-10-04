@@ -39,8 +39,11 @@
 (desktop-save-mode 1)
 
 ;;; マーク記憶数を増やす
-(setq global-mark-ring-max 128)
-(setq mark-ring-max 128)
+(setq global-mark-ring-max 512)
+(setq mark-ring-max 512)
+
+;;; pop-markを連続するときはC-u C-SPC C-SPC...にする
+(setq set-mark-command-repeat-pop t)
 
 ;;; 同じ内容を重複してkill-ringにいれない
 (setq kill-do-not-save-duplicates t)
