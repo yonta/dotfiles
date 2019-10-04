@@ -80,9 +80,32 @@ If the region is active, beggining and end of region is used for the function
 (use-package company-jedi
   :ensure t
   :defer t
-  :after (company jedi-core)
-  :custom
-  (jedi:complete-on-dot t))
+  :after (company jedi-core))
+
+(use-package jedi-core
+  :ensure t
+  :hook (python-mode . jedi:setup)
+  ;; 関数の引数の情報が便利なので、ミニバッファに表示する
+  :custom (jedi:tooltip-method nil))
+
+(use-package jedi-direx
+  :ensure t
+  :hook (jedi-mode . jedi-direx:setup)
+  :bind (:map jedi-mode-map
+              ("C-c x" . jedi-direx:pop-to-buffer)
+              ("C-c C-x" . jedi-direx:switch-to-buffer)))
+
+(use-package jedi
+  :defer t
+  ;; jedi-direxの依存関係にjediがあるためいれる。
+  ;; しかし、jediはauto-completeのためのパッケージであり、
+  ;; company-jediとコンフリクトする。
+  ;; そのため、jediが行うjedi-core.elのへ変数の登録をnilに上書きする。
+  :init
+  (setq jedi:setup-function nil)
+  (setq jedi:mode-function nil)
+  ;; M-,/M-.にjediを使う
+  :custom (jedi:use-shortcuts t))
 
 ;; aptかpipでflake8を入れておく
 ;; どちらを使うかを選択しないといけない、闇
@@ -195,20 +218,6 @@ If the region is active, beggining and end of region is used for the function
     :mode 'python-mode)
   ;; python-mode-mapが定義するC-cC-cより優先度をあげるためbind*にする
   :bind* ("C-c c" . quickrun))
-
-(use-package jedi
-  :ensure t
-  :after python
-  :hook ((python-mode . jedi:setup)
-         ;; jedi-modeがauto-complete-modeをオンにするので、オフにする
-         (jedi-mode . (lambda () (auto-complete-mode -1))))
-  ;; 関数の引数の情報が便利なので、ミニバッファに表示する
-  :custom (jedi:tooltip-method nil))
-
-(use-package jedi-direx
-  :ensure t
-  :after jedi
-  :hook (jedi-mode . jedi-direx:setup))
 
 ;; markdownコマンドをいれておく
 (use-package markdown-mode
