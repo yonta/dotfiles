@@ -46,6 +46,10 @@
       ;(set-face-bold-p 'font-lock-warning-face nil)
       ))
 
+;;; Emacs Lispの正規表現の構成子の色を変えて見やすくする
+(set-face-foreground 'font-lock-regexp-grouping-backslash "#ccc")
+(set-face-foreground 'font-lock-regexp-grouping-construct "#faa")
+
 ;;; 長い行を折り返して表示する
 (setq truncate-partial-width-windows nil)
 
