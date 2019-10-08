@@ -104,6 +104,9 @@ If the region is active, beggining and end of region is used for the function
   :init
   (setq jedi:setup-function nil)
   (setq jedi:mode-function nil)
+  :config
+  (setq jedi:setup-function nil)
+  (setq jedi:mode-function nil)
   ;; M-,/M-.にjediを使う
   :custom (jedi:use-shortcuts t))
 
