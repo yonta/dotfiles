@@ -393,7 +393,8 @@ changes source and target language automaticaly."
           (completion-list-mode :noselect t) ;; 全completionを対象
           ("*Warnings*")
           (" *auto-async-byte-compile*")
-          ("*Kill Ring*"))))
+          ("*Kill Ring*")
+          (" *undo-tree*"))))
 
 ;; ImageMagickをaptでいれておく
 ;; 非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ
@@ -669,6 +670,10 @@ changes source and target language automaticaly."
        (cl-callf color-saturate-name (face-foreground face) 30))))
   (add-hook 'emacs-startup-hook 'rainbow-delimiters-using-stronger-colors)
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package undo-tree
+  :ensure t
+  :bind ("C-c C-/" . undo-tree-visualize))
 
 (use-package shell
   :init
