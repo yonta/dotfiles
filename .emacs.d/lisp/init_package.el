@@ -630,6 +630,12 @@ changes source and target language automaticaly."
   :ensure t
   :bind ("M-&" . vr/query-replace))
 
+;; use-packageを綺麗にする
+(use-package paradox
+  :ensure t
+  :config
+  (paradox-enable))
+
 (use-package shell
   :init
   (bash-completion-setup)
