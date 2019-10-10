@@ -636,6 +636,40 @@ changes source and target language automaticaly."
   :config
   (paradox-enable))
 
+(use-package auto-highlight-symbol
+  :ensure t
+  :diminish auto-highlight-symbol-mode
+  :custom
+  (ahs-idle-interval 2.0)
+  :config
+  (global-auto-highlight-symbol-mode t))
+
+(use-package highlight-indentation
+  :ensure t
+  :diminish highlight-indentation-mode
+  ;; インデントに意味のあるPythonでとりあえず使う
+  :hook (python-mode . highlight-indentation-mode))
+
+(use-package highlight-parentheses
+  :ensure t
+  :diminish highlight-parentheses-mode
+  :hook (prog-mode . highlight-parentheses-mode))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  ;; 括弧の色をより強くする
+  ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
+  (defun rainbow-delimiters-using-stronger-colors ()
+    (interactive)
+    (cl-loop
+     for index from 1 to rainbow-delimiters-max-face-count
+     do
+     (let ((face (intern (format "rainbow-delimiters-depth-%d-face" index))))
+       (cl-callf color-saturate-name (face-foreground face) 30))))
+  (add-hook 'emacs-startup-hook 'rainbow-delimiters-using-stronger-colors)
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 (use-package shell
   :init
   (bash-completion-setup)
