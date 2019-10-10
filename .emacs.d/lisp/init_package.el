@@ -394,7 +394,8 @@ changes source and target language automaticaly."
           ("*Warnings*")
           (" *auto-async-byte-compile*")
           ("*Kill Ring*")
-          (" *undo-tree*"))))
+          (" *undo-tree*")
+          ("*Help*"))))
 
 ;; ImageMagickをaptでいれておく
 ;; 非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ
