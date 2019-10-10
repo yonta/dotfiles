@@ -932,6 +932,8 @@ at point."
   (defun python-shell-send-region-or-line ()
     "Call REPL with active region or current line."
     (interactive) (call-with-region-or-line #'python-shell-send-region))
-  :bind (:map python-mode-map ("C-c C-r" . python-shell-send-region-or-line)))
+  :bind (:map python-mode-map
+              ("C-c C-r" . python-shell-send-region-or-line)
+              ("<backtab>" . python-indent-shift-left)))
 
 ;;; init_package.el ends here
