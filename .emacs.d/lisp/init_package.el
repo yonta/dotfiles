@@ -676,6 +676,10 @@ changes source and target language automaticaly."
   :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
 
+(use-package lispxmp
+  :ensure t
+  :bind ("C-M-;" . lispxmp))
+
 (use-package shell
   :init
   (bash-completion-setup)
