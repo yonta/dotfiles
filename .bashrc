@@ -163,7 +163,7 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
 fi
 
 # WSL
-if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
+if uname -a | grep 'Microsoft' > /dev/null 2>&1 && [ -z "$SSH_CLIENT" ]; then
     # WSLでのXとIME設定
     export DISPLAY=localhost:0.0
     # fcitxが起動してなければ
