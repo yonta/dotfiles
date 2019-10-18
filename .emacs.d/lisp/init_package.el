@@ -74,8 +74,8 @@ If the region is active, beggining and end of region is used for the function
   :defer t
   :after company)
 
-;; aptかpipでjediとvirtualenvを入れておく
-;; aptでpython3-jediとvirtualenvをいれておき、
+;; aptかpipでvirtualenvを入れておく
+;; aptでvirtualenvをいれておき、
 ;; 初回起動時にjedi:install-serverする
 (use-package company-jedi
   :ensure t
