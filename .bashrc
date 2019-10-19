@@ -167,20 +167,16 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1 && [ -z "$SSH_CLIENT" ]; then
     # WSLでのXとIME設定
     export DISPLAY=localhost:0.0
     # fcitxが起動してなければ
-    if ! ps aux | grep "fcitx" | grep -v "grep" > /dev/null 2>&1 ; then
-        # xrandrでディスプレイが存在するか判定する
-        if xrandr > /dev/null 2>&1 ; then
-            export GTK_IM_MODULE=fcitx
-            export QT_IM_MODULE=fcitx
-            export XMODIFIERS=@im=fcitx
-            export DefaultIMModule=fcitx
-
-            export NO_AT_BRIDGE=1
-            # 全角半角キーが連打されるのを防ぐ
-            xset -r 49
-
-            fcitx-autostart 1>/dev/null
-        fi
+    if ! ps aux | grep "fcitx" | grep -v "grep" > /dev/null 2>&1 &&
+           xrandr > /dev/null 2>&1 && # ディスプレイが存在する
+           [ -z "$WSLENV" ]; then     # VSCode WSLじゃない
+        export GTK_IM_MODULE=fcitx
+        export QT_IM_MODULE=fcitx
+        export XMODIFIERS=@im=fcitx
+        export DefaultIMModule=fcitx
+        export NO_AT_BRIDGE=1
+        xset -r 49              # 全角半角キーが連打されるのを防ぐ
+        fcitx-autostart 1>/dev/null
     fi
 
     # Docker on Windows10 from WSL
