@@ -24,9 +24,6 @@
 ;;; 対応する括弧を光らせる
 (show-paren-mode t)
 
-;;; マークセット部分を色付けする
-(transient-mark-mode t)
-
 ;;; ビープ音を消し、画面がフラッシュしないようにする
 (setq ring-bell-function 'ignore)
 
