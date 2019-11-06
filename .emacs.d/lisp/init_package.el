@@ -271,7 +271,9 @@ If the region is active, beggining and end of region is used for the function
   (defun sml-prog-proc-send-region-or-line ()
     "Call REPL with active region or current line."
     (interactive) (call-with-region-or-line #'sml-prog-proc-send-region))
-  :bind (:map sml-mode-map ("C-c C-r" . sml-prog-proc-send-region-or-line)))
+  :bind (:map sml-mode-map
+              ("C-c C-r" . sml-prog-proc-send-region-or-line)
+              ("C-c C-p" . sml-run)))
 
 (use-package company-mlton
   :config
