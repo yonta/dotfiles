@@ -180,5 +180,5 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1 && [ -z "$SSH_CLIENT" ]; then
     fi
 
     # Docker on Windows10 from WSL
-    export DOCKER_HOST='tcp://0.0.0.0:2375'
+    export DOCKER_HOST='tcp://localhost:2375'
 fi
