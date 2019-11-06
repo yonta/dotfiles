@@ -522,7 +522,7 @@ changes source and target language automaticaly."
   :ensure t
   :custom
   (swiper-include-line-number-in-search t)
-  :bind (("C-s" . swiper-isearch)
+  :bind (("C-s" . swiper)
          ("C-c s" . isearch-forward)
          (:map swiper-map
                ("M-%" . swiper-query-replace)
