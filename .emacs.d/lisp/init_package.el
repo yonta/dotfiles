@@ -985,4 +985,12 @@ at point."
               ("C-c C-r" . python-shell-send-region-or-line)
               ("<backtab>" . python-indent-shift-left)))
 
+;;; WSLでのブラウザ設定
+;; aptでubuntu-wslをいれておく
+(if (getenv "WSLENV")
+    (use-package browse-url
+      :custom
+      (browse-url-browser-function 'browse-url-generic)
+      (browse-url-generic-program "wslview")))
+
 ;;; init_package.el ends here
