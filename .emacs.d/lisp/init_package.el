@@ -398,7 +398,8 @@ changes source and target language automaticaly."
           ("*Kill Ring*")
           (" *undo-tree*")
           ("*Help*")
-          ("*xref*"))))
+          ("*xref*")
+          ("*Backtrace*"))))
 
 ;; ImageMagickをaptでいれておく
 ;; 非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ
