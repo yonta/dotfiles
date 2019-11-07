@@ -685,6 +685,12 @@ changes source and target language automaticaly."
   :ensure t
   :bind ("C-M-;" . lispxmp))
 
+(use-package dockerfile-mode
+  :ensure t)
+
+(use-package yaml-mode
+  :ensure t)
+
 (use-package shell
   :init
   (bash-completion-setup)
