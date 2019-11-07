@@ -64,6 +64,11 @@ If the region is active, beggining and end of region is used for the function
   :custom
   (company-quickhelp-delay 1))
 
+(use-package company-prescient
+  :ensure t
+  :config
+  (company-prescient-mode 1))
+
 (use-package company-c-headers
   :ensure t
   :defer t
@@ -690,6 +695,11 @@ changes source and target language automaticaly."
 
 (use-package yaml-mode
   :ensure t)
+
+(use-package ivy-prescient
+  :ensure t
+  :config
+  (ivy-prescient-mode 1))
 
 (use-package shell
   :init
