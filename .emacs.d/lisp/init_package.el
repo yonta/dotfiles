@@ -950,23 +950,25 @@ at point."
          (format "%s_H"
                  (upcase (file-name-sans-extension
                           (file-name-nondirectory buffer-file-name))))))))
-  (defun my-template ()
+  (defun replace-template ()
     "Add template string to file."
-    (mapc #'(lambda(c) (progn (goto-char (point-min))
-                              (replace-string (car c) (funcall (cdr c)) nil)))
+    (mapc (lambda (template-replacement)
+            (goto-char (point-min))
+            (while (search-forward (car template-replacement) nil t)
+              (replace-match (funcall (cdr template-replacement)))))
           template-replacements-alists)
     (goto-char (point-min))
     (message "done."))
   (setq auto-insert-directory "~/.emacs.d/autoinsert/")
   (setq auto-insert-alist
-        (nconc '(("Test\\.\\(cpp\\|cc\\|cxx\\)$" .
-                  ["templateTest.cpp" my-template])
-                 ("\\.\\(cpp\\|cc\\|cxx\\)$" . ["template.cpp" my-template])
-                 ("\\.\\(hpp\\|hh\\|hxx\\)$"   . ["template.hpp" my-template])
-                 ("\\.c$"   . ["template.c" my-template])
-                 ("\\.ino$" . ["template.ino" my-template])
-                 ("\\.py$" . ["template.py" my-template]))
-               auto-insert-alist)))
+        (nconc
+         '(("Test\\.\\(cpp\\|cc\\|cxx\\)$" .
+            ["templateTest.cpp" replace-template])
+           ("\\.\\(cpp\\|cc\\|cxx\\)$" . ["template.cpp" replace-template])
+           ("\\.\\(hpp\\|hh\\|hxx\\)$" . ["template.hpp" replace-template])
+           ("\\.c$" . ["template.c" replace-template])
+           ("\\.ino$" . ["template.ino" replace-template]))
+         auto-insert-alist)))
 
 (use-package recentf
   :init
