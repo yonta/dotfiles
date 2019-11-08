@@ -18,7 +18,11 @@ If the region is active, beggining and end of region is used for the function
            (end (1+ (line-end-position))))
       (funcall func-symbol begin end))))
 
+(eval-when-compile
+  (require 'package)
+  (package-initialize))
 (unless (package-installed-p 'use-package) (package-install 'use-package))
+(require 'use-package)
 
 ;; 起動時間を計測するには、以下を有効にして`use-package-report`を実行する
 ;; (setq use-package-compute-statistics t)
