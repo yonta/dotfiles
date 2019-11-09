@@ -646,7 +646,7 @@ changes source and target language automaticaly."
   :ensure t
   :bind ("M-&" . vr/query-replace))
 
-;; use-packageを綺麗にする
+;; package.elのリストを綺麗で便利にする
 (use-package paradox
   :ensure t
   :config
