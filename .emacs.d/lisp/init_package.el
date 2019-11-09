@@ -671,12 +671,6 @@ changes source and target language automaticaly."
   :straight t
   :bind ("M-&" . vr/query-replace))
 
-;; package.elのリストを綺麗で便利にする
-(use-package paradox
-  :straight t
-  :config
-  (paradox-enable))
-
 (use-package auto-highlight-symbol
   :straight t
   :diminish auto-highlight-symbol-mode
