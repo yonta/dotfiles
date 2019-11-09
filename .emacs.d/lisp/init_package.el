@@ -277,6 +277,11 @@ If the region is active, beggining and end of region is used for the function
   :defer t)
 
 (use-package sml-mode
+  :straight (sml-mode :type git
+                      :host github
+                      :repo "emacs-straight/sml-mode"
+                      :fork (:host github
+                             :repo "yonta/sml-mode"))
   :straight t
   :mode ("\\.smi\\'" "\\.ppg\\'")
   :after company-mlton
@@ -304,7 +309,9 @@ If the region is active, beggining and end of region is used for the function
 (use-package company-mlton
   :straight (company-mlton :type git
                            :host github
-                           :repo "MatthewFluet/company-mlton")
+                           :repo "MatthewFluet/company-mlton"
+                           :fork (:host github
+                                  :repo "yonta/company-mlton"))
   :config
   (company-mlton-basis-autodetect))
 
