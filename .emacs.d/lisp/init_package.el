@@ -572,15 +572,6 @@ changes source and target language automaticaly."
 ;; https://github.com/jschaf/esup/issues/54
 (use-package esup :disabled)
 
-(use-package auto-package-update
-  :straight t
-  :custom
-  (auto-package-update-delete-old-versions t)
-  (auto-package-update-prompt-before-update t)
-  ;; (auto-package-update-hide-results t)
-  :config
-  (auto-package-update-maybe))
-
 (use-package auto-async-byte-compile
   :straight t
   :custom
