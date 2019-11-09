@@ -18,21 +18,38 @@ If the region is active, beggining and end of region is used for the function
            (end (1+ (line-end-position))))
       (funcall func-symbol begin end))))
 
-(eval-when-compile
-  (require 'package)
-  (package-initialize))
-(unless (package-installed-p 'use-package) (package-install 'use-package))
-(require 'use-package)
+;; straight.el bootstrap
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el"
+                         user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
 
 ;; 起動時間を計測するには、以下を有効にして`use-package-report`を実行する
-;; (setq use-package-compute-statistics t)
+;; (use-package use-package
+;;   :customize
+;;   (use-package-compute-statistics t))
+
+(use-package straight
+  :custom
+  (straight-vc-git-default-protocol 'ssh))
 
 ;; use-packageの:diminishを有効にし、モードラインをスッキリさせる
-(use-package diminish :ensure t :defer t)
+(use-package diminish :straight t :defer t)
 
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
 (use-package company
-  :ensure t
+  :straight t
   :diminish company-mode
   :init
   (setq completion-ignore-case t)
@@ -61,7 +78,7 @@ If the region is active, beggining and end of region is used for the function
                ("C-o" . company-other-backend))))
 
 (use-package company-quickhelp
-  :ensure t
+  :straight t
   :after company
   :init
   (company-quickhelp-mode 1)
@@ -69,17 +86,17 @@ If the region is active, beggining and end of region is used for the function
   (company-quickhelp-delay 1))
 
 (use-package company-prescient
-  :ensure t
+  :straight t
   :config
   (company-prescient-mode 1))
 
 (use-package company-c-headers
-  :ensure t
+  :straight t
   :defer t
   :after company)
 
 (use-package company-arduino
-  :ensure t
+  :straight t
   :defer t
   :after company)
 
@@ -87,18 +104,18 @@ If the region is active, beggining and end of region is used for the function
 ;; aptでvirtualenvをいれておき、
 ;; 初回起動時にjedi:install-serverする
 (use-package company-jedi
-  :ensure t
+  :straight t
   :defer t
   :after (company jedi-core))
 
 (use-package jedi-core
-  :ensure t
+  :straight t
   :hook (python-mode . jedi:setup)
   ;; 関数の引数の情報が便利なので、ミニバッファに表示する
   :custom (jedi:tooltip-method nil))
 
 (use-package jedi-direx
-  :ensure t
+  :straight t
   :hook (jedi-mode . jedi-direx:setup)
   :bind (:map jedi-mode-map
               ("C-c x" . jedi-direx:pop-to-buffer)
@@ -123,7 +140,7 @@ If the region is active, beggining and end of region is used for the function
 ;; どちらを使うかを選択しないといけない、闇
 ;; aptでflake8をいれておく
 (use-package flycheck
-  :ensure t
+  :straight t
   :diminish flycheck-mode
   :init
   (global-flycheck-mode)
@@ -139,7 +156,7 @@ If the region is active, beggining and end of region is used for the function
 ;; aptかpipでmypyを入れておく
 ;; aptでmypyをいれておく
 (use-package flycheck-mypy
-  :ensure t
+  :straight t
   :defer t
   :after flycheck
   ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
@@ -149,12 +166,12 @@ If the region is active, beggining and end of region is used for the function
   )
 
 (use-package flycheck-popup-tip
-  :ensure t
+  :straight t
   :after flycheck
   :hook (flycheck-mode . flycheck-popup-tip-mode))
 
 (use-package flycheck-ocaml
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package cc-mode
@@ -187,11 +204,11 @@ If the region is active, beggining and end of region is used for the function
   (add-hook 'c++-mode-hook #'my-c++-mode-hook))
 
 (use-package tuareg
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package yasnippet
-  :ensure t
+  :straight t
   :diminish yas-minor-mode
   :init
   (yas-global-mode 1)
@@ -202,22 +219,22 @@ If the region is active, beggining and end of region is used for the function
   (add-to-list 'company-backends #'company-yasnippet))
 
 (use-package yasnippet-snippets
-  :ensure t)
+  :straight t)
 
 ;; TODO: set compiler and libraries path by environment
 (use-package arduino-mode
-  :ensure t
+  :straight t
   :defer t)
 
 ;; aptかpipでautopep8を入れておく
 ;; aptでpython-autopep8をいれておく
 (use-package py-autopep8
-  :ensure t
+  :straight t
   :if (executable-find "autopep8")
   :hook (python-mode . py-autopep8-enable-on-save))
 
 (use-package quickrun
-  :ensure t
+  :straight t
   :custom
   ;; タイムアウトで処理を中止させない
   (quickrun-timeout-seconds -1)
@@ -233,7 +250,7 @@ If the region is active, beggining and end of region is used for the function
 
 ;; markdownコマンドをいれておく
 (use-package markdown-mode
-  :ensure t
+  :straight t
   :defer t
   :if (executable-find "markdown")
   :mode ("README\\.md\\'" . gfm-mode)
@@ -252,15 +269,15 @@ If the region is active, beggining and end of region is used for the function
 
 ;; markdownでコードブロックの編集のために必要
 (use-package edit-indirect
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package csv-mode
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package sml-mode
-  :ensure t
+  :straight t
   :mode ("\\.smi\\'" "\\.ppg\\'")
   :after company-mlton
   :interpreter "smlsharp"
@@ -285,13 +302,16 @@ If the region is active, beggining and end of region is used for the function
               ("C-c C-p" . sml-run)))
 
 (use-package company-mlton
+  :straight (company-mlton :type git
+                           :host github
+                           :repo "MatthewFluet/company-mlton")
   :config
   (company-mlton-basis-autodetect))
 
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
 (use-package twittering-mode
-  :ensure t
+  :straight t
   :commands twit
   :custom
   ;; use master passworad compressed by GnuPG
@@ -338,16 +358,16 @@ If the region is active, beggining and end of region is used for the function
               ("u" . twittering-toggle-show-replied-statuses)))
 
 (use-package gnuplot-mode
-  :ensure t
+  :straight t
   ;; .gpl .plt、.gp .gnuplotはautoloadで登録済み
   :mode ("\\.gpl\\'" "\\.plt\\'"))
 
 (use-package graphviz-dot-mode
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package google-translate
-  :ensure t)
+  :straight t)
 
 (use-package google-translate-smooth-ui
   :config
@@ -378,11 +398,11 @@ changes source and target language automaticaly."
          ("C-c t" . google-translate-smooth-translate)))
 
 (use-package bash-completion
-  :ensure t
+  :straight t
   :commands shell)
 
 (use-package haxe-mode
-  :ensure t
+  :straight t
   :defer t
   :custom
   (tab-width 4)
@@ -390,11 +410,11 @@ changes source and target language automaticaly."
   (fill-column 80))
 
 (use-package proof-general
-  :ensure t
+  :straight t
   :defer t)
 
 (use-package popwin
-  :ensure t
+  :straight t
   :config
   (popwin-mode 1)
   ;; popwin対象
@@ -420,7 +440,7 @@ changes source and target language automaticaly."
 ;;      Error-log
 ;;      image-diredx--invoke-process: Wrong type argument: processp, [nil 23723 12045 294055 nil image-dired-thumb-queue-run nil nil 600000]
 (use-package image-dired+
-  :ensure t
+  :straight t
   :if (executable-find "convert")
   :commands image-dired
   :config
@@ -447,7 +467,7 @@ changes source and target language automaticaly."
 
 ;; アクティブかどうかでバッファーのモードラインの色を変える
 (use-package hiwin
-  :ensure t
+  :straight t
   :init
   ;; (set-face-background 'hiwin-face "gray92")
   (set-face-attribute 'mode-line nil :background "light sky blue")
@@ -457,7 +477,7 @@ changes source and target language automaticaly."
 
 ;; "#ff0000"などに色をつける
 (use-package rainbow-mode
-  :ensure t
+  :straight t
   :diminish rainbow-mode
   :hook (c++-mode arduino-mode)
   :custom
@@ -465,7 +485,7 @@ changes source and target language automaticaly."
   (rainbow-html-colors t)) ; html color listを使う
 
 (use-package smartparens
-  :ensure t
+  :straight t
   :diminish smartparens-mode
   :init
   (smartparens-global-mode t)
@@ -481,7 +501,7 @@ changes source and target language automaticaly."
 ;; cmigemoをいれておく
 ;; https://github.com/koron/cmigemo
 (use-package migemo
-  :ensure t
+  :straight t
   :if (executable-find "cmigemo")
   :custom
   (migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
@@ -489,23 +509,30 @@ changes source and target language automaticaly."
   (migemo-regex-dictionary nil)
   (migemo-init))
 
+(use-package avy :straight t)
+
 ;; 2019/05/11のswiperアップデートでswiperとavy-migemoの関係が壊れている
 ;; 暫定的にavy-migemoをpackageからアインストールし、PRのcommitを採用している。
 (use-package avy-migemo
-;;  :ensure t
+  :straight (avy-migemo :type git
+                        :host github
+                        :repo "momomo5717/avy-migemo"
+                        :fork (:host github
+                               :repo "yonta/avy-migemo"))
   :if (executable-find "cmigemo")
+  :after (avy swiper counsel ivy)
   :config
   (avy-migemo-mode 1)
   (require 'avy-migemo-e.g.swiper)
   (require 'avy-migemo-e.g.counsel))
 
 (use-package ivy
-  :ensure t
+  :straight t
   :custom
   (ivy-count-format "(%d/%d) "))
 
 (use-package counsel
-  :ensure t
+  :straight t
   ;; dotファイルとコンパイルファイルなどを無視する
   ;; .キーを押せばdotスタートファイルは表示される
   :custom
@@ -530,7 +557,7 @@ changes source and target language automaticaly."
                ("^" . counsel-up-directory))))
 
 (use-package swiper
-  :ensure t
+  :straight t
   :custom
   (swiper-include-line-number-in-search t)
   :bind (("C-s" . swiper)
@@ -546,7 +573,7 @@ changes source and target language automaticaly."
 (use-package esup :disabled)
 
 (use-package auto-package-update
-  :ensure t
+  :straight t
   :custom
   (auto-package-update-delete-old-versions t)
   (auto-package-update-prompt-before-update t)
@@ -555,14 +582,14 @@ changes source and target language automaticaly."
   (auto-package-update-maybe))
 
 (use-package auto-async-byte-compile
-  :ensure t
+  :straight t
   :custom
   ;; (auto-async-byte-compile-init-file "~/.emacs.d/init.el")
   (auto-async-byte-compile-exclude-files-regexp "init_package.el")
   :hook (emacs-lisp-mode . enable-auto-async-byte-compile-mode))
 
 (use-package ivy-rich
-  :ensure t
+  :straight t
   :custom
   (ivy-format-function #'ivy-format-function-line)
   (ivy-rich-path-style 'abbrev)
@@ -575,7 +602,7 @@ changes source and target language automaticaly."
   (ivy-rich-mode 1))
 
 (use-package git-gutter-fringe+
-  :ensure t
+  :straight t
   :diminish git-gutter+-mode
   :init
   (global-git-gutter+-mode 1)
@@ -602,7 +629,7 @@ changes source and target language automaticaly."
   "........"))
 
 (use-package dumb-jump
-  :ensure t
+  :straight t
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go)
          ("M-g i" . dumb-jump-go-prompt))
@@ -610,18 +637,18 @@ changes source and target language automaticaly."
   (setq dumb-jump-selector 'ivy))
 
 (use-package volatile-highlights
-  :ensure t
+  :straight t
   :diminish volatile-highlights-mode
   :config
   (volatile-highlights-mode t)
   (set-face-background 'vhl/default-face "light cyan"))
 
 (use-package expand-region
-  :ensure t
+  :straight t
   :bind ("C-`" . er/expand-region))
 
 (use-package async
-  :ensure t
+  :straight t
   :no-require
   :custom
   (async-bytecomp-allowed-packages '(all))
@@ -629,31 +656,31 @@ changes source and target language automaticaly."
   (async-bytecomp-package-mode 1))
 
 (use-package recentf-ext
-  :ensure t
+  :straight t
   :after recentf)
 
 (use-package which-key
-  :ensure t
+  :straight t
   :diminish which-key-mode
   :config
   (which-key-mode)
   (which-key-setup-side-window-bottom)
   (setq which-key-side-window-max-height 0.4))
 
-(use-package sudo-edit :ensure t :defer t)
+(use-package sudo-edit :straight t :defer t)
 
 (use-package visual-regexp
-  :ensure t
+  :straight t
   :bind ("M-&" . vr/query-replace))
 
 ;; package.elのリストを綺麗で便利にする
 (use-package paradox
-  :ensure t
+  :straight t
   :config
   (paradox-enable))
 
 (use-package auto-highlight-symbol
-  :ensure t
+  :straight t
   :diminish auto-highlight-symbol-mode
   :custom
   (ahs-idle-interval 2.0)
@@ -661,18 +688,18 @@ changes source and target language automaticaly."
   (global-auto-highlight-symbol-mode t))
 
 (use-package highlight-indentation
-  :ensure t
+  :straight t
   :diminish highlight-indentation-mode
   ;; インデントに意味のあるPythonでとりあえず使う
   :hook (python-mode . highlight-indentation-mode))
 
 (use-package highlight-parentheses
-  :ensure t
+  :straight t
   :diminish highlight-parentheses-mode
   :hook (prog-mode . highlight-parentheses-mode))
 
 (use-package rainbow-delimiters
-  :ensure t
+  :straight t
   :init
   ;; 括弧の色をより強くする
   ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
@@ -687,21 +714,21 @@ changes source and target language automaticaly."
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package undo-tree
-  :ensure t
+  :straight t
   :bind ("C-c C-/" . undo-tree-visualize))
 
 (use-package lispxmp
-  :ensure t
+  :straight t
   :bind ("C-M-;" . lispxmp))
 
 (use-package dockerfile-mode
-  :ensure t)
+  :straight t)
 
 (use-package yaml-mode
-  :ensure t)
+  :straight t)
 
 (use-package ivy-prescient
-  :ensure t
+  :straight t
   :config
   (ivy-prescient-mode 1))
 
@@ -914,9 +941,10 @@ at point."
   :bind (("C-M-<left>" . winner-undo)
          ("C-M-<right>" . winner-redo)))
 
-;; hl-line+.elを手に入れてlispフォルダにいれておく
-;; https://www.emacswiki.org/emacs/download/hl-line%2b.el
 (use-package hl-line+
+  :straight (hl-line+ :type git
+                      :host github
+                      :repo "emacsmirror/hl-line-plus")
   :defines hl-line-face
   :config
   (toggle-hl-line-when-idle 1)
