@@ -17,3 +17,4 @@
 .emacs.d/.recentf
 .emacs.d/recentf*
 .emacs.d/tramp
+flycheck_*.el
