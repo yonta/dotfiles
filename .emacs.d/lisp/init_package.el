@@ -705,6 +705,11 @@ changes source and target language automaticaly."
   :config
   (ivy-prescient-mode 1))
 
+;; jenkinsfile-modeに必要
+(use-package groovy-mode :ensure t)
+
+(use-package jenkinsfile-mode)
+
 (use-package shell
   :init
   (bash-completion-setup)

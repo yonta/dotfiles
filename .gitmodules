@@ -13,3 +13,7 @@
 	path = .emacs.d/snippets/python-mode
 	url = git@github.com:marubu/yasnippet-numpy-style.git
 	ignore = dirty
+[submodule ".emacs.d/lisp/jenkinsfile-mode"]
+	path = .emacs.d/lisp/jenkinsfile-mode
+	url = git@github.com:john2x/jenkinsfile-mode.git
+	ignore = dirty
