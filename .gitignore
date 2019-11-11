@@ -1,3 +1,4 @@
+*.elc
 .emacs.d/abbrev_defs
 .emacs.d/ac-comphist.dat
 .emacs.d/auto-save-list
@@ -5,8 +6,6 @@
 .emacs.d/icons.gz
 .emacs.d/server
 .emacs.d/twittering-mode.gpg
-.emacs.d/*.elc
-.emacs.d/lisp/*.elc
 .emacs.d/srecode-map.el
 .emacs.d/network-security.data
 .emacs.d/url/*
