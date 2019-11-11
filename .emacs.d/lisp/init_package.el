@@ -708,7 +708,8 @@ changes source and target language automaticaly."
 ;; jenkinsfile-modeに必要
 (use-package groovy-mode :ensure t)
 
-(use-package jenkinsfile-mode)
+(use-package jenkinsfile-mode
+  :mode "^Jenkinsfile\\'")
 
 (use-package shell
   :init
