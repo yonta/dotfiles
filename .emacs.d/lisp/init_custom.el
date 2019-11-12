@@ -29,7 +29,7 @@
 
 ;;; フォント設定
 (if window-system
-    (add-to-list 'default-frame-alist '(font . "VL ゴシック-12" )))
+    (add-to-list 'default-frame-alist '(font . "VL ゴシック-12")))
 
 ;;; フリンジのサイズを調整する
 (fringe-mode '(15 . 10))
