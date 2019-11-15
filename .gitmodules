@@ -1,14 +1,12 @@
 [submodule ".emacs.d/lisp/company-mlton"]
 	path = .emacs.d/lisp/company-mlton
-	url = git@github.com:MatthewFluet/company-mlton.git
-	ignore = dirty
+	url = git@github.com:yonta/company-mlton.git
 [submodule ".emacs.d/snippets/sml-mode"]
 	path = .emacs.d/snippets/sml-mode
 	url = git@github.com:yonta/yasnippet-sml-mode.git
 [submodule ".emacs.d/lisp/avy-migemo"]
 	path = .emacs.d/lisp/avy-migemo
 	url = git@github.com:yonta/avy-migemo
-	branch = fix-tam171ki-and-obsolute
 	ignore = dirty
 [submodule ".emacs.d/snippets/python-mode"]
 	path = .emacs.d/snippets/python-mode
