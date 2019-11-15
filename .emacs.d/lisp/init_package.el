@@ -27,6 +27,9 @@ If the region is active, beggining and end of region is used for the function
 ;; 起動時間を計測するには、以下を有効にして`use-package-report`を実行する
 ;; (setq use-package-compute-statistics t)
 
+;; quelpa quelpa-use-package
+(use-package quelpa-use-package :ensure t)
+
 ;; use-packageの:diminishを有効にし、モードラインをスッキリさせる
 (use-package diminish :ensure t :defer t)
 
@@ -260,7 +263,7 @@ If the region is active, beggining and end of region is used for the function
   :defer t)
 
 (use-package sml-mode
-  :ensure t
+  :quelpa (sml-mode :fetcher github :repo "yonta/sml-mode")
   :mode ("\\.smi\\'" "\\.ppg\\'")
   :after company-mlton
   :interpreter "smlsharp"
@@ -285,8 +288,12 @@ If the region is active, beggining and end of region is used for the function
               ("C-c C-p" . sml-run)))
 
 (use-package company-mlton
+  :quelpa (company-mlton :fetcher github :repo "yonta/company-mlton")
   :config
   (company-mlton-basis-autodetect))
+
+(use-package flycheck-smlsharp
+  :quelpa (flycheck-smlsharp :fetcher github :repo "yonta/flycheck-smlsharp"))
 
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
@@ -492,7 +499,7 @@ changes source and target language automaticaly."
 ;; 2019/05/11のswiperアップデートでswiperとavy-migemoの関係が壊れている
 ;; 暫定的にavy-migemoをpackageからアインストールし、PRのcommitを採用している。
 (use-package avy-migemo
-;;  :ensure t
+  :quelpa (avy-migemo :fetcher github :repo "yonta/avy-migemo")
   :if (executable-find "cmigemo")
   :config
   (avy-migemo-mode 1)
@@ -705,10 +712,8 @@ changes source and target language automaticaly."
   :config
   (ivy-prescient-mode 1))
 
-;; jenkinsfile-modeに必要
-(use-package groovy-mode :ensure t)
-
 (use-package jenkinsfile-mode
+  :quelpa (jenkinsfile-mode :fetcher github :repo "john2x/jenkinsfile-mode")
   :mode "^Jenkinsfile\\'")
 
 (use-package shell
@@ -923,6 +928,7 @@ at point."
 ;; hl-line+.elを手に入れてlispフォルダにいれておく
 ;; https://www.emacswiki.org/emacs/download/hl-line%2b.el
 (use-package hl-line+
+  :quelpa (hl-line+ :fetcher github :repo "emacsmirror/hl-line-plus")
   :defines hl-line-face
   :config
   (toggle-hl-line-when-idle 1)
