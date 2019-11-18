@@ -1,18 +1,7 @@
-[submodule ".emacs.d/lisp/company-mlton"]
-	path = .emacs.d/lisp/company-mlton
-	url = git@github.com:yonta/company-mlton.git
 [submodule ".emacs.d/snippets/sml-mode"]
 	path = .emacs.d/snippets/sml-mode
 	url = git@github.com:yonta/yasnippet-sml-mode.git
-[submodule ".emacs.d/lisp/avy-migemo"]
-	path = .emacs.d/lisp/avy-migemo
-	url = git@github.com:yonta/avy-migemo
-	ignore = dirty
 [submodule ".emacs.d/snippets/python-mode"]
 	path = .emacs.d/snippets/python-mode
 	url = git@github.com:marubu/yasnippet-numpy-style.git
-	ignore = dirty
-[submodule ".emacs.d/lisp/jenkinsfile-mode"]
-	path = .emacs.d/lisp/jenkinsfile-mode
-	url = git@github.com:john2x/jenkinsfile-mode.git
 	ignore = dirty

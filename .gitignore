@@ -3,6 +3,7 @@
 .emacs.d/ac-comphist.dat
 .emacs.d/auto-save-list
 .emacs.d/elpa
+.emacs.d/el-get
 .emacs.d/icons.gz
 .emacs.d/server
 .emacs.d/twittering-mode.gpg
