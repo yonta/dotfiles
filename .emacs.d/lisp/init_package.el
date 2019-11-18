@@ -485,8 +485,7 @@ changes source and target language automaticaly."
   :if (executable-find "cmigemo")
   :custom
   (migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
-  (migemo-user-dictionary nil)
-  (migemo-regex-dictionary nil)
+  :config
   (migemo-init))
 
 ;; 2019/05/11のswiperアップデートでswiperとavy-migemoの関係が壊れている
