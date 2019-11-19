@@ -1,4 +1,4 @@
-;;; init_display.el --- settings for display
+;;; init_display.el --- settings for display -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This is settings about display.

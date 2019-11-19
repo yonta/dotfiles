@@ -1,4 +1,4 @@
-;;; init.el --- dot emacs file
+;;; init.el --- dot emacs file -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This is my dot Emacs file.

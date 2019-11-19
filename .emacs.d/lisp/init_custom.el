@@ -1,4 +1,4 @@
-;;; custom --- customization for each PC
+;;; custom --- customization for each PC -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

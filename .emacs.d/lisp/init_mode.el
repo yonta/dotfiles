@@ -1,4 +1,4 @@
-;;; init_mode --- settings about mode
+;;; init_mode --- settings about mode -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This is settings about mode.

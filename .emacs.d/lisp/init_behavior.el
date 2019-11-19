@@ -1,4 +1,4 @@
-;;; init_behavior.el --- settings about behavior
+;;; init_behavior.el --- settings about behavior -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This is settings about behavior
