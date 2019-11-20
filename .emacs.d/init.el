@@ -35,12 +35,9 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 ;;; 設定ファイルの読み込み
-(load "init_package")
-(load "init_display")
-(load "init_keybind")
-(load "init_behavior")
-(load "init_mode")
-(load "init_custom")
+(mapc #'load
+      '("init_util" "init_package" "init_display" "init_keybind"
+        "init_behavior" "init_mode" "init_custom"))
 
 ;;; カスタム変数は別ファイルに保存する
 (setq custom-file "~/.emacs.d/custom.el")

@@ -6,18 +6,6 @@
 
 ;;; Code:
 
-;; ユーティリティ
-(defun call-with-region-or-line (func-symbol)
-  "Call FUNC-SYMBOL with marked region or current line.
-
-If the region is active, beggining and end of region is used for the function
- arguments, othewise current line is used."
-  (if (region-active-p)
-      (funcall func-symbol (region-beginning) (region-end))
-    (let* ((begin (line-beginning-position))
-           (end (1+ (line-end-position))))
-      (funcall func-symbol begin end))))
-
 (eval-when-compile
   (require 'package)
   (package-initialize))
