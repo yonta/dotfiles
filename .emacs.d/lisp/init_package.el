@@ -597,6 +597,10 @@ changes source and target language automaticaly."
   :diminish auto-highlight-symbol-mode
   :custom
   (ahs-idle-interval . 2.0)
+  :custom-face
+  ((ahs-plugin-defalt-face
+    . '((t (:foreground "black" :background "light sky blue"))))
+   (ahs-face . '((t (:foreground "ghost white" :background "slate gray")))))
   :config
   (global-auto-highlight-symbol-mode t))
 
