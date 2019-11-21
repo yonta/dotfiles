@@ -958,6 +958,11 @@ at point."
 
   (leaf recentf-ext :ensure t :require t))
 
+(leaf subword
+  :diminish subword-mode
+  :config
+  (global-subword-mode 1))
+
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく
 (leaf browse-url
