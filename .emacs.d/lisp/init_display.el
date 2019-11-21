@@ -50,4 +50,7 @@
 ;;; 同じ名前のバッファをわかりやすく名前付けする
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
+;;; scratchバッファのメッセージをなくす
+(setq initial-scratch-message "")
+
 ;;; init_display.el ends here
