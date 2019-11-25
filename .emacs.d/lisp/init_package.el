@@ -17,12 +17,12 @@
   (leaf-keywords-init))
 
 ;; :diminishを有効にし、モードラインをスッキリさせる
-(leaf diminish :ensure t :require t)
+(leaf diminish :ensure t)
 
-(leaf bind-key :ensure t :require t)
+(leaf bind-key :ensure t)
 
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
-(leaf company :ensure t :require t
+(leaf company :ensure t
   :diminish company-mode
   :custom
   (company-idle-delay . 0)
@@ -50,38 +50,38 @@
           ("C-o" . company-other-backend)))
 
   :config
-  (leaf company-quickhelp :ensure t :require t
+  (leaf company-quickhelp :ensure t
     :config
     (company-quickhelp-mode 1)
     :custom
     (company-quickhelp-delay . 1))
 
-  (leaf company-prescient :ensure t :require t
+  (leaf company-prescient :ensure t
     :config
     (company-prescient-mode 1))
 
-  (leaf company-c-headers :ensure t :require t
+  (leaf company-c-headers :ensure t
     :leaf-defer t)
 
-  (leaf company-arduino :ensure t :require t
+  (leaf company-arduino :ensure t
     :leaf-defer t
     :after company)
 
   ;; aptかpipでvirtualenvを入れておく
   ;; aptでvirtualenvをいれておき、
   ;; 初回起動時にjedi:install-serverする
-  (leaf company-jedi :ensure t :require t
+  (leaf company-jedi :ensure t
     :init
-    (leaf jedi-core :ensure t :require t
+    (leaf jedi-core :ensure t
       :hook (python-mode-hook . jedi:setup)
       ;; 関数の引数の情報が便利なので、ミニバッファに表示する
       :custom ((jedi:tooltip-method . nil)
                (jedi:use-shortcuts . t)))) ; M-,/M-.にjediを使う
 
-  (leaf yasnippet :ensure t :require t
+  (leaf yasnippet :ensure t
     :diminish yas-minor-mode
     :init
-    (leaf yasnippet-snippets :ensure t :require t)
+    (leaf yasnippet-snippets :ensure t)
     :config
     (yas-global-mode 1)
     ;; yas-expandは使わず、companyからyasを使う。
@@ -92,7 +92,7 @@
 ;; aptかpipでflake8を入れておく
 ;; どちらを使うかを選択しないといけない、闇
 ;; aptでflake8をいれておく
-(leaf flycheck :ensure t :require t
+(leaf flycheck :ensure t
   :diminish flycheck-mode
   :custom
   (flycheck-python-flake8-executable . "flake8")
@@ -107,7 +107,7 @@
   :config
   ;; aptかpipでmypyを入れておく
   ;; aptでmypyをいれておく
-  (leaf flycheck-mypy :ensure t :require t
+  (leaf flycheck-mypy :ensure t
     :leaf-defer t
     ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
     ;; 必要なときにだけflycheck-select-checkerで利用する
@@ -115,10 +115,10 @@
     ;;                             (setq-local flycheck-checker 'python-mypy))))
     )
 
-  (leaf flycheck-popup-tip :ensure t :require t
+  (leaf flycheck-popup-tip :ensure t
     :hook (flycheck-mode-hook . flycheck-popup-tip-mode))
 
-  (leaf flycheck-ocaml :ensure t :require t :leaf-defer t))
+  (leaf flycheck-ocaml :ensure t))
 
 (leaf cc-mode
   :leaf-defer t
@@ -126,7 +126,7 @@
 
   :init
   ;; "#ff0000"などに色をつける
-  (leaf rainbow-mode :ensure t :require t
+  (leaf rainbow-mode :ensure t
     :diminish t
     :custom
     (rainbow-r-colors . t)                ; R color listを使う
@@ -158,12 +158,12 @@
   :hook ((c-mode-hook . my-c-mode-hook)
          (c++-mode-hook . my-c++-mode-hook)))
 
-(leaf tuareg :ensure t :require t :leaf-defer t)
+(leaf tuareg :ensure t :leaf-defer t)
 
 ;; TODO: set compiler and libraries path by environment
-(leaf arduino-mode :ensure t :require t :leaf-defer t)
+(leaf arduino-mode :ensure t)
 
-(leaf quickrun :ensure t :require t
+(leaf quickrun :ensure t
   :custom
   (quickrun-timeout-seconds . -1)       ; タイムアウトで処理を中止させない
   :config
@@ -176,13 +176,13 @@
   :bind ("C-c c" . quickrun))
 
 ;; markdownコマンドをいれておく
-(leaf markdown-mode :ensure t :require t
+(leaf markdown-mode :ensure t
   :if (executable-find "markdown")
   :mode ("README\\.md\\'" . gfm-mode)
 
   :init
   ;; markdownでコードブロックの編集のために必要
-  (leaf edit-indirect :ensure t :require t :leaf-defer t)
+  (leaf edit-indirect :ensure t)
 
   ;; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
   ;; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
@@ -197,21 +197,21 @@
   ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
   (markdown-css-paths . '("style.css")))
 
-(leaf csv-mode :ensure t :require t :leaf-defer t)
+(leaf csv-mode :ensure t)
 
-(leaf sml-mode :ensure t :require t
+(leaf sml-mode :ensure t
   :mode ("\\.smi\\'" "\\.ppg\\'")
   :interpreter "smlsharp"
 
   :init
-  (leaf company-mlton :require t
+  (leaf company-mlton
     :el-get (company-mlton
              :url "https://github.com/yonta/company-mlton.git"
              :branch "add-smlsharp")
     :config
     (company-mlton-basis-autodetect))
 
-  (leaf flycheck-smlsharp :require t
+  (leaf flycheck-smlsharp
     :el-get (flycheck-smlsharp
              :url "https://github.com/yonta/flycheck-smlsharp.git"))
 
@@ -237,7 +237,7 @@
 
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
-(leaf twittering-mode :ensure t :require t
+(leaf twittering-mode :ensure t
   :commands twit
   :init
   (defvar my-twittering-status-format
@@ -285,15 +285,15 @@
          ("K" . twittering-goto-first-status)
          ("u" . twittering-toggle-show-replied-statuses)))
 
-(leaf gnuplot-mode :ensure t :require t
+(leaf gnuplot-mode :ensure t
   ;; .gpl .plt、.gp .gnuplotはautoloadで登録済み
   :mode ("\\.gpl\\'" "\\.plt\\'"))
 
-(leaf graphviz-dot-mode :ensure t :require t :leaf-defer t)
+(leaf graphviz-dot-mode :ensure t)
 
-(leaf google-translate-smooth-ui :require t
+(leaf google-translate-smooth-ui
   :init
-  (leaf google-translate :ensure t :require t)
+  (leaf google-translate :ensure t)
 
   (defun google-translate-smooth-translate-region (&optional text)
     "Translate a text in selected region using translation directions.
@@ -324,7 +324,7 @@ changes source and target language automaticaly."
 (leaf shell
   :init
 
-  (leaf bash-completion :ensure t :require t
+  (leaf bash-completion :ensure t
     :commands shell)
 
   ;; コマンドラインと同じ色付けを使う
@@ -345,19 +345,20 @@ changes source and target language automaticaly."
   (explicit-bash-args . '("--login" "-i"))
   ;; shell-modeでのファイル名補完
   (shell-file-name-chars . "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
+
   :hook (shell-mode-hook . (lambda ()
                              ;; SHELL で ^M が付く場合は ^M を削除する
                              (set-buffer-process-coding-system
                               'undecided-dos 'sjis-unix))))
 
-(leaf haxe-mode :ensure t :require t
+(leaf haxe-mode :ensure t
   :leaf-defer t
   :custom
   (tab-width . 4)
   (indent-tabs-mode . nil)
   (fill-column . 80))
 
-(leaf proof-general :ensure t :require t :leaf-defer t)
+(leaf proof-general :ensure t)
 
 (leaf popwin :ensure t :require t
   :custom
@@ -385,7 +386,7 @@ changes source and target language automaticaly."
 ;;      何らかの自分のinitファイルが問題を引き起こしている。
 ;;      Error-log
 ;;      image-diredx--invoke-process: Wrong type argument: processp, [nil 23723 12045 294055 nil image-dired-thumb-queue-run nil nil 600000]
-(leaf image-dired+ :ensure t :require t
+(leaf image-dired+ :ensure t
   :if (executable-find "convert")
   :commands image-dired
   :config
@@ -413,7 +414,7 @@ changes source and target language automaticaly."
           ("0" . image-dired-display-current-image-sized))))
 
 ;; アクティブかどうかでバッファーのモードラインの色を変える
-(leaf hiwin :ensure t :require t
+(leaf hiwin :ensure t
   :config
   ;; (set-face-background 'hiwin-face "gray92")
   (set-face-attribute 'mode-line nil :background "light sky blue")
@@ -421,7 +422,7 @@ changes source and target language automaticaly."
                       :background "light gray"
                       :foreground "dim gray"))
 
-(leaf smartparens :ensure t :require t
+(leaf smartparens :ensure t
   :diminish smartparens-mode
   :config
   (smartparens-global-mode t)
@@ -434,7 +435,7 @@ changes source and target language automaticaly."
   (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
   (sp-local-pair 'tuareg-mode "'" nil :actions nil))
 
-(leaf ivy :ensure t :require t
+(leaf ivy :ensure t
   :custom
   (ivy-count-format . "(%d/%d) ")
   :config
@@ -451,11 +452,11 @@ changes source and target language automaticaly."
                    (plist-get plist #'ivy-switch-buffer))))
     (ivy-rich-mode 1))
 
-  (leaf ivy-prescient :ensure t :require t
+  (leaf ivy-prescient :ensure t
     :config
     (ivy-prescient-mode 1)))
 
-(leaf counsel :ensure t :require t
+(leaf counsel :ensure t
   ;; dotファイルとコンパイルファイルなどを無視する
   ;; .キーを押せばdotスタートファイルは表示される
   :init
@@ -481,7 +482,7 @@ changes source and target language automaticaly."
          (:counsel-find-file-map
           ("^" . counsel-up-directory))))
 
-(leaf swiper :ensure t :require t
+(leaf swiper :ensure t
 
   :init
   ;; cmigemoをいれておく
@@ -499,10 +500,10 @@ changes source and target language automaticaly."
     :el-get (avy-migemo
              :url "https://github.com/yonta/avy-migemo.git"
              :branch "fix-tam171ki-and-obsolute")
-    :require t
+
     :if (executable-find "cmigemo")
     :init
-    (leaf avy :ensure t :require t)
+    (leaf avy :ensure t)
     :config
     (avy-migemo-mode 1)
     (require 'avy-migemo-e.g.swiper)
@@ -522,7 +523,7 @@ changes source and target language automaticaly."
 ;; https://github.com/jschaf/esup/issues/54
 (leaf esup :disabled t)
 
-(leaf auto-package-update :ensure t :require t
+(leaf auto-package-update :ensure t
   :custom
   (auto-package-update-delete-old-versions . t)
   (auto-package-update-prompt-before-update . t)
@@ -555,47 +556,47 @@ changes source and target language automaticaly."
   "........"
   "........"))
 
-(leaf dumb-jump :ensure t :require t
+(leaf dumb-jump :ensure t
   :config
   (setq dumb-jump-selector 'ivy)
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go)
          ("M-g i" . dumb-jump-go-prompt)))
 
-(leaf volatile-highlights :ensure t :require t
+(leaf volatile-highlights :ensure t
   :diminish volatile-highlights-mode
   :config
   (volatile-highlights-mode t)
   (set-face-background 'vhl/default-face "light cyan"))
 
-(leaf expand-region :ensure t :require t
+(leaf expand-region :ensure t
   :bind ("C-`" . er/expand-region))
 
-(leaf async :ensure t :require t
+(leaf async :ensure t
   :no-require
   :custom
   (async-bytecomp-allowed-packages . '(all))
   :config
   (async-bytecomp-package-mode 1))
 
-(leaf which-key :ensure t :require t
+(leaf which-key :ensure t
   :diminish which-key-mode
   :config
   (which-key-mode)
   (which-key-setup-side-window-bottom)
   (setq which-key-side-window-max-height 0.4))
 
-(leaf sudo-edit :ensure t :require t :leaf-defer t)
+(leaf sudo-edit :ensure t)
 
-(leaf visual-regexp :ensure t :require t
+(leaf visual-regexp :ensure t
   :bind ("M-&" . vr/query-replace))
 
 ;; package.elのリストを綺麗で便利にする
-(leaf paradox :ensure t :require t
+(leaf paradox :ensure t
   :config
   (paradox-enable))
 
-(leaf auto-highlight-symbol :ensure t :require t
+(leaf auto-highlight-symbol :ensure t
   :diminish auto-highlight-symbol-mode
   :custom
   (ahs-idle-interval . 2.0)
@@ -606,11 +607,11 @@ changes source and target language automaticaly."
   :config
   (global-auto-highlight-symbol-mode t))
 
-(leaf highlight-parentheses :ensure t :require t
+(leaf highlight-parentheses :ensure t
   :diminish highlight-parentheses-mode
   :hook (prog-mode-hook . highlight-parentheses-mode))
 
-(leaf rainbow-delimiters :ensure t :require t
+(leaf rainbow-delimiters :ensure t
   :init
   ;; 括弧の色をより強くする
   ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
@@ -623,29 +624,29 @@ changes source and target language automaticaly."
   :hook ((emacs-startup-hook . rainbow-delimiters-using-stronger-colors)
          (prog-mode-hook . rainbow-delimiters-mode)))
 
-(leaf undo-tree :ensure t :require t
+(leaf undo-tree :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
 
-(leaf dockerfile-mode :ensure t :require t)
+(leaf dockerfile-mode :ensure t)
 
-(leaf yaml-mode :ensure t :require t)
+(leaf yaml-mode :ensure t)
 
 (leaf jenkinsfile-mode
   :el-get (jenkinsfile-mode
            :url "https://github.com/spotify/dockerfile-mode.git")
-  :require t
+
   :init
   ;; jenkinsfile-modeに必要
-  (leaf groovy-mode :ensure t :require t)
+  (leaf groovy-mode :ensure t)
   :mode "^Jenkinsfile\\'")
 
 (leaf elisp-mode
   :init
 
-  (leaf auto-async-byte-compile :ensure t :require t
+  (leaf auto-async-byte-compile :ensure t
     :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
 
-  (leaf lispxmp :ensure t :require t
+  (leaf lispxmp :ensure t
     :bind ("C-M-;" . lispxmp))
 
   (defun eval-region-or-line ()
@@ -665,19 +666,19 @@ changes source and target language automaticaly."
 
   ;; aptかpipでautopep8を入れておく
   ;; aptでpython-autopep8をいれておく
-  (leaf py-autopep8 :ensure t :require t
+  (leaf py-autopep8 :ensure t
     :if (executable-find "autopep8")
     :hook (python-mode-hook . py-autopep8-enable-on-save))
 
-  (leaf highlight-indentation :ensure t :require t
+  (leaf highlight-indentation :ensure t
     :diminish highlight-indentation-mode
     ;; インデントに意味のあるPythonでとりあえず使う
     :hook (python-mode-hook . highlight-indentation-mode))
 
-  (leaf jedi-direx :ensure t :require t
+  (leaf jedi-direx :ensure t
     :init
 
-    (leaf jedi :ensure t :require t
+    (leaf jedi :ensure t
       :leaf-defer t
       ;; jedi-direxの依存関係にjediがあるためいれる。
       ;; しかし、jediはauto-completeのためのパッケージであり、
@@ -958,7 +959,7 @@ at point."
   (setq recentf-auto-cleanup 'never)
   (recentf-mode 1)
 
-  (leaf recentf-ext :ensure t :require t))
+  (leaf recentf-ext :ensure t))
 
 (leaf subword
   :diminish subword-mode
