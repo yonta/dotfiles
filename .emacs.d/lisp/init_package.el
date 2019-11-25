@@ -332,6 +332,11 @@ changes source and target language automaticaly."
     :commands ansi-color-for-comint-mode-on
     :hook (shell-mode-hook . ansi-color-for-comint-mode-on))
 
+  (leaf sh-script
+    :config
+    (unbind-key "C-c C-d" sh-mode-map)
+    :bind (:sh-mode-map ("C-c C-p" . sh-cd-here)))
+
   (bash-completion-setup)
   (defvar my-shell-file-name (getenv "SHELL"))
   :custom
