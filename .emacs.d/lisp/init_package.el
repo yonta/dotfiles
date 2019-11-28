@@ -647,6 +647,10 @@ changes source and target language automaticaly."
   (leaf lispxmp :ensure t
     :bind ("C-M-;" . lispxmp))
 
+  (leaf macrostep :ensure t
+    :bind ((:emacs-lisp-mode-map ("C-c e" . macrostep-expand))
+           (:lisp-interaction-mode-map ("C-c e" . macrostep-expand))))
+
   (defun eval-region-or-line ()
     "Eval active region or current line."
     (interactive) (call-with-region-or-line #'eval-region))
