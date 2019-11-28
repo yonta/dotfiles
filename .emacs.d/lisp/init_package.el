@@ -62,8 +62,7 @@
 
   (leaf company-c-headers :ensure t)
 
-  (leaf company-arduino :ensure t
-    :after company)
+  (leaf company-arduino :ensure t)
 
   ;; aptかpipでvirtualenvを入れておく
   ;; aptでvirtualenvをいれておき、
@@ -118,9 +117,8 @@
   (leaf flycheck-ocaml :ensure t))
 
 (leaf cc-mode
-  :after (company-clang company-c-headers)
-
   :init
+
   ;; "#ff0000"などに色をつける
   (leaf rainbow-mode :ensure t
     :diminish t
