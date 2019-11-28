@@ -439,6 +439,7 @@ changes source and target language automaticaly."
   :config
 
   (leaf ivy-rich :ensure t :require t
+    :after counsel
     :custom
     (ivy-format-function . #'ivy-format-function-line)
     (ivy-rich-path-style . 'abbrev)
