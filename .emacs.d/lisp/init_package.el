@@ -1,4 +1,4 @@
-;;; init_package --- settings about packages -*- lexical-binding: t; no-byte-compile: t -*-
+;;; init_package --- settings about packages -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This is settings about package.
@@ -6,24 +6,29 @@
 
 ;;; Code:
 
+(eval-and-compile (package-initialize))
+
 (unless (package-installed-p 'leaf)
   (package-refresh-contents)
   (package-install 'leaf))
 
-(leaf leaf-keywords :ensure t
-  :config
-  (leaf el-get :ensure t
-    :custom ((el-get-git-shallow-clone . t)))
-  (leaf-keywords-init))
+(eval-and-compile
+  (leaf leaf-keywords :ensure t
+    :config
+    (leaf el-get :ensure t
+      :custom ((el-get-git-shallow-clone . t)))
+    ;; :diminishを有効にし、モードラインをスッキリさせる
+    (leaf diminish :ensure t)
+    (leaf-keywords-init)))
 
-;; :diminishを有効にし、モードラインをスッキリさせる
-(leaf diminish :ensure t)
+(leaf bind-key :ensure t :require t)
 
-(leaf bind-key :ensure t)
+(leaf util :defun call-with-region-or-line) ; dummy, init_util.el
 
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
 (leaf company :ensure t
   :diminish company-mode
+  :defvar (company-mode-map company-tooltip-align-annotations company-backends)
   :custom
   (company-idle-delay . 0)
   (company-minimum-prefix-length . 2)
@@ -77,6 +82,7 @@
 
   (leaf yasnippet :ensure t
     :diminish yas-minor-mode
+    :defvar yas-minor-mode-map
     :init
     (leaf yasnippet-snippets :ensure t)
     :config
@@ -91,6 +97,7 @@
 ;; aptでflake8をいれておく
 (leaf flycheck :ensure t
   :diminish flycheck-mode
+  :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
   :custom
   (flycheck-python-flake8-executable . "flake8")
   (flycheck-checker-error-threshold . 250)
@@ -117,6 +124,7 @@
   (leaf flycheck-ocaml :ensure t))
 
 (leaf cc-mode
+  :defvar c-basic-offset
   :init
 
   ;; "#ff0000"などに色をつける
@@ -172,18 +180,20 @@
 ;; markdownコマンドをいれておく
 (leaf markdown-mode :ensure t
   :if (executable-find "markdown")
+  :defun (markdown-fontify-buffer-wiki-links
+          leo-markdown-fontify-buffer-wiki-links-empty)
   :mode ("README\\.md\\'" . gfm-mode)
 
   :init
   ;; markdownでコードブロックの編集のために必要
   (leaf edit-indirect :ensure t)
 
+  :config
   ;; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
   ;; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
   (defun leo-markdown-fontify-buffer-wiki-links-empty ()
     "Empty replacement for `markdown-fontify-buffer-wiki-links` due to hanging bug."
     (interactive))
-  :config
   (fset #'markdown-fontify-buffer-wiki-links
         #'leo-markdown-fontify-buffer-wiki-links-empty)
   :custom
@@ -199,12 +209,14 @@
            :branch "add-smlsharp")
   :mode ("\\.smi\\'" "\\.ppg\\'")
   :interpreter "smlsharp"
+  :defun sml-prog-proc-send-region
 
   :init
   (leaf company-mlton
     :el-get (company-mlton
              :url "https://github.com/yonta/company-mlton.git"
              :branch "add-smlsharp")
+    :defun company-mlton-basis-autodetect
     :config
     (company-mlton-basis-autodetect))
 
@@ -235,6 +247,7 @@
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
 (leaf twittering-mode :ensure t
+  :defun twittering-icon-mode
   :commands twit
   :init
   (defvar my-twittering-status-format
@@ -289,8 +302,10 @@
 (leaf graphviz-dot-mode :ensure t)
 
 (leaf google-translate-smooth-ui
+  :defvar google-translate-translation-directions-alist
   :init
-  (leaf google-translate :ensure t)
+  (leaf google-translate :ensure t
+    :defun google-translate-translate)
 
   (defun google-translate-smooth-translate-region (&optional text)
     "Translate a text in selected region using translation directions.
@@ -357,6 +372,7 @@ changes source and target language automaticaly."
 (leaf proof-general :ensure t)
 
 (leaf popwin :ensure t :require t
+  :defun popwin-mode
   :custom
   ;; popwin対象
   (popwin:special-display-config
@@ -420,6 +436,7 @@ changes source and target language automaticaly."
 
 (leaf smartparens :ensure t
   :diminish smartparens-mode
+  :defun sp-local-pair
   :config
   (smartparens-global-mode t)
   ;; 一部のモードでは'での補完を行わない
@@ -432,12 +449,14 @@ changes source and target language automaticaly."
   (sp-local-pair 'tuareg-mode "'" nil :actions nil))
 
 (leaf ivy :ensure t
+  :defvar ivy-height-alist
   :custom
   (ivy-count-format . "(%d/%d) ")
   :config
 
   (leaf ivy-rich :ensure t :require t
     :after counsel
+    :defvar ivy-rich-display-transformers-list
     :custom
     (ivy-format-function . #'ivy-format-function-line)
     (ivy-rich-path-style . 'abbrev)
@@ -486,6 +505,7 @@ changes source and target language automaticaly."
   ;; https://github.com/koron/cmigemo
   (leaf migemo :ensure t :require t
     :if (executable-find "cmigemo")
+    :defun migemo-init
     :custom
     (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
     :config
@@ -497,8 +517,8 @@ changes source and target language automaticaly."
     :el-get (avy-migemo
              :url "https://github.com/yonta/avy-migemo.git"
              :branch "fix-tam171ki-and-obsolute")
-
     :if (executable-find "cmigemo")
+    :defun avy-migemo-mode
     :init
     (leaf avy :ensure t)
     :config
@@ -534,6 +554,7 @@ changes source and target language automaticaly."
   (global-git-gutter+-mode 1)
   (set-face-foreground 'git-gutter+-added "lime green")
   (set-face-foreground 'git-gutter+-modified "blue")
+  (eval-when-compile (require 'fringe-helper))
   (fringe-helper-define 'git-gutter-fr+-modified nil
   "X......."
   "XXXX...."
@@ -554,6 +575,7 @@ changes source and target language automaticaly."
   "........"))
 
 (leaf dumb-jump :ensure t
+  :defvar dumb-jump-selector
   :config
   (setq dumb-jump-selector 'ivy)
   :bind (("M-g o" . dumb-jump-go-other-window)
@@ -578,6 +600,7 @@ changes source and target language automaticaly."
 
 (leaf which-key :ensure t
   :diminish which-key-mode
+  :defvar which-key-side-window-max-height
   :config
   (which-key-mode)
   (which-key-setup-side-window-bottom)
@@ -590,6 +613,8 @@ changes source and target language automaticaly."
 
 ;; package.elのリストを綺麗で便利にする
 (leaf paradox :ensure t
+  :custom
+  (paradox-execute-asynchronously t)
   :config
   (paradox-enable))
 
@@ -609,7 +634,11 @@ changes source and target language automaticaly."
   :hook (prog-mode-hook . highlight-parentheses-mode))
 
 (leaf rainbow-delimiters :ensure t
+  :defvar rainbow-delimiters-max-face-count
   :init
+
+  (leaf color :defun color-saturate-name)
+
   ;; 括弧の色をより強くする
   ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
   (defun rainbow-delimiters-using-stronger-colors ()
@@ -663,6 +692,7 @@ changes source and target language automaticaly."
          (:lisp-interaction-mode-map ("C-c C-r" . eval-region-or-line))))
 
 (leaf python
+  :defun python-shell-send-region
   :init
 
   ;; aptかpipでautopep8を入れておく
@@ -722,12 +752,15 @@ changes source and target language automaticaly."
 (leaf hl-line+
   :el-get (hl-line+
            :url "https://github.com/emacsmirror/hl-line-plus.git")
+  :defvar hl-line-face
+  :defun (toggle-hl-line-when-idle hl-line-when-idle-interval)
   :config
   (toggle-hl-line-when-idle 1)
   (hl-line-when-idle-interval 4)
   (set-face-background hl-line-face "light cyan"))
 
 (leaf dired
+  :defun (dired-various-sort-change reload-current-dired-buffer)
   :custom
   ;; dired-modeがlsコマンドに渡すオプションを設定する
   ;; l: 長い表示、dired-modeに必須のオプション
@@ -835,6 +868,8 @@ Creates a buffer if necessary."
          ("M-<right>". help-go-forward)))
 
 (leaf ibuffer
+  :defvar (ibuffer-inline-columns ibuffer-formats)
+  :defun ibuffer-current-buffer
   :config
   ;; キロメガでサイズ表示する
   ;; 参考： https://www.emacswiki.org/emacs/IbufferMode
@@ -867,6 +902,7 @@ at point."
 
 (leaf whitespace
   :diminish global-whitespace-mode
+  :defvar whitespace-line-column
   :init
   ;; white spaceをオン
   (global-whitespace-mode t)
@@ -906,11 +942,13 @@ at point."
 
   (leaf linum
     :if (version< emacs-version "26") ; Emacs25以下
+    :defvar linum-format
     :init
     (global-linum-mode 1)
     (setq linum-format "%4d ")))
 
 (leaf autoinsert
+  :defvar (auto-insert-directory auto-insert-alist)
   :init
   (defvar template-replacements-alists
     '(("%file%" . (lambda () (file-name-nondirectory (buffer-file-name))))
@@ -951,6 +989,7 @@ at point."
          auto-insert-alist)))
 
 (leaf recentf
+  :defvar (recentf-save-file recentf-max-saved-items recentf-auto-cleanup)
   :config
   ;; 最近使ったファイルをrecentfファイルに保存する
   ;; counsel-recentfで呼び出せる
