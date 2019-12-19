@@ -619,10 +619,15 @@ changes source and target language automaticaly."
 
 ;; package.elのリストを綺麗で便利にする
 (leaf paradox :ensure t
+  :init
+  ;; paradox-enableを遅延するために、別コマンドにする
+  (defun list-packages-paradox ()
+    "Call `list-packages' function with paradox initialization."
+    (interactive)
+    (paradox-enable)
+    (call-interactively #'list-packages))
   :custom
-  (paradox-execute-asynchronously t)
-  :config
-  (paradox-enable))
+  (paradox-execute-asynchronously t))
 
 (leaf auto-highlight-symbol :ensure t
   :diminish auto-highlight-symbol-mode
