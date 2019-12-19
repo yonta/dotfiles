@@ -456,8 +456,45 @@ changes source and target language automaticaly."
   (ivy-count-format . "(%d/%d) ")
   :config
 
+  (leaf swiper :ensure t
+    :custom
+    (swiper-include-line-number-in-search . t)
+    :bind (("C-s" . swiper)
+           ("C-M-s" . swiper-all)
+           ("C-c s" . isearch-forward)
+           (:swiper-map
+            ("M-%" . swiper-query-replace)
+            ("C-w" . ivy-yank-word)
+            ("C-M-y" . ivy-yank-char))))
+
+  (leaf counsel :ensure t
+    :init
+    ;; dotファイルとコンパイルファイルなどを無視する
+    ;; .キーを押せばdotスタートファイルは表示される
+    (defvar my-counsel-find-file-ignore-regexp
+      (concat "\\(\\`\\.\\)\\|" (regexp-opt completion-ignored-extensions)))
+    :custom
+    (counsel-find-file-ignore-regexp . my-counsel-find-file-ignore-regexp)
+    (counsel-mark-ring-sort-selections . nil)
+    :config
+    ;; counsel-yank-popの高さをデフォルト5から10に拡大する
+    (setq ivy-height-alist
+          (cons '(counsel-yank-pop . 10)
+                (assq-delete-all 'counsel-yank-pop ivy-height-alist)))
+    :bind (("M-x" . counsel-M-x)
+           ("M-r" . counsel-command-history)
+           ("C-x C-f" . counsel-find-file)
+           ("C-x f" . counsel-recentf)
+           ("C-c C-d" . counsel-describe-function)
+           ("C-c g" . counsel-git-grep)
+           ("C-x b" . counsel-switch-buffer)
+           ("C-M-y" . counsel-yank-pop)
+           ("C-c C-SPC" . counsel-mark-ring)
+           (:counsel-find-file-map
+            ("^" . counsel-up-directory))))
+
   (leaf ivy-rich :ensure t :require t
-    :after counsel
+    :after ivy
     :defvar ivy-rich-display-transformers-list
     :custom
     (ivy-format-function . #'ivy-format-function-line)
@@ -471,72 +508,36 @@ changes source and target language automaticaly."
     (ivy-rich-mode 1))
 
   (leaf ivy-prescient :ensure t
+    :after ivy
     :config
-    (ivy-prescient-mode 1)))
-
-(leaf counsel :ensure t
-  ;; dotファイルとコンパイルファイルなどを無視する
-  ;; .キーを押せばdotスタートファイルは表示される
-  :init
-  (defvar my-counsel-find-file-ignore-regexp
-    (concat "\\(\\`\\.\\)\\|" (regexp-opt completion-ignored-extensions)))
-  :custom
-  (counsel-find-file-ignore-regexp . my-counsel-find-file-ignore-regexp)
-  (counsel-mark-ring-sort-selections . nil)
-  :config
-  ;; counsel-yank-popの高さをデフォルト5から10に拡大する
-  (setq ivy-height-alist
-        (cons '(counsel-yank-pop . 10)
-              (assq-delete-all 'counsel-yank-pop ivy-height-alist)))
-  :bind (("M-x" . counsel-M-x)
-         ("M-r" . counsel-command-history)
-         ("C-x C-f" . counsel-find-file)
-         ("C-x f" . counsel-recentf)
-         ("C-c C-d" . counsel-describe-function)
-         ("C-c g" . counsel-git-grep)
-         ("C-x b" . counsel-switch-buffer)
-         ("C-M-y" . counsel-yank-pop)
-         ("C-c C-SPC" . counsel-mark-ring)
-         (:counsel-find-file-map
-          ("^" . counsel-up-directory))))
-
-(leaf swiper :ensure t
-
-  :init
-  ;; cmigemoをいれておく
-  ;; https://github.com/koron/cmigemo
-  (leaf migemo :ensure t :require t
-    :if (executable-find "cmigemo")
-    :defun migemo-init
-    :custom
-    (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
-    :config
-    (migemo-init))
+    (ivy-prescient-mode 1))
 
   ;; 2019/05/11のswiperアップデートでswiperとavy-migemoの関係が壊れている
   ;; 暫定的にavy-migemoをpackageからアインストールし、PRのcommitを採用している。
-  (leaf avy-migemo
+  (leaf avy-migemo :require t
     :el-get (avy-migemo
              :url "https://github.com/yonta/avy-migemo.git"
              :branch "fix-tam171ki-and-obsolute")
+    ;; cmigemoをいれておく
+    ;; https://github.com/koron/cmigemo
     :if (executable-find "cmigemo")
+    :after swiper
     :defun avy-migemo-mode
     :init
+
     (leaf avy :ensure t)
+
+    (leaf migemo :ensure t :require t
+      :defun migemo-init
+      :custom
+      (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
+      :config
+      (migemo-init))
+
     :config
     (avy-migemo-mode 1)
     (require 'avy-migemo-e.g.swiper)
-    (require 'avy-migemo-e.g.counsel))
-
-  :custom
-  (swiper-include-line-number-in-search . t)
-  :bind (("C-s" . swiper)
-         ("C-M-s" . swiper-all)
-         ("C-c s" . isearch-forward)
-         (:swiper-map
-          ("M-%" . swiper-query-replace)
-          ("C-w" . ivy-yank-word)
-          ("C-M-y" . ivy-yank-char))))
+    (require 'avy-migemo-e.g.counsel)))
 
 ;; バグで動かない
 ;; https://github.com/jschaf/esup/issues/54
@@ -639,7 +640,9 @@ changes source and target language automaticaly."
   :defvar rainbow-delimiters-max-face-count
   :init
 
-  (leaf color :defun color-saturate-name)
+  (leaf color  :require t
+    :after rainbow-delimiters
+    :defun color-saturate-name)
 
   ;; 括弧の色をより強くする
   ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
