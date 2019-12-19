@@ -351,7 +351,9 @@ changes source and target language automaticaly."
     (unbind-key "C-c C-d" sh-mode-map)
     :bind (:sh-mode-map ("C-c C-p" . sh-cd-here)))
 
-  (bash-completion-setup)
+  (autoload 'bash-completion-dynamic-complete "bash-completion"
+    "BASH completion hook")
+  (add-hook 'shell-dynamic-complete-functions 'bash-completion-dynamic-complete)
   (defvar my-shell-file-name (getenv "SHELL"))
   :custom
   ;; Emacsを起動したshellを使用する（bashからの起動を前提）
