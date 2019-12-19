@@ -551,14 +551,17 @@ changes source and target language automaticaly."
   :config
   (auto-package-update-maybe))
 
-(leaf git-gutter-fringe+ :ensure t :require t
-  :diminish git-gutter+-mode
+(leaf git-gutter-fringe :ensure t :require t
+  :diminish git-gutter-mode
+  :init
+  (global-git-gutter-mode)
   :config
-  (global-git-gutter+-mode 1)
-  (set-face-foreground 'git-gutter+-added "lime green")
-  (set-face-foreground 'git-gutter+-modified "blue")
+  (set-face-foreground 'git-gutter-fr:added "lime green")
+  (set-face-background 'git-gutter-fr:added "white smoke")
+  (set-face-foreground 'git-gutter-fr:modified "blue")
+  (set-face-background 'git-gutter-fr:modified "white smoke")
   (eval-when-compile (require 'fringe-helper))
-  (fringe-helper-define 'git-gutter-fr+-modified nil
+  (fringe-helper-define 'git-gutter-fr:modified nil
   "X......."
   "XXXX...."
   "XXXXXX.."
@@ -567,7 +570,7 @@ changes source and target language automaticaly."
   "XXXXXX.."
   "XXXX...."
   "XX......")
-  (fringe-helper-define 'git-gutter-fr+-deleted nil
+  (fringe-helper-define 'git-gutter-fr:deleted nil
   "........"
   "........"
   "........"
