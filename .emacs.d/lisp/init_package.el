@@ -222,7 +222,9 @@
 
   (leaf flycheck-smlsharp
     :el-get (flycheck-smlsharp
-             :url "https://github.com/yonta/flycheck-smlsharp.git"))
+             :url "https://github.com/yonta/flycheck-smlsharp.git")
+    :hook (sml-mode-hook
+           . (lambda () (require 'flycheck-smlsharp))))
 
   :init
   (defun sml-prog-proc-send-region-or-line ()
