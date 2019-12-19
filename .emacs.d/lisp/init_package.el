@@ -545,7 +545,8 @@ changes source and target language automaticaly."
 ;; https://github.com/jschaf/esup/issues/54
 (leaf esup :disabled t)
 
-(leaf auto-package-update :ensure t
+;; パッケージのアップデートでネットワーク接続中にフリーズするので無効化
+(leaf auto-package-update :ensure t :disabled t
   :custom
   (auto-package-update-delete-old-versions . t)
   (auto-package-update-prompt-before-update . t)
