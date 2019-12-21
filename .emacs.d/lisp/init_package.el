@@ -688,9 +688,15 @@ changes source and target language automaticaly."
   (leaf auto-async-byte-compile :ensure t
     :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
 
-  (leaf lispxmp :ensure t)
+  (leaf lispxmp :ensure t
+    :bind (:lisp-mode-shared-map
+           :package elisp-mode
+           ("C-M-;" . lispxmp)))
 
-  (leaf macrostep :ensure t)
+  (leaf macrostep :ensure t
+    :bind (:lisp-mode-shared-map
+           :package elisp-mode
+           ("C-c e" . macrostep-expand)))
 
   (defun eval-region-or-line ()
     "Eval active region or current line."
@@ -701,10 +707,7 @@ changes source and target language automaticaly."
                          '((company-capf
                             :with company-files company-dabbrev-code
                             company-yasnippet)))))
-  :bind ((:lisp-mode-shared-map
-          ("C-c C-r" . eval-region-or-line)
-          ("C-M-;" . lispxmp)
-          ("C-c e" . macrostep-expand))))
+  :bind ((:lisp-mode-shared-map ("C-c C-r" . eval-region-or-line))))
 
 (leaf python
   :defun python-shell-send-region
