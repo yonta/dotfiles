@@ -21,22 +21,6 @@
       `("find . -type f -print0 | xargs -0 -e grep -nHE " . 48))
 ;;; terminal(-nw)で起動した場合は、C-SPCが使えないので、C-]にする
 (if (not window-system) (bind-key "C-]" #'set-mark-command))
-;;; C-x oの代わりのバッファ移動
-(bind-key "C-c l" #'windmove-right)
-(bind-key "C-c h" #'windmove-left)
-(bind-key "C-c j" #'windmove-down)
-(bind-key "C-c k" #'windmove-up)
-
-;;; Shift + カーソル で分割ウィンドウ間を移動
-(require 'windmove)
-(windmove-default-keybindings)
-(setq windmove-wrap-around t)
-
-;;; カーソルのみで分割ウィンドウ間を移動
-;; (bind-key "<left>" #'windmove-right)
-;; (bind-key "<right>" #'windmove-left)
-;; (bind-key "<down>" #'windmove-down)
-;; (bind-key "<up>" #'windmove-up)
 
 ;;; swap-screenで上下や左右のバッファを入れ替え，これをC-Oにする
 (defun swap-screen()

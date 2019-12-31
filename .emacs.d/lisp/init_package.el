@@ -1029,6 +1029,25 @@ at point."
   :config
   (global-subword-mode 1))
 
+(leaf windmove
+  :config
+  ;; Shift + カーソル で分割ウィンドウ間を移動
+  (windmove-default-keybindings)
+  :custom
+  ;; 画面外への移動はサイクルする
+  (windmove-wrap-around . t)
+  ;; C-x oの代わりのバッファ移動
+  :bind (("C-c l" . windmove-right)
+         ("C-c h" . windmove-left)
+         ("C-c j" . windmove-down)
+         ("C-c k" . windmove-up)
+         ;; カーソルのみで分割ウィンドウ間を移動
+         ;; ("<left>" . windmove-right)
+         ;; ("<right>" . windmove-left)
+         ;; ("<down>" . windmove-down)
+         ;; ("<up>" . windmove-up)
+  ))
+
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく
 (leaf browse-url
