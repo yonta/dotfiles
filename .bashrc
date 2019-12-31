@@ -119,6 +119,7 @@ alias vi='vim'
 alias grep='grep --color=auto'
 alias lessv='/usr/share/vim/vim80/macros/less.sh'
 alias spacemacs='env HOME=${HOME}/.spacemacs emacs'
+alias emacsc='emacs -Q --batch -f batch-byte-compile'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
