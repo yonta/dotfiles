@@ -700,6 +700,10 @@ changes source and target language automaticaly."
            :package elisp-mode
            ("C-c e" . macrostep-expand)))
 
+  :config
+  ;; Emacs Lispの正規表現の構成子の色を変えて見やすくする
+  (set-face-foreground 'font-lock-regexp-grouping-backslash "#ccc")
+  (set-face-foreground 'font-lock-regexp-grouping-construct "#faa")
   (defun eval-region-or-line ()
     "Eval active region or current line."
     (interactive) (call-with-region-or-line #'eval-region))
