@@ -632,7 +632,7 @@ changes source and target language automaticaly."
     (paradox-enable)
     (call-interactively #'list-packages))
   :custom
-  (paradox-execute-asynchronously t))
+  (paradox-execute-asynchronously . t))
 
 (leaf auto-highlight-symbol :ensure t
   :diminish auto-highlight-symbol-mode
