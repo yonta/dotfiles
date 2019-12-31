@@ -4,7 +4,7 @@
 ;; This is settings about keybindings.
 
 ;;; Code:
-(require 'bind-key)
+(eval-when-compile (require 'bind-key))
 
 ;;; C-hをバックスペースにする
 ;; global-set-keyやbind-keyより、key自体を交換するのがよい
