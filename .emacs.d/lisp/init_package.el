@@ -98,6 +98,11 @@
 (leaf flycheck :ensure t
   :diminish flycheck-mode
   :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
+  :init
+
+  (leaf flycheck-popup-tip :ensure t
+    :hook (flycheck-mode-hook . flycheck-popup-tip-mode))
+
   :custom
   (flycheck-python-flake8-executable . "flake8")
   (flycheck-checker-error-threshold . 250)
@@ -117,9 +122,6 @@
     ;; :hook (python-mode-hook . (lambda ()
     ;;                             (setq-local flycheck-checker 'python-mypy))))
     )
-
-  (leaf flycheck-popup-tip :ensure t
-    :hook (flycheck-mode-hook . flycheck-popup-tip-mode))
 
   (leaf flycheck-ocaml :ensure t))
 
