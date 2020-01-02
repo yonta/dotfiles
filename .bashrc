@@ -177,7 +177,7 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1 && [ -z "$SSH_CLIENT" ]; then
         xset -r 49              # 全角半角キーが連打されるのを防ぐ
         # fcitxが起動してなければ
         if ! ps aux | grep "fcitx" | grep -v "grep" > /dev/null 2>&1 ; then
-            fcitx-autostart 1>/dev/null
+            fcitx-autostart > /dev/null 2>&1
         fi
     fi
 
