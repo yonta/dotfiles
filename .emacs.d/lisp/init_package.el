@@ -25,6 +25,10 @@
 
 (leaf util :defun call-with-region-or-line) ; dummy, init_util.el
 
+(leaf initchart
+  :el-get (initchart
+           :url "https://github.com/yuttie/initchart.git"))
+
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
 (leaf company :ensure t
   :diminish company-mode

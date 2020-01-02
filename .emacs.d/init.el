@@ -5,6 +5,16 @@
 
 ;;; Code:
 
+;;; Emacs起動時の機能読み込みをログしてsvgに吐く
+;; コメントアウトを外し、Emacsを起動して、
+;; `initchart-visualize-init-sequence'を実行して出力先を指定する。
+(let ((default-directory  "~/.emacs.d/el-get/initchart"))
+  (normal-top-level-add-to-load-path '("."))
+  (normal-top-level-add-subdirs-to-load-path))
+;; (require 'initchart)
+;; (initchart-record-execution-time-of load file)
+;; (initchart-record-execution-time-of require feature)
+
 (setq gc-cons-threshold 134217728)
 (require 'cl-lib)
 
