@@ -6,6 +6,11 @@
 
 ;;; Code:
 
+(require 'package)
+(add-to-list 'package-archives ; MELPAを追加
+             '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives ; Marmaladeを追加
+             '("marmalade" . "https://marmalade-repo.org/packages/"))
 (eval-and-compile (package-initialize))
 
 (unless (package-installed-p 'leaf)
