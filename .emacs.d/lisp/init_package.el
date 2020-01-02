@@ -40,9 +40,9 @@
   (company-transformers . '(company-sort-by-occurrence))
   :config
   (setq completion-ignore-case t)
-  (global-company-mode 1)
   (bind-key [remap completion-at-point] #'company-complete company-mode-map)
   (setq company-tooltip-align-annotations t)
+  :hook (after-init-hook . global-company-mode)
   :bind (("C-M-i" . company-complete)
          (:company-active-map
           ("C-n" . company-select-next)
@@ -54,7 +54,7 @@
           ("C-s" . company-filter-candidates)
           ("C-o" . company-other-backend)))
 
-  :config
+  :init
   (leaf company-quickhelp :ensure t
     :config
     (company-quickhelp-mode 1)
