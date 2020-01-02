@@ -65,9 +65,9 @@
     :config
     (company-prescient-mode 1))
 
-  (leaf company-c-headers :ensure t)
+  (leaf company-c-headers :ensure t :disabled t)
 
-  (leaf company-arduino :ensure t)
+  (leaf company-arduino :ensure t :disabled t)
 
   ;; aptかpipでvirtualenvを入れておく
   ;; aptでvirtualenvをいれておき、
@@ -165,7 +165,7 @@
 (leaf tuareg :ensure t)
 
 ;; TODO: set compiler and libraries path by environment
-(leaf arduino-mode :ensure t)
+(leaf arduino-mode :ensure t :disabled t)
 
 (leaf quickrun :ensure t
   :custom
