@@ -188,25 +188,21 @@
     :mode 'python-mode)
   :bind ("C-c c" . quickrun))
 
-;; markdownコマンドをいれておく
+;; markdownとgripをaptでいれておく
 (leaf markdown-mode :ensure t
-  :if (executable-find "markdown")
-  :defun (markdown-fontify-buffer-wiki-links
-          leo-markdown-fontify-buffer-wiki-links-empty)
+  :if (executable-find "markdown") (executable-find "grip")
   :mode ("README\\.md\\'" . gfm-mode)
 
   :init
   ;; markdownでコードブロックの編集のために必要
   (leaf edit-indirect :ensure t)
 
-  :config
-  ;; ファイルロック機能と競合してハングするため、leoさんの松葉杖対処を導入
-  ;; https://groups.google.com/forum/#!topic/gnu.emacs.help/AIy5megeSHA
-  (defun leo-markdown-fontify-buffer-wiki-links-empty ()
-    "Empty replacement for `markdown-fontify-buffer-wiki-links` due to hanging bug."
-    (interactive))
-  (fset #'markdown-fontify-buffer-wiki-links
-        #'leo-markdown-fontify-buffer-wiki-links-empty)
+  ;; GitHubのSettings/Developer settings/Personal access tokensでつくった
+  ;; 空権限のtokenをcustom.elのgrip-github-passwordに書き込む
+  ;; gfm-modeのときにgrip-modeで起動する
+  (leaf grip-mode :ensure t
+    :custom (grip-github-password . ""))
+
   :custom
   (markdown-command . "markdown")
   ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
