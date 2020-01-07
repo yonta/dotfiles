@@ -206,7 +206,9 @@
   :custom
   (markdown-command . "markdown")
   ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
-  (markdown-css-paths . '("style.css")))
+  (markdown-css-paths . '("style.css"))
+  :config
+  (require 'smartparens-markdown))
 
 (leaf csv-mode :ensure t)
 
@@ -455,6 +457,7 @@ changes source and target language automaticaly."
   (sp-local-pair 'emacs-lisp-mode "`" "'")
   (sp-local-pair 'lisp-mode "'" nil :actions nil)
   (sp-local-pair 'lisp-mode "`" nil :actions nil)
+  (sp-local-pair 'sml-mode "(*" "*)" )
   (sp-local-pair 'sml-mode "'" nil :actions nil)
   (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
   (sp-local-pair 'tuareg-mode "'" nil :actions nil))
@@ -761,6 +764,8 @@ changes source and target language automaticaly."
   :custom
   (python-shell-interpreter . "python3")
   (python-indent-offset . 4)
+  :config
+  (require 'smartparens-python)
   :hook ((python-mode-hook
           . (lambda ()
               (setq-local company-backends
