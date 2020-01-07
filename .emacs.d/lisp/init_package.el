@@ -109,8 +109,10 @@
   :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
   :init
 
-  (leaf flycheck-popup-tip :ensure t
-    :hook (flycheck-mode-hook . flycheck-popup-tip-mode))
+  (leaf flycheck-pos-tip :ensure t
+    :after flycheck
+    :config
+    (flycheck-pos-tip-mode))
 
   :custom
   (flycheck-python-flake8-executable . "flake8")
