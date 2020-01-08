@@ -78,17 +78,6 @@
 
   (leaf company-arduino :ensure t :disabled t)
 
-  ;; aptかpipでvirtualenvを入れておく
-  ;; aptでvirtualenvをいれておき、
-  ;; 初回起動時にjedi:install-serverする
-  (leaf company-jedi :ensure t
-    :init
-    (leaf jedi-core :ensure t
-      :hook (python-mode-hook . jedi:setup)
-      ;; 関数の引数の情報が便利なので、ミニバッファに表示する
-      :custom ((jedi:tooltip-method . nil)
-               (jedi:use-shortcuts . t)))) ; M-,/M-.にjediを使う
-
   (leaf yasnippet :ensure t
     :diminish yas-minor-mode
     :defvar yas-minor-mode-map
@@ -125,15 +114,6 @@
          ("M-n" . flycheck-next-error))
 
   :config
-  ;; aptかpipでmypyを入れておく
-  ;; aptでmypyをいれておく
-  (leaf flycheck-mypy :ensure t
-    ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
-    ;; 必要なときにだけflycheck-select-checkerで利用する
-    ;; :hook (python-mode-hook . (lambda ()
-    ;;                             (setq-local flycheck-checker 'python-mypy))))
-    )
-
   (leaf flycheck-ocaml :ensure t))
 
 (leaf cc-mode
@@ -727,47 +707,6 @@ changes source and target language automaticaly."
 
 (leaf python
   :defun python-shell-send-region
-  :init
-
-  ;; aptかpipでautopep8を入れておく
-  ;; aptでpython-autopep8をいれておく
-  (leaf py-autopep8 :ensure t
-    :if (executable-find "autopep8")
-    :hook (python-mode-hook . py-autopep8-enable-on-save))
-
-  (leaf highlight-indentation :ensure t
-    :diminish highlight-indentation-mode
-    ;; インデントに意味のあるPythonでとりあえず使う
-    :hook (python-mode-hook . highlight-indentation-mode))
-
-  (leaf jedi-direx :ensure t
-    :init
-
-    (leaf jedi :ensure t
-      ;; jedi-direxの依存関係にjediがあるためいれる。
-      ;; しかし、jediはauto-completeのためのパッケージであり、
-      ;; company-jediとコンフリクトする。
-      ;; そのため、jediが行うjedi-core.elのへ変数の登録をnilに上書きする。
-      :init
-      (setq jedi:setup-function nil)
-      (setq jedi:mode-function nil)
-      :config
-      (setq jedi:setup-function nil)
-      (setq jedi:mode-function nil))
-
-    :hook (jedi-mode-hook . jedi-direx:setup)
-    :bind (:jedi-mode-map
-           ("C-c x" . jedi-direx:pop-to-buffer)
-           ("C-c C-x" . jedi-direx:switch-to-buffer)))
-
-  (defun python-shell-send-region-or-line ()
-    "Call REPL with active region or current line."
-    (interactive) (call-with-region-or-line #'python-shell-send-region))
-  :custom
-  (python-shell-interpreter . "python3")
-  (python-indent-offset . 4)
-  :config
-  (require 'smartparens-python)
   :hook ((python-mode-hook
           . (lambda ()
               (setq-local company-backends
@@ -783,7 +722,60 @@ changes source and target language automaticaly."
                              company-yasnippet))))))
   :bind (:python-mode-map
          ("C-c C-r" . python-shell-send-region-or-line)
-         ("<backtab>" . python-indent-shift-left)))
+         ("<backtab>" . python-indent-shift-left))
+  :init
+  (defun python-shell-send-region-or-line ()
+    "Call REPL with active region or current line."
+    (interactive) (call-with-region-or-line #'python-shell-send-region))
+  :custom
+  (python-shell-interpreter . "python3")
+  (python-indent-offset . 4)
+  :config
+  (require 'smartparens-python)
+
+  :init
+  (leaf jedi-core :ensure t
+    :hook (python-mode-hook . jedi:setup)
+    ;; 関数の引数の情報が便利なので、ミニバッファに表示する
+    :custom ((jedi:tooltip-method . nil)
+             (jedi:use-shortcuts . t))) ; M-,/M-.にjediを使う
+
+  ;; aptかpipでvirtualenvを入れておく
+  ;; aptでvirtualenvをいれておき、
+  ;; 初回起動時にjedi:install-serverする
+  (leaf company-jedi :ensure t)
+
+  ;; aptかpipでmypyを入れておく
+  ;; aptでmypyをいれておく
+  (leaf flycheck-mypy :ensure t
+    ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
+    ;; 必要なときにだけflycheck-select-checkerで利用する
+    ;; :hook (python-mode-hook . (lambda ()
+    ;;                             (setq-local flycheck-checker 'python-mypy))))
+    )
+
+  ;; aptかpipでautopep8を入れておく
+  ;; aptでpython-autopep8をいれておく
+  (leaf py-autopep8 :ensure t
+    :if (executable-find "autopep8")
+    :hook (python-mode-hook . py-autopep8-enable-on-save))
+
+  (leaf highlight-indentation :ensure t
+    :diminish highlight-indentation-mode
+    ;; インデントに意味のあるPythonでとりあえず使う
+    :hook (python-mode-hook . highlight-indentation-mode))
+
+  (leaf jedi-direx
+    :el-get (jedi-direx
+             :url "https://github.com/yonta/emacs-jedi-direx.git"
+             :branch "use-jedi-core")
+    :hook (jedi-mode-hook . jedi-direx:setup)
+    :bind (:jedi-mode-map
+           :package jedi-core
+           ("C-c x" . jedi-direx:pop-to-buffer)
+           ("C-c C-x" . jedi-direx:switch-to-buffer))
+    :init
+    (leaf direx :ensure t)))
 
 (leaf hl-line+
   :el-get (hl-line+
