@@ -635,7 +635,9 @@ changes source and target language automaticaly."
     . '((t (:foreground "black" :background "light sky blue"))))
    (ahs-face . '((t (:foreground "ghost white" :background "slate gray")))))
   :config
-  (global-auto-highlight-symbol-mode t))
+  (global-auto-highlight-symbol-mode t)
+  :bind (("M-<up>" . ahs-backward)
+         ("M-<down>" . ahs-forward)))
 
 (leaf highlight-parentheses :ensure t
   :diminish highlight-parentheses-mode
@@ -777,6 +779,19 @@ changes source and target language automaticaly."
            ("C-c C-x" . jedi-direx:switch-to-buffer))
     :init
     (leaf direx :ensure t)))
+
+(leaf perspective :ensure t
+  :bind (("M-<right>" . persp-next)
+         ("M-<left>" . persp-prev))
+  :hook ((kill-emacs-hook . persp-state-save)
+         (emacs-startup-hook
+          . (lambda () (persp-state-load "~/.emacs.d/.perspective"))))
+  :custom
+  (persp-initial-frame-name . "el")
+  (persp-modestring-dividers . '("" "" "|"))
+  (persp-state-default-file . "~/.emacs.d/.perspective")
+  :config
+  (persp-mode t))
 
 (leaf hl-line+
   :el-get (hl-line+

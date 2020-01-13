@@ -19,4 +19,5 @@
 .emacs.d/recentf*
 .emacs.d/tramp
 .emacs.d/custom.el*
+.emacs.d/.perspective
 flycheck_*.el
