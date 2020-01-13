@@ -707,6 +707,8 @@ changes source and target language automaticaly."
                             company-yasnippet)))))
   :bind ((:lisp-mode-shared-map ("C-c C-r" . eval-region-or-line))))
 
+(leaf eldoc :diminish eldoc-mode)
+
 (leaf python
   :defun python-shell-send-region
   :hook ((python-mode-hook
