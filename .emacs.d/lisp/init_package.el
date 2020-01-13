@@ -742,11 +742,13 @@ changes source and target language automaticaly."
     :hook (python-mode-hook . jedi:setup)
     ;; 関数の引数の情報が便利なので、ミニバッファに表示する
     :custom ((jedi:tooltip-method . nil)
-             (jedi:use-shortcuts . t))) ; M-,/M-.にjediを使う
+             (jedi:use-shortcuts . t) ; M-,/M-.にjediを使う
+             (jedi:environment-root . "python3-default")))
 
   ;; aptかpipでvirtualenvを入れておく
-  ;; aptでvirtualenvをいれておき、
-  ;; 初回起動時にjedi:install-serverする
+  ;; Ubuntu bionicのpythonは2.7なので、予め以下コマンドでPython3の環境を作る
+  ;;   virtualenv -p python3 .python-environment/python3-default
+  ;; その後、初回起動時にjedi:install-serverする
   (leaf company-jedi :ensure t)
 
   ;; aptかpipでmypyを入れておく
