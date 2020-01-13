@@ -94,18 +94,20 @@
 ;; どちらを使うかを選択しないといけない、闇
 ;; aptでflake8をいれておく
 (leaf flycheck :ensure t
-  :diminish flycheck-mode
   :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
   :init
 
   (leaf flycheck-pos-tip :ensure t
     :after flycheck
+    :custom
+    (flycheck-pos-tip-timeout . 0) ; pos-tipを自動で消さない
     :config
     (flycheck-pos-tip-mode))
 
   :custom
   (flycheck-python-flake8-executable . "flake8")
   (flycheck-checker-error-threshold . 250)
+  (flycheck-mode-line-prefix . "f")
   :config
   (global-flycheck-mode)
   (set-face-background 'flycheck-error "pink") ; エラー箇所は背景色をつける
