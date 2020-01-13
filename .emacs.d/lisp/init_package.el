@@ -90,9 +90,9 @@
     (unbind-key "TAB" yas-minor-mode-map)
     (add-to-list 'company-backends #'company-yasnippet)))
 
-;; aptかpipでflake8を入れておく
-;; どちらを使うかを選択しないといけない、闇
-;; aptでflake8をいれておく
+;; aptかpipでflake8とmypyを入れておく
+;; aptとpipのどちらを使うかを選択しないといけない、闇
+;; aptでflake8とmypyをいれておく
 (leaf flycheck :ensure t
   :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
   :init
@@ -724,6 +724,10 @@ changes source and target language automaticaly."
                           '((company-capf
                              :with company-files company-dabbrev-code
                              company-yasnippet))))))
+  ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
+  ;; 必要なときにだけflycheck-select-checkerで利用する
+  ;; :hook (python-mode-hook
+  ;;        . (lambda () (setq-local flycheck-checker 'python-mypy))))
   :bind (:python-mode-map
          ("C-c C-r" . python-shell-send-region-or-line)
          ("<backtab>" . python-indent-shift-left))
@@ -750,15 +754,6 @@ changes source and target language automaticaly."
   ;;   virtualenv -p python3 .python-environment/python3-default
   ;; その後、初回起動時にjedi:install-serverする
   (leaf company-jedi :ensure t)
-
-  ;; aptかpipでmypyを入れておく
-  ;; aptでmypyをいれておく
-  (leaf flycheck-mypy :ensure t
-    ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
-    ;; 必要なときにだけflycheck-select-checkerで利用する
-    ;; :hook (python-mode-hook . (lambda ()
-    ;;                             (setq-local flycheck-checker 'python-mypy))))
-    )
 
   ;; aptかpipでautopep8を入れておく
   ;; aptでpython-autopep8をいれておく
