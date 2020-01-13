@@ -629,9 +629,10 @@ changes source and target language automaticaly."
 (leaf auto-highlight-symbol :ensure t
   :diminish auto-highlight-symbol-mode
   :custom
+  (ahs-default-range . 'ahs-range-whole-buffer)
   (ahs-idle-interval . 2.0)
   :custom-face
-  ((ahs-plugin-defalt-face
+  ((ahs-plugin-whole-buffer-face
     . '((t (:foreground "black" :background "light sky blue"))))
    (ahs-face . '((t (:foreground "ghost white" :background "slate gray")))))
   :config
