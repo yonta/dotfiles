@@ -90,9 +90,7 @@
     (unbind-key "TAB" yas-minor-mode-map)
     (add-to-list 'company-backends #'company-yasnippet)))
 
-;; aptかpipでflake8とmypyを入れておく
-;; aptとpipのどちらを使うかを選択しないといけない、闇
-;; aptでflake8とmypyをいれておく
+;; pipでflake8とmypyをいれておく
 (leaf flycheck :ensure t
   :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
   :init
@@ -172,7 +170,7 @@
     :mode 'python-mode)
   :bind ("C-c c" . quickrun))
 
-;; markdownとgripをaptでいれておく
+;; aptでmarkdown、pipでgripをいれておく
 (leaf markdown-mode :ensure t
   :if (executable-find "markdown") (executable-find "grip")
   :mode ("README\\.md\\'" . gfm-mode)
@@ -752,14 +750,14 @@ changes source and target language automaticaly."
              (jedi:use-shortcuts . t) ; M-,/M-.にjediを使う
              (jedi:environment-root . "python3-default")))
 
-  ;; aptかpipでvirtualenvを入れておく
+  ;; pipでvirtualenvを入れておく
   ;; Ubuntu bionicのpythonは2.7なので、予め以下コマンドでPython3の環境を作る
   ;;   virtualenv -p python3 .python-environment/python3-default
   ;; その後、初回起動時にjedi:install-serverする
+  ;; 必要に応じて補完したいライブラリを、activateしてpip installする
   (leaf company-jedi :ensure t)
 
-  ;; aptかpipでautopep8を入れておく
-  ;; aptでpython-autopep8をいれておく
+  ;; pipでautopep8をいれておく
   (leaf py-autopep8 :ensure t
     :if (executable-find "autopep8")
     :hook (python-mode-hook . py-autopep8-enable-on-save))
