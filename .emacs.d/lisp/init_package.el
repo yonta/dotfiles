@@ -781,8 +781,8 @@ changes source and target language automaticaly."
     (leaf direx :ensure t)))
 
 (leaf perspective :ensure t
-  :bind (("M-<right>" . persp-next)
-         ("M-<left>" . persp-prev))
+  :bind* (("M-<right>" . persp-next)
+          ("M-<left>" . persp-prev))
   :hook ((kill-emacs-hook . persp-state-save)
          (emacs-startup-hook
           . (lambda () (persp-state-load "~/.emacs.d/.perspective"))))
