@@ -168,7 +168,8 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1 && [ -z "$SSH_CLIENT" ]; then
     # WSLでのXとIME設定
     export DISPLAY=localhost:0.0
     # ディスプレイが存在しVSCode WSLじゃない
-    if xrandr > /dev/null 2>&1 && [ -z "$WSLENV" ] ; then
+    if xrandr > /dev/null 2>&1 &&
+           echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
         export GTK_IM_MODULE=fcitx
         export QT_IM_MODULE=fcitx
         export XMODIFIERS=@im=fcitx
