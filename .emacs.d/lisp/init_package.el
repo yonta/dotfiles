@@ -200,7 +200,10 @@
            :branch "add-smlsharp")
   :mode ("\\.smi\\'" "\\.ppg\\'")
   :interpreter "smlsharp"
-  :defun sml-prog-proc-send-region
+  :defun (sml-prog-proc-send-region
+          sml-prog-proc-proc
+          sml-prog-proc-send-string
+          sml-prog-proc-send-region-by-string)
 
   :init
   (leaf company-mlton
@@ -218,9 +221,15 @@
            . (lambda () (require 'flycheck-smlsharp))))
 
   :init
+  (defun sml-prog-proc-send-region-by-string (begin end)
+    (interactive "r")
+    (let ((proc (sml-prog-proc-proc))
+          (code (buffer-substring begin end)))
+      (sml-prog-proc-send-string proc code)))
   (defun sml-prog-proc-send-region-or-line ()
     "Call REPL with active region or current line."
-    (interactive) (call-with-region-or-line #'sml-prog-proc-send-region))
+    (interactive)
+    (call-with-region-or-line #'sml-prog-proc-send-region-by-string))
   :custom
   (sml-indent-level . 2)
   (sml-indent-args . 2)
