@@ -251,26 +251,24 @@
 (leaf twittering-mode :ensure t
   :defun twittering-icon-mode
   :commands twit
-  :init
-  (defvar my-twittering-status-format
-    (concat
-     "%i %S(@%s) "
-     "[%FACE[underline]{%@{%Y-%m-%d %H:%M}}]"
-     "%FACE[twittering-timeline-footer-face]{"
-     "%FIELD-IF-NONZERO[  ↩%s]{retweet_count}"
-     " %FIELD-IF-NONZERO[♡%s]{favorite_count}"
-     "}"
-     "\n"
-     "%RT{ %FACE[bold]{RT} by %S(@%s)\n}"
-     "%FOLD[]{%T}\n"
-     "-------------------------------------------------------------------------------"))
   :custom
   ;; use master passworad compressed by GnuPG
   (twittering-use-master-password . t)
   (twittering-private-info-file . "~/.emacs.d/twittering-mode.gpg")
   (twittering-use-icon-storage . t)
   (twittering-icon-storage-file . "~/.emacs.d/icons.gz")
-  (twittering-status-format . my-twittering-status-format)
+  `(twittering-status-format
+    . ,(concat
+        "%i %S(@%s) "
+        "[%FACE[underline]{%@{%Y-%m-%d %H:%M}}]"
+        "%FACE[twittering-timeline-footer-face]{"
+        "%FIELD-IF-NONZERO[  ↩%s]{retweet_count}"
+        " %FIELD-IF-NONZERO[♡%s]{favorite_count}"
+        "}"
+        "\n"
+        "%RT{ %FACE[bold]{RT} by %S(@%s)\n}"
+        "%FOLD[]{%T}\n"
+        "-------------------------------------------------------------------------------"))
   ;;(twittering-convert-fix-size . 24)
   (twittering-timer-interval . 600)
   (twittering-number-of-tweets-on-retrieval . 100)
@@ -356,6 +354,7 @@ changes source and target language automaticaly."
   (autoload 'bash-completion-dynamic-complete "bash-completion"
     "BASH completion hook")
   (add-hook 'shell-dynamic-complete-functions 'bash-completion-dynamic-complete)
+  ;; TODO: バイトコンパイル時でなく起動時に評価するよう変更する
   (defvar my-shell-file-name (getenv "SHELL"))
   :custom
   ;; Emacsを起動したshellを使用する（bashからの起動を前提）
@@ -474,12 +473,12 @@ changes source and target language automaticaly."
 
   (leaf counsel :ensure t
     :init
+    :custom
     ;; dotファイルとコンパイルファイルなどを無視する
     ;; .キーを押せばdotスタートファイルは表示される
-    (defvar my-counsel-find-file-ignore-regexp
-      (concat "\\(\\`\\.\\)\\|" (regexp-opt completion-ignored-extensions)))
-    :custom
-    (counsel-find-file-ignore-regexp . my-counsel-find-file-ignore-regexp)
+    `(counsel-find-file-ignore-regexp
+     . ,(concat "\\(\\`\\.\\)\\|"
+                (regexp-opt completion-ignored-extensions)))
     (counsel-mark-ring-sort-selections . nil)
     :config
     ;; counsel-yank-popの高さをデフォルト5から10に拡大する
