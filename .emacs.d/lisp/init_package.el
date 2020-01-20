@@ -625,6 +625,7 @@ changes source and target language automaticaly."
   (paradox-execute-asynchronously . t))
 
 (leaf auto-highlight-symbol :ensure t
+  :leaf-defer nil
   :diminish auto-highlight-symbol-mode
   :custom
   (ahs-default-range . 'ahs-range-whole-buffer)
