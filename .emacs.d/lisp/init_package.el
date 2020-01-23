@@ -791,6 +791,11 @@ changes source and target language automaticaly."
     (leaf direx :ensure t)))
 
 (leaf perspective :ensure t
+  ;; 1つめのEmacsだけperspectiveをload/saveする
+  :if (string-equal
+       (shell-command-to-string
+        "ps ax | grep ' emacs' | grep -c -v 'grep' | grep '1'")
+       "1\n")
   :bind* (("M-<right>" . persp-next)
           ("M-<left>" . persp-prev))
   :hook ((kill-emacs-hook . persp-state-save)
