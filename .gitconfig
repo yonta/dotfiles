@@ -2,11 +2,11 @@
         name = SAITOU Keita
         email = keita44.f4@gmail.com
 [color]
-        ui = always
-        status = always
-        diff = always
-        log = always
-        branch = always
+        ui = auto
+        status = auto
+        diff = auto
+        log = auto
+        branch = auto
 [alias]
         h = help
         co = checkout
