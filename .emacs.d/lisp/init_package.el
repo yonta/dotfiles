@@ -796,6 +796,7 @@ changes source and target language automaticaly."
        (shell-command-to-string
         "ps ax | grep ' emacs' | grep -c -v 'grep' | grep '1'")
        "1\n")
+  :if window-system
   :bind* (("M-<right>" . persp-next)
           ("M-<left>" . persp-prev))
   :hook ((kill-emacs-hook . persp-state-save)
