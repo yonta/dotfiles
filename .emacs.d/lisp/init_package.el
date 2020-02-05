@@ -784,7 +784,7 @@ changes source and target language automaticaly."
              :branch "use-jedi-core")
     :hook (jedi-mode-hook . jedi-direx:setup)
     :bind (:jedi-mode-map
-           :package jedi-core
+           :package jedi-direx
            ("C-c x" . jedi-direx:pop-to-buffer)
            ("C-c C-x" . jedi-direx:switch-to-buffer))
     :init
