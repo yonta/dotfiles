@@ -97,6 +97,12 @@
 
   (leaf flycheck-pos-tip :ensure t
     :after flycheck
+
+    :init
+    (leaf pos-tip :ensure t
+      :custom
+      (pos-tip-use-relative-coordinates . t)) ; pos-tipをフレームに収める
+
     :custom
     (flycheck-pos-tip-timeout . 0) ; pos-tipを自動で消さない
     :config
