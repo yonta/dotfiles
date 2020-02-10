@@ -71,7 +71,7 @@ if [ "$color_prompt" = yes ]; then
     OSNAME=''
     PS1_2='\[\033[00m\]:\[\033[01;34m\]\w\[\033[35m\]$(show_branch)\[\033[00m\]\$ '
     # WSLでubuntu/openSUSEの両方がある場合、OS名をいれる
-    if uname -a | grep '\-Microsoft' > /dev/null 2>&1 &&
+    if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
            type "ubuntu.exe" > /dev/null 2>&1 &&
            type "openSUSE-42.exe" > /dev/null 2>&1 ; then
         if grep 'Ubuntu' /etc/os-release > /dev/null 2>&1; then
@@ -158,15 +158,27 @@ GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUPSTREAM=auto
 
-# Change default file and directory permission for WSL
-if uname -a | grep 'Microsoft' > /dev/null 2>&1; then
+# WSL1
+if uname -a | grep -e 'Microsoft' > /dev/null 2>&1 ; then
+    # Change default file and directory permission for WSL
     umask 0022
+    export DOCKER_HOST='tcp://localhost:2375'
+    if [ -z "$SSH_CLIENT" ]; then # not via ssh
+        export DISPLAY=localhost:0
+    fi
 fi
 
-# WSL
-if uname -a | grep 'Microsoft' > /dev/null 2>&1 && [ -z "$SSH_CLIENT" ]; then
-    # WSLでのXとIME設定
-    export DISPLAY=localhost:0.0
+# WSL2
+if uname -a | grep -e 'microsoft' > /dev/null 2>&1 ; then
+    if [ -z "$SSH_CLIENT" ]; then # not via ssh
+        export DISPLAY=`cat /etc/hosts | grep -e '192.168.10' | tail -1 \
+                      | awk '{print $1}'`:0
+    fi
+fi
+
+# WSL1 or WSL2
+if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
+    [ -z "$SSH_CLIENT" ]; then
     # ディスプレイが存在しVSCode WSLじゃない
     if xrandr > /dev/null 2>&1 &&
            echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
@@ -181,7 +193,4 @@ if uname -a | grep 'Microsoft' > /dev/null 2>&1 && [ -z "$SSH_CLIENT" ]; then
             fcitx-autostart > /dev/null 2>&1
         fi
     fi
-
-    # Docker on Windows10 from WSL
-    export DOCKER_HOST='tcp://localhost:2375'
 fi
