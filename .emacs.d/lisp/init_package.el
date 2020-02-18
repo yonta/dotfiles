@@ -1060,16 +1060,16 @@ at point."
          auto-insert-alist)))
 
 (leaf recentf
-  :defvar (recentf-save-file recentf-max-saved-items recentf-auto-cleanup)
-  :config
-  ;; 最近使ったファイルをrecentfファイルに保存する
+  ;; 最近使ったファイルを.recentfファイルに保存する
   ;; counsel-recentfで呼び出せる
-  (setq recentf-save-file "~/.emacs.d/.recentf")
-  (setq recentf-max-saved-items 100)
-  (setq recentf-auto-cleanup 'never)
+  :custom
+  (recentf-save-file . "~/.emacs.d/.recentf")
+  (recentf-max-saved-items . 1000)
+  (recentf-auto-cleanup . 'never)
+  :config
   (recentf-mode 1)
 
-  (leaf recentf-ext :ensure t))
+  (leaf recentf-ext :ensure t :require t))
 
 (leaf subword
   :diminish subword-mode
