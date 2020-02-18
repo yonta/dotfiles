@@ -467,6 +467,7 @@ changes source and target language automaticaly."
   :defvar ivy-height-alist
   :custom
   (ivy-count-format . "(%d/%d) ")
+  (ivy-initial-inputs-alist . nil)
   :config
 
   (leaf swiper :ensure t
