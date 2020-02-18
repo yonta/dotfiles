@@ -180,6 +180,9 @@
 (leaf markdown-mode :ensure t
   :if (executable-find "markdown") (executable-find "grip")
   :mode ("README\\.md\\'" . gfm-mode)
+  :config
+  (unbind-key "C-c '" gfm-mode-map)
+  :bind (:gfm-mode-map ("C-c `" . markdown-edit-code-block))
 
   :init
   ;; markdownでコードブロックの編集のために必要
