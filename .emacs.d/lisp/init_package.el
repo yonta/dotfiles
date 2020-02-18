@@ -37,7 +37,7 @@
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
 (leaf company :ensure t
   :diminish company-mode
-  :defvar (company-mode-map company-tooltip-align-annotations company-backends)
+  :defvar (company-mode-map company-backends)
   :custom
   (company-idle-delay . 0)
   (company-minimum-prefix-length . 2)
@@ -47,10 +47,10 @@
   (company-dabbrev-code-ignore-case . t)
   (company-etags-ignore-case . t)
   (company-transformers . '(company-sort-by-occurrence))
+  (company-tooltip-align-annotations . t)
   :config
   (setq completion-ignore-case t)
   (bind-key [remap completion-at-point] #'company-complete company-mode-map)
-  (setq company-tooltip-align-annotations t)
   :hook (after-init-hook . global-company-mode)
   :bind (("C-M-i" . company-complete)
          (:company-active-map
@@ -622,11 +622,11 @@ changes source and target language automaticaly."
 
 (leaf which-key :ensure t
   :diminish which-key-mode
-  :defvar which-key-side-window-max-height
+  :custom
+  (which-key-side-window-max-height . 0.4)
   :config
   (which-key-mode)
-  (which-key-setup-side-window-bottom)
-  (setq which-key-side-window-max-height 0.4))
+  (which-key-setup-side-window-bottom))
 
 (leaf sudo-edit :ensure t)
 
