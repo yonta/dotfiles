@@ -507,6 +507,8 @@ changes source and target language automaticaly."
            ("C-M-y" . counsel-yank-pop)
            ("C-c C-SPC" . counsel-mark-ring)
            (:counsel-find-file-map
+            ("<C-return>" . ivy-immediate-done) ;; C-M-jをよく忘れるので
+            ("C-c <C-return>" . ivy-immediate-done)
             ("^" . counsel-up-directory))))
 
   (leaf ivy-rich :ensure t :require t
