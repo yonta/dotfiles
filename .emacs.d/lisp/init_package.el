@@ -464,7 +464,7 @@ changes source and target language automaticaly."
   (sp-local-pair 'tuareg-mode "'" nil :actions nil))
 
 (leaf ivy :ensure t
-  :defvar ivy-height-alist
+  :defvar ivy-height-alist ivy-initial-inputs-alist
   :custom
   (ivy-count-format . "(%d/%d) ")
   (ivy-initial-inputs-alist . nil)
@@ -495,6 +495,7 @@ changes source and target language automaticaly."
     (setq ivy-height-alist
           (cons '(counsel-yank-pop . 10)
                 (assq-delete-all 'counsel-yank-pop ivy-height-alist)))
+    (setq ivy-initial-inputs-alist nil) ;; 先頭の^をやめる
     :bind (("M-x" . counsel-M-x)
            ("M-r" . counsel-command-history)
            ("C-x C-f" . counsel-find-file)
