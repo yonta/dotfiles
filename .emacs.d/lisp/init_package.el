@@ -975,12 +975,9 @@ at point."
   :bind (("C-x C-b" . ibuffer)
          (:ibuffer-mode-map ("C-x C-f" . ibuffer-find-file-by-counsel))))
 
-(leaf whitespace
+(leaf whitespace :require t
   :diminish global-whitespace-mode
   :defvar whitespace-line-column
-  :init
-  ;; white spaceをオン
-  (global-whitespace-mode t)
   :custom
   ;; 空白などの可視化、対象はタブ文字、80文字超え部、行末の空白、全角スペース
   (whitespace-style . '(face tabs lines-tail trailing spaces empty))
@@ -995,6 +992,8 @@ at point."
    (whitespace-empty . '((t (:background nil))))             ; 空行
    (whitespace-line . '((t (:foreground nil
                             :background "khaki")))))         ; 80文字オーバー
+  :config
+  (global-whitespace-mode t) ;; white spaceをオン
   ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
   :hook ((java-mode-hook . (lambda () (setq whitespace-line-column 100)))
          (change-major-mode-hook
