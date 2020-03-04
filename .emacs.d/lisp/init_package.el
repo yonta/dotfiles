@@ -1069,7 +1069,6 @@ at point."
   ;; 最近使ったファイルを.recentfファイルに保存する
   ;; counsel-recentfで呼び出せる
   :custom
-  (recentf-save-file . "~/.emacs.d/.recentf")
   (recentf-max-saved-items . 1000)
   (recentf-auto-cleanup . 'never)
   :config
