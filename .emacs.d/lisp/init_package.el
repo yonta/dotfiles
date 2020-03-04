@@ -142,8 +142,10 @@
     (setq indent-tabs-mode nil)
     (setq-local company-backends
                 '((company-clang
-                   :with company-c-headers company-files company-dabbrev-code
-                   company-yasnippet))))
+                   :with
+                   ;; company-c-headers
+                   company-dabbrev-code company-yasnippet)
+                  company-files)))
   (defun my-c++-mode-hook ()
     "Setting for c++-mode."
     (c-set-style "k&r")
@@ -154,8 +156,10 @@
     (setq flycheck-clang-language-standard "c++11")
     (setq-local company-backends
                 '((company-clang
-                   :with company-c-headers company-files company-dabbrev-code
-                   company-yasnippet))))
+                   :with
+                   ;; company-c-headers
+                   company-dabbrev-code company-yasnippet)
+                  company-files)))
   :hook ((c-mode-hook . my-c-mode-hook)
          (c++-mode-hook . my-c++-mode-hook)))
 
@@ -729,8 +733,8 @@ changes source and target language automaticaly."
          . (lambda ()
              (setq-local company-backends
                          '((company-capf
-                            :with company-files company-dabbrev-code
-                            company-yasnippet)))))
+                            :with company-dabbrev-code company-yasnippet)
+                           company-files))))
   :bind ((:lisp-mode-shared-map ("C-c C-r" . eval-region-or-line))))
 
 (leaf eldoc :diminish eldoc-mode)
@@ -748,8 +752,8 @@ changes source and target language automaticaly."
           . (lambda ()
               (setq-local company-backends
                           '((company-capf
-                             :with company-files company-dabbrev-code
-                             company-yasnippet))))))
+                             :with company-dabbrev-code company-yasnippet)
+                            company-files)))))
   ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
   ;; 必要なときにだけflycheck-select-checkerで利用する
   ;; :hook (python-mode-hook
