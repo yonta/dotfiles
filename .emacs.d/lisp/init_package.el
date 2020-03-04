@@ -657,7 +657,6 @@ changes source and target language automaticaly."
   :diminish auto-highlight-symbol-mode
   :custom
   (ahs-default-range . 'ahs-range-whole-buffer)
-  (ahs-idle-interval . 2.0)
   :custom-face
   ((ahs-plugin-whole-buffer-face
     . '((t (:foreground "black" :background "light sky blue"))))
