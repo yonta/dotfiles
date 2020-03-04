@@ -68,7 +68,7 @@
     :config
     (company-quickhelp-mode 1)
     :custom
-    (company-quickhelp-delay . 1))
+    (company-quickhelp-delay . 0.5))
 
   (leaf company-prescient :ensure t
     :config
