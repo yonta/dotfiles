@@ -216,7 +216,9 @@
   :defun (sml-prog-proc-send-region
           sml-prog-proc-proc
           sml-prog-proc-send-string
-          sml-prog-proc-send-region-by-string)
+          sml-prog-proc-send-region-by-string
+          sml-set-company-settings)
+  :defvar company-minimum-prefix-length
 
   :init
   (leaf company-mlton
@@ -224,14 +226,27 @@
              :url "https://github.com/yonta/company-mlton.git"
              :branch "add-smlsharp")
     :defun company-mlton-basis-autodetect
-    :config
-    (company-mlton-basis-autodetect))
+    :custom
+    (company-mlton-modes . '(sml-mode inferior-sml-mode))
+    ;; MLtonのbasisを除き、SMLのbasisを使う
+    (company-mlton-basis-file
+     . "~/.emacs.d/el-get/company-mlton/sml-basis-lib.basis")
+    :hook
+    (sml-mode-hook . company-mlton-basis-autodetect))
 
   (leaf flycheck-smlsharp
     :el-get (flycheck-smlsharp
              :url "https://github.com/yonta/flycheck-smlsharp.git")
-    :hook (sml-mode-hook
-           . (lambda () (require 'flycheck-smlsharp))))
+    :hook (sml-mode-hook . (lambda () (require 'flycheck-smlsharp))))
+
+  (leaf flycheck-mlton
+    :el-get gist:80c938a54f4d14a1b75146e9c0b76fc2:flycheck-mlton
+    :hook (sml-mode-hook . (lambda () (require 'flycheck-mlton))))
+
+  (leaf sml-eldoc :disabled t
+    :el-get (sml-eldoc
+             :url "https://raw.githubusercontent.com/xuchunyang/emacs.d/master/lisp/sml-eldoc.el")
+    :hook (sml-mode-hook . sml-eldoc-turn-on))
 
   :init
   (defun sml-prog-proc-send-region-by-string (begin end)
@@ -243,21 +258,27 @@
     "Call REPL with active region or current line."
     (interactive)
     (call-with-region-or-line #'sml-prog-proc-send-region-by-string))
+  (defun sml-set-company-settings ()
+    "Set company settings for SML mode."
+    (setq-local completion-ignore-case nil)
+    (setq-local company-minimum-prefix-length 3)
+    (setq-local company-backends
+                '((company-mlton-keyword
+                   company-mlton-basis
+                   :with company-dabbrev-code company-yasnippet)
+                  company-files)))
   :custom
   (sml-indent-level . 2)
   (sml-indent-args . 2)
   ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
   (sml-program-name . "smlsharp")
-  :hook (sml-mode-hook
-         . (lambda ()
-             (setq-local company-backends
-                         '((company-mlton-keyword
-                            company-mlton-basis
-                            :with company-files company-dabbrev-code
-                            company-yasnippet)))))
+  (sml-electric-pipe-mode . nil)
+  :hook ((sml-mode-hook . sml-set-company-settings)
+         (inferior-sml-mode-hook . sml-set-company-settings))
   :bind (:sml-mode-map
          ("C-c C-r" . sml-prog-proc-send-region-or-line)
-         ("C-c C-p" . sml-run)))
+         ("C-c C-p" . sml-run)
+         ("M-." . dumb-jump-go)))
 
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
@@ -655,6 +676,7 @@ changes source and target language automaticaly."
 (leaf auto-highlight-symbol :ensure t
   :leaf-defer nil
   :diminish auto-highlight-symbol-mode
+  :defvar ahs-modes
   :custom
   (ahs-default-range . 'ahs-range-whole-buffer)
   :custom-face
@@ -663,6 +685,7 @@ changes source and target language automaticaly."
    (ahs-face . '((t (:foreground "ghost white" :background "slate gray")))))
   :config
   (global-auto-highlight-symbol-mode t)
+  (push 'sml-mode ahs-modes)
   :bind (("M-<up>" . ahs-backward)
          ("M-<down>" . ahs-forward)))
 
