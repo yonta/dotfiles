@@ -49,4 +49,7 @@
 ;;; scratchバッファのメッセージをなくす
 (setq initial-scratch-message "")
 
+;;; マウスの色を変える
+(set-mouse-color "blue")
+
 ;;; init_display.el ends here
