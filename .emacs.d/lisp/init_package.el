@@ -1023,7 +1023,9 @@ at point."
   ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
   :hook ((java-mode-hook . (lambda () (setq whitespace-line-column 100)))
          (change-major-mode-hook
-          . (lambda () (setq whitespace-line-column 80)))))
+          . (lambda () (setq whitespace-line-column 80)))
+         (dired-mode-hook
+          . (lambda () (setq-local truncate-partial-width-windows t)))))
 
 (leaf winner
   :config
