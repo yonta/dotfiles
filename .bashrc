@@ -171,8 +171,7 @@ fi
 # WSL2
 if uname -a | grep -e 'microsoft' > /dev/null 2>&1 ; then
     if [ -z "$SSH_CLIENT" ]; then # not via ssh
-        export DISPLAY=`cat /etc/hosts | grep -e '192.168.10' | tail -1 \
-                      | awk '{print $1}'`:0
+        export DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2}'):0
     fi
 fi
 
