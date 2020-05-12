@@ -485,7 +485,10 @@ changes source and target language automaticaly."
   (sp-local-pair 'lisp-mode "`" nil :actions nil)
   (sp-local-pair 'sml-mode "(*" "*)" )
   (sp-local-pair 'sml-mode "'" nil :actions nil)
+  (sp-local-pair 'sml-mode "`" nil :actions nil)
+  (sp-local-pair 'inferior-sml-mode "(*" "*)" )
   (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
+  (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
   (sp-local-pair 'tuareg-mode "'" nil :actions nil))
 
 (leaf ivy :ensure t
