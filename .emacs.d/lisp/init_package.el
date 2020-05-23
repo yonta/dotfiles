@@ -237,7 +237,8 @@
   (leaf flycheck-smlsharp
     :el-get (flycheck-smlsharp
              :url "https://github.com/yonta/flycheck-smlsharp.git")
-    :hook (sml-mode-hook . (lambda () (require 'flycheck-smlsharp))))
+    :after sml-mode
+    :require t)
 
   (leaf flycheck-mlton
     :el-get gist:80c938a54f4d14a1b75146e9c0b76fc2:flycheck-mlton
