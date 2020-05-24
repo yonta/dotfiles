@@ -15,9 +15,9 @@
         br = branch
         l = log --graph --date=format:'%Y/%m/%d(%a) %T %z'
         a = add .
-        addw = !git diff -w --no-color | git apply --cached
-        aw = !git diff -w --no-color | git apply --cached
-        addp = add -p
+        addw = !git diff --ignore-all-space --no-color | git apply --cached
+        aw = !git diff --ignore-all-space --no-color | git apply --cached
+        addp = add --patch
         diffs = diff --staged
         diffw = diff --color-words
         pushf = push --force-with-lease
