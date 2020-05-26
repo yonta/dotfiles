@@ -24,6 +24,9 @@
 [core]
         editor = emacsclient
         excludesfile = ~/.gitignore_global
+        pager = delta --color-only
+[interactive]
+         diffFilter = delta --color-only
 [push]
         default = simple
 [merge]
