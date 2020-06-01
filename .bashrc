@@ -147,10 +147,10 @@ fi
 
 # by User
 
-# 色付きlessコマンドオプション`less -R`を使う
-# -X: less終了時に画面をクリアしない
-# -q: lessでビープ音を鳴らさない
-export LESS='-R -X -q'
+# --RAW-CONTROL-CHARS: カラーシーケンスを処理する
+# --no-init: less終了時に画面をクリアしない
+# --quiet: lessでビープ音を鳴らさない
+export LESS='--RAW-CONTROL-CHARS --no-init --quiet'
 
 # git ps1 settings
 GIT_PS1_SHOWDIRTYSTATE=true
