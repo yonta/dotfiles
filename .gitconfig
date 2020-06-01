@@ -24,7 +24,7 @@
 [core]
         editor = emacsclient
         excludesfile = ~/.gitignore_global
-        pager = delta --color-only
+        pager = delta --color-only | less --RAW-CONTROL-CHARS
 [interactive]
          diffFilter = delta --color-only
 [push]
