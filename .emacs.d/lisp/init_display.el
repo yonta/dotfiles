@@ -24,21 +24,9 @@
 ;;; ビープ音を消し、画面がフラッシュしないようにする
 (setq ring-bell-function 'ignore)
 
-;;; フォントカラーの変更
-(if window-system
-    (progn
-      (set-face-foreground 'font-lock-comment-face "Sienna") ; comment
-      (set-face-foreground 'font-lock-string-face "forest green") ; string
-      (set-face-foreground 'font-lock-keyword-face "purple") ; reserved word
-      (set-face-foreground 'font-lock-function-name-face "blue") ; fun name
-      (set-face-foreground 'font-lock-variable-name-face "dodger blue") ; val
-      (set-face-foreground 'font-lock-type-face "chocolate") ; type
-      (set-face-foreground 'font-lock-builtin-face "deep pink") ; ex.macro in C
-      (set-face-foreground 'font-lock-constant-face "slate gray") ; ex.NULL in C
-      ; (set-face-bold 'font-lock-constant-face t)
-      (set-face-foreground 'font-lock-warning-face "red") ; warning
-      ;(set-face-bold-p 'font-lock-warning-face nil)
-      ))
+;;; カラーテーマの設定
+(setq custom-theme-directory "~/.emacs.d/themes")
+(if window-system (load-theme 'original t))
 
 ;;; 長い行を折り返して表示する
 (setq truncate-partial-width-windows nil)

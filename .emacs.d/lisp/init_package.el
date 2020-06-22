@@ -3,6 +3,7 @@
 ;;; Commentary:
 ;; This is settings about package.
 ;; It is written using `leaf.el`.
+;; See also ../themes/original-theme.el for settings of faces.
 
 ;;; Code:
 
@@ -114,7 +115,6 @@
   (flycheck-mode-line-prefix . "f")
   :config
   (global-flycheck-mode)
-  (set-face-background 'flycheck-error "pink") ; エラー箇所は背景色をつける
   :bind (:flycheck-mode-map
          ("M-p" . flycheck-previous-error)
          ("M-n" . flycheck-next-error))
@@ -314,9 +314,6 @@
   (twittering-retweet-format . " %u")
   (twittering-fill-column . 80)
   (twittering-edit-skeleton . 'inherit-mentions)
-  :custom-face
-  ;; URLを青文字にする
-  (twittering-uri-face . '((t (:foreground "blue" :underline t))))
   :config
   (twittering-icon-mode t) ; use icon
   :bind (:twittering-mode-map
@@ -466,13 +463,7 @@ changes source and target language automaticaly."
           ("0" . image-dired-display-current-image-sized))))
 
 ;; アクティブかどうかでバッファーのモードラインの色を変える
-(leaf hiwin :ensure t
-  :config
-  ;; (set-face-background 'hiwin-face "gray92")
-  (set-face-attribute 'mode-line nil :background "light sky blue")
-  (set-face-attribute 'mode-line-inactive nil
-                      :background "light gray"
-                      :foreground "dim gray"))
+(leaf hiwin :ensure t)
 
 (leaf smartparens :ensure t
   :diminish smartparens-mode
@@ -604,10 +595,6 @@ changes source and target language automaticaly."
   :init
   (global-git-gutter-mode)
   :config
-  (set-face-foreground 'git-gutter-fr:added "lime green")
-  (set-face-background 'git-gutter-fr:added "white smoke")
-  (set-face-foreground 'git-gutter-fr:modified "blue")
-  (set-face-background 'git-gutter-fr:modified "white smoke")
   (eval-when-compile (require 'fringe-helper))
   (fringe-helper-define 'git-gutter-fr:modified nil
   "X......."
@@ -639,8 +626,7 @@ changes source and target language automaticaly."
 (leaf volatile-highlights :ensure t
   :diminish volatile-highlights-mode
   :config
-  (volatile-highlights-mode t)
-  (set-face-background 'vhl/default-face "light cyan"))
+  (volatile-highlights-mode t))
 
 (leaf expand-region :ensure t
   :bind ("C-`" . er/expand-region))
@@ -683,10 +669,6 @@ changes source and target language automaticaly."
   :defvar ahs-modes
   :custom
   (ahs-default-range . 'ahs-range-whole-buffer)
-  :custom-face
-  ((ahs-plugin-whole-buffer-face
-    . '((t (:foreground "black" :background "light sky blue"))))
-   (ahs-face . '((t (:foreground "ghost white" :background "slate gray")))))
   :config
   (global-auto-highlight-symbol-mode t)
   (push 'sml-mode ahs-modes)
@@ -749,9 +731,6 @@ changes source and target language automaticaly."
            ("C-c e" . macrostep-expand)))
 
   :config
-  ;; Emacs Lispの正規表現の構成子の色を変えて見やすくする
-  (set-face-foreground 'font-lock-regexp-grouping-backslash "#ccc")
-  (set-face-foreground 'font-lock-regexp-grouping-construct "#faa")
   (defun eval-region-or-line ()
     "Eval active region or current line."
     (interactive) (call-with-region-or-line #'eval-region))
@@ -857,12 +836,10 @@ changes source and target language automaticaly."
 (leaf hl-line+
   :el-get (hl-line+
            :url "https://github.com/emacsmirror/hl-line-plus.git")
-  :defvar hl-line-face
   :defun (toggle-hl-line-when-idle hl-line-when-idle-interval)
   :config
   (toggle-hl-line-when-idle 1)
-  (hl-line-when-idle-interval 4)
-  (set-face-background hl-line-face "light cyan"))
+  (hl-line-when-idle-interval 4))
 
 (leaf dired
   :defun (dired-various-sort-change reload-current-dired-buffer)
@@ -1015,13 +992,6 @@ at point."
   (whitespace-action . '(auto-cleanup))
   ;; spacesの対象は全角スペースのみ
   (whitespace-space-regexp . "\\(　+\\)")
-  :custom-face
-  ((whitespace-trailing . '((t (:background "lavender"))))   ; 行末スペース
-   (whitespace-space . '((t (:background "DarkSeaGreen1")))) ; 全角スペース
-   (whitespace-tab . '((t (:background "light goldenrod yellow")))) ; タブ
-   (whitespace-empty . '((t (:background nil))))             ; 空行
-   (whitespace-line . '((t (:foreground nil
-                            :background "khaki")))))         ; 80文字オーバー
   :config
   (global-whitespace-mode t) ;; white spaceをオン
   ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
@@ -1043,8 +1013,7 @@ at point."
   (leaf display-line-numbers
     :if (version<= "26" emacs-version) ; Emacs26以降
     :init
-    (global-display-line-numbers-mode 1)
-    (set-face-background 'line-number "white smoke"))
+    (global-display-line-numbers-mode 1))
 
   (leaf linum
     :if (version< emacs-version "26") ; Emacs25以下

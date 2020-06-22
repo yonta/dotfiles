@@ -21,9 +21,6 @@
                '(left . 0) ; 起動時の表示位置（左から）
                '(width . 194) ; 起動時のサイズ（幅）
                '(height . 47) ; 起動時のサイズ（縦）
-               ;;'(foreground-color . "#FFFFFF") ; 文字の色
-               ;;'(background-color . "gray30") ; 背景の色
-               ;;'(cursor-color . "gray") ; カーソルの色
                )
               default-frame-alist))
 
