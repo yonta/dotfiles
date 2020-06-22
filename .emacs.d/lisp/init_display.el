@@ -24,10 +24,6 @@
 ;;; ビープ音を消し、画面がフラッシュしないようにする
 (setq ring-bell-function 'ignore)
 
-;;; カラーテーマの設定
-(setq custom-theme-directory "~/.emacs.d/themes")
-(if window-system (load-theme 'original t))
-
 ;;; 長い行を折り返して表示する
 (setq truncate-partial-width-windows nil)
 

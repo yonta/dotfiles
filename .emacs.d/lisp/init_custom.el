@@ -28,6 +28,10 @@
 (if window-system
     (add-to-list 'default-frame-alist '(font . "VL ゴシック-12")))
 
+;;; カラーテーマの設定
+(setq custom-theme-directory "~/.emacs.d/themes")
+(if window-system (load-theme 'original t))
+
 ;;; フリンジのサイズを調整する
 (fringe-mode '(15 . 10))
 
