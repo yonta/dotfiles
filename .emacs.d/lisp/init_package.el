@@ -841,6 +841,8 @@ changes source and target language automaticaly."
   (toggle-hl-line-when-idle 1)
   (hl-line-when-idle-interval 4))
 
+(leaf rebecca-theme :ensure t)
+
 (leaf dired
   :defun (dired-various-sort-change reload-current-dired-buffer)
   :custom
