@@ -5,6 +5,8 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 ;;; Emacs起動時の機能読み込みをログしてsvgに吐く
 ;; コメントアウトを外し、Emacsを起動して、
 ;; `initchart-visualize-init-sequence'を実行して出力先を指定する。
@@ -15,8 +17,9 @@
 ;; (initchart-record-execution-time-of load file)
 ;; (initchart-record-execution-time-of require feature)
 
-(setq gc-cons-threshold 134217728)
-(require 'cl-lib)
+;;; GCのしきい値を上げ、アイドル時にGCしておく
+(setq gc-cons-threshold (eval-when-compile (* 128 1024 1024)))
+(run-with-idle-timer 300 t #'garbage-collect)
 
 ;;; 自分のカスタムemacs lispのpath
 ;; 参考： https://www.emacswiki.org/emacs/LoadPath
