@@ -845,6 +845,13 @@ changes source and target language automaticaly."
 
 (leaf rebecca-theme :ensure t)
 
+(leaf mozc :ensure t
+  :custom
+  (default-input-method . "japanese-mozc")
+  :config
+  (set-language-environment "Japanese")
+  (prefer-coding-system 'utf-8))
+
 (leaf dired
   :defun (dired-various-sort-change reload-current-dired-buffer)
   :custom
