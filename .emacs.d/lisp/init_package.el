@@ -687,14 +687,16 @@ changes source and target language automaticaly."
     :after rainbow-delimiters
     :defun color-saturate-name)
 
-  ;; 括弧の色をより強くする
+  ;; 白背景地には括弧の色をより強くする
   ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
   (defun rainbow-delimiters-using-stronger-colors ()
-    (cl-loop
-     for index from 1 to rainbow-delimiters-max-face-count do
-     (let ((face (intern (format "rainbow-delimiters-depth-%d-face" index))))
-       (cl-callf color-saturate-name (face-foreground face) 30))))
-
+    "Set delimiter to more strong color for white background."
+    (if (string> (background-color-at-point) "#808080")
+        (cl-loop
+         for index from 1 to rainbow-delimiters-max-face-count do
+         (let ((face
+                (intern (format "rainbow-delimiters-depth-%d-face" index))))
+           (cl-callf color-saturate-name (face-foreground face) 30)))))
   :hook ((emacs-startup-hook . rainbow-delimiters-using-stronger-colors)
          (prog-mode-hook . rainbow-delimiters-mode)))
 
