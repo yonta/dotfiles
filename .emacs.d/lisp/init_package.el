@@ -281,6 +281,74 @@
          ("C-c C-p" . sml-run)
          ("M-." . dumb-jump-go)))
 
+(leaf ruby
+  :init
+  (leaf ruby-electric :ensure t
+    :diminish t
+    :hook (ruby-mode-hook . ruby-electric-mode))
+
+  (leaf inf-ruby :ensure t
+    :hook (ruby-mode-hook . inf-ruby-minor-mode)
+    :bind (:ruby-mode-map
+           :package ruby-mode
+           ("C-c C-p" . inf-ruby)
+           ("C-c p" . inf-ruby-console-auto))
+    :custom
+    ;; irbだとpromptが重複するため、Ruby REPLにpryを使う
+    (inf-ruby-default-implementation . "pry"))
+
+  (leaf rubocop :ensure t)
+
+  (leaf rufo :ensure t
+    :diminish rufo-minor-mode
+    :hook (ruby-mode-hook . rufo-minor-mode))
+
+  (leaf robe :ensure t
+    :defun robe-start
+    :defvar robe-running
+    :diminish t
+    :hook (ruby-mode-hook . robe-mode)
+    :config
+    (push 'company-robe company-backends)
+    ;; robeはRuby REPLがないと動かない。
+    ;; 下記URLを参考にRuby REPL起動時にrobeを自動でスタートさせる
+    ;; https://github.com/dgutov/robe/issues/93#issuecomment-276224025
+    (defun my-robe-start ()
+      (interactive)
+      (unless robe-running (robe-start)))
+    (defadvice inf-ruby-console-auto (after inf-ruby-console-auto activate)
+      "Run `robe-start' after `inf-ruby-console-auto' started."
+      (my-robe-start))
+    (defadvice inf-ruby (after inf-ruby activate)
+      "Run `robe-start' after `inf-ruby' started."
+      (my-robe-start))
+    ;; ruby-mode起動時にRuby REPLを起動する
+    ;; (defun my-robe-auto-start ()
+    ;;   (unless robe-running
+    ;;     (call-interactively 'inf-ruby)))
+    ;; (add-hook 'enh-ruby-mode-hook #'my-robe-auto-start)
+    )
+
+  (leaf web-mode :ensure t
+    :mode "\\.html\\.erb\\'"
+    :custom
+    (web-mode-enable-comment-interpolation . t)
+    (web-mode-enable-current-element-highlight . t))
+
+  (leaf reformatter :ensure t)
+
+  (leaf htmlbeautifier ;;:require t
+    :el-get (htmlbeautifier
+             :url "https://github.com/yonta/htmlbeautifier.el.git")
+    :hook (web-mode-hook . htmlbeautifier-format-on-save-mode)
+    :custom (htmlbeautifier-keep-blank-lines . 1))
+
+  (leaf rspec-mode :disabled t)
+  (leaf ruby-block :disabled t)
+
+  :custom
+  (ruby-insert-encoding-magic-comment . nil))
+
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
 (leaf twittering-mode :ensure t
@@ -1083,7 +1151,11 @@ at point."
          ;; ("<right>" . windmove-left)
          ;; ("<down>" . windmove-down)
          ;; ("<up>" . windmove-up)
-  ))
+         ))
+
+(leaf indent
+  :custom
+  (standard-indent . 2))
 
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく
