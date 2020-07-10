@@ -534,6 +534,7 @@ changes source and target language automaticaly."
   (leaf ivy-rich :ensure t :require t
     :after ivy
     :defvar ivy-rich-display-transformers-list
+    :defun ivy-format-function-line
     :custom
     (ivy-format-function . #'ivy-format-function-line)
     (ivy-rich-path-style . 'abbrev)
