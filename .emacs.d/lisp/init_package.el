@@ -429,11 +429,11 @@
   (autoload 'bash-completion-dynamic-complete "bash-completion"
     "BASH completion hook")
   (add-hook 'shell-dynamic-complete-functions 'bash-completion-dynamic-complete)
-  ;; TODO: バイトコンパイル時でなく起動時に評価するよう変更する
-  (defvar my-shell-file-name (getenv "SHELL"))
   :custom
   ;; Emacsを起動したshellを使用する（bashからの起動を前提）
-  (explicit-shell-file-name . my-shell-file-name)
+  ;; TODO: バイトコンパイル時でなく起動時に評価するよう変更する
+  `(explicit-shell-file-name . ,(getenv "SHELL"))
+  ;; (explicit-shell-file-name . my-shell-file-name)
   (explicit-bash-args . '("--login" "-i"))
   ;; shell-modeでのファイル名補完
   (shell-file-name-chars . "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
