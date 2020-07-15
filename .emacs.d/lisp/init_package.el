@@ -383,7 +383,7 @@
   (twittering-fill-column . 80)
   (twittering-edit-skeleton . 'inherit-mentions)
   :config
-  (twittering-icon-mode t) ; use icon
+  (twittering-icon-mode t)              ; use icon
   :bind (:twittering-mode-map
          ("R" . twittering-native-retweet)
          ("r" . twittering-enter)
