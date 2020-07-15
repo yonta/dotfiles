@@ -1157,6 +1157,9 @@ at point."
   :custom
   (standard-indent . 2))
 
+(leaf newcomment
+  :bind ("C-;" . comment-line))
+
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく
 (leaf browse-url
