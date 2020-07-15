@@ -53,8 +53,8 @@
   (setq completion-ignore-case t)
   (bind-key [remap completion-at-point] #'company-complete company-mode-map)
   :hook (after-init-hook . global-company-mode)
-  :bind (("C-M-i" . company-complete)
-         (:company-active-map
+  :bind* ("C-M-i" . company-complete)
+  :bind ((:company-active-map
           ("C-n" . company-select-next)
           ("C-p" . company-select-previous)
           ("<tab>" . company-complete-common-or-cycle)
