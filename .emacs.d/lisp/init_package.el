@@ -896,6 +896,11 @@
   (set-language-environment "Japanese")
   (prefer-coding-system 'utf-8))
 
+(leaf keyfreq :ensure t
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
+
 (leaf dired
   :defun (dired-various-sort-change reload-current-dired-buffer)
   :custom
