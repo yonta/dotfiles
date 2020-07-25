@@ -21,15 +21,18 @@
         diffs = diff --staged
         diffw = diff --color-words
         pushf = push --force-with-lease
+        blames = blame -s
 [core]
         editor = emacsclient
         excludesfile = ~/.gitignore_global
         pager = delta --color-only | less --RAW-CONTROL-CHARS
 [interactive]
-         diffFilter = delta --color-only
+        diffFilter = delta --color-only
 [push]
         default = simple
 [merge]
         conflictstyle = diff3
 [rebase]
         autostash = true
+[blame]
+        date=format:%m/%d(%a)%R
