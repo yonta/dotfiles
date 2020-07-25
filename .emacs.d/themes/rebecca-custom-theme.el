@@ -49,6 +49,7 @@
  '(query-replace ((t (:inherit (isearch)))))
  '(git-gutter:modified ((t (:inherit default :foreground "royal blue" :weight bold))))
  '(whitespace-empty ((t (:background "#383a62" :foreground "firebrick"))))
- '(flycheck-error ((t (:background "maroon" :underline (:color "Red1" :style wave))))))
+ '(flycheck-error ((t (:background "maroon" :underline (:color "Red1" :style wave)))))
+ '(smerge-base ((t (:background "#606000")))))
 
 (provide-theme 'rebecca-custom)
