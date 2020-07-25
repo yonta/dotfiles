@@ -901,6 +901,11 @@
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
 
+(leaf editorconfig :ensure t
+  :diminish t
+  :config
+  (editorconfig-mode 1))
+
 (leaf dired
   :defun (dired-various-sort-change reload-current-dired-buffer)
   :custom
