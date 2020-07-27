@@ -344,6 +344,25 @@
     (web-mode-enable-comment-interpolation . t)
     (web-mode-enable-current-element-highlight . t))
 
+  (leaf rspec-mode :disabled t)
+  (leaf ruby-block :disabled t)
+
+  (leaf ruby-mode
+    :custom
+    (ruby-insert-encoding-magic-comment . nil)))
+
+(leaf html-css
+  :init
+  (leaf web-mode
+    :defvar web-mode-whitespaces-regexp
+    :custom
+    (web-mode-enable-auto-quoting . t)
+    ;; web-modeとwhitespace-modeのコンフリクトでfaceがおかしくなるのを解消する
+    ;; https://github.com/fxbois/web-mode/issues/119a
+    (web-mode-display-table . nil))
+    ;; :config
+    ;; (setq web-mode-whitespaces-regexp "^[\t]+\\|[\t ]+$"))
+
   ;; htmlbeautifierに必要
   (leaf reformatter :ensure t)
 
@@ -353,11 +372,22 @@
     :hook (web-mode-hook . htmlbeautifier-format-on-save-mode)
     :custom (htmlbeautifier-keep-blank-lines . 1))
 
-  (leaf rspec-mode :disabled t)
-  (leaf ruby-block :disabled t)
+  (leaf company-bootstrap
+    :defun company-bootstrap
+    :el-get (company-bootstrap
+             :url "https://github.com/typefo/company-bootstrap.git")
+    :after company)
 
-  :custom
-  (ruby-insert-encoding-magic-comment . nil))
+  (leaf company-web :ensure t
+    :after company
+    :config
+    (add-to-list 'company-backends
+                 '(company-web-html
+                   :with company-dabbrev-code company-bootstrap)))
+
+  (leaf css-mode
+    :custom
+    (css-indent-offset . 2)))
 
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
