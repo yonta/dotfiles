@@ -8,8 +8,13 @@
 ;;; Code:
 
 (require 'package)
+;; パッケージアーカイブの順番は関係ない。
+;; 優先度はバージョン番号が大きい方が優先されるため、
+;; melpaが常にmarmaladeよりも優先される。
+;; melpaよりもmelpa-stableを優先するなどの別途優先度をつけるには、
+;; `package-archive-priorities'を使って設定する。
 (add-to-list 'package-archives ; MELPAを追加
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives ; Marmaladeを追加
              '("marmalade" . "https://marmalade-repo.org/packages/"))
 (eval-and-compile (package-initialize))
