@@ -302,8 +302,12 @@
     ;; irbだとpromptが重複するため、Ruby REPLにpryを使う
     (inf-ruby-default-implementation . "pry"))
 
+  ;; gemでrubocopを入れておく
+  ;; gem install rubocop
   (leaf rubocop :ensure t)
 
+  ;; gemでrufoを入れておく
+  ;; gem install rufo
   (leaf rufo :ensure t
     :diminish rufo-minor-mode
     :hook (ruby-mode-hook . rufo-minor-mode))
