@@ -344,9 +344,10 @@
     (web-mode-enable-comment-interpolation . t)
     (web-mode-enable-current-element-highlight . t))
 
+  ;; htmlbeautifierに必要
   (leaf reformatter :ensure t)
 
-  (leaf htmlbeautifier ;;:require t
+  (leaf htmlbeautifier
     :el-get (htmlbeautifier
              :url "https://github.com/yonta/htmlbeautifier.el.git")
     :hook (web-mode-hook . htmlbeautifier-format-on-save-mode)
