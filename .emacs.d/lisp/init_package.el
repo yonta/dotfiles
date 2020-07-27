@@ -389,6 +389,28 @@
     :custom
     (css-indent-offset . 2)))
 
+(leaf javascript
+  ;; npmなどで補完用のternとリント用のeslintを入れておく
+  ;; `npm install -g tern eslint'
+  :init
+  ;; company-ternに必要
+  (leaf tern :ensure t
+    :diminish t
+    :hook js-mode-hook)
+
+  ;; company-ternに必要
+  (leaf dash-functional :ensure t)
+
+  (leaf company-tern
+    :defun company-tern
+    :el-get (company-tern
+             :url "https://github.com/whitypig/company-tern.git")
+    :config
+
+    (add-to-list 'company-backends
+                 '(company-tern
+                   :with company-dabbrev-code company-bootstrap))))
+
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
 (leaf twittering-mode :ensure t
