@@ -612,8 +612,8 @@
     ;; dotファイルとコンパイルファイルなどを無視する
     ;; .キーを押せばdotスタートファイルは表示される
     `(counsel-find-file-ignore-regexp
-     . ,(concat "\\(\\`\\.\\)\\|"
-                (regexp-opt completion-ignored-extensions)))
+      . ,(concat "\\(\\`\\.\\)\\|"
+                 (regexp-opt completion-ignored-extensions)))
     (counsel-mark-ring-sort-selections . nil)
     :config
     ;; counsel-yank-popの高さをデフォルト5から10に拡大する
@@ -703,23 +703,23 @@
   :config
   (eval-when-compile (require 'fringe-helper))
   (fringe-helper-define 'git-gutter-fr:modified nil
-  "X......."
-  "XXXX...."
-  "XXXXXX.."
-  "XXXXXXXX"
-  "XXXXXXXX"
-  "XXXXXX.."
-  "XXXX...."
-  "XX......")
+    "X......."
+    "XXXX...."
+    "XXXXXX.."
+    "XXXXXXXX"
+    "XXXXXXXX"
+    "XXXXXX.."
+    "XXXX...."
+    "XX......")
   (fringe-helper-define 'git-gutter-fr:deleted nil
-  "........"
-  "........"
-  "........"
-  "XXXXXXXX"
-  "XXXXXXXX"
-  "XXXXXXXX"
-  "........"
-  "........"))
+    "........"
+    "........"
+    "........"
+    "XXXXXXXX"
+    "XXXXXXXX"
+    "XXXXXXXX"
+    "........"
+    "........"))
 
 (leaf dumb-jump :ensure t
   :defvar dumb-jump-selector
