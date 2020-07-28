@@ -569,9 +569,10 @@
 ;; アクティブかどうかでバッファーのモードラインの色を変える
 (leaf hiwin :ensure t)
 
+(eval-when-compile (require 'smartparens)) ; sp-with-modesマクロの読み込み
 (leaf smartparens :ensure t
   :diminish smartparens-mode
-  :defun sp-local-pair sp-with-modes
+  :defun sp-local-pair
   :config
   (smartparens-global-mode t)
   ;; 一部のモードでは'での補完を行わない
@@ -586,10 +587,10 @@
   (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
   (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
   (sp-local-pair 'tuareg-mode "'" nil :actions nil)
-  (sp-with-modes             ; ｛の後にEnterすると｝の前に改行をつける
+  ;; ｛の後にEnterすると｝の前に改行をつける
+  (sp-with-modes
       '(c++-mode objc-mode c-mode web-mode js-mode css-mode)
     (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
-
 
 (leaf ivy :ensure t
   :defvar ivy-height-alist ivy-initial-inputs-alist
