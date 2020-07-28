@@ -310,6 +310,8 @@
     :diminish rufo-minor-mode
     :hook (ruby-mode-hook . rufo-minor-mode))
 
+  ;; gemでpryとpry-docを入れておく
+  ;; gem install pry pry-doc
   (leaf robe :ensure t
     :defun robe-start
     :defvar robe-running
