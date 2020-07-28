@@ -15,10 +15,16 @@
 (bind-key "M-h" #'delete-indentation)
 ;;; C-c dでカーソル位置のシンボルのヘルプを表示
 (bind-key "C-c d" #'describe-symbol)
+
 ;;; C-cgをgrep-findに
+;; cargoでripgrepを入れておく
+;; cargo install ripgrep
 (bind-key "C-c f" #'grep-find)
 (setq grep-find-command
-      `("find . -type f -print0 | xargs -0 -e grep -nHE " . 48))
+      (let* ((format "rg --no-heading ")
+             (point (+ (length format) 1)))
+        `(,format . ,point)))
+
 ;;; terminal(-nw)で起動した場合は、C-SPCが使えないので、C-]にする
 (if (not window-system) (bind-key "C-]" #'set-mark-command))
 
