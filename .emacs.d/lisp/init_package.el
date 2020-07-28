@@ -41,35 +41,36 @@
            :url "https://github.com/yuttie/initchart.git"))
 
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
-(leaf company :ensure t
-  :defvar (company-mode-map company-backends)
-  :custom
-  (company-idle-delay . 0)
-  (company-minimum-prefix-length . 2)
-  (company-selection-wrap-around . t)
-  (company-require-match . 'never)
-  (company-dabbrev-ignore-case . t)
-  (company-dabbrev-code-ignore-case . t)
-  (company-etags-ignore-case . t)
-  (company-transformers . '(company-sort-by-occurrence))
-  (company-tooltip-align-annotations . t)
-  (company-lighter-base . "")
-  :config
-  (setq completion-ignore-case t)
-  (bind-key [remap completion-at-point] #'company-complete company-mode-map)
-  :hook (after-init-hook . global-company-mode)
-  :bind* ("C-M-i" . company-complete)
-  :bind ((:company-active-map
-          ("C-n" . company-select-next)
-          ("C-p" . company-select-previous)
-          ("<tab>" . company-complete-common-or-cycle)
-          ("<backtab>" . company-select-previous)
-          ("C-f" . company-complete-selection)
-          ("C-d" . company-show-doc-buffer)
-          ("C-s" . company-filter-candidates)
-          ("C-o" . company-other-backend)))
-
+(leaf company
   :init
+  (leaf company :ensure t
+    :defvar (company-mode-map company-backends)
+    :custom
+    (company-idle-delay . 0)
+    (company-minimum-prefix-length . 2)
+    (company-selection-wrap-around . t)
+    (company-require-match . 'never)
+    (company-dabbrev-ignore-case . t)
+    (company-dabbrev-code-ignore-case . t)
+    (company-etags-ignore-case . t)
+    (company-transformers . '(company-sort-by-occurrence))
+    (company-tooltip-align-annotations . t)
+    (company-lighter-base . "")
+    :config
+    (setq completion-ignore-case t)
+    (bind-key [remap completion-at-point] #'company-complete company-mode-map)
+    :hook (after-init-hook . global-company-mode)
+    :bind* ("C-M-i" . company-complete)
+    :bind ((:company-active-map
+            ("C-n" . company-select-next)
+            ("C-p" . company-select-previous)
+            ("<tab>" . company-complete-common-or-cycle)
+            ("<backtab>" . company-select-previous)
+            ("C-f" . company-complete-selection)
+            ("C-d" . company-show-doc-buffer)
+            ("C-s" . company-filter-candidates)
+            ("C-o" . company-other-backend))))
+
   (leaf company-quickhelp :ensure t
     :config
     (company-quickhelp-mode 1)
@@ -79,10 +80,6 @@
   (leaf company-prescient :ensure t
     :config
     (company-prescient-mode 1))
-
-  (leaf company-c-headers :ensure t :disabled t)
-
-  (leaf company-arduino :ensure t :disabled t)
 
   (leaf yasnippet :ensure t
     :diminish yas-minor-mode
@@ -94,7 +91,10 @@
     ;; yas-expandは使わず、companyからyasを使う。
     (unbind-key "<tab>" yas-minor-mode-map)
     (unbind-key "TAB" yas-minor-mode-map)
-    (add-to-list 'company-backends #'company-yasnippet)))
+    (add-to-list 'company-backends #'company-yasnippet))
+
+  (leaf company-c-headers :ensure t :disabled t)
+  (leaf company-arduino :ensure t :disabled t))
 
 ;; pipでflake8とmypyをいれておく
 (leaf flycheck :ensure t
