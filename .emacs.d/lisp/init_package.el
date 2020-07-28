@@ -571,7 +571,7 @@
 
 (leaf smartparens :ensure t
   :diminish smartparens-mode
-  :defun sp-local-pair
+  :defun sp-local-pair sp-with-modes
   :config
   (smartparens-global-mode t)
   ;; 一部のモードでは'での補完を行わない
@@ -585,7 +585,11 @@
   (sp-local-pair 'inferior-sml-mode "(*" "*)" )
   (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
   (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
-  (sp-local-pair 'tuareg-mode "'" nil :actions nil))
+  (sp-local-pair 'tuareg-mode "'" nil :actions nil)
+  (sp-with-modes             ; ｛の後にEnterすると｝の前に改行をつける
+      '(c++-mode objc-mode c-mode web-mode js-mode css-mode)
+    (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+
 
 (leaf ivy :ensure t
   :defvar ivy-height-alist ivy-initial-inputs-alist
