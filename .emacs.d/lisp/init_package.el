@@ -97,34 +97,32 @@
   (leaf company-arduino :ensure t :disabled t))
 
 ;; pipでflake8とmypyをいれておく
-(leaf flycheck :ensure t
-  :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
+(leaf flycheck
   :init
+  (leaf flycheck :ensure t
+    :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
+    :init
+    (global-flycheck-mode)
+    :custom
+    (flycheck-python-flake8-executable . "flake8")
+    (flycheck-checker-error-threshold . 250)
+    (flycheck-mode-line-prefix . "f")
+    :bind (:flycheck-mode-map
+           ("M-p" . flycheck-previous-error)
+           ("M-n" . flycheck-next-error)))
+
+  :init
+  (leaf pos-tip :ensure t
+    :custom
+    (pos-tip-use-relative-coordinates . t)) ; pos-tipをフレームに収める
 
   (leaf flycheck-pos-tip :ensure t
     :after flycheck
-
-    :init
-    (leaf pos-tip :ensure t
-      :custom
-      (pos-tip-use-relative-coordinates . t)) ; pos-tipをフレームに収める
-
     :custom
     (flycheck-pos-tip-timeout . 0) ; pos-tipを自動で消さない
     :config
     (flycheck-pos-tip-mode))
 
-  :custom
-  (flycheck-python-flake8-executable . "flake8")
-  (flycheck-checker-error-threshold . 250)
-  (flycheck-mode-line-prefix . "f")
-  :config
-  (global-flycheck-mode)
-  :bind (:flycheck-mode-map
-         ("M-p" . flycheck-previous-error)
-         ("M-n" . flycheck-next-error))
-
-  :config
   (leaf flycheck-ocaml :ensure t))
 
 (leaf cc-mode
