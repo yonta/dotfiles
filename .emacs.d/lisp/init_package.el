@@ -42,7 +42,6 @@
 
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
 (leaf company :ensure t
-  :diminish company-mode
   :defvar (company-mode-map company-backends)
   :custom
   (company-idle-delay . 0)
@@ -54,6 +53,7 @@
   (company-etags-ignore-case . t)
   (company-transformers . '(company-sort-by-occurrence))
   (company-tooltip-align-annotations . t)
+  (company-lighter-base . "")
   :config
   (setq completion-ignore-case t)
   (bind-key [remap completion-at-point] #'company-complete company-mode-map)
