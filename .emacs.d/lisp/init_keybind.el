@@ -16,7 +16,7 @@
 ;;; C-c dでカーソル位置のシンボルのヘルプを表示
 (bind-key "C-c d" #'describe-symbol)
 
-;;; C-cgをgrep-findに
+;;; C-cfをgrep-findに
 ;; cargoでripgrepを入れておく
 ;; cargo install ripgrep
 (bind-key "C-c f" #'grep-find)
