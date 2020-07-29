@@ -686,7 +686,13 @@
     :config
     (avy-migemo-mode 1)
     (require 'avy-migemo-e.g.swiper)
-    (require 'avy-migemo-e.g.counsel)))
+    (require 'avy-migemo-e.g.counsel))
+
+  (leaf counsel-fd ;; :require t
+    :el-get (counsel-fd
+             :url "https://github.com/yonta/counsel-fd.git"
+             :branch "add-autoload")
+    :bind ("C-c C-f" . counsel-fd-file-jump)))
 
 ;; バグで動かない
 ;; https://github.com/jschaf/esup/issues/54
