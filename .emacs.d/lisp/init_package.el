@@ -972,6 +972,16 @@
   :config
   (editorconfig-mode 1))
 
+(leaf imenu
+  :init
+  (leaf imenu-list :ensure t
+    :bind ("C->" . imenu-list-smart-toggle)
+    :custom
+    (imenu-list-focus-after-activation . t))
+
+  (leaf imenu-anywhere :ensure t
+    :bind ("C-." . ivy-imenu-anywhere)))
+
 (leaf dired
   :defun (dired-various-sort-change reload-current-dired-buffer)
   :custom
