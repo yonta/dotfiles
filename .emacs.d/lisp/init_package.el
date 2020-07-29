@@ -911,19 +911,7 @@
   (leaf highlight-indentation :ensure t
     :diminish highlight-indentation-mode
     ;; インデントに意味のあるPythonでとりあえず使う
-    :hook (python-mode-hook . highlight-indentation-mode))
-
-  (leaf jedi-direx
-    :el-get (jedi-direx
-             :url "https://github.com/yonta/emacs-jedi-direx.git"
-             :branch "use-jedi-core")
-    :hook (jedi-mode-hook . jedi-direx:setup)
-    :bind (:jedi-mode-map
-           :package jedi-direx
-           ("C-c x" . jedi-direx:pop-to-buffer)
-           ("C-c C-x" . jedi-direx:switch-to-buffer))
-    :init
-    (leaf direx :ensure t)))
+    :hook (python-mode-hook . highlight-indentation-mode)))
 
 (leaf perspective :ensure t
   ;; 1つめのEmacsだけperspectiveをload/saveする
