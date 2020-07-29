@@ -857,36 +857,38 @@
 (leaf eldoc :diminish eldoc-mode)
 
 (leaf python
-  :defun python-shell-send-region
-  :hook ((python-mode-hook
-          . (lambda ()
-              (setq-local company-backends
-                          '((company-jedi :with company-yasnippet)
-                            ;; string内で補完する
-                            company-yasnippet
-                            company-files))))
-         (inferior-python-mode-hook
-          . (lambda ()
-              (setq-local company-backends
-                          '((company-capf
-                             :with company-dabbrev-code company-yasnippet)
-                            company-files)))))
-  ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
-  ;; 必要なときにだけflycheck-select-checkerで利用する
-  ;; :hook (python-mode-hook
-  ;;        . (lambda () (setq-local flycheck-checker 'python-mypy))))
-  :bind (:python-mode-map
-         ("C-c C-r" . python-shell-send-region-or-line)
-         ("<backtab>" . python-indent-shift-left))
   :init
   (defun python-shell-send-region-or-line ()
     "Call REPL with active region or current line."
     (interactive) (call-with-region-or-line #'python-shell-send-region))
-  :custom
-  (python-shell-interpreter . "python3")
-  (python-indent-offset . 4)
-  :config
-  (require 'smartparens-python)
+
+  (leaf python
+    :defun python-shell-send-region
+    :hook ((python-mode-hook
+            . (lambda ()
+                (setq-local company-backends
+                            '((company-jedi :with company-yasnippet)
+                              ;; string内で補完する
+                              company-yasnippet
+                              company-files))))
+           (inferior-python-mode-hook
+            . (lambda ()
+                (setq-local company-backends
+                            '((company-capf
+                               :with company-dabbrev-code company-yasnippet)
+                              company-files)))))
+    ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
+    ;; 必要なときにだけflycheck-select-checkerで利用する
+    ;; :hook (python-mode-hook
+    ;;        . (lambda () (setq-local flycheck-checker 'python-mypy))))
+    :bind (:python-mode-map
+           ("C-c C-r" . python-shell-send-region-or-line)
+           ("<backtab>" . python-indent-shift-left))
+    :custom
+    (python-shell-interpreter . "python3")
+    (python-indent-offset . 4)
+    :config
+    (require 'smartparens-python))
 
   :init
   (leaf jedi-core :ensure t
@@ -898,9 +900,12 @@
 
   ;; pipでvirtualenvを入れておく
   ;; Ubuntu bionicのpythonは2.7なので、予め以下コマンドでPython3の環境を作る
+  ;; Ubuntu focalではpython3なので必要ない
   ;;   virtualenv -p python3 .python-environment/python3-default
   ;; その後、初回起動時にjedi:install-serverする
   ;; 必要に応じて補完したいライブラリを、activateしてpip installする
+  ;;   source ~/.emacs.d/.python-environments/python3-default/bin/activate
+  ;;   pip install -r ~/.emacs.d/requirements.txt
   (leaf company-jedi :ensure t)
 
   ;; pipでautopep8をいれておく
