@@ -20,10 +20,11 @@
 ;; cargoでripgrepを入れておく
 ;; cargo install ripgrep
 (bind-key "C-c f" #'grep-find)
-(setq grep-find-command
-      (let* ((format "rg --no-heading ")
-             (point (+ (length format) 1)))
-        `(,format . ,point)))
+(if (executable-find "rg")
+    (setq grep-find-command
+          (let* ((format "rg --no-heading ")
+                 (point (+ (length format) 1)))
+            `(,format . ,point))))
 
 ;;; terminal(-nw)で起動した場合は、C-SPCが使えないので、C-]にする
 (if (not window-system) (bind-key "C-]" #'set-mark-command))

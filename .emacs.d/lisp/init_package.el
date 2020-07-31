@@ -302,17 +302,19 @@
 
   ;; gemでrubocopを入れておく
   ;; gem install rubocop
-  (leaf rubocop :ensure t)
+  (leaf rubocop :ensure t :if (executable-find "rubocop"))
 
   ;; gemでrufoを入れておく
   ;; gem install rufo
   (leaf rufo :ensure t
+    :if (executable-find "rufo")
     :diminish rufo-minor-mode
     :hook (ruby-mode-hook . rufo-minor-mode))
 
   ;; gemでpryとpry-docを入れておく
   ;; gem install pry pry-doc
   (leaf robe :ensure t
+    :if (executable-find "pry")
     :defun robe-start
     :defvar robe-running
     :diminish t
@@ -391,6 +393,7 @@
 (leaf javascript
   ;; npmなどで補完用のternとリント用のeslintを入れておく
   ;; `npm install -g tern eslint'
+  :if (executable-find "tern")
   :init
   ;; company-ternに必要
   (leaf tern :ensure t
@@ -419,14 +422,16 @@
     :custom
     (typescript-indent-level . 2))
 
-  ;; npmでtideを入れておく
-  ;;   npm install --global tide
+  ;; nvmでnodeを入れておく
+  ;;   nvm install stable
+  ;;   nvm alias default stable
   (leaf tide :ensure t
     :hook ((typescript-mode-hook . tide-setup)
            (tide-mode-hook . tide-hl-identifier-mode)
            (before-save-hook . tide-format-before-save)))
 
   (leaf ts-comint :ensure t
+    :if (executable-find "ts-node")
     :custom
     (ts-comint-program-command . "ts-node")
     :bind (:typescript-mode-map
@@ -713,6 +718,7 @@
     (require 'avy-migemo-e.g.counsel))
 
   (leaf counsel-fd ;; :require t
+    :if (executable-find "fd")
     :el-get (counsel-fd
              :url "https://github.com/yonta/counsel-fd.git"
              :branch "add-autoload")
@@ -1273,7 +1279,7 @@ at point."
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく
 (leaf browse-url
-  :if (getenv "WSLENV")
+  :if (getenv "WSLENV") (executable-find "wslview")
   :custom
   (browse-url-browser-function . #'browse-url-generic)
   (browse-url-generic-program . "wslview"))
