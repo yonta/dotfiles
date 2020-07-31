@@ -1,0 +1,11 @@
+# libraries had used
+numpy
+pandas
+scipy
+matplotlib
+sklearn
+scikit-learn
+requests
+bs4
+seaborn
+serial
