@@ -413,6 +413,27 @@
                  '(company-tern
                    :with company-dabbrev-code company-bootstrap))))
 
+(leaf typescript
+  :init
+  (leaf typescript-mode :ensure t
+    :custom
+    (typescript-indent-level . 2))
+
+  ;; npmでtideを入れておく
+  ;;   npm install --global tide
+  (leaf tide :ensure t
+    :hook ((typescript-mode-hook . tide-setup)
+           (tide-mode-hook . tide-hl-identifier-mode)
+           (before-save-hook . tide-format-before-save)))
+
+  (leaf ts-comint :ensure t
+    :custom
+    (ts-comint-program-command . "ts-node")
+    :bind (:typescript-mode-map
+           :package typescript-mode
+           ("C-c C-r" . ts-send-region)
+           ("C-c C-p" . run-ts))))
+
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
 (leaf twittering-mode :ensure t
@@ -592,7 +613,7 @@
   (sp-local-pair 'tuareg-mode "'" nil :actions nil)
   ;; ｛の後にEnterすると｝の前に改行をつける
   (sp-with-modes
-      '(c++-mode objc-mode c-mode web-mode js-mode css-mode)
+      '(c++-mode objc-mode c-mode web-mode js-mode css-mode typescript-mode)
     (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 (leaf ivy :ensure t
