@@ -15,7 +15,7 @@
  '(shadow ((((class color grayscale) (min-colors 88) (background light)) (:foreground "grey50")) (((class color grayscale) (min-colors 88) (background dark)) (:foreground "grey70")) (((class color) (min-colors 8) (background light)) (:foreground "green")) (((class color) (min-colors 8) (background dark)) (:foreground "yellow"))))
  '(secondary-selection ((((class color) (min-colors 88) (background light)) (:background "yellow1")) (((class color) (min-colors 88) (background dark)) (:background "SkyBlue4")) (((class color) (min-colors 16) (background light)) (:background "yellow")) (((class color) (min-colors 16) (background dark)) (:background "SkyBlue4")) (((class color) (min-colors 8)) (:foreground "black" :background "cyan")) (t (:inverse-video t))))
  '(trailing-whitespace ((((class color) (background light)) (:background "red1")) (((class color) (background dark)) (:background "red1")) (t (:inverse-video t))))
- '(font-lock-builtin-face ((t (:foreground "deep pink"))))
+ '(font-lock-builtin-face ((t (:foreground "DeepPink3"))))
  '(font-lock-comment-delimiter-face ((default (:inherit (font-lock-comment-face)))))
  '(font-lock-comment-face ((t (:foreground "Sienna"))))
  '(font-lock-constant-face ((t (:foreground "slate gray"))))
@@ -60,6 +60,7 @@
  '(whitespace-tab ((t (:background "light goldenrod yellow"))))
  '(whitespace-empty ((t nil)))
  '(whitespace-line ((t (:background "khaki"))))
- '(line-number ((t (:background "white smoke" :inherit (shadow default))))))
+ '(line-number ((t (:background "white smoke" :inherit (shadow default)))))
+ '(web-mode-symbol-face ((t (:foreground "coral2")))))
 
 (provide-theme 'original)
