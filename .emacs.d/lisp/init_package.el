@@ -395,6 +395,10 @@
   ;; `npm install -g tern eslint'
   :if (executable-find "tern")
   :init
+  (leaf js
+    :custom
+    (js-indent-level . 2))
+
   ;; company-ternに必要
   (leaf tern :ensure t
     :diminish t
