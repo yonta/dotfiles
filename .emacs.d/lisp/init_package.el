@@ -983,7 +983,6 @@
   :bind* (("M-<right>" . persp-next)
           ("M-<left>" . persp-prev))
   :hook ((kill-emacs-hook . persp-state-save)
-         (auto-save-hook . persp-state-save) ;; 適度に保存する
          (emacs-startup-hook
           . (lambda () (persp-state-load "~/.emacs.d/.perspective"))))
   :custom
