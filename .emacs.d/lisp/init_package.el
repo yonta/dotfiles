@@ -351,7 +351,9 @@
     :mode "\\.html\\.erb\\'"
     :custom
     (web-mode-enable-comment-interpolation . t)
-    (web-mode-enable-current-element-highlight . t))
+    (web-mode-enable-current-element-highlight . t)
+    :config
+    (require 'smartparens-html))
 
   (leaf rspec-mode :disabled t)
   (leaf ruby-block :disabled t)
