@@ -133,6 +133,7 @@
     (defun my-c-mode-hook ()
       "Setting for c-mode."
       (c-set-style "k&r")
+      (require 'smartparens-c)
       (setq-local company-backends
                   '((company-clang
                      :with
@@ -151,6 +152,7 @@
       "Setting for c++-mode."
       (setq-local flycheck-gcc-language-standard "c++11")
       (setq-local flycheck-clang-language-standard "c++11")
+      (require 'smartparens-c)
       (c-set-style "k&r")
       (setq-local company-backends
                   '((company-clang
@@ -640,7 +642,7 @@
                                             ("* [i]||\n[i]" "RET")))) ;bug?
   ;; ｛の後にEnterすると｝の前に改行をつける
   (sp-with-modes
-      '(c++-mode objc-mode c-mode web-mode js-mode css-mode typescript-mode)
+      '(web-mode js-mode css-mode typescript-mode)
     (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 (leaf ivy :ensure t
