@@ -391,34 +391,36 @@
     (css-indent-offset . 2)))
 
 (leaf javascript
-  ;; npmなどで補完用のternとリント用のeslintを入れておく
-  ;; `npm install -g tern eslint'
-  :if (executable-find "tern")
   :init
   (leaf js
     :custom
     (js-indent-level . 2))
 
-  ;; company-ternに必要
-  (leaf tern :ensure t
-    :diminish t
-    :defvar tern-command
-    :hook js-mode-hook
-    :config
-    ;; .tern-portファイルを作らない
-    (setq tern-command '("tern" "--no-port-file")))
+  (leaf tern
+    :if (executable-find "tern")
+    :init
+    ;; npmなどで補完用のternとリント用のeslintを入れておく
+    ;; `npm install -g tern eslint'
+    ;; company-ternに必要
+    (leaf tern :ensure t
+      :diminish t
+      :defvar tern-command
+      :hook js-mode-hook
+      :config
+      ;; .tern-portファイルを作らない
+      (setq tern-command '("tern" "--no-port-file")))
 
-  ;; company-ternに必要
-  (leaf dash-functional :ensure t)
+    ;; company-ternに必要
+    (leaf dash-functional :ensure t)
 
-  (leaf company-tern
-    :defun company-tern
-    :el-get (company-tern
-             :url "https://github.com/whitypig/company-tern.git")
-    :config
-    (add-to-list 'company-backends
-                 '(company-tern
-                   :with company-dabbrev-code company-bootstrap))))
+    (leaf company-tern
+      :defun company-tern
+      :el-get (company-tern
+               :url "https://github.com/whitypig/company-tern.git")
+      :config
+      (add-to-list 'company-backends
+                   '(company-tern
+                     :with company-dabbrev-code company-bootstrap)))))
 
 (leaf typescript
   :init
