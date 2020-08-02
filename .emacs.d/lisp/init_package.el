@@ -433,6 +433,7 @@
   ;;   nvm install stable
   ;;   nvm alias default stable
   (leaf tide :ensure t
+    :diminish tide-mode
     :hook ((typescript-mode-hook . tide-setup)
            (tide-mode-hook . tide-hl-identifier-mode)
            (before-save-hook . tide-format-before-save)))
