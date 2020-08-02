@@ -424,8 +424,7 @@
                :url "https://github.com/whitypig/company-tern.git")
       :config
       (add-to-list 'company-backends
-                   '(company-tern
-                     :with company-dabbrev-code company-bootstrap))))
+                   '(company-tern :with company-dabbrev-code))))
 
   (leaf add-node-modules-path :ensure t
     :hook ((js-mode-hook . add-node-modules-path)
