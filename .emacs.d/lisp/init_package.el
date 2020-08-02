@@ -126,8 +126,42 @@
   (leaf flycheck-ocaml :ensure t))
 
 (leaf cc-mode
-  :defvar c-basic-offset
   :init
+  (leaf c-mode
+    :hook (c-mode-hook . my-c-mode-hook)
+    :init
+    (defun my-c-mode-hook ()
+      "Setting for c-mode."
+      (c-set-style "k&r")
+      (setq-local company-backends
+                  '((company-clang
+                     :with
+                     ;; company-c-headers
+                     company-dabbrev-code company-yasnippet)
+                    company-files)))
+    :custom
+    (c-basic-offset . 2)
+    (tab-width . c-basic-offset)
+    (indent-tabs-mode . nil))
+
+  (leaf c++-mode
+    :hook (c++-mode-hook . my-c++-mode-hook)
+    :init
+    (defun my-c++-mode-hook ()
+      "Setting for c++-mode."
+      (setq-local flycheck-gcc-language-standard "c++11")
+      (setq-local flycheck-clang-language-standard "c++11")
+      (c-set-style "k&r")
+      (setq-local company-backends
+                  '((company-clang
+                     :with
+                     ;; company-c-headers
+                     company-dabbrev-code company-yasnippet)
+                    company-files)))
+    :custom
+    (c-basic-offset . 2)
+    (tab-width . c-basic-offset)
+    (indent-tabs-mode . nil))
 
   ;; "#ff0000"などに色をつける
   (leaf rainbow-mode :ensure t
@@ -135,36 +169,7 @@
     :custom
     (rainbow-r-colors . t)                ; R color listを使う
     (rainbow-html-colors . t)             ; html color listを使う
-    :hook (c++-mode-hook arduino-mode-hook))
-
-  (defun my-c-mode-hook ()
-    "Setting for c-mode."
-    (c-set-style "k&r")
-    (setq c-basic-offset 2)
-    (setq tab-width c-basic-offset)
-    (setq indent-tabs-mode nil)
-    (setq-local company-backends
-                '((company-clang
-                   :with
-                   ;; company-c-headers
-                   company-dabbrev-code company-yasnippet)
-                  company-files)))
-  (defun my-c++-mode-hook ()
-    "Setting for c++-mode."
-    (c-set-style "k&r")
-    (setq c-basic-offset 2)
-    (setq tab-width c-basic-offset)
-    (setq indent-tabs-mode nil)
-    (setq flycheck-gcc-language-standard "c++11")
-    (setq flycheck-clang-language-standard "c++11")
-    (setq-local company-backends
-                '((company-clang
-                   :with
-                   ;; company-c-headers
-                   company-dabbrev-code company-yasnippet)
-                  company-files)))
-  :hook ((c-mode-hook . my-c-mode-hook)
-         (c++-mode-hook . my-c++-mode-hook)))
+    :hook (c++-mode-hook arduino-mode-hook)))
 
 (leaf tuareg :ensure t)
 
