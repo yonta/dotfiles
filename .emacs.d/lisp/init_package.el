@@ -420,7 +420,11 @@
       :config
       (add-to-list 'company-backends
                    '(company-tern
-                     :with company-dabbrev-code company-bootstrap)))))
+                     :with company-dabbrev-code company-bootstrap))))
+
+  (leaf add-node-modules-path :ensure t
+    :hook ((js-mode-hook . add-node-modules-path)
+           (typescript-mode-hook . add-node-modules-path))))
 
 (leaf typescript
   :init
