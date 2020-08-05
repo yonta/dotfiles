@@ -450,8 +450,11 @@
   (leaf tide :ensure t
     :diminish tide-mode
     :hook ((typescript-mode-hook . tide-setup)
-           (tide-mode-hook . tide-hl-identifier-mode)
-           (before-save-hook . tide-format-before-save)))
+           (tide-mode-hook . tide-hl-identifier-mode)))
+
+  (leaf prettier-js :ensure t
+    :diminish prettier-js-mode
+    :hook (typescript-mode-hook . prettier-js-mode))
 
   (leaf ts-comint :ensure t
     :if (executable-find "ts-node")
