@@ -128,6 +128,7 @@
 (leaf cc-mode
   :init
   (leaf c-mode
+    :defvar c-basic-offset
     :hook (c-mode-hook . my-c-mode-hook)
     :init
     (defun my-c-mode-hook ()
