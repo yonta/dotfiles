@@ -438,9 +438,14 @@
 (leaf typescript
   :init
   (leaf typescript-mode :ensure t
-    :defvar flycheck-checker
+    :defvar (flycheck-checker
+             flycheck-check-syntax-automatically
+             flycheck-idle-change-delay)
     :hook (typescript-mode-hook
-           . (lambda () (setq-local flycheck-checker 'javascript-eslint)))
+           . (lambda ()
+               (setq-local flycheck-checker 'javascript-eslint)
+               (setq-local flycheck-check-syntax-automatically
+                           '(save mode-enabled))))
     :custom
     (typescript-indent-level . 2))
 
