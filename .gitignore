@@ -20,4 +20,5 @@
 .emacs.d/tramp
 .emacs.d/custom.el*
 .emacs.d/.perspective
+.emacs.d/projectile-*
 flycheck_*.el

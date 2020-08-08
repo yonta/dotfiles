@@ -191,6 +191,25 @@
     :mode 'python-mode)
   :bind ("C-c c" . quickrun))
 
+(leaf projectile
+  :init
+  (leaf projectile :ensure t
+    :diminish projectile-mode
+    :custom
+    (projectile-completion-system . 'ivy)
+    :config
+    (projectile-mode 1))
+
+  (leaf ripgrep :ensure t ; projectile-ripgrepの依存関係なので使う
+    :bind ("C-c f" . ripgrep-regexp))
+
+  (leaf projectile-ripgrep :ensure t
+    :bind (:projectile-mode-map
+           :package projectile
+           ("C-c f" . projectile-ripgrep)))
+
+  (leaf projectile-rails :ensure t))
+
 ;; aptでmarkdown、pipでgripをいれておく
 (leaf markdown-mode :ensure t
   :if (executable-find "markdown") (executable-find "grip")
