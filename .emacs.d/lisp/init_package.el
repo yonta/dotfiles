@@ -208,7 +208,10 @@
            :package projectile
            ("C-c f" . projectile-ripgrep)))
 
-  (leaf projectile-rails :ensure t))
+  (leaf projectile-rails :ensure t
+    :diminish projectile-rails-mode
+    :config
+    (projectile-rails-global-mode)))
 
 ;; aptでmarkdown、pipでgripをいれておく
 (leaf markdown-mode :ensure t
