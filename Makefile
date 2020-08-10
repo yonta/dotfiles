@@ -1,5 +1,4 @@
-SRCDIR := .emacs.d/lisp
-SRCS := $(wildcard $(SRCDIR)/*.el)
+SRCS := $(wildcard .emacs.d/lisp/*.el) $(wildcard .emacs.d/themes/*.el)
 TARGETS := $(SRCS:.el=.elc)
 
 .PHONY: all clean
