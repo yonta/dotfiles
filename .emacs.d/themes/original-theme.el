@@ -62,6 +62,8 @@
  '(whitespace-line ((t (:background "khaki"))))
  '(line-number ((t (:background "white smoke" :inherit (shadow default)))))
  '(web-mode-symbol-face ((t (:foreground "coral2"))))
- '(web-mode-current-element-highlight-face ((t (:foreground "gray10" :background "light sky blue")))))
+ '(web-mode-current-element-highlight-face ((t (:foreground "gray10" :background "light sky blue"))))
+ '(web-mode-current-column-highlight-face ((t (:inherit (whitespace-trailing)))))
+ '(highlight-indentation-face ((t (:inherit (whitespace-trailing))))))
 
 (provide-theme 'original)
