@@ -222,6 +222,7 @@
   :init
   (leaf projectile :ensure t
     :diminish projectile-mode
+    :bind (:projectile-mode-map ("C-c C-f" . projectile-find-file))
     :custom
     (projectile-completion-system . 'ivy)
     :config
@@ -243,6 +244,7 @@
 ;; aptでmarkdown、pipでgripをいれておく
 (leaf markdown-mode :ensure t
   :if (executable-find "markdown") (executable-find "grip")
+  :defvar markdown-mode-map
   :mode ("README\\.md\\'" . gfm-mode)
   :config
   (unbind-key "C-c '" gfm-mode-map)
@@ -263,7 +265,8 @@
   ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
   (markdown-css-paths . '("style.css"))
   :config
-  (require 'smartparens-markdown))
+  (require 'smartparens-markdown)
+  (unbind-key "C-c C-f" markdown-mode-map))
 
 (leaf csv-mode :ensure t)
 
@@ -407,6 +410,7 @@
 (leaf html-css
   :init
   (leaf web-mode :ensure t
+    :defvar web-mode-map
     :mode "\\.html\\.erb\\'"
     :custom
     (web-mode-enable-comment-interpolation . t)
@@ -422,7 +426,8 @@
     :config
     (require 'smartparens-html)
     (sp-local-pair 'web-mode "<%" "%>"
-                   :post-handlers '(("|| " "SPC") (" || " "="))))
+                   :post-handlers '(("|| " "SPC") (" || " "=")))
+    (unbind-key "C-c C-f" web-mode-map))
 
   ;; htmlbeautifierに必要
   (leaf reformatter :ensure t)
@@ -779,7 +784,7 @@
     :el-get (counsel-fd
              :url "https://github.com/yonta/counsel-fd.git"
              :branch "add-autoload")
-    :bind* ("C-c C-f" . counsel-fd-file-jump)))
+    :bind ("C-c C-f" . counsel-fd-file-jump)))
 
 ;; バグで動かない
 ;; https://github.com/jschaf/esup/issues/54
