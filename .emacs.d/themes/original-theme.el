@@ -61,6 +61,7 @@
  '(whitespace-empty ((t nil)))
  '(whitespace-line ((t (:background "khaki"))))
  '(line-number ((t (:background "white smoke" :inherit (shadow default)))))
- '(web-mode-symbol-face ((t (:foreground "coral2")))))
+ '(web-mode-symbol-face ((t (:foreground "coral2"))))
+ '(web-mode-current-element-highlight-face ((t (:foreground "gray10" :background "light sky blue")))))
 
 (provide-theme 'original)
