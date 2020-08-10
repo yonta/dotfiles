@@ -397,14 +397,6 @@
     ;; (add-hook 'enh-ruby-mode-hook #'my-robe-auto-start)
     )
 
-  (leaf web-mode :ensure t
-    :mode "\\.html\\.erb\\'"
-    :custom
-    (web-mode-enable-comment-interpolation . t)
-    (web-mode-enable-current-element-highlight . t)
-    :config
-    (require 'smartparens-html))
-
   (leaf rspec-mode :disabled t)
   (leaf ruby-block :disabled t)
 
@@ -414,15 +406,23 @@
 
 (leaf html-css
   :init
-  (leaf web-mode
-    :defvar web-mode-whitespaces-regexp
+  (leaf web-mode :ensure t
+    :mode "\\.html\\.erb\\'"
     :custom
+    (web-mode-enable-comment-interpolation . t)
+    (web-mode-enable-auto-pairing . nil)
     (web-mode-enable-auto-quoting . t)
+    (web-mode-enable-auto-expanding . t)
+    (web-mode-enable-current-element-highlight . t)
+    (web-mode-enable-current-column-highlight . t)
+    (web-mode-auto-close-style . 2)
     ;; web-modeとwhitespace-modeのコンフリクトでfaceがおかしくなるのを解消する
     ;; https://github.com/fxbois/web-mode/issues/119a
-    (web-mode-display-table . nil))
-    ;; :config
-    ;; (setq web-mode-whitespaces-regexp "^[\t]+\\|[\t ]+$"))
+    (web-mode-display-table . nil)
+    :config
+    (require 'smartparens-html)
+    (sp-local-pair 'web-mode "<%" "%>"
+                   :post-handlers '(("|| " "SPC") (" || " "="))))
 
   ;; htmlbeautifierに必要
   (leaf reformatter :ensure t)
