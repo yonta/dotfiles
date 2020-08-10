@@ -125,6 +125,33 @@
 
   (leaf flycheck-ocaml :ensure t))
 
+(eval-when-compile (require 'smartparens)) ; sp-with-modesマクロの読み込み
+(leaf smartparens :ensure t
+  :diminish smartparens-mode
+  :defun sp-local-pair
+  :config
+  (smartparens-global-mode t)
+  ;; 一部のモードでは'での補完を行わない
+  (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
+  (sp-local-pair 'emacs-lisp-mode "`" "'")
+  (sp-local-pair 'lisp-mode "'" nil :actions nil)
+  (sp-local-pair 'lisp-mode "`" nil :actions nil)
+  (sp-local-pair 'sml-mode "(*" "*)")
+  (sp-local-pair 'sml-mode "'" nil :actions nil)
+  (sp-local-pair 'sml-mode "`" nil :actions nil)
+  (sp-local-pair 'inferior-sml-mode "(*" "*)")
+  (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
+  (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
+  (sp-local-pair 'tuareg-mode "'" nil :actions nil)
+  ;; /*の後をいい感じにする
+  (sp-with-modes '(js-mode typescript-mode)
+    (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
+                                              ("* [i]||\n[i]" "RET")))) ;bug?
+  ;; ｛の後にEnterすると｝の前に改行をつける
+  (sp-with-modes
+      '(web-mode js-mode css-mode typescript-mode)
+    (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+
 (leaf cc-mode
   :init
   (leaf c-mode
@@ -650,33 +677,6 @@
 
 ;; アクティブかどうかでバッファーのモードラインの色を変える
 (leaf hiwin :ensure t)
-
-(eval-when-compile (require 'smartparens)) ; sp-with-modesマクロの読み込み
-(leaf smartparens :ensure t
-  :diminish smartparens-mode
-  :defun sp-local-pair
-  :config
-  (smartparens-global-mode t)
-  ;; 一部のモードでは'での補完を行わない
-  (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-  (sp-local-pair 'emacs-lisp-mode "`" "'")
-  (sp-local-pair 'lisp-mode "'" nil :actions nil)
-  (sp-local-pair 'lisp-mode "`" nil :actions nil)
-  (sp-local-pair 'sml-mode "(*" "*)")
-  (sp-local-pair 'sml-mode "'" nil :actions nil)
-  (sp-local-pair 'sml-mode "`" nil :actions nil)
-  (sp-local-pair 'inferior-sml-mode "(*" "*)")
-  (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
-  (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
-  (sp-local-pair 'tuareg-mode "'" nil :actions nil)
-  ;; /*の後をいい感じにする
-  (sp-with-modes '(js-mode typescript-mode)
-  (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
-                                            ("* [i]||\n[i]" "RET")))) ;bug?
-  ;; ｛の後にEnterすると｝の前に改行をつける
-  (sp-with-modes
-      '(web-mode js-mode css-mode typescript-mode)
-    (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 (leaf ivy :ensure t
   :defvar ivy-height-alist ivy-initial-inputs-alist
