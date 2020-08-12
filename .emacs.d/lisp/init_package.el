@@ -152,6 +152,38 @@
       '(web-mode js-mode css-mode typescript-mode)
     (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
+;;; MODE
+
+(leaf emacs-lisp
+  :init
+  (leaf elisp-mode
+    :config
+    (defun eval-region-or-line ()
+      "Eval active region or current line."
+      (interactive) (call-with-region-or-line #'eval-region))
+    :hook (emacs-lisp-mode-hook
+           . (lambda ()
+               (setq-local company-backends
+                           '((company-capf
+                              :with company-dabbrev-code company-yasnippet)
+                             company-files))))
+    :bind ((:lisp-mode-shared-map ("C-c C-r" . eval-region-or-line))))
+
+  (leaf eldoc :diminish eldoc-mode)
+
+  (leaf auto-async-byte-compile :ensure t
+    :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
+
+  (leaf lispxmp :ensure t
+    :bind (:lisp-mode-shared-map
+           :package elisp-mode
+           ("C-M-;" . lispxmp)))
+
+  (leaf macrostep :ensure t
+    :bind (:lisp-mode-shared-map
+           :package elisp-mode
+           ("C-c e" . macrostep-expand))))
+
 (leaf cc-mode
   :init
   (leaf c-mode
@@ -924,36 +956,6 @@
   ;; jenkinsfile-modeに必要
   (leaf groovy-mode :ensure t)
   :mode "^Jenkinsfile\\'")
-
-(leaf elisp-mode
-  :init
-
-  (leaf auto-async-byte-compile :ensure t
-    :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
-
-  (leaf lispxmp :ensure t
-    :bind (:lisp-mode-shared-map
-           :package elisp-mode
-           ("C-M-;" . lispxmp)))
-
-  (leaf macrostep :ensure t
-    :bind (:lisp-mode-shared-map
-           :package elisp-mode
-           ("C-c e" . macrostep-expand)))
-
-  :config
-  (defun eval-region-or-line ()
-    "Eval active region or current line."
-    (interactive) (call-with-region-or-line #'eval-region))
-  :hook (emacs-lisp-mode-hook
-         . (lambda ()
-             (setq-local company-backends
-                         '((company-capf
-                            :with company-dabbrev-code company-yasnippet)
-                           company-files))))
-  :bind ((:lisp-mode-shared-map ("C-c C-r" . eval-region-or-line))))
-
-(leaf eldoc :diminish eldoc-mode)
 
 (leaf python
   :init
