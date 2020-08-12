@@ -149,6 +149,9 @@
   (leaf auto-async-byte-compile :ensure t
     :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
 
+  ;; 設定はinit.elにある
+  (leaf auto-compile :ensure t)
+
   (leaf lispxmp :ensure t
     :bind (:lisp-mode-shared-map
            :package elisp-mode

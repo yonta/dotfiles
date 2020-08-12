@@ -21,6 +21,19 @@
 (setq gc-cons-threshold (eval-when-compile (* 128 1024 1024)))
 (run-with-idle-timer 300 t #'garbage-collect)
 
+;;; .el/.elcで新しい方を読み込む
+(setq load-prefer-newer t)
+
+;;; .elcが古ければauto-compileする
+;; 初回起動時はインストールされてないため、次回から有効になる
+(require 'package)
+(package-initialize)
+(if (package-installed-p 'auto-compile)
+    (progn
+      (require 'auto-compile)
+      (declare-function auto-compile-on-load-mode "auto-compile")
+      (auto-compile-on-load-mode)))
+
 ;;; 自分のカスタムemacs lispのpath
 ;; 参考： https://www.emacswiki.org/emacs/LoadPath
 (let ((default-directory  "~/.emacs.d/lisp/"))
