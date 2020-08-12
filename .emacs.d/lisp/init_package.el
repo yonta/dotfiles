@@ -698,6 +698,34 @@
     (toggle-hl-line-when-idle 1)
     (hl-line-when-idle-interval 4)))
 
+(leaf git-gutter-fringe :ensure t :require t
+  :diminish git-gutter-mode
+  :init
+  (global-git-gutter-mode)
+  :config
+  (eval-when-compile (require 'fringe-helper))
+  (fringe-helper-define 'git-gutter-fr:modified nil
+    "X......."
+    "XXXX...."
+    "XXXXXX.."
+    "XXXXXXXX"
+    "XXXXXXXX"
+    "XXXXXX.."
+    "XXXX...."
+    "XX......")
+  (fringe-helper-define 'git-gutter-fr:deleted nil
+    "........"
+    "........"
+    "........"
+    "XXXXXXXX"
+    "XXXXXXXX"
+    "XXXXXXXX"
+    "........"
+    "........"))
+
+;; アクティブかどうかでバッファーのモードラインの色を変える
+(leaf hiwin :ensure t)
+
 ;;; OTHER
 
 (leaf popwin :ensure t :require t
@@ -865,9 +893,6 @@
           ("f" . image-dired-display-current-image-full)
           ("0" . image-dired-display-current-image-sized))))
 
-;; アクティブかどうかでバッファーのモードラインの色を変える
-(leaf hiwin :ensure t)
-
 (leaf ivy :ensure t
   :defvar ivy-height-alist ivy-initial-inputs-alist
   :custom
@@ -971,35 +996,6 @@
              :branch "add-autoload")
     :bind ("C-c C-f" . counsel-fd-file-jump)))
 
-;; バグで動かない
-;; https://github.com/jschaf/esup/issues/54
-(leaf esup :disabled t)
-
-(leaf git-gutter-fringe :ensure t :require t
-  :diminish git-gutter-mode
-  :init
-  (global-git-gutter-mode)
-  :config
-  (eval-when-compile (require 'fringe-helper))
-  (fringe-helper-define 'git-gutter-fr:modified nil
-    "X......."
-    "XXXX...."
-    "XXXXXX.."
-    "XXXXXXXX"
-    "XXXXXXXX"
-    "XXXXXX.."
-    "XXXX...."
-    "XX......")
-  (fringe-helper-define 'git-gutter-fr:deleted nil
-    "........"
-    "........"
-    "........"
-    "XXXXXXXX"
-    "XXXXXXXX"
-    "XXXXXXXX"
-    "........"
-    "........"))
-
 (leaf dumb-jump :ensure t
   :defvar dumb-jump-selector
   :config
@@ -1089,6 +1085,7 @@
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
 
+;; projectの.editorconfigファイルを読み込む
 (leaf editorconfig :ensure t
   :diminish t
   :config
@@ -1253,9 +1250,8 @@ at point."
   :bind (("C-M-<left>" . winner-undo)
          ("C-M-<right>" . winner-redo)))
 
-(leaf dummy-line-num :require nil ; dummy
+(leaf line-number
   :init
-
   (leaf display-line-numbers
     :if (version<= "26" emacs-version) ; Emacs26以降
     :init
