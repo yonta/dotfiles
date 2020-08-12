@@ -40,6 +40,8 @@
   :el-get (initchart
            :url "https://github.com/yuttie/initchart.git"))
 
+;;; Company and Flycheck
+
 ;; clangがあるとより便利らしいので、aptでclangをいれておく
 (leaf company
   :init
@@ -124,33 +126,6 @@
     (flycheck-pos-tip-mode))
 
   (leaf flycheck-ocaml :ensure t))
-
-(eval-when-compile (require 'smartparens)) ; sp-with-modesマクロの読み込み
-(leaf smartparens :ensure t
-  :diminish smartparens-mode
-  :defun sp-local-pair
-  :config
-  (smartparens-global-mode t)
-  ;; 一部のモードでは'での補完を行わない
-  (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-  (sp-local-pair 'emacs-lisp-mode "`" "'")
-  (sp-local-pair 'lisp-mode "'" nil :actions nil)
-  (sp-local-pair 'lisp-mode "`" nil :actions nil)
-  (sp-local-pair 'sml-mode "(*" "*)")
-  (sp-local-pair 'sml-mode "'" nil :actions nil)
-  (sp-local-pair 'sml-mode "`" nil :actions nil)
-  (sp-local-pair 'inferior-sml-mode "(*" "*)")
-  (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
-  (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
-  (sp-local-pair 'tuareg-mode "'" nil :actions nil)
-  ;; /*の後をいい感じにする
-  (sp-with-modes '(js-mode typescript-mode)
-    (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
-                                              ("* [i]||\n[i]" "RET")))) ;bug?
-  ;; ｛の後にEnterすると｝の前に改行をつける
-  (sp-with-modes
-      '(web-mode js-mode css-mode typescript-mode)
-    (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 ;;; MODE
 
@@ -249,29 +224,6 @@
       (:compile-only . "pyflakes %s"))
     :mode 'python-mode)
   :bind ("C-c c" . quickrun))
-
-(leaf projectile
-  :init
-  (leaf projectile :ensure t
-    :diminish projectile-mode
-    :bind (:projectile-mode-map ("C-c C-f" . projectile-find-file))
-    :custom
-    (projectile-completion-system . 'ivy)
-    :config
-    (projectile-mode 1))
-
-  (leaf ripgrep :ensure t ; projectile-ripgrepの依存関係なので使う
-    :bind ("C-c f" . ripgrep-regexp))
-
-  (leaf projectile-ripgrep :ensure t
-    :bind (:projectile-mode-map
-           :package projectile
-           ("C-c f" . projectile-ripgrep)))
-
-  (leaf projectile-rails :ensure t
-    :diminish projectile-rails-mode
-    :config
-    (projectile-rails-global-mode)))
 
 ;; aptでmarkdown、pipでgripをいれておく
 (leaf markdown-mode :ensure t
@@ -375,6 +327,68 @@
          ("C-c C-r" . sml-prog-proc-send-region-or-line)
          ("C-c C-p" . sml-run)
          ("M-." . dumb-jump-go)))
+
+(leaf python
+  :init
+  (defun python-shell-send-region-or-line ()
+    "Call REPL with active region or current line."
+    (interactive) (call-with-region-or-line #'python-shell-send-region))
+
+  (leaf python
+    :defun python-shell-send-region
+    :hook ((python-mode-hook
+            . (lambda ()
+                (setq-local company-backends
+                            '((company-jedi :with company-yasnippet)
+                              ;; string内で補完する
+                              company-yasnippet
+                              company-files))))
+           (inferior-python-mode-hook
+            . (lambda ()
+                (setq-local company-backends
+                            '((company-capf
+                               :with company-dabbrev-code company-yasnippet)
+                              company-files)))))
+    ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
+    ;; 必要なときにだけflycheck-select-checkerで利用する
+    ;; :hook (python-mode-hook
+    ;;        . (lambda () (setq-local flycheck-checker 'python-mypy))))
+    :bind (:python-mode-map
+           ("C-c C-r" . python-shell-send-region-or-line)
+           ("<backtab>" . python-indent-shift-left))
+    :custom
+    (python-shell-interpreter . "python3")
+    (python-indent-offset . 4)
+    :config
+    (require 'smartparens-python))
+
+  :init
+  (leaf jedi-core :ensure t
+    :hook (python-mode-hook . jedi:setup)
+    ;; 関数の引数の情報が便利なので、ミニバッファに表示する
+    :custom ((jedi:tooltip-method . nil)
+             (jedi:use-shortcuts . t) ; M-,/M-.にjediを使う
+             (jedi:environment-root . "python3-default")))
+
+  ;; pipでvirtualenvを入れておく
+  ;; Ubuntu bionicのpythonは2.7なので、予め以下コマンドでPython3の環境を作る
+  ;; Ubuntu focalではpython3なので必要ない
+  ;;   virtualenv -p python3 .python-environment/python3-default
+  ;; その後、初回起動時にjedi:install-serverする
+  ;; 必要に応じて補完したいライブラリを、activateしてpip installする
+  ;;   source ~/.emacs.d/.python-environments/python3-default/bin/activate
+  ;;   pip install -r ~/.emacs.d/requirements.txt
+  (leaf company-jedi :ensure t)
+
+  ;; pipでautopep8をいれておく
+  (leaf py-autopep8 :ensure t
+    :if (executable-find "autopep8")
+    :hook (python-mode-hook . py-autopep8-enable-on-save))
+
+  (leaf highlight-indentation :ensure t
+    :diminish highlight-indentation-mode
+    ;; インデントに意味のあるPythonでとりあえず使う
+    :hook (python-mode-hook . highlight-indentation-mode)))
 
 (leaf ruby
   :init
@@ -556,6 +570,186 @@
            ("C-c C-r" . ts-send-region)
            ("C-c C-p" . run-ts))))
 
+(leaf dockerfile-mode :ensure t)
+
+(leaf yaml-mode :ensure t)
+
+(leaf jenkinsfile-mode
+  :el-get (jenkinsfile-mode
+           :url "https://github.com/spotify/dockerfile-mode.git")
+
+  :init
+  ;; jenkinsfile-modeに必要
+  (leaf groovy-mode :ensure t)
+  :mode "^Jenkinsfile\\'")
+
+(leaf haxe-mode :ensure t
+  :custom
+  (tab-width . 4)
+  (indent-tabs-mode . nil)
+  (fill-column . 80))
+
+(leaf proof-general :ensure t)
+
+(leaf gnuplot-mode :ensure t
+  ;; .gpl .plt、.gp .gnuplotはautoloadで登録済み
+  :mode ("\\.gpl\\'" "\\.plt\\'"))
+
+(leaf graphviz-dot-mode :ensure t)
+
+;;; Face
+
+(leaf whitespace :require t
+  :diminish global-whitespace-mode
+  :defvar whitespace-line-column
+  :custom
+  ;; 空白などの可視化、対象はタブ文字、80文字超え部、行末の空白、全角スペース
+  (whitespace-style . '(face tabs lines-tail trailing spaces empty))
+  ;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
+  (whitespace-action . '(auto-cleanup))
+  ;; spacesの対象は全角スペースのみ
+  (whitespace-space-regexp . "\\(　+\\)")
+  :config
+  (global-whitespace-mode t) ;; white spaceをオン
+  ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
+  :hook ((java-mode-hook . (lambda () (setq whitespace-line-column 100)))
+         (change-major-mode-hook
+          . (lambda () (setq whitespace-line-column 80)))
+         (dired-mode-hook
+          . (lambda () (setq-local truncate-partial-width-windows t)))))
+
+(leaf parens
+  :init
+  (eval-when-compile (require 'smartparens)) ; sp-with-modesマクロの読み込み
+  (leaf smartparens :ensure t
+    :diminish smartparens-mode
+    :defun sp-local-pair
+    :config
+    (smartparens-global-mode t)
+    ;; 一部のモードでは'での補完を行わない
+    (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
+    (sp-local-pair 'emacs-lisp-mode "`" "'")
+    (sp-local-pair 'lisp-mode "'" nil :actions nil)
+    (sp-local-pair 'lisp-mode "`" nil :actions nil)
+    (sp-local-pair 'sml-mode "(*" "*)")
+    (sp-local-pair 'sml-mode "'" nil :actions nil)
+    (sp-local-pair 'sml-mode "`" nil :actions nil)
+    (sp-local-pair 'inferior-sml-mode "(*" "*)")
+    (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
+    (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
+    (sp-local-pair 'tuareg-mode "'" nil :actions nil)
+    ;; /*の後をいい感じにする
+    (sp-with-modes '(js-mode typescript-mode)
+      (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
+                                                ("* [i]||\n[i]" "RET")))) ;bug?
+    ;; ｛の後にEnterすると｝の前に改行をつける
+    (sp-with-modes
+        '(web-mode js-mode css-mode typescript-mode)
+      (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+
+  (leaf rainbow-delimiters :ensure t
+    :defvar rainbow-delimiters-max-face-count
+    :init
+
+    (leaf color  :require t
+      :after rainbow-delimiters
+      :defun color-saturate-name)
+
+    ;; 白背景地には括弧の色をより強くする
+    ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
+    (defun rainbow-delimiters-using-stronger-colors ()
+      "Set delimiter to more strong color for white background."
+      (if (string> (background-color-at-point) "#808080")
+          (cl-loop
+           for index from 1 to rainbow-delimiters-max-face-count do
+           (let ((face
+                  (intern (format "rainbow-delimiters-depth-%d-face" index))))
+             (cl-callf color-saturate-name (face-foreground face) 30)))))
+    :hook ((emacs-startup-hook . rainbow-delimiters-using-stronger-colors)
+           (prog-mode-hook . rainbow-delimiters-mode)))
+
+  (leaf highlight-parentheses :ensure t
+    :diminish highlight-parentheses-mode
+    :hook (prog-mode-hook . highlight-parentheses-mode)))
+
+(leaf highlight
+  (leaf auto-highlight-symbol :ensure t
+    :leaf-defer nil
+    :diminish auto-highlight-symbol-mode
+    :defvar ahs-modes
+    :custom
+    (ahs-default-range . 'ahs-range-whole-buffer)
+    :config
+    (global-auto-highlight-symbol-mode t)
+    (push 'sml-mode ahs-modes)
+    :bind (("M-<up>" . ahs-backward)
+           ("M-<down>" . ahs-forward)))
+
+  (leaf volatile-highlights :ensure t
+    :diminish volatile-highlights-mode
+    :config
+    (volatile-highlights-mode t))
+
+  (leaf hl-line+
+    :el-get (hl-line+
+             :url "https://github.com/emacsmirror/hl-line-plus.git")
+    :defun (toggle-hl-line-when-idle hl-line-when-idle-interval)
+    :config
+    (toggle-hl-line-when-idle 1)
+    (hl-line-when-idle-interval 4)))
+
+;;; OTHER
+
+(leaf popwin :ensure t :require t
+  :defun popwin-mode
+  :custom
+  ;; popwin対象
+  (popwin:special-display-config
+   . '(("*quickrun*" :stick t)
+       ("*Google Translate*")
+       (completion-list-mode :noselect t) ;; 全completionを対象
+       ("*Warnings*")
+       (" *auto-async-byte-compile*")
+       ("*Kill Ring*")
+       (" *undo-tree*")
+       ("*Help*")
+       ("*xref*")
+       ("*Backtrace*")))
+  :config
+  (popwin-mode 1))
+
+(leaf projectile
+  :init
+  (leaf projectile :ensure t
+    :diminish projectile-mode
+    :bind (:projectile-mode-map ("C-c C-f" . projectile-find-file))
+    :custom
+    (projectile-completion-system . 'ivy)
+    :config
+    (projectile-mode 1))
+
+  (leaf ripgrep :ensure t ; projectile-ripgrepの依存関係なので使う
+    :bind ("C-c f" . ripgrep-regexp))
+
+  (leaf projectile-ripgrep :ensure t
+    :bind (:projectile-mode-map
+           :package projectile
+           ("C-c f" . projectile-ripgrep)))
+
+  (leaf projectile-rails :ensure t
+    :diminish projectile-rails-mode
+    :config
+    (projectile-rails-global-mode)))
+
+(leaf google-translate :ensure t
+  :config
+  (leaf google-translate-smooth-ui
+    :defvar google-translate-translation-directions-alist
+    :config
+    (setq google-translate-translation-directions-alist
+          '(("en" . "ja") ("ja" . "en")))
+    :bind ("C-c C-t" . google-translate-smooth-translate)))
+
 ;; aptでgnupgを入れておく
 ;; alpaca.elが必要
 (leaf twittering-mode :ensure t
@@ -602,21 +796,6 @@
          ("K" . twittering-goto-first-status)
          ("u" . twittering-toggle-show-replied-statuses)))
 
-(leaf gnuplot-mode :ensure t
-  ;; .gpl .plt、.gp .gnuplotはautoloadで登録済み
-  :mode ("\\.gpl\\'" "\\.plt\\'"))
-
-(leaf graphviz-dot-mode :ensure t)
-
-(leaf google-translate :ensure t
-  :config
-  (leaf google-translate-smooth-ui
-    :defvar google-translate-translation-directions-alist
-    :config
-    (setq google-translate-translation-directions-alist
-          '(("en" . "ja") ("ja" . "en")))
-    :bind ("C-c C-t" . google-translate-smooth-translate)))
-
 (leaf shell
   :init
 
@@ -649,32 +828,6 @@
                              ;; SHELL で ^M が付く場合は ^M を削除する
                              (set-buffer-process-coding-system
                               'undecided-dos 'sjis-unix))))
-
-(leaf haxe-mode :ensure t
-  :custom
-  (tab-width . 4)
-  (indent-tabs-mode . nil)
-  (fill-column . 80))
-
-(leaf proof-general :ensure t)
-
-(leaf popwin :ensure t :require t
-  :defun popwin-mode
-  :custom
-  ;; popwin対象
-  (popwin:special-display-config
-   . '(("*quickrun*" :stick t)
-       ("*Google Translate*")
-       (completion-list-mode :noselect t) ;; 全completionを対象
-       ("*Warnings*")
-       (" *auto-async-byte-compile*")
-       ("*Kill Ring*")
-       (" *undo-tree*")
-       ("*Help*")
-       ("*xref*")
-       ("*Backtrace*")))
-  :config
-  (popwin-mode 1))
 
 ;; ImageMagickをaptでいれておく
 ;; 非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ
@@ -822,15 +975,6 @@
 ;; https://github.com/jschaf/esup/issues/54
 (leaf esup :disabled t)
 
-;; パッケージのアップデートでネットワーク接続中にフリーズするので無効化
-(leaf auto-package-update :ensure t :disabled t
-  :custom
-  (auto-package-update-delete-old-versions . t)
-  (auto-package-update-prompt-before-update . t)
-  ;; (auto-package-update-hide-results . t)
-  :config
-  (auto-package-update-maybe))
-
 (leaf git-gutter-fringe :ensure t :require t
   :diminish git-gutter-mode
   :init
@@ -864,20 +1008,8 @@
          ("M-g j" . dumb-jump-go)
          ("M-g i" . dumb-jump-go-prompt)))
 
-(leaf volatile-highlights :ensure t
-  :diminish volatile-highlights-mode
-  :config
-  (volatile-highlights-mode t))
-
 (leaf expand-region :ensure t
   :bind ("C-`" . er/expand-region))
-
-(leaf async :ensure t
-  :no-require
-  :custom
-  (async-bytecomp-allowed-packages . '(all))
-  :config
-  (async-bytecomp-package-mode 1))
 
 (leaf which-key :ensure t
   :diminish which-key-mode
@@ -892,132 +1024,37 @@
 (leaf visual-regexp :ensure t
   :bind ("M-&" . vr/query-replace))
 
-;; package.elのリストを綺麗で便利にする
-(leaf paradox :ensure t
+(leaf package
   :init
-  ;; paradox-enableを遅延するために、別コマンドにする
-  (defun list-packages-paradox ()
-    "Call `list-packages' function with paradox initialization."
-    (interactive)
-    (paradox-enable)
-    (call-interactively #'list-packages))
-  :custom
-  (paradox-execute-asynchronously . t))
+  ;; package.elのリストを綺麗で便利にする
+  (leaf paradox :ensure t
+    :init
+    ;; paradox-enableを遅延するために、別コマンドにする
+    (defun list-packages-paradox ()
+      "Call `list-packages' function with paradox initialization."
+      (interactive)
+      (paradox-enable)
+      (call-interactively #'list-packages))
+    :custom
+    (paradox-execute-asynchronously . t))
 
-(leaf auto-highlight-symbol :ensure t
-  :leaf-defer nil
-  :diminish auto-highlight-symbol-mode
-  :defvar ahs-modes
-  :custom
-  (ahs-default-range . 'ahs-range-whole-buffer)
-  :config
-  (global-auto-highlight-symbol-mode t)
-  (push 'sml-mode ahs-modes)
-  :bind (("M-<up>" . ahs-backward)
-         ("M-<down>" . ahs-forward)))
+  (leaf auto-package-update :ensure t
+    :custom
+    (auto-package-update-delete-old-versions . t)
+    (auto-package-update-prompt-before-update . t)
+    ;; (auto-package-update-hide-results . t)
+    :config
+    (auto-package-update-maybe))
 
-(leaf highlight-parentheses :ensure t
-  :diminish highlight-parentheses-mode
-  :hook (prog-mode-hook . highlight-parentheses-mode))
-
-(leaf rainbow-delimiters :ensure t
-  :defvar rainbow-delimiters-max-face-count
-  :init
-
-  (leaf color  :require t
-    :after rainbow-delimiters
-    :defun color-saturate-name)
-
-  ;; 白背景地には括弧の色をより強くする
-  ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
-  (defun rainbow-delimiters-using-stronger-colors ()
-    "Set delimiter to more strong color for white background."
-    (if (string> (background-color-at-point) "#808080")
-        (cl-loop
-         for index from 1 to rainbow-delimiters-max-face-count do
-         (let ((face
-                (intern (format "rainbow-delimiters-depth-%d-face" index))))
-           (cl-callf color-saturate-name (face-foreground face) 30)))))
-  :hook ((emacs-startup-hook . rainbow-delimiters-using-stronger-colors)
-         (prog-mode-hook . rainbow-delimiters-mode)))
+  (leaf async :ensure t
+    :no-require
+    :custom
+    (async-bytecomp-allowed-packages . '(all))
+    :config
+    (async-bytecomp-package-mode 1)))
 
 (leaf undo-tree :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
-
-(leaf dockerfile-mode :ensure t)
-
-(leaf yaml-mode :ensure t)
-
-(leaf jenkinsfile-mode
-  :el-get (jenkinsfile-mode
-           :url "https://github.com/spotify/dockerfile-mode.git")
-
-  :init
-  ;; jenkinsfile-modeに必要
-  (leaf groovy-mode :ensure t)
-  :mode "^Jenkinsfile\\'")
-
-(leaf python
-  :init
-  (defun python-shell-send-region-or-line ()
-    "Call REPL with active region or current line."
-    (interactive) (call-with-region-or-line #'python-shell-send-region))
-
-  (leaf python
-    :defun python-shell-send-region
-    :hook ((python-mode-hook
-            . (lambda ()
-                (setq-local company-backends
-                            '((company-jedi :with company-yasnippet)
-                              ;; string内で補完する
-                              company-yasnippet
-                              company-files))))
-           (inferior-python-mode-hook
-            . (lambda ()
-                (setq-local company-backends
-                            '((company-capf
-                               :with company-dabbrev-code company-yasnippet)
-                              company-files)))))
-    ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
-    ;; 必要なときにだけflycheck-select-checkerで利用する
-    ;; :hook (python-mode-hook
-    ;;        . (lambda () (setq-local flycheck-checker 'python-mypy))))
-    :bind (:python-mode-map
-           ("C-c C-r" . python-shell-send-region-or-line)
-           ("<backtab>" . python-indent-shift-left))
-    :custom
-    (python-shell-interpreter . "python3")
-    (python-indent-offset . 4)
-    :config
-    (require 'smartparens-python))
-
-  :init
-  (leaf jedi-core :ensure t
-    :hook (python-mode-hook . jedi:setup)
-    ;; 関数の引数の情報が便利なので、ミニバッファに表示する
-    :custom ((jedi:tooltip-method . nil)
-             (jedi:use-shortcuts . t) ; M-,/M-.にjediを使う
-             (jedi:environment-root . "python3-default")))
-
-  ;; pipでvirtualenvを入れておく
-  ;; Ubuntu bionicのpythonは2.7なので、予め以下コマンドでPython3の環境を作る
-  ;; Ubuntu focalではpython3なので必要ない
-  ;;   virtualenv -p python3 .python-environment/python3-default
-  ;; その後、初回起動時にjedi:install-serverする
-  ;; 必要に応じて補完したいライブラリを、activateしてpip installする
-  ;;   source ~/.emacs.d/.python-environments/python3-default/bin/activate
-  ;;   pip install -r ~/.emacs.d/requirements.txt
-  (leaf company-jedi :ensure t)
-
-  ;; pipでautopep8をいれておく
-  (leaf py-autopep8 :ensure t
-    :if (executable-find "autopep8")
-    :hook (python-mode-hook . py-autopep8-enable-on-save))
-
-  (leaf highlight-indentation :ensure t
-    :diminish highlight-indentation-mode
-    ;; インデントに意味のあるPythonでとりあえず使う
-    :hook (python-mode-hook . highlight-indentation-mode)))
 
 (leaf perspective :ensure t
   ;; 1つめのEmacsだけperspectiveをload/saveする
@@ -1037,14 +1074,6 @@
   (persp-state-default-file . "~/.emacs.d/.perspective")
   :config
   (persp-mode t))
-
-(leaf hl-line+
-  :el-get (hl-line+
-           :url "https://github.com/emacsmirror/hl-line-plus.git")
-  :defun (toggle-hl-line-when-idle hl-line-when-idle-interval)
-  :config
-  (toggle-hl-line-when-idle 1)
-  (hl-line-when-idle-interval 4))
 
 (leaf rebecca-theme :ensure t)
 
@@ -1074,6 +1103,8 @@
 
   (leaf imenu-anywhere :ensure t
     :bind ("C-." . ivy-imenu-anywhere)))
+
+;;; Emacs default (not package.el)
 
 (leaf dired
   :defun (dired-various-sort-change reload-current-dired-buffer)
@@ -1215,25 +1246,6 @@ at point."
       (counsel-find-file default-directory)))
   :bind (("C-x C-b" . ibuffer)
          (:ibuffer-mode-map ("C-x C-f" . ibuffer-find-file-by-counsel))))
-
-(leaf whitespace :require t
-  :diminish global-whitespace-mode
-  :defvar whitespace-line-column
-  :custom
-  ;; 空白などの可視化、対象はタブ文字、80文字超え部、行末の空白、全角スペース
-  (whitespace-style . '(face tabs lines-tail trailing spaces empty))
-  ;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
-  (whitespace-action . '(auto-cleanup))
-  ;; spacesの対象は全角スペースのみ
-  (whitespace-space-regexp . "\\(　+\\)")
-  :config
-  (global-whitespace-mode t) ;; white spaceをオン
-  ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
-  :hook ((java-mode-hook . (lambda () (setq whitespace-line-column 100)))
-         (change-major-mode-hook
-          . (lambda () (setq whitespace-line-column 80)))
-         (dired-mode-hook
-          . (lambda () (setq-local truncate-partial-width-windows t)))))
 
 (leaf winner
   :config
