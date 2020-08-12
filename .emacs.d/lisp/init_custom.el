@@ -16,13 +16,9 @@
 
 ;;; ウィンドウについての設定
 (setq default-frame-alist
-      (append (list
-               '(top . 0) ; 起動時の表示位置（上から）
-               '(left . 0) ; 起動時の表示位置（左から）
-               '(width . 194) ; 起動時のサイズ（幅）
-               '(height . 47) ; 起動時のサイズ（縦）
-               )
-              default-frame-alist))
+      ;; 起動時の表示位置とサイズ。上から、左から、幅、高さの順
+      (append (list '(top . 0) '(left . 0) '(width . 194) '(height . 47))
+              default-frame-alist)))
 
 ;;; フォント設定
 (if window-system
