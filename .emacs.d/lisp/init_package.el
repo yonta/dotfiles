@@ -757,7 +757,9 @@
   :init
   (leaf projectile :ensure t
     :diminish projectile-mode
-    :bind (:projectile-mode-map ("C-c C-f" . projectile-find-file))
+    :bind (:projectile-mode-map
+           ("C-c C-f" . projectile-find-file)
+           ("C-c b" . projectile-switch-to-buffer))
     :custom
     (projectile-completion-system . 'ivy)
     :config
