@@ -863,7 +863,7 @@
 
   :hook (shell-mode-hook . (lambda ()
                              ;; SHELL で ^M が付く場合は ^M を削除する
-                             (set-buffer-process-coding-system
+                             (set-process-coding-system
                               'undecided-dos 'sjis-unix))))
 
 ;; ImageMagickをaptでいれておく
