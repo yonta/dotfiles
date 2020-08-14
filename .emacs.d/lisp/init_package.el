@@ -487,6 +487,10 @@
     :hook (web-mode-hook . htmlbeautifier-format-on-save-mode)
     :custom (htmlbeautifier-keep-blank-lines . 1))
 
+  (leaf erblint :ensure t
+    :custom
+    (erblint-check-command . "erblint --lint-all"))
+
   (leaf company-bootstrap
     :defun company-bootstrap
     :el-get (company-bootstrap
