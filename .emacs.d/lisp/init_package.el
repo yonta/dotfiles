@@ -136,13 +136,10 @@
     (defun eval-region-or-line ()
       "Eval active region or current line."
       (interactive) (call-with-region-or-line #'eval-region))
-    :hook (emacs-lisp-mode-hook
-           . (lambda ()
-               (setq-local company-backends
-                           '((company-capf
-                              :with company-dabbrev-code company-yasnippet)
-                             company-files))))
-    :bind ((:lisp-mode-shared-map ("C-c C-r" . eval-region-or-line))))
+    :bind ((:lisp-mode-shared-map ("C-c C-r" . eval-region-or-line)))
+    :config
+    (add-to-list 'company-backends
+                 '(company-capf :with company-dabbrev-code company-yasnippet)))
 
   (leaf eldoc :diminish eldoc-mode)
 
@@ -171,14 +168,10 @@
     (defun my-c-mode-hook ()
       "Setting for c-mode."
       (c-set-style "k&r")
-      (require 'smartparens-c)
-      (setq-local company-backends
-                  '((company-clang
-                     :with
-                     ;; company-c-headers
-                     company-dabbrev-code company-yasnippet)
-                    company-files)))
+      (require 'smartparens-c))
     :custom
+    (add-to-list 'company-backends
+                 '(company-clang :with company-dabbrev-code company-yasnippet))
     (c-basic-offset . 2)
     (tab-width . c-basic-offset)
     (indent-tabs-mode . nil))
@@ -191,14 +184,11 @@
       (setq-local flycheck-gcc-language-standard "c++11")
       (setq-local flycheck-clang-language-standard "c++11")
       (require 'smartparens-c)
-      (c-set-style "k&r")
-      (setq-local company-backends
-                  '((company-clang
-                     :with
-                     ;; company-c-headers
-                     company-dabbrev-code company-yasnippet)
-                    company-files)))
+      (c-set-style "k&r"))
     :custom
+    (add-to-list 'company-backends
+                 '(company-clang ;; company-c-headers
+                   :with company-dabbrev-code company-yasnippet))
     (c-basic-offset . 2)
     (tab-width . c-basic-offset)
     (indent-tabs-mode . nil))
@@ -281,6 +271,11 @@
     ;; MLtonのbasisを除き、SMLのbasisを使う
     (company-mlton-basis-file
      . "~/.emacs.d/el-get/company-mlton/sml-basis-lib.basis")
+    :config
+    (add-to-list 'company-backends
+                 '(company-mlton-keyword
+                   company-mlton-basis
+                   :with company-dabbrev-code company-yasnippet))
     :hook
     (sml-mode-hook . company-mlton-basis-autodetect))
 
@@ -312,12 +307,7 @@
   (defun sml-set-company-settings ()
     "Set company settings for SML mode."
     (setq-local completion-ignore-case nil)
-    (setq-local company-minimum-prefix-length 3)
-    (setq-local company-backends
-                '((company-mlton-keyword
-                   company-mlton-basis
-                   :with company-dabbrev-code company-yasnippet)
-                  company-files)))
+    (setq-local company-minimum-prefix-length 3))
   :custom
   (sml-indent-level . 2)
   (sml-indent-args . 2)
@@ -339,19 +329,6 @@
 
   (leaf python
     :defun python-shell-send-region
-    :hook ((python-mode-hook
-            . (lambda ()
-                (setq-local company-backends
-                            '((company-jedi :with company-yasnippet)
-                              ;; string内で補完する
-                              company-yasnippet
-                              company-files))))
-           (inferior-python-mode-hook
-            . (lambda ()
-                (setq-local company-backends
-                            '((company-capf
-                               :with company-dabbrev-code company-yasnippet)
-                              company-files)))))
     ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
     ;; 必要なときにだけflycheck-select-checkerで利用する
     ;; :hook (python-mode-hook
@@ -363,6 +340,8 @@
     (python-shell-interpreter . "python3")
     (python-indent-offset . 4)
     :config
+    (add-to-list 'company-backends
+                 '(company-jedi :with company-dabbrev-code company-yasnippet))
     (require 'smartparens-python))
 
   :init
@@ -501,7 +480,8 @@
     :after company
     :config
     (add-to-list 'company-backends
-                 '(company-web-html company-dabbrev-code company-bootstrap)))
+                 '(company-web-html
+                   :with company-dabbrev-code company-bootstrap)))
 
   (leaf css-mode
     :custom
