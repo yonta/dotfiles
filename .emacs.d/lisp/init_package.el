@@ -829,6 +829,8 @@
   (leaf sh-script
     :config
     (unbind-key "C-c C-d" sh-mode-map)
+    :hook (sh-mode-hook
+           . (lambda () (setq-local flycheck-checker 'sh-posix-bash)))
     :bind (:sh-mode-map ("C-c C-p" . sh-cd-here)))
 
   (autoload 'bash-completion-dynamic-complete "bash-completion"
