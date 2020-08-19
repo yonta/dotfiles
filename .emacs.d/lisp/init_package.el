@@ -542,7 +542,8 @@
   (leaf tide :ensure t
     :diminish tide-mode
     :hook ((typescript-mode-hook . tide-setup)
-           (tide-mode-hook . tide-hl-identifier-mode)))
+           (tide-mode-hook . tide-hl-identifier-mode))
+    :bind ("C-c C-d" . tide-documentation-at-point))
 
   (leaf prettier-js :ensure t
     :diminish prettier-js-mode
@@ -729,7 +730,8 @@
        (" *undo-tree*")
        ("*Help*")
        ("*xref*")
-       ("*Backtrace*")))
+       ("*Backtrace*")
+       ("*tide-documentation*")))
   :config
   (popwin-mode 1))
 
