@@ -1,5 +1,8 @@
 # Emacs Quickrun
 qr_*
 
-#ignore thumbnails created by windows
+# ignore thumbnails created by windows
 Thumbs.db
+
+# Hivemind
+Procfile*
