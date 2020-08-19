@@ -22,6 +22,7 @@
         diffw = diff --color-words
         pushf = push --force-with-lease
         blames = blame -s
+        cp = cherry-pick
 [core]
         editor = emacsclient
         excludesfile = ~/.gitignore_global
