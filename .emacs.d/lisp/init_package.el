@@ -528,9 +528,13 @@
     :defvar (flycheck-checker
              flycheck-check-syntax-automatically
              flycheck-idle-change-delay)
+    :defun (flycheck-add-next-checker flycheck-remove-next-checker)
     :hook (typescript-mode-hook
            . (lambda ()
-               (setq-local flycheck-checker 'javascript-eslint)
+               (flycheck-remove-next-checker
+                'typescript-tide 'typescript-tslint)
+               (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
+               (setq-local flycheck-checker 'typescript-tide)
                (setq-local flycheck-check-syntax-automatically
                            '(save mode-enabled))))
     :custom
