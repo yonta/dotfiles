@@ -726,6 +726,7 @@
        (completion-list-mode :noselect t) ;; 全completionを対象
        ("*Warnings*")
        (" *auto-async-byte-compile*")
+       ("*Compile-Log*")
        ("*Kill Ring*")
        (" *undo-tree*")
        ("*Help*")
