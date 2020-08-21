@@ -750,7 +750,8 @@
     :diminish projectile-mode
     :bind (:projectile-mode-map
            ("C-c C-f" . projectile-find-file)
-           ("C-c b" . projectile-switch-to-buffer))
+           ("C-c b" . projectile-switch-to-buffer)
+           ("C-c C-x k" . projectile-kill-buffers))
     :custom
     (projectile-completion-system . 'ivy)
     :config
