@@ -64,6 +64,10 @@
  '(web-mode-symbol-face ((t (:foreground "coral2"))))
  '(web-mode-current-element-highlight-face ((t (:foreground "gray10" :background "light sky blue"))))
  '(web-mode-current-column-highlight-face ((t (:inherit (whitespace-trailing)))))
- '(highlight-indentation-face ((t (:inherit (whitespace-trailing))))))
+ '(highlight-indentation-face ((t (:inherit (whitespace-trailing)))))
+ ;; mode-lineから算出
+ '(flycheck-color-mode-line-error-face ((t (:background "#fa8d87"))))
+ '(flycheck-color-mode-line-warning-face ((t (:background "#fad987"))))
+ '(flycheck-color-mode-line-running-face ((t (:foreground "#666137")))))
 
 (provide-theme 'original)

@@ -50,6 +50,8 @@
  '(git-gutter:modified ((t (:inherit default :foreground "royal blue" :weight bold))))
  '(whitespace-empty ((t (:background "#383a62" :foreground "firebrick"))))
  '(flycheck-error ((t (:background "maroon" :underline (:color "Red1" :style wave)))))
- '(smerge-base ((t (:background "#606000")))))
+ '(smerge-base ((t (:background "#606000"))))
+ '(flycheck-color-mode-line-error-face ((t (:background "#993333"))))
+ '(flycheck-color-mode-line-warning-face ((t (:background "#826831")))))
 
 (provide-theme 'rebecca-custom)

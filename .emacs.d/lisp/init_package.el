@@ -125,6 +125,10 @@
     :config
     (flycheck-pos-tip-mode))
 
+  (leaf flycheck-color-mode-line :ensure t
+    :after flycheck
+    :hook (flycheck-mode-hook . flycheck-color-mode-line-mode))
+
   (leaf flycheck-ocaml :ensure t))
 
 ;;; MODE
