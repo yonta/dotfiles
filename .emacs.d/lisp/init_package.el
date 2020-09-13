@@ -1055,24 +1055,41 @@
 (leaf undo-tree :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
 
-(leaf perspective :ensure t
-  ;; 1つめのEmacsだけperspectiveをload/saveする
-  :if (string-equal
-       (shell-command-to-string
-        "ps ax | grep ' emacs' | grep -c -v 'grep' | grep '1'")
-       "1\n")
-  :if window-system
-  :bind* (("M-<right>" . persp-next)
-          ("M-<left>" . persp-prev))
-  :hook ((kill-emacs-hook . persp-state-save)
-         (emacs-startup-hook
-          . (lambda () (persp-state-load "~/.emacs.d/.perspective"))))
-  :custom
-  (persp-initial-frame-name . "el")
-  (persp-modestring-dividers . '("" "" "|"))
-  (persp-state-default-file . "~/.emacs.d/.perspective")
-  :config
-  (persp-mode t))
+(leaf persp-mode
+  :init
+  (leaf persp-mode :ensure t
+    :defun get-current-persp persp-contain-buffer-p
+    :defvar ivy-sort-functions-alist
+    :bind* (("M-<right>" . persp-prev)
+            ("M-<left>" . persp-next))
+    :custom
+    (persp-save-dir . "~/.emacs.d/.persp-confs/")
+    (persp-auto-save-persps-to-their-file-before-kill . t)
+    (persp-auto-save-num-of-backups . 5)
+    (persp-kill-foreign-buffer-behaviour . nil)
+    `(persp-keymap-prefix . ,(kbd "C-x x"))
+    :init
+    (persp-mode 1)
+    :config
+    ;; counsel-switch-bufferで現ワークスペースのbufferのみを選択肢とする
+    ;; 参考：https://gist.github.com/Bad-ptr/1aca1ec54c3bdb2ee80996eb2b68ad2d#file-persp-ivy-el
+    (eval-after-load 'ivy
+      '(progn
+         (add-hook 'ivy-ignore-buffers
+                   #'(lambda (b)
+                       (when persp-mode
+                         (let ((persp (get-current-persp)))
+                           (if persp
+                               (not (persp-contain-buffer-p b persp))
+                             nil)))))
+         (setq ivy-sort-functions-alist
+               (append ivy-sort-functions-alist
+                       '((persp-kill-buffer   . nil)
+                         (persp-remove-buffer . nil)
+                         (persp-add-buffer    . nil)
+                         (persp-switch        . nil)
+                         (persp-window-switch . nil)
+                         (persp-frame-switch  . nil))))))))
 
 (leaf rebecca-theme :ensure t)
 
@@ -1355,6 +1372,10 @@ at point."
 
 (leaf newcomment
   :bind ("C-;" . comment-line))
+
+(leaf saveplace
+  :init
+  (save-place-mode 1))
 
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく

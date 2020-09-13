@@ -21,4 +21,6 @@
 .emacs.d/custom.el*
 .emacs.d/.perspective
 .emacs.d/projectile-*
+.emacs.d/places
+.emacs.d/.persp-confs/*
 flycheck_*.el
