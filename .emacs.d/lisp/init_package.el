@@ -669,6 +669,7 @@
     :hook (prog-mode-hook . highlight-parentheses-mode)))
 
 (leaf highlight
+  :init
   (leaf auto-highlight-symbol :ensure t
     :leaf-defer nil
     :diminish auto-highlight-symbol-mode
