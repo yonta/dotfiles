@@ -1104,6 +1104,12 @@
   (leaf imenu-anywhere :ensure t
     :bind ("C-." . ivy-imenu-anywhere)))
 
+(leaf buffer-move :ensure t
+  :bind* (("C-S-h" . buf-move-left)
+          ("C-S-j" . buf-move-down)
+          ("C-S-k" . buf-move-up)
+          ("C-S-l" . buf-move-right)))
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
