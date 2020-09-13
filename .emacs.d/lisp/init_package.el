@@ -992,11 +992,8 @@
     (require 'avy-migemo-e.g.swiper)
     (require 'avy-migemo-e.g.counsel))
 
-  (leaf counsel-fd ;; :require t
+  (leaf counsel-fd :ensure t
     :if (executable-find "fd")
-    :el-get (counsel-fd
-             :url "https://github.com/yonta/counsel-fd.git"
-             :branch "add-autoload")
     :bind ("C-c C-f" . counsel-fd-file-jump)))
 
 (leaf dumb-jump :ensure t
