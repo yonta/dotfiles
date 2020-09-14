@@ -7,6 +7,9 @@
 
 ;;; Code:
 
+;; パッケージの全てをclからcl-libに移行しきれないので警告を無視する
+(with-no-warnings (require 'cl))
+
 (require 'package)
 ;; パッケージアーカイブの順番は関係ない。
 ;; 優先度はバージョン番号が大きい方が優先されるため、
