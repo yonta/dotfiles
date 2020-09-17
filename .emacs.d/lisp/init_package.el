@@ -1378,6 +1378,12 @@ at point."
   :init
   (save-place-mode 1))
 
+(leaf autorevert
+  :global-minor-mode global-auto-revert-mode
+  :custom
+  (auto-revert-interval . 5)
+  (auto-revert-check-vc-info . t))
+
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく
 (leaf browse-url
