@@ -50,6 +50,7 @@
   :init
   (leaf company :ensure t
     :defvar (company-mode-map company-backends)
+    :global-minor-mode global-company-mode
     :custom
     (company-idle-delay . 0)
     (company-minimum-prefix-length . 2)
@@ -64,7 +65,6 @@
     :config
     (setq completion-ignore-case t)
     (bind-key [remap completion-at-point] #'company-complete company-mode-map)
-    :hook (after-init-hook . global-company-mode)
     :bind* ("C-M-i" . company-complete)
     :bind ((:company-active-map
             ("C-n" . company-select-next)
@@ -87,12 +87,12 @@
     (company-prescient-mode 1))
 
   (leaf yasnippet :ensure t
-    :diminish yas-minor-mode
     :defvar yas-minor-mode-map
+    :global-minor-mode yas-global-mode
+    :diminish yas-minor-mode
     :init
     (leaf yasnippet-snippets :ensure t)
     :config
-    (yas-global-mode 1)
     ;; yas-expandは使わず、companyからyasを使う。
     (unbind-key "<tab>" yas-minor-mode-map)
     (unbind-key "TAB" yas-minor-mode-map)
@@ -106,8 +106,7 @@
   :init
   (leaf flycheck :ensure t
     :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
-    :init
-    (global-flycheck-mode)
+    :global-minor-mode global-flycheck-mode
     :custom
     (flycheck-python-flake8-executable . "flake8")
     (flycheck-checker-error-threshold . 250)
@@ -599,8 +598,9 @@
 ;;; Face
 
 (leaf whitespace :require t
-  :diminish global-whitespace-mode
   :defvar whitespace-line-column
+  :global-minor-mode global-whitespace-mode
+  :diminish global-whitespace-mode
   :custom
   ;; 空白などの可視化、対象はタブ文字、80文字超え部、行末の空白、全角スペース
   (whitespace-style . '(face tabs lines-tail trailing spaces empty))
@@ -608,8 +608,6 @@
   (whitespace-action . '(auto-cleanup))
   ;; spacesの対象は全角スペースのみ
   (whitespace-space-regexp . "\\(　+\\)")
-  :config
-  (global-whitespace-mode t) ;; white spaceをオン
   ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
   :hook ((java-mode-hook . (lambda () (setq whitespace-line-column 100)))
          (change-major-mode-hook
@@ -621,10 +619,10 @@
   :init
   (eval-when-compile (require 'smartparens)) ; sp-with-modesマクロの読み込み
   (leaf smartparens :ensure t
-    :diminish smartparens-mode
     :defun sp-local-pair
+    :global-minor-mode smartparens-global-mode
+    :diminish smartparens-mode
     :config
-    (smartparens-global-mode t)
     ;; 一部のモードでは'での補完を行わない
     (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
     (sp-local-pair 'emacs-lisp-mode "`" "'")
@@ -675,12 +673,12 @@
   :init
   (leaf auto-highlight-symbol :ensure t
     :leaf-defer nil
-    :diminish auto-highlight-symbol-mode
     :defvar ahs-modes
+    :global-minor-mode global-auto-highlight-symbol-mode
+    :diminish auto-highlight-symbol-mode
     :custom
     (ahs-default-range . 'ahs-range-whole-buffer)
     :config
-    (global-auto-highlight-symbol-mode t)
     (push 'sml-mode ahs-modes)
     :bind (("M-<up>" . ahs-backward)
            ("M-<down>" . ahs-forward)))
@@ -699,9 +697,8 @@
     (hl-line-when-idle-interval 4)))
 
 (leaf git-gutter-fringe :ensure t :require t
+  :global-minor-mode global-git-gutter-mode
   :diminish git-gutter-mode
-  :init
-  (global-git-gutter-mode)
   :config
   (eval-when-compile (require 'fringe-helper))
   (fringe-helper-define 'git-gutter-fr:modified nil
@@ -751,15 +748,14 @@
 (leaf projectile
   :init
   (leaf projectile :ensure t
+    :global-minor-mode projectile-mode
     :diminish projectile-mode
     :bind (:projectile-mode-map
            ("C-c C-f" . projectile-find-file)
            ("C-c b" . projectile-switch-to-buffer)
            ("C-c C-x k" . projectile-kill-buffers))
     :custom
-    (projectile-completion-system . 'ivy)
-    :config
-    (projectile-mode 1))
+    (projectile-completion-system . 'ivy))
 
   (leaf ripgrep :ensure t ; projectile-ripgrepの依存関係なので使う
     :bind ("C-c f" . ripgrep-regexp))
@@ -770,9 +766,8 @@
            ("C-c f" . projectile-ripgrep)))
 
   (leaf projectile-rails :ensure t
-    :diminish projectile-rails-mode
-    :config
-    (projectile-rails-global-mode)))
+    :global-minor-mode projectile-rails-global-mode
+    :diminish projectile-rails-mode))
 
 (leaf google-translate :ensure t
   :config
@@ -1281,14 +1276,13 @@ at point."
   :init
   (leaf display-line-numbers
     :if (version<= "26" emacs-version) ; Emacs26以降
-    :init
-    (global-display-line-numbers-mode 1))
+    :global-minor-mode global-display-line-numbers-mode)
 
   (leaf linum
     :if (version< emacs-version "26") ; Emacs25以下
     :defvar linum-format
+    :global-minor-mode global-linum-mode
     :init
-    (global-linum-mode 1)
     (setq linum-format "%4d ")))
 
 (leaf autoinsert
@@ -1344,9 +1338,8 @@ at point."
   (leaf recentf-ext :ensure t :require t))
 
 (leaf subword
-  :diminish subword-mode
-  :config
-  (global-subword-mode 1))
+  :global-minor-mode global-subword-mode
+  :diminish subword-mode)
 
 (leaf windmove
   :config
