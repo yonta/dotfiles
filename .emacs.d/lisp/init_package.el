@@ -1096,12 +1096,17 @@
 
 (leaf rebecca-theme :ensure t)
 
-(leaf mozc :ensure t
-  :custom
-  (default-input-method . "japanese-mozc")
-  :config
-  (set-language-environment "Japanese")
-  (prefer-coding-system 'utf-8))
+(leaf mozc
+  :init
+  (leaf mozc :ensure t
+    :config
+    (set-language-environment "Japanese")
+    (prefer-coding-system 'utf-8))
+
+  (leaf mozc-popup :ensure t :require t
+    :after mozc
+    :custom
+    (mozc-candidate-style . 'popup)))
 
 (leaf keyfreq :ensure t
   :config
