@@ -1098,7 +1098,20 @@
 
 (leaf mozc
   :init
+  ;; 予め${HOME}/bin/mozc_emacs_helperを用意するか、
+  ;; aptでemacs-mozc-binを入れておく。
+  ;; 参考: https://w.atwiki.jp/ntemacs/pages/61.html
+  ;;       https://github.com/smzht/mozc_emacs_helper
   (leaf mozc :ensure t
+    :if (executable-find "mozc_emacs_helper")
+    :custom
+    (default-input-method . "japanese-mozc")
+    (mozc-leim-title . "[も]")
+    ;; WindowsのGoogle日本語入力を使う
+    :advice (:after mozc-session-execute-command
+                    (lambda (&rest args)
+                      (when (eq (nth 0 args) 'CreateSession)
+                        (mozc-session-sendkey '(Hankaku/Zenkaku)))))
     :config
     (set-language-environment "Japanese")
     (prefer-coding-system 'utf-8))
