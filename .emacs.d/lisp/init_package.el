@@ -1061,9 +1061,10 @@
     :custom
     (persp-save-dir . "~/.emacs.d/.persp-confs/")
     (persp-auto-save-persps-to-their-file-before-kill . t)
-    (persp-auto-save-num-of-backups . 5)
+    (persp-auto-save-num-of-backups . 10)
     (persp-kill-foreign-buffer-behaviour . nil)
     `(persp-keymap-prefix . ,(kbd "C-x x"))
+    (persp-add-buffer-on-after-change-major-mode . t)
     :init
     (persp-mode 1)
     :config
