@@ -56,6 +56,8 @@
     (company-minimum-prefix-length . 2)
     (company-selection-wrap-around . t)
     (company-require-match . 'never)
+    (company-dabbrev-code-other-buffers . 'code)
+    (company-dabbrev-code-everywhere . t)
     (company-dabbrev-ignore-case . t)
     (company-dabbrev-code-ignore-case . t)
     (company-etags-ignore-case . t)
