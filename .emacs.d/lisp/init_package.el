@@ -179,10 +179,7 @@
       (require 'smartparens-c))
     :custom
     (add-to-list 'company-backends
-                 '(company-clang :with company-dabbrev-code company-yasnippet))
-    (c-basic-offset . 2)
-    (tab-width . c-basic-offset)
-    (indent-tabs-mode . nil))
+                 '(company-clang :with company-dabbrev-code company-yasnippet)))
 
   (leaf c++-mode
     :hook (c++-mode-hook . my-c++-mode-hook)
@@ -196,10 +193,7 @@
     :custom
     (add-to-list 'company-backends
                  '(company-clang ;; company-c-headers
-                   :with company-dabbrev-code company-yasnippet))
-    (c-basic-offset . 2)
-    (tab-width . c-basic-offset)
-    (indent-tabs-mode . nil))
+                   :with company-dabbrev-code company-yasnippet)))
 
   ;; "#ff0000"などに色をつける
   (leaf rainbow-mode :ensure t
@@ -594,7 +588,6 @@
 (leaf haxe-mode :ensure t
   :custom
   (tab-width . 4)
-  (indent-tabs-mode . nil)
   (fill-column . 80))
 
 (leaf proof-general :ensure t)
@@ -1390,6 +1383,10 @@ at point."
          ))
 
 (leaf indent
+  :init
+  ;; Cソースコードの変数だが、indentにまとめておく
+  (setq-default tab-width 2)
+  (setq-default indent-tabs-mode nil)
   :custom
   (standard-indent . 2))
 
