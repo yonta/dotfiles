@@ -42,7 +42,7 @@
 ;;; 設定ファイルの読み込み
 (mapc #'load
       '("init_util" "init_package" "init_display" "init_keybind"
-        "init_behavior" "init_mode" "init_custom"))
+        "init_behavior" "init_custom"))
 
 ;;; カスタム変数は別ファイルに保存する
 (setq custom-file "~/.emacs.d/custom.el")

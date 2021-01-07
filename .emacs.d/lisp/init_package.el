@@ -1406,6 +1406,10 @@ at point."
   (auto-revert-interval . 5)
   (auto-revert-check-vc-info . t))
 
+(leaf sticky-buffer
+  :bind*
+  ("C-c C-s" . sticky-buffer-mode))
+
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく
 (leaf browse-url
