@@ -11,6 +11,7 @@
         h = help
         co = checkout
         ci = commit -v
+        cif = commit -v --amend -C @
         st = status
         br = branch
         l = log --graph --date=format:'%Y/%m/%d(%a) %T %z'
