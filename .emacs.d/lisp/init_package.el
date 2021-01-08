@@ -390,7 +390,8 @@
            ("C-c p" . inf-ruby-console-auto))
     :custom
     ;; irbだとpromptが重複するため、Ruby REPLにpryを使う
-    (inf-ruby-default-implementation . "pry"))
+    (inf-ruby-default-implementation . "pry")
+    (inf-ruby-console-environment . "development"))
 
   ;; gemでrubocopを入れておく
   ;; gem install rubocop
@@ -407,30 +408,14 @@
   ;; gem install pry pry-doc
   (leaf robe :ensure t
     :if (executable-find "pry")
-    :defun robe-start
-    :defvar robe-running
+    :defun robe-start robe-running-p
     :diminish t
     :hook (ruby-mode-hook . robe-mode)
+           ;; robeはRuby REPLが必要
+    :hook (robe-mode-hook
+           . (lambda () (unless (robe-running-p) (funcall 'robe-start t))))
     :config
-    (push 'company-robe company-backends)
-    ;; robeはRuby REPLがないと動かない。
-    ;; 下記URLを参考にRuby REPL起動時にrobeを自動でスタートさせる
-    ;; https://github.com/dgutov/robe/issues/93#issuecomment-276224025
-    (defun my-robe-start ()
-      (interactive)
-      (unless robe-running (robe-start)))
-    (defadvice inf-ruby-console-auto (after inf-ruby-console-auto activate)
-      "Run `robe-start' after `inf-ruby-console-auto' started."
-      (my-robe-start))
-    (defadvice inf-ruby (after inf-ruby activate)
-      "Run `robe-start' after `inf-ruby' started."
-      (my-robe-start))
-    ;; ruby-mode起動時にRuby REPLを起動する
-    ;; (defun my-robe-auto-start ()
-    ;;   (unless robe-running
-    ;;     (call-interactively 'inf-ruby)))
-    ;; (add-hook 'enh-ruby-mode-hook #'my-robe-auto-start)
-    )
+    (push 'company-robe company-backends))
 
   (leaf rspec-mode :disabled t)
   (leaf ruby-block :disabled t)
