@@ -1278,8 +1278,7 @@ at point."
          (:ibuffer-mode-map ("C-x C-f" . ibuffer-find-file-by-counsel))))
 
 (leaf winner
-  :config
-  (winner-mode 1)
+  :global-minor-mode winner-mode
   :bind (("C-M-<left>" . winner-undo)
          ("C-M-<right>" . winner-redo)))
 
