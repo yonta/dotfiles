@@ -472,9 +472,8 @@
     :after company
     :config
     (add-to-list 'company-backends
-                 '(company-web-html
-                   :with company-bootstrap
-                   company-dabbrev-code company-dabbrev)))
+                 '(company-web-html company-bootstrap
+                   :with company-dabbrev-code company-dabbrev)))
 
   (leaf css-mode
     :custom
@@ -482,7 +481,7 @@
     :config
     (add-to-list 'company-backends
                  '(company-css
-                   :with  company-bootstrap
+                   :with company-bootstrap
                    company-dabbrev-code company-dabbrev))))
 
 (leaf javascript
