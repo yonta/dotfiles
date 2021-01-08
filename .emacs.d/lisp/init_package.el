@@ -1395,6 +1395,10 @@ at point."
   :bind*
   ("C-c C-s" . sticky-buffer-mode))
 
+(leaf files
+  :custom
+  (confirm-kill-emacs . 'y-or-n-p))
+
 ;;; WSLでのブラウザ設定
 ;; aptでubuntu-wslをいれておく
 (leaf browse-url
