@@ -415,7 +415,10 @@
     :hook (robe-mode-hook
            . (lambda () (unless (robe-running-p) (funcall 'robe-start t))))
     :config
-    (push 'company-robe company-backends))
+    (push 'company-robe company-backends)
+    :custom
+    ;; RubyのSymbolをdabbrev対象にする
+    (dabbrev-abbrev-skip-leading-regexp . ":"))
 
   (leaf rspec-mode :disabled t)
   (leaf ruby-block :disabled t)
