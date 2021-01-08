@@ -990,6 +990,7 @@
   :defvar dumb-jump-selector
   :config
   (setq dumb-jump-selector 'ivy)
+  :hook (xref-backend-functions . dumb-jump-xref-activate)
   :bind (("M-g o" . dumb-jump-go-other-window)
          ("M-g j" . dumb-jump-go)
          ("M-g i" . dumb-jump-go-prompt)))
