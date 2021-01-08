@@ -727,6 +727,7 @@
        ("*Kill Ring*")
        (" *undo-tree*")
        ("*Help*")
+       ("*robe-doc*")
        ("*xref*")
        ("*Backtrace*")
        ("*tide-documentation*")))
