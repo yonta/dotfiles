@@ -598,10 +598,9 @@
   (whitespace-action . '(auto-cleanup))
   ;; spacesの対象は全角スペースのみ
   (whitespace-space-regexp . "\\(　+\\)")
-  ;; java-modeではカラムオーバーの限界をデフォルトの80から100に変更する
-  :hook ((java-mode-hook . (lambda () (setq whitespace-line-column 100)))
-         (change-major-mode-hook
-          . (lambda () (setq whitespace-line-column 80)))
+  ;; java-mode/web-modeで1行の最大文字数を変更する
+  :hook ((java-mode-hook . (lambda () (setq-local whitespace-line-column 100)))
+         (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))
          (dired-mode-hook
           . (lambda () (setq-local truncate-partial-width-windows t)))))
 
