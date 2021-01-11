@@ -436,7 +436,6 @@
 (leaf html-css
   :init
   (leaf web-mode :ensure t
-    :defvar web-mode-map
     :mode "\\.html\\.erb\\'"
     :custom
     (web-mode-enable-comment-interpolation . t)
