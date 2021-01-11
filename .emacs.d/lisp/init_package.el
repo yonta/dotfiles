@@ -1089,6 +1089,10 @@
   ;;       https://github.com/smzht/mozc_emacs_helper
   (leaf mozc :ensure t
     :if (executable-find "mozc_emacs_helper")
+    ;; mozcモードで一部キーバインドが外れるので再設定
+    :bind (:mozc-mode-map
+           ("C-x C-s" . save-buffer)
+           ("C-x h" . mark-hole-buffer))
     :custom
     (default-input-method . "japanese-mozc")
     (mozc-leim-title . "[も]")
