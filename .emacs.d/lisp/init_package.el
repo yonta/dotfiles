@@ -384,10 +384,14 @@
 
   (leaf inf-ruby :ensure t
     :hook (ruby-mode-hook . inf-ruby-minor-mode)
-    :bind (:ruby-mode-map
-           :package ruby-mode
-           ("C-c C-p" . inf-ruby)
-           ("C-c p" . inf-ruby-console-auto))
+    :bind ((:ruby-mode-map
+            :package ruby-mode
+            ("C-c C-p" . inf-ruby)
+            ("C-c p" . inf-ruby-console-auto))
+           (:web-mode-map
+            :package web-mode
+            ("C-c C-p" . inf-ruby)
+            ("C-c p" . inf-ruby-console-auto)))
     :custom
     ;; irbだとpromptが重複するため、Ruby REPLにpryを使う
     (inf-ruby-default-implementation . "pry")
@@ -408,12 +412,14 @@
   ;; gem install pry pry-doc
   (leaf robe :ensure t
     :if (executable-find "pry")
-    :defun robe-start robe-running-p
+    ;; :defun robe-start robe-running-p
     :diminish t
     :hook (ruby-mode-hook . robe-mode)
-           ;; robeはRuby REPLが必要
-    :hook (robe-mode-hook
-           . (lambda () (unless (robe-running-p) (funcall 'robe-start t))))
+    ;; robeはRuby REPLが必要
+    ;; 自動robe-startが不安定なので一時オフにする
+    ;; :hook (robe-mode-hook
+    ;;        . (lambda () (unless (robe-running-p) (funcall 'robe-start t))))
+    :bind ("C-c @" . robe-start)
     :config
     (push 'company-robe company-backends)
     :custom
