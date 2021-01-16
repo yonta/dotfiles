@@ -717,6 +717,11 @@
 ;; アクティブかどうかでバッファーのモードラインの色を変える
 (leaf hiwin :ensure t)
 
+;; GitHubの絵文字をよく使うようなら有効にする
+(leaf emojify :ensure t :disabled t
+  :hook (after-init-hook . global-emojify-mode)
+  :custom (emojify-emoji-styles . (ascii github)))
+
 ;;; OTHER
 
 (leaf popwin :ensure t :require t
