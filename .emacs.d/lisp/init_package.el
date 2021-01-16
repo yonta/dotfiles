@@ -722,6 +722,12 @@
   :hook (after-init-hook . global-emojify-mode)
   :custom (emojify-emoji-styles . (ascii github)))
 
+(leaf tree-sitter
+  :init
+  (leaf tree-sitter :ensure t
+    :global-minor-mode global-tree-sitter-mode)
+  (leaf tree-sitter-langs :ensure t))
+
 ;;; OTHER
 
 (leaf popwin :ensure t :require t
