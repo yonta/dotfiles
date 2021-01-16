@@ -733,6 +733,7 @@
        ("*Kill Ring*")
        (" *undo-tree*")
        ("*Help*")
+       ("\\*helpful" :regexp t)
        ("*robe-doc*")
        ("*xref*")
        ("*Backtrace*")
@@ -933,7 +934,7 @@
             ("C-c C-SPC" . counsel-mark-ring))
     :bind (("<f1> f" . counsel-describe-function)
            ("<f1> v" . counsel-describe-variable)
-           ("C-c C-d" . counsel-describe-symbol)
+           ("C-c d" . counsel-describe-symbol)
            (:counsel-find-file-map
             ("<C-return>" . ivy-immediate-done) ;; C-M-jをよく忘れるので
             ("C-c <C-return>" . ivy-immediate-done)
@@ -988,7 +989,14 @@
 
   (leaf counsel-fd :ensure t
     :if (executable-find "fd")
-    :bind ("C-c C-f" . counsel-fd-file-jump)))
+    :bind ("C-c C-f" . counsel-fd-file-jump))
+
+  (leaf helpful :ensure t
+    :bind* ("<f1> k" . helpful-key)
+    :bind ("C-c C-d" . helpful-at-point)
+    :custom
+    ((counsel-describe-function-function . 'helpful-callable)
+     (counsel-describe-variable-function . 'helpful-variable))))
 
 (leaf dumb-jump :ensure t
   :defvar dumb-jump-selector
