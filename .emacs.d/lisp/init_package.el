@@ -140,11 +140,11 @@
 (leaf emacs-lisp
   :init
   (leaf elisp-mode
-    :config
-    (defun eval-region-or-line ()
+    :preface
+    (defun my-eval-region-or-line ()
       "Eval active region or current line."
       (interactive) (call-with-region-or-line #'eval-region))
-    :bind ((:lisp-mode-shared-map ("C-c C-r" . eval-region-or-line)))
+    :bind ((:lisp-mode-shared-map ("C-c C-r" . my-eval-region-or-line)))
     :config
     (add-to-list 'company-backends
                  '(company-capf :with company-dabbrev-code company-yasnippet)))
@@ -171,25 +171,25 @@
   :init
   (leaf c-mode
     :defvar c-basic-offset
-    :hook (c-mode-hook . my-c-mode-hook)
-    :init
+    :preface
     (defun my-c-mode-hook ()
       "Setting for c-mode."
       (c-set-style "k&r")
       (require 'smartparens-c))
+    :hook (c-mode-hook . my-c-mode-hook)
     :custom
     (add-to-list 'company-backends
                  '(company-clang :with company-dabbrev-code company-yasnippet)))
 
   (leaf c++-mode
-    :hook (c++-mode-hook . my-c++-mode-hook)
-    :init
+    :preface
     (defun my-c++-mode-hook ()
       "Setting for c++-mode."
       (setq-local flycheck-gcc-language-standard "c++11")
       (setq-local flycheck-clang-language-standard "c++11")
       (require 'smartparens-c)
       (c-set-style "k&r"))
+    :hook (c++-mode-hook . my-c++-mode-hook)
     :custom
     (add-to-list 'company-backends
                  '(company-clang ;; company-c-headers
@@ -250,19 +250,44 @@
 (leaf csv-mode :ensure t)
 
 (leaf sml-mode
-  :el-get (sml-mode
-           :url "https://github.com/yonta/sml-mode.git"
-           :branch "add-smlsharp")
-  :mode ("\\.smi\\'" "\\.ppg\\'")
-  :interpreter "smlsharp"
-  :defun (sml-prog-proc-send-region
-          sml-prog-proc-proc
-          sml-prog-proc-send-string
-          sml-prog-proc-send-region-by-string
-          sml-set-company-settings)
-  :defvar company-minimum-prefix-length
-
   :init
+  (leaf sml-mode
+    :el-get (sml-mode
+             :url "https://github.com/yonta/sml-mode.git"
+             :branch "add-smlsharp")
+    :defun (sml-prog-proc-proc
+            sml-prog-proc-send-string
+            my-sml-prog-proc-send-region-by-string)
+    :defvar company-minimum-prefix-length
+    :preface
+    (defun my-sml-prog-proc-send-region-by-string (begin end)
+      (interactive "r")
+      (let ((proc (sml-prog-proc-proc))
+            (code (buffer-substring begin end)))
+        (sml-prog-proc-send-string proc code)))
+    (defun my-sml-prog-proc-send-region-or-line ()
+      "Call REPL with active region or current line."
+      (interactive)
+      (call-with-region-or-line #'my-sml-prog-proc-send-region-by-string))
+    (defun my-sml-set-company-settings ()
+      "Set company settings for SML mode."
+      (setq-local completion-ignore-case nil)
+      (setq-local company-minimum-prefix-length 3))
+    :mode ("\\.smi\\'" "\\.ppg\\'")
+    :hook ((sml-mode-hook . my-sml-set-company-settings)
+           (inferior-sml-mode-hook . my-sml-set-company-settings))
+    :bind (:sml-mode-map
+           ("C-c C-r" . my-sml-prog-proc-send-region-or-line)
+           ("C-c C-p" . sml-run)
+           ("M-." . dumb-jump-go))
+    :interpreter "smlsharp"
+    :custom
+    (sml-indent-level . 2)
+    (sml-indent-args . 2)
+    ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
+    (sml-program-name . "smlsharp")
+    (sml-electric-pipe-mode . nil))
+
   (leaf company-mlton
     :el-get (company-mlton
              :url "https://github.com/yonta/company-mlton.git"
@@ -294,49 +319,22 @@
   (leaf sml-eldoc :disabled t
     :el-get (sml-eldoc
              :url "https://raw.githubusercontent.com/xuchunyang/emacs.d/master/lisp/sml-eldoc.el")
-    :hook (sml-mode-hook . sml-eldoc-turn-on))
-
-  :init
-  (defun sml-prog-proc-send-region-by-string (begin end)
-    (interactive "r")
-    (let ((proc (sml-prog-proc-proc))
-          (code (buffer-substring begin end)))
-      (sml-prog-proc-send-string proc code)))
-  (defun sml-prog-proc-send-region-or-line ()
-    "Call REPL with active region or current line."
-    (interactive)
-    (call-with-region-or-line #'sml-prog-proc-send-region-by-string))
-  (defun sml-set-company-settings ()
-    "Set company settings for SML mode."
-    (setq-local completion-ignore-case nil)
-    (setq-local company-minimum-prefix-length 3))
-  :custom
-  (sml-indent-level . 2)
-  (sml-indent-args . 2)
-  ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
-  (sml-program-name . "smlsharp")
-  (sml-electric-pipe-mode . nil)
-  :hook ((sml-mode-hook . sml-set-company-settings)
-         (inferior-sml-mode-hook . sml-set-company-settings))
-  :bind (:sml-mode-map
-         ("C-c C-r" . sml-prog-proc-send-region-or-line)
-         ("C-c C-p" . sml-run)
-         ("M-." . dumb-jump-go)))
+    :hook (sml-mode-hook . sml-eldoc-turn-on)))
 
 (leaf python
   :init
-  (defun python-shell-send-region-or-line ()
-    "Call REPL with active region or current line."
-    (interactive) (call-with-region-or-line #'python-shell-send-region))
-
   (leaf python
     :defun python-shell-send-region
+    :preface
+    (defun my-python-shell-send-region-or-line ()
+      "Call REPL with active region or current line."
+      (interactive) (call-with-region-or-line #'python-shell-send-region))
     ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
     ;; 必要なときにだけflycheck-select-checkerで利用する
     ;; :hook (python-mode-hook
     ;;        . (lambda () (setq-local flycheck-checker 'python-mypy))))
     :bind (:python-mode-map
-           ("C-c C-r" . python-shell-send-region-or-line)
+           ("C-c C-r" . my-python-shell-send-region-or-line)
            ("<backtab>" . python-indent-shift-left))
     :custom
     (python-shell-interpreter . "python3")
@@ -640,15 +638,10 @@
 
   (leaf rainbow-delimiters :ensure t
     :defvar rainbow-delimiters-max-face-count
-    :init
-
-    (leaf color  :require t
-      :after rainbow-delimiters
-      :defun color-saturate-name)
-
+    :preface
     ;; 白背景地には括弧の色をより強くする
     ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
-    (defun rainbow-delimiters-using-stronger-colors ()
+    (defun my-rainbow-delimiters-using-stronger-colors ()
       "Set delimiter to more strong color for white background."
       (if (string> (background-color-at-point) "#808080")
           (cl-loop
@@ -656,8 +649,12 @@
            (let ((face
                   (intern (format "rainbow-delimiters-depth-%d-face" index))))
              (cl-callf color-saturate-name (face-foreground face) 30)))))
-    :hook ((emacs-startup-hook . rainbow-delimiters-using-stronger-colors)
+    :hook ((emacs-startup-hook . my-rainbow-delimiters-using-stronger-colors)
            (prog-mode-hook . rainbow-delimiters-mode)))
+
+  (leaf color  :require t
+    :after rainbow-delimiters
+    :defun color-saturate-name)
 
   (leaf highlight-parentheses :ensure t
     :diminish highlight-parentheses-mode
@@ -1040,6 +1037,7 @@
   (leaf paradox :ensure t
     :init
     ;; paradox-enableを遅延するために、別コマンドにする
+    ;; これだけは`lpp'で即呼び出しするため、`my-'をつけない
     (defun list-packages-paradox ()
       "Call `list-packages' function with paradox initialization."
       (interactive)
@@ -1164,7 +1162,7 @@
 ;;; Emacs default (not package.el)
 
 (leaf dired
-  :defun (dired-various-sort-change reload-current-dired-buffer)
+  :defun (my-dired-various-sort-change my-reload-current-dired-buffer)
   :custom
   ;; dired-modeがlsコマンドに渡すオプションを設定する
   ;; l: 長い表示、dired-modeに必須のオプション
@@ -1184,7 +1182,7 @@
       ("v" . "version")
       ("t" . "date")
       (""  . "name")))
-  (defun dired-various-sort-change (sort-type-alist &optional prior-pair)
+  (defun my-dired-various-sort-change (sort-type-alist &optional prior-pair)
     "Dired various sort change by SORT-TYPE-ALIST and PRIOR-PAIR."
     (when (eq major-mode 'dired-mode)
       (let* (case-fold-search
@@ -1209,7 +1207,7 @@
               (concat "Dired by " (cdr opt-desc-pair)))
         (force-mode-line-update)
         (revert-buffer))))
-  (defun dired-various-sort-change-or-edit (&optional arg)
+  (defun my-dired-various-sort-change-or-edit (&optional arg)
     "Dired various sort change or edit by ARG."
     (interactive "P")
     (when dired-sort-inhibit
@@ -1217,16 +1215,16 @@
     (if arg
         (dired-sort-other
          (read-string "ls switches (must contain -l): " dired-actual-switches))
-      (dired-various-sort-change dired-various-sort-type)))
+      (my-dired-various-sort-change dired-various-sort-type)))
   ;; diredでディレクトリを移動してもバッファを新規に作成しない
-  (defun dired-my-advertised-find-file ()
+  (defun my-dired-advertised-find-file ()
     (interactive)
     (let ((kill-target (current-buffer))
           (check-file (dired-get-filename nil t)))
       (funcall #'dired-find-file)
       (if (file-directory-p check-file)
           (kill-buffer kill-target))))
-  (defun dired-my-up-directory (&optional other-window)
+  (defun my-dired-up-directory (&optional other-window)
     "Run dired on parent directory of current directory.
 Find the parent directory either in this buffer or another buffer.
 Creates a buffer if necessary."
@@ -1245,24 +1243,24 @@ Creates a buffer if necessary."
                 (dired up))
               (dired-goto-file dir))))))
   ;; C-.でドットファイルの表示と非表示を切り替える
-  (defun reload-current-dired-buffer ()
+  (defun my-reload-current-dired-buffer ()
     "Reload current `dired-mode' buffer."
     (let* ((dir (dired-current-directory)))
       (progn (kill-buffer (current-buffer))
              (dired dir))))
-  (defun toggle-dired-listing-switches ()
+  (defun my-toggle-dired-listing-switches ()
     "Toggle `dired-mode' switch between with and without 'A' option to show or hide dot files."
     (interactive)
     (progn
       (if (string-match "[Aa]" dired-listing-switches)
           (setq dired-listing-switches "-lgGhF")
         (setq dired-listing-switches "-lgGhFA"))
-      (reload-current-dired-buffer)))
+      (my-reload-current-dired-buffer)))
   :bind (:dired-mode-map
-         ("s" . dired-various-sort-change-or-edit)
-         ("C-m" . dired-my-advertised-find-file)
-         ("^" . dired-my-up-directory)
-         ("C-." . toggle-dired-listing-switches)
+         ("s" . my-dired-various-sort-change-or-edit)
+         ("C-m" . my-dired-advertised-find-file)
+         ("^" . my-dired-up-directory)
+         ("C-." . my-toggle-dired-listing-switches)
          ("r" . wdired-change-to-wdired-mode)))
 
 (leaf help-mode
@@ -1290,7 +1288,7 @@ Creates a buffer if necessary."
                 (size-h 9 -1 :right) " " (mode 16 16 :left :elide) " "
                 filename-and-process)))
   ;; ibuffer-find-fileを使わずにcounselを使う
-  (defun ibuffer-find-file-by-counsel ()
+  (defun my-ibuffer-find-file-by-counsel ()
     "Like `counsel-find-file', but default to the directory of the buffer
 at point."
     (interactive)
@@ -1302,7 +1300,7 @@ at point."
                 default-directory))))
       (counsel-find-file default-directory)))
   :bind (("C-x C-b" . ibuffer)
-         (:ibuffer-mode-map ("C-x C-f" . ibuffer-find-file-by-counsel))))
+         (:ibuffer-mode-map ("C-x C-f" . my-ibuffer-find-file-by-counsel))))
 
 (leaf winner
   :global-minor-mode winner-mode
@@ -1341,7 +1339,7 @@ at point."
          (format "%s_H"
                  (upcase (file-name-sans-extension
                           (file-name-nondirectory buffer-file-name))))))))
-  (defun replace-template ()
+  (defun my-replace-template ()
     "Add template string to file."
     (mapc (lambda (template-replacement)
             (goto-char (point-min))
@@ -1356,11 +1354,11 @@ at point."
   (setq auto-insert-alist
         (nconc
          '(("Test\\.\\(cpp\\|cc\\|cxx\\)$" .
-            ["templateTest.cpp" replace-template])
-           ("\\.\\(cpp\\|cc\\|cxx\\)$" . ["template.cpp" replace-template])
-           ("\\.\\(hpp\\|hh\\|hxx\\)$" . ["template.hpp" replace-template])
-           ("\\.c$" . ["template.c" replace-template])
-           ("\\.ino$" . ["template.ino" replace-template]))
+            ["templateTest.cpp" my-replace-template])
+           ("\\.\\(cpp\\|cc\\|cxx\\)$" . ["template.cpp" my-replace-template])
+           ("\\.\\(hpp\\|hh\\|hxx\\)$" . ["template.hpp" my-replace-template])
+           ("\\.c$" . ["template.c" my-replace-template])
+           ("\\.ino$" . ["template.ino" my-replace-template]))
          auto-insert-alist)))
 
 (leaf recentf
