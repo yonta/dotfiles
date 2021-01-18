@@ -372,7 +372,11 @@
   (leaf highlight-indentation :ensure t
     :diminish highlight-indentation-mode
     ;; インデントに意味のあるPythonでとりあえず使う
-    :hook (python-mode-hook . highlight-indentation-mode)))
+    :hook (python-mode-hook . highlight-indentation-mode))
+
+  ;; pipでimportmagic3とepcをいれておく
+  (leaf importmagic :ensure t
+    :hook (python-mode-hook . importmagic-mode)))
 
 (leaf ruby
   :init
