@@ -985,6 +985,35 @@
     :config
     (ivy-prescient-mode 1))
 
+  (leaf s :ensure t)
+
+  (eval-and-compile (require 's))
+  ;; cmigemoをいれておく
+  ;; https://github.com/koron/cmigemo
+  (leaf migemo :ensure t :require t
+    :defun migemo-init migemo-get-pattern
+    :defvar ivy-re-builders-alist
+    :preface
+    ;; swiperでもmigemoを使う
+    ;; 参考: https://www.yewton.net/2020/05/21/migemo-ivy/
+    (defun my-ivy-migemo-re-builder (str)
+      (let* ((sep " \\|\\^\\|\\.\\|\\*")
+             (splitted
+              (--map (s-join "" it)
+                     (--partition-by (s-matches-p " \\|\\^\\|\\.\\|\\*" it)
+                                     (s-split "" str t)))))
+        (s-join "" (--map (cond ((s-equals? it " ") ".*?")
+                                ((s-matches? sep it) it)
+                                (t (migemo-get-pattern it)))
+                          splitted))))
+    :if (executable-find "cmigemo")
+    :custom
+    (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
+    :config
+    (migemo-init)
+    (setq ivy-re-builders-alist '((t . ivy--regex-plus)
+                                  (swiper . my-ivy-migemo-re-builder))))
+
   (leaf counsel-fd :ensure t
     :if (executable-find "fd")
     :bind ("C-c C-f" . counsel-fd-file-jump))
