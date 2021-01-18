@@ -735,6 +735,22 @@
     :global-minor-mode global-tree-sitter-mode)
   (leaf tree-sitter-langs :ensure t))
 
+(leaf all-the-icons
+  :init
+  ;; 初回に`M-x all-the-icons-install-fonts'を実行する
+  (leaf all-the-icons :ensure t)
+
+  (leaf all-the-icons-dired :ensure t
+    :hook (dired-mode-hook . all-the-icons-dired-mode))
+
+  (leaf all-the-icons-ibuffer :ensure t
+    :init
+    (all-the-icons-ibuffer-mode 1))
+
+  (leaf all-the-icons-ivy-rich :ensure t
+    :init
+    (all-the-icons-ivy-rich-mode 1)))
+
 ;;; OTHER
 
 (leaf popwin :ensure t :require t
