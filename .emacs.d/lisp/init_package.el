@@ -1183,10 +1183,12 @@
   ;; aptでaspell-enをいれておく
   (leaf flyspell
     :diminish flyspell-mode
-    :hook ((text-mode-hook . flyspell-mode)
-           (prog-mode-hook . flyspell-prog-mode))
-    :init
-    (defvar ispell-local-dictionary "en_US"))
+    :hook (text-mode-hook . flyspell-mode)
+    :custom
+    (ispell-local-dictionary . "en_US")
+    :config
+    ;; 日本語まじりをチェック対象外にする
+    (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
 
   (leaf flyspell-popup :ensure t
     :hook (flyspell-mode-hook . flyspell-popup-auto-correct-mode)))
