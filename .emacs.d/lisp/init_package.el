@@ -1159,6 +1159,19 @@
           ("C-S-k" . buf-move-up)
           ("C-S-l" . buf-move-right)))
 
+(leaf flyspell
+  :init
+  ;; aptでaspell-enをいれておく
+  (leaf flyspell
+    :diminish flyspell-mode
+    :hook ((text-mode-hook . flyspell-mode)
+           (prog-mode-hook . flyspell-prog-mode))
+    :init
+    (defvar ispell-local-dictionary "en_US"))
+
+  (leaf flyspell-popup :ensure t
+    :hook (flyspell-mode-hook . flyspell-popup-auto-correct-mode)))
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
