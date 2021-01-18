@@ -1170,7 +1170,7 @@
     (imenu-list-focus-after-activation . t))
 
   (leaf imenu-anywhere :ensure t
-    :bind ("C-." . ivy-imenu-anywhere)))
+    :bind* ("C-." . ivy-imenu-anywhere)))
 
 (leaf buffer-move :ensure t
   :bind* (("C-S-h" . buf-move-left)
