@@ -1450,7 +1450,7 @@ at point."
   (standard-indent . 2))
 
 (leaf newcomment
-  :bind ("C-;" . comment-line))
+  :bind* ("C-;" . comment-line))
 
 (leaf saveplace
   :init
