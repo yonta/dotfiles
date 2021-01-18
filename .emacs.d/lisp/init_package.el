@@ -925,12 +925,14 @@
           ("f" . image-dired-display-current-image-full)
           ("0" . image-dired-display-current-image-sized))))
 
-(leaf ivy :ensure t
-  :defvar ivy-height-alist ivy-initial-inputs-alist
-  :custom
-  (ivy-count-format . "(%d/%d) ")
-  (ivy-initial-inputs-alist . nil)
-  :config
+(leaf swiper
+  :init
+  (leaf ivy :ensure t
+    :defvar ivy-height-alist ivy-initial-inputs-alist
+    :custom
+    (ivy-count-format . "(%d/%d) ")
+    (ivy-initial-inputs-alist . nil) ;; 先頭の^をやめる
+    (ivy-format-functions-alist . '((t . ivy-format-function-line))))
 
   (leaf swiper :ensure t
     :custom
@@ -957,7 +959,6 @@
     (setq ivy-height-alist
           (cons '(counsel-yank-pop . 10)
                 (assq-delete-all 'counsel-yank-pop ivy-height-alist)))
-    (setq ivy-initial-inputs-alist nil) ;; 先頭の^をやめる
     :bind* (("M-x" . counsel-M-x)
             ("M-r" . counsel-command-history)
             ("C-x C-f" . counsel-find-file)
@@ -974,52 +975,15 @@
             ("C-c <C-return>" . ivy-immediate-done)
             ("^" . counsel-up-directory))))
 
-  (leaf ivy-rich :ensure t :require t
-    :after ivy
-    :defvar ivy-rich-display-transformers-list
-    :defun ivy-format-function-line
+  (leaf ivy-rich :ensure t
     :custom
-    (ivy-format-function . #'ivy-format-function-line)
     (ivy-rich-path-style . 'abbrev)
     :config
-    ;; ivy-switch-bufferと同じrichをcounsel-switch-bufferでも使う
-    (let ((plist ivy-rich-display-transformers-list))
-      (unless (plist-member plist #'counsel-switch-buffer)
-        (plist-put plist #'counsel-switch-buffer
-                   (plist-get plist #'ivy-switch-buffer))))
     (ivy-rich-mode 1))
 
   (leaf ivy-prescient :ensure t
-    :after ivy
     :config
     (ivy-prescient-mode 1))
-
-  ;; 2019/05/11のswiperアップデートでswiperとavy-migemoの関係が壊れている
-  ;; 暫定的にavy-migemoをpackageからアインストールし、PRのcommitを採用している。
-  (leaf avy-migemo :require t
-    :el-get (avy-migemo
-             :url "https://github.com/yonta/avy-migemo.git"
-             :branch "fix-tam171ki-and-obsolute")
-    ;; cmigemoをいれておく
-    ;; https://github.com/koron/cmigemo
-    :if (executable-find "cmigemo")
-    :after swiper
-    :defun avy-migemo-mode
-    :init
-
-    (leaf avy :ensure t)
-
-    (leaf migemo :ensure t :require t
-      :defun migemo-init
-      :custom
-      (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
-      :config
-      (migemo-init))
-
-    :config
-    (avy-migemo-mode 1)
-    (require 'avy-migemo-e.g.swiper)
-    (require 'avy-migemo-e.g.counsel))
 
   (leaf counsel-fd :ensure t
     :if (executable-find "fd")
