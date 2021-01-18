@@ -1172,6 +1172,13 @@
   (leaf flyspell-popup :ensure t
     :hook (flyspell-mode-hook . flyspell-popup-auto-correct-mode)))
 
+(leaf aggressive-indent :ensure t
+  :diminish aggressive-indent-mode
+  :global-minor-mode global-aggressive-indent-mode)
+;; まずい動きをするときは除外モードを以下のように入れる
+;; :config
+;; (add-to-list 'aggressive-indent-exclude-modes 'html-mode)
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
