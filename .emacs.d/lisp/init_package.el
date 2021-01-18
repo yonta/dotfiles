@@ -981,10 +981,6 @@
     :config
     (ivy-rich-mode 1))
 
-  (leaf ivy-prescient :ensure t
-    :config
-    (ivy-prescient-mode 1))
-
   (leaf s :ensure t)
 
   (eval-and-compile (require 's))
@@ -1023,7 +1019,12 @@
     :bind ("C-c C-d" . helpful-at-point)
     :custom
     ((counsel-describe-function-function . 'helpful-callable)
-     (counsel-describe-variable-function . 'helpful-variable))))
+     (counsel-describe-variable-function . 'helpful-variable)))
+
+  ;; MEMO: ivy-***-alistを書き換える中で最後に来ないと動かないことがある
+  (leaf ivy-prescient :ensure t
+    :config
+    (ivy-prescient-mode 1)))
 
 (leaf dumb-jump :ensure t
   :defvar dumb-jump-selector
