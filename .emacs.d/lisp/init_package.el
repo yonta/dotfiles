@@ -376,7 +376,11 @@
 
   ;; pipでimportmagic3とepcをいれておく
   (leaf importmagic :ensure t
-    :hook (python-mode-hook . importmagic-mode)))
+    :hook (python-mode-hook . importmagic-mode))
+
+  ;; pipでisortをいれておく
+  (leaf py-isort :ensure t
+    :hook (before-save-hook . py-isort-before-save)))
 
 (leaf ruby
   :init
