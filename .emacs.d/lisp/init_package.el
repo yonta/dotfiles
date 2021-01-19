@@ -79,14 +79,12 @@
             ("C-o" . company-other-backend))))
 
   (leaf company-quickhelp :ensure t
-    :config
-    (company-quickhelp-mode 1)
+    :global-minor-mode company-quickhelp-mode
     :custom
     (company-quickhelp-delay . 0.5))
 
   (leaf company-prescient :ensure t
-    :config
-    (company-prescient-mode 1))
+    :global-minor-mode company-prescient-mode)
 
   (leaf yasnippet :ensure t
     :defvar yas-minor-mode-map
@@ -744,17 +742,15 @@
     :hook (dired-mode-hook . all-the-icons-dired-mode))
 
   (leaf all-the-icons-ibuffer :ensure t
-    :init
-    (all-the-icons-ibuffer-mode 1))
+    :global-minor-mode all-the-icons-ibuffer-mode)
 
   (leaf all-the-icons-ivy-rich :ensure t
-    :init
-    (all-the-icons-ivy-rich-mode 1)))
+    :global-minor-mode all-the-icons-ivy-rich-mode))
 
 ;;; OTHER
 
 (leaf popwin :ensure t :require t
-  :defun popwin-mode
+  :global-minor-mode popwin-mode
   :custom
   ;; popwin対象
   (popwin:special-display-config
@@ -771,9 +767,7 @@
        ("*robe-doc*")
        ("*xref*")
        ("*Backtrace*")
-       ("*tide-documentation*")))
-  :config
-  (popwin-mode 1))
+       ("*tide-documentation*"))))
 
 (leaf projectile
   :init
@@ -976,10 +970,9 @@
             ("^" . counsel-up-directory))))
 
   (leaf ivy-rich :ensure t
+    :global-minor-mode ivy-rich-mode
     :custom
-    (ivy-rich-path-style . 'abbrev)
-    :config
-    (ivy-rich-mode 1))
+    (ivy-rich-path-style . 'abbrev))
 
   (leaf s :ensure t)
 
@@ -1023,8 +1016,7 @@
 
   ;; MEMO: ivy-***-alistを書き換える中で最後に来ないと動かないことがある
   (leaf ivy-prescient :ensure t
-    :config
-    (ivy-prescient-mode 1)))
+    :global-minor-mode ivy-prescient-mode))
 
 (leaf dumb-jump :ensure t
   :defvar dumb-jump-selector
@@ -1075,11 +1067,9 @@
     (auto-package-update-maybe))
 
   (leaf async :ensure t
-    :no-require
+    :global-minor-mode async-bytecomp-package-mode
     :custom
-    (async-bytecomp-allowed-packages . '(all))
-    :config
-    (async-bytecomp-package-mode 1)))
+    (async-bytecomp-allowed-packages . '(all))))
 
 (leaf undo-tree :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
@@ -1087,6 +1077,7 @@
 (leaf persp-mode
   :init
   (leaf persp-mode :ensure t
+    :global-minor-mode persp-mode
     :defun get-current-persp persp-contain-buffer-p
     :defvar ivy-sort-functions-alist
     :bind* (("M-<right>" . persp-prev)
@@ -1098,8 +1089,6 @@
     (persp-kill-foreign-buffer-behaviour . nil)
     `(persp-keymap-prefix . ,(kbd "C-x x"))
     (persp-add-buffer-on-after-change-major-mode . t)
-    :init
-    (persp-mode 1)
     :config
     ;; counsel-switch-bufferで現ワークスペースのbufferのみを選択肢とする
     ;; 参考：https://gist.github.com/Bad-ptr/1aca1ec54c3bdb2ee80996eb2b68ad2d#file-persp-ivy-el
@@ -1153,15 +1142,12 @@
     (mozc-candidate-style . 'popup)))
 
 (leaf keyfreq :ensure t
-  :config
-  (keyfreq-mode 1)
-  (keyfreq-autosave-mode 1))
+  :global-minor-mode keyfreq-mode keyfreq-autosave-mode)
 
 ;; projectの.editorconfigファイルを読み込む
 (leaf editorconfig :ensure t
   :diminish t
-  :config
-  (editorconfig-mode 1))
+  :global-minor-mode editorconfig-mode)
 
 (leaf imenu
   :init
@@ -1363,6 +1349,7 @@ at point."
     (setq linum-format "%4d ")))
 
 (leaf autoinsert
+  :global-minor-mode auto-insert-mode
   :defvar (auto-insert-directory auto-insert-alist)
   :init
   (defvar template-replacements-alists
@@ -1391,7 +1378,6 @@ at point."
     (goto-char (point-min))
     (message "done."))
   :config
-  (auto-insert-mode 1)
   (setq auto-insert-directory "~/.emacs.d/autoinsert/")
   (setq auto-insert-alist
         (nconc
@@ -1404,13 +1390,14 @@ at point."
          auto-insert-alist)))
 
 (leaf recentf
-  ;; 最近使ったファイルを.recentfファイルに保存する
-  ;; counsel-recentfで呼び出せる
-  :custom
-  (recentf-max-saved-items . 1000)
-  (recentf-auto-cleanup . 'never)
-  :config
-  (recentf-mode 1)
+  :init
+  (leaf recentf
+    ;; 最近使ったファイルを.recentfファイルに保存する
+    ;; counsel-recentfで呼び出せる
+    :global-minor-mode recentf-mode
+    :custom
+    (recentf-max-saved-items . 1000)
+    (recentf-auto-cleanup . 'never))
 
   (leaf recentf-ext :ensure t :require t))
 
@@ -1449,8 +1436,7 @@ at point."
   :bind* ("C-;" . comment-line))
 
 (leaf saveplace
-  :init
-  (save-place-mode 1))
+  :global-minor-mode save-place-mode)
 
 (leaf autorevert
   :global-minor-mode global-auto-revert-mode
