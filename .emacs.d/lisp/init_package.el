@@ -344,7 +344,8 @@
                    company-yasnippet))
     (require 'smartparens-python))
 
-  :init
+  (leaf pip-requirements :ensure t)
+
   (leaf jedi-core :ensure t
     :hook (python-mode-hook . jedi:setup)
     ;; 関数の引数の情報が便利なので、ミニバッファに表示する
@@ -570,7 +571,11 @@
            ("C-c C-r" . ts-send-region)
            ("C-c C-p" . run-ts))))
 
-(leaf dockerfile-mode :ensure t)
+(leaf docker
+  :init
+  (leaf dockerfile-mode :ensure t)
+
+  (leaf docker-compose-mode :ensure t))
 
 (leaf yaml-mode :ensure t)
 
@@ -595,6 +600,8 @@
   :mode ("\\.gpl\\'" "\\.plt\\'"))
 
 (leaf graphviz-dot-mode :ensure t)
+
+(leaf gitignore-mode :ensure t)
 
 ;;; Face
 
