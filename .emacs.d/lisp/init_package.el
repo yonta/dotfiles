@@ -667,7 +667,7 @@
     :hook ((emacs-startup-hook . my-rainbow-delimiters-using-stronger-colors)
            (prog-mode-hook . rainbow-delimiters-mode)))
 
-  (leaf color  :require t
+  (leaf color :require t
     :after rainbow-delimiters
     :defun color-saturate-name)
 
