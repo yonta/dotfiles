@@ -967,7 +967,7 @@
             ("M-r" . counsel-command-history)
             ("C-x C-f" . counsel-find-file)
             ("C-x f" . counsel-recentf)
-            ("C-c g" . counsel-git-grep)
+            ("C-c C-c g" . counsel-git-grep)
             ("C-x b" . counsel-switch-buffer)
             ("C-M-y" . counsel-yank-pop)
             ("C-c C-SPC" . counsel-mark-ring))
@@ -1196,6 +1196,12 @@
 ;; まずい動きをするときは除外モードを以下のように入れる
 ;; :config
 ;; (add-to-list 'aggressive-indent-exclude-modes 'html-mode)
+
+(leaf git-timemachine :ensure t
+  :bind ("C-c C-c t" . git-timemachine))
+
+(leaf vc-msg :ensure t
+  :bind ("C-c C-c b" . vc-msg-show))
 
 ;;; Emacs default (not package.el)
 
