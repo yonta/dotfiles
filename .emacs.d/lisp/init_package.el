@@ -739,6 +739,7 @@
   (leaf all-the-icons :ensure t)
 
   (leaf all-the-icons-dired :ensure t
+    :diminish all-the-icons-dired-mode
     :hook (dired-mode-hook . all-the-icons-dired-mode))
 
   (leaf all-the-icons-ibuffer :ensure t
