@@ -175,7 +175,7 @@
       (c-set-style "k&r")
       (require 'smartparens-c))
     :hook (c-mode-hook . my-c-mode-hook)
-    :custom
+    :config
     (add-to-list 'company-backends
                  '(company-clang :with company-dabbrev-code company-yasnippet)))
 
@@ -188,7 +188,7 @@
       (require 'smartparens-c)
       (c-set-style "k&r"))
     :hook (c++-mode-hook . my-c++-mode-hook)
-    :custom
+    :config
     (add-to-list 'company-backends
                  '(company-clang ;; company-c-headers
                    :with company-dabbrev-code company-yasnippet)))
