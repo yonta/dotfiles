@@ -743,6 +743,8 @@
     :hook (dired-mode-hook . all-the-icons-dired-mode))
 
   (leaf all-the-icons-ibuffer :ensure t
+    ;; size-h化も一緒にされる
+    :after ibuffer
     :global-minor-mode all-the-icons-ibuffer-mode)
 
   (leaf all-the-icons-ivy-rich :ensure t
@@ -1299,27 +1301,12 @@ Creates a buffer if necessary."
          ("M-<right>". help-go-forward)))
 
 (leaf ibuffer
-  :defvar (ibuffer-inline-columns ibuffer-formats)
   :defun ibuffer-current-buffer
-  :config
-  ;; キロメガでサイズ表示する
-  ;; 参考： https://www.emacswiki.org/emacs/IbufferMode
-  (define-ibuffer-column size-h
-    (:name "Size" :inline t)
-    (cond
-     ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-     ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
-     ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-     (t (format "%8d" (buffer-size)))))
-  ;; Modify the default ibuffer-formats
-  (setq ibuffer-formats
-        '((mark modified read-only locked " " (name 18 18 :left :elide) " "
-                (size-h 9 -1 :right) " " (mode 16 16 :left :elide) " "
-                filename-and-process)))
-  ;; ibuffer-find-fileを使わずにcounselを使う
-  (defun my-ibuffer-find-file-by-counsel ()
-    "Like `counsel-find-file', but default to the directory of the buffer
-at point."
+  :preface
+  ;; ibuffer選択肢を考慮したibuffer-find-file関数を、counselで実現する
+  (defun my-counsel-ibuffer-find-file ()
+    "Like `counsel-find-file', but default directory is set to current
+candidate of ibuffer."
     (interactive)
     (let ((default-directory
             (let ((buf (ibuffer-current-buffer)))
@@ -1329,7 +1316,7 @@ at point."
                 default-directory))))
       (counsel-find-file default-directory)))
   :bind (("C-x C-b" . ibuffer)
-         (:ibuffer-mode-map ("C-x C-f" . my-ibuffer-find-file-by-counsel))))
+         (:ibuffer-mode-map ("C-x C-f" . my-counsel-ibuffer-find-file))))
 
 (leaf winner
   :global-minor-mode winner-mode
