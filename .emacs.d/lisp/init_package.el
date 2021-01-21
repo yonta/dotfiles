@@ -935,6 +935,7 @@
     :defvar ivy-height-alist ivy-initial-inputs-alist
     :custom
     (ivy-count-format . "(%d/%d) ")
+    (ivy-extra-directories . '("./"))
     (ivy-initial-inputs-alist . nil) ;; 先頭の^をやめる
     (ivy-format-functions-alist . '((t . ivy-format-function-line))))
 
