@@ -965,13 +965,13 @@
                 (assq-delete-all 'counsel-yank-pop ivy-height-alist)))
     :bind* (("M-x" . counsel-M-x)
             ("M-r" . counsel-command-history)
-            ("C-x C-f" . counsel-find-file)
             ("C-x f" . counsel-recentf)
             ("C-c C-c g" . counsel-git-grep)
             ("C-x b" . counsel-switch-buffer)
             ("C-M-y" . counsel-yank-pop)
             ("C-c C-SPC" . counsel-mark-ring))
-    :bind (("<f1> f" . counsel-describe-function)
+    :bind (("C-x C-f" . counsel-find-file) ;; ibufferで上書きがある
+           ("<f1> f" . counsel-describe-function)
            ("<f1> v" . counsel-describe-variable)
            ("C-c d" . counsel-describe-symbol)
            (:counsel-find-file-map
@@ -1328,8 +1328,8 @@ candidate of ibuffer."
                     default-directory)
                 default-directory))))
       (counsel-find-file default-directory)))
-  :bind (("C-x C-b" . ibuffer)
-         (:ibuffer-mode-map ("C-x C-f" . my-counsel-ibuffer-find-file))))
+  :bind* ("C-x C-b" . ibuffer)
+  :bind (:ibuffer-mode-map ("C-x C-f" . my-counsel-ibuffer-find-file)))
 
 (leaf winner
   :global-minor-mode winner-mode
