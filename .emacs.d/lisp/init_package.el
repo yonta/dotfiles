@@ -1181,7 +1181,7 @@
   ;; aptでaspell-enをいれておく
   (leaf flyspell
     :diminish flyspell-mode
-    :hook (text-mode-hook . flyspell-mode)
+    ;; :hook (text-mode-hook . flyspell-mode)
     :custom
     (ispell-local-dictionary . "en_US")
     :config
