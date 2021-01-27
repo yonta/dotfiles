@@ -1196,10 +1196,12 @@
 
 (leaf aggressive-indent :ensure t
   :diminish aggressive-indent-mode
-  :global-minor-mode global-aggressive-indent-mode)
-;; まずい動きをするときは除外モードを以下のように入れる
-;; :config
-;; (add-to-list 'aggressive-indent-exclude-modes 'html-mode)
+  :global-minor-mode global-aggressive-indent-mode
+  :defvar aggressive-indent-excluded-modes
+  ;; まずい動きをするときはに除外モードを追加する
+  :config
+  ;; defcustomだがデフォルト値に追加の形で書く
+  (add-to-list 'aggressive-indent-excluded-modes 'web-mode))
 
 (leaf git-timemachine :ensure t
   :bind ("C-c C-c t" . git-timemachine))
