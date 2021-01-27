@@ -1465,12 +1465,12 @@ candidate of ibuffer."
   (defun my-split-window-right-and-switch ()
     "Split the window right, then switch to the new window."
     (interactive)
-    (split-windown-right)
+    (split-window-right)
     (other-window 1))
   (defun my-split-window-below-and-switch ()
     "Split the window right, then switch to the new window."
     (interactive)
-    (split-windown-below)
+    (split-window-below)
     (other-window 1))
   :bind* (("C-c 2" . my-split-window-below-and-switch)
           ("C-c 3" . my-split-window-right-and-switch)))
