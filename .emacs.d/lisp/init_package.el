@@ -528,7 +528,9 @@
 
   (leaf add-node-modules-path :ensure t
     :hook ((js-mode-hook . add-node-modules-path)
-           (typescript-mode-hook . add-node-modules-path)))
+           (typescript-mode-hook . add-node-modules-path)
+           (markdown-mode-hook . add-node-modules-path)
+           (css-mode-hook . add-node-modules-path)))
 
   (leaf json-mode :ensure t))
 
