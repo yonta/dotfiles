@@ -1214,17 +1214,7 @@
 
 (leaf dired
   :defun (my-dired-various-sort-change my-reload-current-dired-buffer)
-  :custom
-  ;; dired-modeがlsコマンドに渡すオプションを設定する
-  ;; l: 長い表示、dired-modeに必須のオプション
-  ;; g: ユーザ名を非表示
-  ;; G: グループ名を非表示
-  ;; h: kbyte・Mbyteの使用
-  ;; F: ディレクトリに「/」を表示
-  ;; A: 「.」と「..」を非表示でドットファイルを表示
-  ;;(setq dired-listing-switches "-gGhFA")
-  (dired-listing-switches . "-lgGhF")
-  :init
+  :preface
   ;; サイズや拡張子による並び替えを追加する．
   ;; http://d.hatena.ne.jp/mooz/20091207/p1
   (defvar dired-various-sort-type
@@ -1307,6 +1297,20 @@ Creates a buffer if necessary."
           (setq dired-listing-switches "-lgGhF")
         (setq dired-listing-switches "-lgGhFA"))
       (my-reload-current-dired-buffer)))
+  :init
+  (leaf dired-collapse :ensure t
+    :hook (dired-mode-hook . dired-collapse-mode))
+
+  :custom
+  ;; dired-modeがlsコマンドに渡すオプションを設定する
+  ;; l: 長い表示、dired-modeに必須のオプション
+  ;; g: ユーザ名を非表示
+  ;; G: グループ名を非表示
+  ;; h: kbyte・Mbyteの使用
+  ;; F: ディレクトリに「/」を表示
+  ;; A: 「.」と「..」を非表示でドットファイルを表示
+  ;;(setq dired-listing-switches "-gGhFA")
+  (dired-listing-switches . "-lgGhF")
   :bind (:dired-mode-map
          ("s" . my-dired-various-sort-change-or-edit)
          ("C-m" . my-dired-advertised-find-file)
