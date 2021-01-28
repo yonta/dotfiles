@@ -23,4 +23,6 @@
 .emacs.d/projectile-*
 .emacs.d/places
 .emacs.d/.persp-confs/*
+.emacs.d/request/*
+.emacs.d/transient/*
 flycheck_*.el
