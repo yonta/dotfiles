@@ -449,6 +449,7 @@
     (web-mode-enable-auto-expanding . t)
     (web-mode-enable-current-element-highlight . t)
     (web-mode-enable-current-column-highlight . t)
+    (web-mode-comment-style . 2)
     (web-mode-auto-close-style . 2)
     ;; web-modeとwhitespace-modeのコンフリクトでfaceがおかしくなるのを解消する
     ;; https://github.com/fxbois/web-mode/issues/119a
