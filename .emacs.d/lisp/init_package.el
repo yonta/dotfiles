@@ -620,8 +620,9 @@
   (whitespace-action . '(auto-cleanup))
   ;; spacesの対象は全角スペースのみ
   (whitespace-space-regexp . "\\(　+\\)")
-  ;; java-mode/web-modeで1行の最大文字数を変更する
+  ;; 一部モードで1行の最大文字数を変更する
   :hook ((java-mode-hook . (lambda () (setq-local whitespace-line-column 100)))
+         (ruby-mode-hook . (lambda () (setq-local whitespace-line-column 120)))
          (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))
          (dired-mode-hook
           . (lambda () (setq-local truncate-partial-width-windows t)))))
