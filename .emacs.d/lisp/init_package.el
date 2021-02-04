@@ -866,9 +866,12 @@
 
 (leaf shell
   :init
-
-  (leaf bash-completion :ensure t
-    :commands shell)
+  (leaf company-shell :ensure t
+    :config
+    (add-to-list 'company-backends
+                 '(company-shell
+                   company-shell-env
+                   :with company-dabbrev-code company-yasnippet company-files)))
 
   ;; コマンドラインと同じ色付けを使う
   (leaf ansi-color
@@ -882,22 +885,20 @@
            . (lambda () (setq-local flycheck-checker 'sh-posix-bash)))
     :bind (:sh-mode-map ("C-c C-p" . sh-cd-here)))
 
-  (autoload 'bash-completion-dynamic-complete "bash-completion"
-    "BASH completion hook")
-  (add-hook 'shell-dynamic-complete-functions 'bash-completion-dynamic-complete)
-  :custom
-  ;; Emacsを起動したshellを使用する（bashからの起動を前提）
-  ;; TODO: バイトコンパイル時でなく起動時に評価するよう変更する
-  `(explicit-shell-file-name . ,(getenv "SHELL"))
-  ;; (explicit-shell-file-name . my-shell-file-name)
-  (explicit-bash-args . '("--login" "-i"))
-  ;; shell-modeでのファイル名補完
-  (shell-file-name-chars . "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
+  (leaf shell
+    :custom
+    ;; Emacsを起動したshellを使用する（bashからの起動を前提）
+    ;; TODO: バイトコンパイル時でなく起動時に評価するよう変更する
+    `(explicit-shell-file-name . ,(getenv "SHELL"))
+    ;; (explicit-shell-file-name . my-shell-file-name)
+    (explicit-bash-args . '("--login" "-i"))
+    ;; shell-modeでのファイル名補完
+    (shell-file-name-chars . "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")))
 
-  :hook (shell-mode-hook . (lambda ()
-                             ;; SHELL で ^M が付く場合は ^M を削除する
-                             (set-process-coding-system
-                              'undecided-dos 'sjis-unix))))
+;; :hook (shell-mode-hook . (lambda ()
+;;                            ;; SHELL で ^M が付く場合は ^M を削除する
+;;                            (set-process-coding-system
+;;                             'undecided-dos 'sjis-unix)))
 
 ;; ImageMagickをaptでいれておく
 ;; 非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ
