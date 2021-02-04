@@ -579,7 +579,14 @@
   :init
   (leaf dockerfile-mode :ensure t)
 
-  (leaf docker-compose-mode :ensure t))
+  (leaf docker-compose-mode :ensure t)
+
+  (leaf docker :ensure t
+    :bind ("C-c C-x d" . docker))
+
+  (leaf docker-tramp :ensure t)
+
+  (leaf counsel-tramp :ensure t))
 
 (leaf yaml-mode :ensure t)
 
@@ -974,7 +981,7 @@
     :bind* (("M-x" . counsel-M-x)
             ("M-r" . counsel-command-history)
             ("C-x f" . counsel-recentf)
-            ("C-c C-c g" . counsel-git-grep)
+            ("C-c C-x g" . counsel-git-grep)
             ("C-x b" . counsel-switch-buffer)
             ("C-M-y" . counsel-yank-pop)
             ("C-c C-SPC" . counsel-mark-ring))
@@ -1209,10 +1216,10 @@
   (add-to-list 'aggressive-indent-excluded-modes 'dockerfile-mode))
 
 (leaf git-timemachine :ensure t
-  :bind ("C-c C-c t" . git-timemachine))
+  :bind ("C-c C-x t" . git-timemachine))
 
 (leaf vc-msg :ensure t
-  :bind ("C-c C-c b" . vc-msg-show))
+  :bind ("C-c C-x b" . vc-msg-show))
 
 (leaf ace-window :ensure t
   :custom
