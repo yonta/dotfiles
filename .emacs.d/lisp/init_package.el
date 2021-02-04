@@ -1211,6 +1211,13 @@
 (leaf vc-msg :ensure t
   :bind ("C-c C-c b" . vc-msg-show))
 
+(leaf ace-window :ensure t
+  :custom
+  ;; 参考: https://github.com/abo-abo/ace-window/wiki/display-buffer
+  (aw-keys . '(?h ?j ?k ?l ?a ?s ?d ?f ? g))
+  (display-buffer-base-action
+   . '((display-buffer-reuse-window ace-display-buffer))))
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
