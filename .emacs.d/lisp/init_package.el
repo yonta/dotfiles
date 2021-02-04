@@ -1204,7 +1204,8 @@
   ;; まずい動きをするときはに除外モードを追加する
   :config
   ;; defcustomだがデフォルト値に追加の形で書く
-  (add-to-list 'aggressive-indent-excluded-modes 'web-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'web-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'dockerfile-mode))
 
 (leaf git-timemachine :ensure t
   :bind ("C-c C-c t" . git-timemachine))
