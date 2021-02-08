@@ -112,9 +112,12 @@ fi
 
 # some more ls aliases
 alias ls='ls --color=auto --show-control-chars'
-alias ll='ls -alFh'
-alias la='ls -A'
-alias l='ls -CF'
+# alias ll='ls -alFh'
+# alias la='ls -A'
+# alias l='ls -CF'
+alias ll='exa -alFg --git'
+alias la='exa -a'
+alias l='exa -lFg --git'
 alias vi='vim'
 alias grep='grep --color=auto'
 alias lessv='/usr/share/vim/vim81/macros/less.sh'
