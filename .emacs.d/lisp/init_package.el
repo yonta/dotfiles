@@ -420,6 +420,10 @@
     ;; :defun robe-start robe-running-p
     :diminish t
     :hook (ruby-mode-hook . robe-mode)
+    :hook (ruby-mode-hook
+           . (lambda ()
+               (setq-local company-backends
+                           '((company-robe :with company-yasnippet)))))
     ;; robeはRuby REPLが必要
     ;; 自動robe-startが不安定なので一時オフにする
     ;; :hook (robe-mode-hook
@@ -427,8 +431,6 @@
     :bind (:inf-ruby-mode-map
            :package inf-ruby
            ("C-c @" . robe-start))
-    :config
-    (push 'company-robe company-backends)
     :custom
     ;; RubyのSymbolをdabbrev対象にする
     (dabbrev-abbrev-skip-leading-regexp . ":"))
