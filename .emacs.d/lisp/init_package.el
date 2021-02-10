@@ -424,7 +424,9 @@
     ;; 自動robe-startが不安定なので一時オフにする
     ;; :hook (robe-mode-hook
     ;;        . (lambda () (unless (robe-running-p) (funcall 'robe-start t))))
-    :bind ("C-c @" . robe-start)
+    :bind (:inf-ruby-mode-map
+           :package inf-ruby
+           ("C-c @" . robe-start))
     :config
     (push 'company-robe company-backends)
     :custom
