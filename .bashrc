@@ -142,11 +142,11 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
 fi
 
 # by User
@@ -181,7 +181,7 @@ fi
 
 # WSL1 or WSL2
 if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
-    [ -z "$SSH_CLIENT" ]; then
+       [ -z "$SSH_CLIENT" ]; then
     # ディスプレイが存在しVSCode WSLじゃない
     if xrandr > /dev/null 2>&1 &&
            echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
