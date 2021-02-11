@@ -110,21 +110,6 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ls='ls --color=auto --show-control-chars'
-# alias ll='ls -alFh'
-# alias la='ls -A'
-# alias l='ls -CF'
-alias ll='exa -alFg --git'
-alias la='exa -a'
-alias l='exa -lFg --git'
-alias vi='vim'
-alias grep='grep --color=auto'
-alias lessv='/usr/share/vim/vim81/macros/less.sh'
-alias vless='lessv'
-alias spacemacs='env HOME=${HOME}/.spacemacs emacs'
-alias emacsc='emacs -Q --batch -f batch-byte-compile'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
