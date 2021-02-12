@@ -61,7 +61,8 @@
     (company-dabbrev-ignore-case . t)
     (company-dabbrev-code-ignore-case . t)
     (company-etags-ignore-case . t)
-    (company-transformers . '(company-sort-by-occurrence))
+    (company-transformers
+     . '(company-sort-by-occurrence company-sort-by-backend-importance))
     (company-tooltip-align-annotations . t)
     (company-lighter-base . "")
     :config
