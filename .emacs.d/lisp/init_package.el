@@ -1218,7 +1218,8 @@
   :config
   ;; defcustomだがデフォルト値に追加の形で書く
   (add-to-list 'aggressive-indent-excluded-modes 'web-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'dockerfile-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'dockerfile-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'compilation-mode))
 
 (leaf git-timemachine :ensure t
   :bind ("C-c C-x t" . git-timemachine))
