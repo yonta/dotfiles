@@ -27,40 +27,56 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # all pip package upgrade
-alias pip3-upgrade-all="pip3 list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip3 install -U"
+if type pip > /dev/null 2>&1 ; then
+    alias pip3-upgrade-all="pip3 list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip3 install -U"
+fi
 
 # GPG
 export GPG_TTY=$(tty)
 
 # EDITOR
-export EDITOR=vim
+if type vim > /dev/null 2>&1 ; then
+    export EDITOR=vim
+fi
 
 # OPAM configuration
-. /home/kei/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+if [ -f "$HOME/.opam/opam-init/init.sh" ] ; then
+    . /home/kei/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+fi
 
 # SML/NJ PATH
-PATH="$HOME/.smlnj/bin:$PATH"
+if [ -d "$HOME/.smlnj" ] ; then
+    PATH="$HOME/.smlnj/bin:$PATH"
+fi
 
 # WSL
-alias firefox="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+if [ -f "/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe" ] ; then
+    alias firefox="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+fi
 PATH="$PATH:/mnt/c/Windows"          # for wsl deb package
 PATH="$PATH:/mnt/c/Windows/System32" # for wsl deb package
 
 # Rust and cargo
-PATH="$HOME/.cargo/bin:$PATH"
+if [ -d "$HOME/.cargo" ] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
 
 # Ruby
-PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+if [ -d "$HOME/.rbenv" ] ; then
+    PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+fi
 
-# Node.js
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # This loads nvm bash_completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # OchaCaml
-PATH="$PATH:$HOME/.ochacaml/OchaCaml"
+if [ -d "${HOME}/.ochacaml" ]; then
+    PATH="$PATH:$HOME/.ochacaml/OchaCaml"
+fi
 
 #=====================================================================
 # GitKraken
