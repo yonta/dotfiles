@@ -29,6 +29,9 @@ fi
 # all pip package upgrade
 alias pip3-upgrade-all="pip3 list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip3 install -U"
 
+# GPG
+export GPG_TTY=$(tty)
+
 # EDITOR
 export EDITOR=vim
 
