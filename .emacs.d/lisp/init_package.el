@@ -436,7 +436,8 @@
     ;; RubyのSymbolをdabbrev対象にする
     (dabbrev-abbrev-skip-leading-regexp . ":"))
 
-  (leaf rspec-mode :disabled t)
+  (leaf rspec-mode :ensure t :diminish t)
+
   (leaf ruby-block :disabled t)
 
   (leaf ruby-mode
