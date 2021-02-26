@@ -482,8 +482,11 @@
   (leaf company-bootstrap
     :defun company-bootstrap
     :el-get (company-bootstrap
-             :url "https://github.com/typefo/company-bootstrap.git")
-    :after company)
+             :url "https://github.com/typefo/company-bootstrap.git"))
+
+  (leaf company-bootstrap-icons
+    :el-get (company-bootstrap-icons
+             :url "https://github.com/yonta/company-bootstrap-icons.git"))
 
   (leaf company-web :ensure t
     :after company
@@ -491,6 +494,7 @@
     (add-to-list 'company-backends
                  '(company-web-html
                    company-bootstrap
+                   company-bootstrap-icons
                    :with company-dabbrev-code company-dabbrev)))
 
   (leaf css-mode
