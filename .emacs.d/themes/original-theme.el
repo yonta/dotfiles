@@ -57,7 +57,7 @@
  '(hl-line ((t (:background "light cyan" :inherit (highlight)))))
  '(whitespace-trailing ((t (:background "lavender"))))
  '(whitespace-space ((t (:background "DarkSeaGreen1"))))
- '(whitespace-tab ((t (:background "light goldenrod yellow"))))
+ '(whitespace-tab ((t (:background "khaki"))))
  '(whitespace-empty ((t nil)))
  '(whitespace-line ((t (:background "khaki"))))
  '(line-number ((t (:background "white smoke" :inherit (shadow default)))))
