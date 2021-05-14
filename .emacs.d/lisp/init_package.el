@@ -1154,6 +1154,7 @@
   ;; 参考: https://w.atwiki.jp/ntemacs/pages/61.html
   ;;       https://github.com/smzht/mozc_emacs_helper
   (leaf mozc :ensure t
+    :defun mozc-session-sendkey
     :if (executable-find "mozc_emacs_helper")
     ;; mozcモードで一部キーバインドが外れるので再設定
     :bind (:mozc-mode-map
