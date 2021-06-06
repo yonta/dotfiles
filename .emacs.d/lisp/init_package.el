@@ -440,6 +440,10 @@
 
   (leaf ruby-block :disabled t)
 
+  (leaf yard-mode :ensure t
+    :diminish t
+    :hook (ruby-mode-hook . yard-mode))
+
   (leaf ruby-mode
     :custom
     (ruby-insert-encoding-magic-comment . nil)))
