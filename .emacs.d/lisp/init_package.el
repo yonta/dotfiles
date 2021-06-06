@@ -497,9 +497,9 @@
     :config
     (add-to-list 'company-backends
                  '(company-web-html
-                   company-bootstrap
+                   :with company-bootstrap
                    company-bootstrap-icons
-                   :with company-dabbrev-code company-dabbrev)))
+                   company-dabbrev-code company-dabbrev)))
 
   (leaf css-mode
     :custom
