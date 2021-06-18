@@ -483,10 +483,10 @@
     :custom
     (erblint-check-command . "erblint --lint-all"))
 
-  (leaf company-bootstrap
-    :defun company-bootstrap
-    :el-get (company-bootstrap
-             :url "https://github.com/typefo/company-bootstrap.git"))
+  (leaf company-bootstrap5
+    :defun company-bootstrap5
+    :el-get (company-bootstrap5
+             :url "https://github.com/yonta/company-bootstrap5.git"))
 
   (leaf company-bootstrap-icons
     :el-get (company-bootstrap-icons
@@ -497,7 +497,7 @@
     :config
     (add-to-list 'company-backends
                  '(company-web-html
-                   :with company-bootstrap
+                   :with company-bootstrap5
                    company-bootstrap-icons
                    company-dabbrev-code company-dabbrev)))
 
@@ -507,7 +507,7 @@
     :config
     (add-to-list 'company-backends
                  '(company-css
-                   :with company-bootstrap
+                   :with company-bootstrap5
                    company-dabbrev-code company-dabbrev))))
 
 (leaf javascript
