@@ -578,7 +578,8 @@
 
   (leaf prettier-js :ensure t
     :diminish prettier-js-mode
-    :hook (typescript-mode-hook . prettier-js-mode))
+    :hook ((javascript-mode-hook . prettier-js-mode)
+           (typescript-mode-hook . prettier-js-mode)))
 
   (leaf ts-comint :ensure t
     :if (executable-find "ts-node")
