@@ -28,7 +28,7 @@ fi
 
 # all pip package upgrade
 if type pip > /dev/null 2>&1 ; then
-    alias pip3-upgrade-all="pip3 list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip3 install -U"
+    alias pip-upgrade-all="pip list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip install -U"
 fi
 
 # GPG
