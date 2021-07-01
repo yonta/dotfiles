@@ -50,9 +50,9 @@ if [ -d "$HOME/.smlnj" ] ; then
 fi
 
 # WSL
-if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
-    alias firefox="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
-fi
+ if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
+     alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+ fi
 PATH="$PATH:/mnt/c/Windows"          # for wsl deb package
 PATH="$PATH:/mnt/c/Windows/System32" # for wsl deb package
 
