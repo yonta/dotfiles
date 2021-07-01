@@ -574,7 +574,12 @@
     :diminish tide-mode
     :hook ((typescript-mode-hook . tide-setup)
            (tide-mode-hook . tide-hl-identifier-mode))
-    :bind ("C-c C-d" . tide-documentation-at-point))
+    :bind ("C-c C-d" . tide-documentation-at-point)
+    :custom ((tide-completion-setup-company-backend . nil)
+             (tide-completion-ignore-case . t)
+             (tide-completion-detailed . t))
+    :config (cl-pushnew
+             '(company-tide :with company-dabbrev-code) company-backends))
 
   (leaf prettier-js :ensure t
     :diminish prettier-js-mode
