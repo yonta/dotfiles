@@ -1167,10 +1167,10 @@
     :defun mozc-session-sendkey
     :if (executable-find "mozc_emacs_helper")
     ;; mozcモードで一部キーバインドが外れるので再設定
-    :bind (("C-\\" . mozc-mode)
-           (:mozc-mode-map
-            ("C-x C-s" . save-buffer)
-            ("C-x h" . mark-hole-buffer)))
+    :bind* ("C-\\" . mozc-mode)
+    :bind (:mozc-mode-map
+           ("C-x C-s" . save-buffer)
+           ("C-x h" . mark-hole-buffer))
     :custom
     (default-input-method . "japanese-mozc")
     (mozc-leim-title . "[も]")
