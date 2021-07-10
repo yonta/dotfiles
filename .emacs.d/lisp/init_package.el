@@ -384,6 +384,7 @@
 
 (leaf ruby
   :init
+  ;; def/doなどに自動でendを挿入する
   (leaf ruby-electric :ensure t
     :diminish t
     :hook (ruby-mode-hook . ruby-electric-mode))
@@ -416,7 +417,7 @@
 
   ;; gemでpryとpry-docを入れておく
   ;; gem install pry pry-doc
-  (leaf robe :ensure t
+  (leaf robe :ensure t :disabled t
     :if (executable-find "pry")
     ;; :defun robe-start robe-running-p
     :diminish t
@@ -438,15 +439,39 @@
 
   (leaf rspec-mode :ensure t :diminish t)
 
-  (leaf ruby-block :disabled t)
-
   (leaf yard-mode :ensure t
     :diminish t
     :hook (ruby-mode-hook . yard-mode))
 
+  ;; gemでsolargraphを入れる
+  ;; gem install solargraph
+  ;; solargraph download-coreを実行
+  ;; yard gemsを実行
+  ;; （yard config --gem-install-yriでgem install時に自動生成する設定が便利）
+  ;; プロジェクトルートでsolargraph bundleを実行
+  ;; プロジェクトにマジックコメントのファイルを設置
   (leaf ruby-mode
     :custom
-    (ruby-insert-encoding-magic-comment . nil)))
+    (ruby-insert-encoding-magic-comment . nil)
+    :hook (ruby-mode-hook . lsp)))
+
+(leaf lsp
+  :init
+  (leaf lsp-mode :ensure t
+    :diminish t
+    :hook (lsp-mode-hook . lsp-enable-which-key-integration))
+  (leaf lsp-ui :ensure t
+    :custom
+    (lsp-ui-doc-position . 'at-point)
+    (lsp-ui-doc-border . "gray10")
+    ;; WSL2ではexport WEBKIT_FORCE_SANDBOX=0すればXwidgetが使える
+    ;; ただし、HighDPI対応をどうすればいいのかわからない。
+    ;; Emacsを--with-x-toolkit=gtk3 --with-xwidgetsでビルドする必要がある
+    ;; (lsp-ui-doc-use-webkit . t)
+    (lsp-ui-doc-delay . 0.7))
+  (leaf lsp-treemacs :ensure t
+    :global-minor-mode lsp-treemacs-sync-mode)
+  (leaf lsp-ivy :ensure t))
 
 (leaf html-css
   :init

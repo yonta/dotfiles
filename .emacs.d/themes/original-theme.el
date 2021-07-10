@@ -69,6 +69,11 @@
  ;; mode-lineから算出
  '(flycheck-color-mode-line-error-face ((t (:background "#fa8d87"))))
  '(flycheck-color-mode-line-warning-face ((t (:background "#fad987"))))
- '(flycheck-color-mode-line-running-face ((t (:foreground "#666137")))))
-
+ '(flycheck-color-mode-line-running-face ((t (:foreground "#666137"))))
+ '(lsp-ui-doc-background ((t (:background "gray80"))))
+ ;; code in lsp-ui-doc
+ '(markdown-inline-code-face ((t :foreground "slate blue" :inherit (fixed-pitch))))
+ ;; signature in lsp-ui-doc
+ '(markdown-pre-face ((t :inherit (markdown-inline-code-face))))
+ )
 (provide-theme 'original)
