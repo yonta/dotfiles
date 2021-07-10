@@ -160,7 +160,7 @@ fi
 # WSL2
 if uname -a | grep -e 'microsoft' > /dev/null 2>&1 ; then
     if [ -z "$SSH_CLIENT" ]; then # not via ssh
-        export DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2}'):0
+        export DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2}'):0.0
     fi
 fi
 
