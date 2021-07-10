@@ -180,5 +180,8 @@ if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
         if ! ps aux | grep "fcitx" | grep -v "grep" > /dev/null 2>&1 ; then
             fcitx-autostart > /dev/null 2>&1
         fi
+        # Scale for High DPI Display
+        export GDK_SCALE=2
+        export QT_AUTO_SCREEN_SCALE_FACTOR=1
     fi
 fi
