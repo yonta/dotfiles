@@ -52,6 +52,7 @@
  '(git-gutter-fr:added ((t (:foreground "lime green" :background "white smoke" :inherit (git-gutter:added fringe)))))
  '(git-gutter-fr:modified ((t (:foreground "blue" :background "white smoke" :inherit (git-gutter:modified fringe)))))
  '(vhl/default-face ((t (:background "light cyan" :inherit (secondary-selection)))))
+ '(ahs-plugin-defalt-face ((t :foreground "gray10" :inherit (region))))
  '(ahs-plugin-whole-buffer-face ((t (:background "light sky blue" :foreground "gray10"))))
  '(ahs-face ((t (:background "slate gray" :foreground "ghost white"))))
  '(hl-line ((t (:background "light cyan" :inherit (highlight)))))
