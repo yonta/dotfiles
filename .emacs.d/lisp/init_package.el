@@ -750,6 +750,7 @@
     :diminish auto-highlight-symbol-mode
     :custom
     (ahs-default-range . 'ahs-range-whole-buffer)
+    (ahs-disabled-minor-modes . '(iedit-mode ivy-mode))
     :config
     (push 'sml-mode ahs-modes)
     :bind (("M-<up>" . ahs-backward)
