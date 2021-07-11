@@ -25,4 +25,6 @@
 .emacs.d/.persp-confs/*
 .emacs.d/request/*
 .emacs.d/transient/*
+.emacs.d/.cache
+.emacs.d/.lsp-session-v1
 flycheck_*.el

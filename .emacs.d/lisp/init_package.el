@@ -469,13 +469,15 @@
     :hook (lsp-mode-hook . lsp-enable-which-key-integration))
   (leaf lsp-ui :ensure t
     :custom
+    (lsp-ui-sideline-enable . nil)
     (lsp-ui-doc-position . 'at-point)
     (lsp-ui-doc-border . "gray10")
     ;; WSL2ではexport WEBKIT_FORCE_SANDBOX=0すればXwidgetが使える
     ;; ただし、HighDPI対応をどうすればいいのかわからない。
     ;; Emacsを--with-x-toolkit=gtk3 --with-xwidgetsでビルドする必要がある
     ;; (lsp-ui-doc-use-webkit . t)
-    (lsp-ui-doc-delay . 0.7))
+    (lsp-ui-doc-delay . 0.7)
+    :bind (:lsp-ui-mode-map ("<tab>" . lsp-ui-doc-focus-frame)))
   (leaf lsp-treemacs :ensure t
     :global-minor-mode lsp-treemacs-sync-mode)
   (leaf lsp-ivy :ensure t))
