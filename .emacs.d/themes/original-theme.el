@@ -1,79 +1,144 @@
 (deftheme original
   "Created 2020-06-23.")
 
+;; LightSkyBlue #bfe6ff #e0f3ff
+;; #456980
+;; #fad987 #ffedbf #fff6e0
+;; #fa8d87 #ffc2bf #ffe2e0
+;; #95fa87 #c7ffbf #e4ffe0
+
 (custom-theme-set-faces
  'original
- '(default ((t (:family "VL ゴシック" :foundry "VL  " :width normal :height 121 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil :inverse-video nil :foreground "gray10" :background "white smoke" :stipple nil :inherit nil))))
- '(cursor ((((background light)) (:background "black")) (((background dark)) (:background "white smoke"))))
+ '(default
+    ((t (
+         :family "VL ゴシック" :foundry "VL  " :width normal :height 121
+         :weight normal :slant normal :underline nil :overline nil
+         :strike-through nil :box nil :inverse-video nil
+         :foreground "gray10" :background "WhiteSmoke" :stipple nil
+         :inherit nil))))
+ '(shadow ((t (:foreground "gray50"))))
+ '(cursor ((t (:background "#456980"))))
  '(fixed-pitch ((t (:family "Monospace"))))
- '(variable-pitch ((((type w32)) (:foundry "outline" :family "Arial")) (t (:family "Sans Serif"))))
- '(escape-glyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
- '(homoglyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
- '(minibuffer-prompt ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "medium blue"))))
- '(highlight ((((class color) (min-colors 88) (background light)) (:background "darkseagreen2")) (((class color) (min-colors 88) (background dark)) (:background "darkolivegreen")) (((class color) (min-colors 16) (background light)) (:background "darkseagreen2")) (((class color) (min-colors 16) (background dark)) (:background "darkolivegreen")) (((class color) (min-colors 8)) (:foreground "gray10" :background "green")) (t (:inverse-video t))))
- '(region ((t (:background "LightBlue1"))))
- '(shadow ((((class color grayscale) (min-colors 88) (background light)) (:foreground "grey50")) (((class color grayscale) (min-colors 88) (background dark)) (:foreground "grey70")) (((class color) (min-colors 8) (background light)) (:foreground "green")) (((class color) (min-colors 8) (background dark)) (:foreground "yellow"))))
- '(secondary-selection ((((class color) (min-colors 88) (background light)) (:background "yellow1")) (((class color) (min-colors 88) (background dark)) (:background "SkyBlue4")) (((class color) (min-colors 16) (background light)) (:background "yellow")) (((class color) (min-colors 16) (background dark)) (:background "SkyBlue4")) (((class color) (min-colors 8)) (:foreground "gray10" :background "cyan")) (t (:inverse-video t))))
- '(trailing-whitespace ((((class color) (background light)) (:background "red1")) (((class color) (background dark)) (:background "red1")) (t (:inverse-video t))))
- '(font-lock-builtin-face ((t (:foreground "DeepPink3"))))
- '(font-lock-comment-delimiter-face ((default (:inherit (font-lock-comment-face)))))
- '(font-lock-comment-face ((t (:foreground "Sienna"))))
- '(font-lock-constant-face ((t (:foreground "slate gray"))))
- '(font-lock-doc-face ((t (:foreground "forest green" :inherit (font-lock-string-face)))))
- '(font-lock-function-name-face ((t (:foreground "blue"))))
- '(font-lock-keyword-face ((t (:foreground "purple"))))
- '(font-lock-negation-char-face ((t nil)))
- '(font-lock-preprocessor-face ((t (:inherit (font-lock-builtin-face)))))
- '(font-lock-regexp-grouping-backslash ((t (:foreground "#ccc" :inherit (bold)))))
- '(font-lock-regexp-grouping-construct ((t (:foreground "#faa" :inherit (bold)))))
- '(font-lock-string-face ((t (:foreground "forest green"))))
- '(font-lock-type-face ((t (:foreground "chocolate"))))
- '(font-lock-variable-name-face ((t (:foreground "dodger blue"))))
- '(font-lock-warning-face ((t (:foreground "red" :inherit (error)))))
- '(button ((t (:inherit (link)))))
- '(link ((((class color) (min-colors 88) (background light)) (:underline (:color foreground-color :style line) :foreground "RoyalBlue3")) (((class color) (background light)) (:underline (:color foreground-color :style line) :foreground "blue")) (((class color) (min-colors 88) (background dark)) (:underline (:color foreground-color :style line) :foreground "cyan1")) (((class color) (background dark)) (:underline (:color foreground-color :style line) :foreground "cyan")) (t (:inherit (underline)))))
- '(link-visited ((default (:inherit (link))) (((class color) (background light)) (:foreground "magenta4")) (((class color) (background dark)) (:foreground "violet"))))
- '(fringe ((((class color) (background light)) (:background "grey95")) (((class color) (background dark)) (:background "grey10")) (t (:background "gray"))))
- '(header-line ((default (:inherit (mode-line))) (((type tty)) (:underline (:color foreground-color :style line) :inverse-video nil)) (((class color grayscale) (background light)) (:box nil :foreground "grey20" :background "grey90")) (((class color grayscale) (background dark)) (:box nil :foreground "grey90" :background "grey20")) (((class mono) (background light)) (:underline (:color foreground-color :style line) :box nil :inverse-video nil :foreground "gray10" :background "white smoke")) (((class mono) (background dark)) (:underline (:color foreground-color :style line) :box nil :inverse-video nil :foreground "white smoke" :background "gray10"))))
- '(tooltip ((((class color)) (:inherit (variable-pitch) :foreground "gray10" :background "lightyellow")) (t (:inherit (variable-pitch)))))
- '(mode-line ((t (:box (:line-width -1 :color nil :style released-button) :foreground "gray10" :background "light sky blue"))))
+ '(variable-pitch ((((type w32)) (:foundry "outline" :family "Arial"))
+                   (t (:family "Sans Serif"))))
+ '(highlight ((t (:background "#bfe6ff"))))
+ '(lazy-highlight ((t (:background "#e0f3ff"))))
+ '(region ((t (:background "#bfe6ff"))))
+ '(secondary-selection ((t (:background "#e0f3ff"))))
+ '(tooltip ((t (:foreground "gray10" :background "#fff6e0"))))
+ '(success ((t (:foreground "ForestGreen"))))
+ ;; 基本色、HSVでH203 S46 V98
+ '(mode-line ((t (:box (:line-width -1 :color nil :style released-button)
+                       :foreground "gray10" :background "LightSkyBlue"))))
  '(mode-line-buffer-id ((t (:weight bold))))
  '(mode-line-emphasis ((t (:weight bold))))
- '(mode-line-highlight ((((class color) (min-colors 88)) (:box (:line-width 2 :color "grey40" :style released-button))) (t (:inherit (highlight)))))
- '(mode-line-inactive ((t (:weight light :box (:line-width -1 :color "grey75" :style nil) :foreground "dim gray" :background "light gray" :inherit (mode-line)))))
- '(isearch ((((class color) (min-colors 88) (background light)) (:foreground "lightskyblue1" :background "magenta3")) (((class color) (min-colors 88) (background dark)) (:foreground "brown4" :background "palevioletred2")) (((class color) (min-colors 16)) (:foreground "cyan1" :background "magenta4")) (((class color) (min-colors 8)) (:foreground "cyan1" :background "magenta4")) (t (:inverse-video t))))
- '(isearch-fail ((((class color) (min-colors 88) (background light)) (:background "RosyBrown1")) (((class color) (min-colors 88) (background dark)) (:background "red4")) (((class color) (min-colors 16)) (:background "red")) (((class color) (min-colors 8)) (:background "red")) (((class color grayscale)) (:foreground "grey")) (t (:inverse-video t))))
- '(lazy-highlight ((((class color) (min-colors 88) (background light)) (:background "paleturquoise")) (((class color) (min-colors 88) (background dark)) (:background "paleturquoise4")) (((class color) (min-colors 16)) (:background "turquoise3")) (((class color) (min-colors 8)) (:background "turquoise3")) (t (:underline (:color foreground-color :style line)))))
- '(match ((((class color) (min-colors 88) (background light)) (:background "yellow1")) (((class color) (min-colors 88) (background dark)) (:background "RoyalBlue3")) (((class color) (min-colors 8) (background light)) (:foreground "gray10" :background "yellow")) (((class color) (min-colors 8) (background dark)) (:foreground "white smoke" :background "blue")) (((type tty) (class mono)) (:inverse-video t)) (t (:background "gray"))))
+ '(mode-line-highlight
+   ((((class color) (min-colors 88))
+     (:box (:line-width 2 :color "grey40" :style released-button)))
+    (t (:inherit (highlight)))))
+ '(mode-line-inactive
+   ((t (:weight light :box (:line-width -1 :color "grey75" :style nil)
+                :foreground "DimGray" :background "LightGray"
+                :inherit (mode-line)))))
+ ;; font-lock、プログラムのキーワード
+ '(font-lock-keyword-face ((t (:foreground "Purple"))))
+ '(font-lock-function-name-face ((t (:foreground "Blue"))))
+ '(font-lock-string-face ((t (:foreground "ForestGreen"))))
+ '(font-lock-doc-face ((t (:inherit (font-lock-string-face)))))
+ '(font-lock-variable-name-face ((t (:foreground "DodgerBlue"))))
+ '(font-lock-type-face ((t (:foreground "Chocolate"))))
+ '(font-lock-builtin-face ((t (:foreground "DeepPink3"))))
+ '(font-lock-constant-face ((t (:foreground "SlateGray"))))
+ '(font-lock-comment-face ((t (:foreground "Sienna"))))
+ '(font-lock-comment-delimiter-face
+   ((default (:inherit (font-lock-comment-face)))))
+ '(font-lock-negation-char-face ((t nil)))
+ '(font-lock-preprocessor-face ((t (:inherit (font-lock-builtin-face)))))
+ '(font-lock-regexp-grouping-backslash
+   ((t (:foreground "#ccc" :inherit (bold)))))
+ '(font-lock-regexp-grouping-construct
+   ((t (:foreground "#faa" :inherit (bold)))))
+ '(font-lock-warning-face ((t (:inherit (error)))))
+ ;; 元からあったやつ
+ '(escape-glyph ((t (:inherit (font-lock-comment-face)))))
+ '(homoglyph ((t (:inherit (font-lock-comment-face)))))
+ '(minibuffer-prompt ((t (:foreground "blue"))))
+ '(button ((t (:inherit (link)))))
+ '(link ((t (:underline (:color foreground-color :style line)
+                        :foreground "RoyalBlue3"))))
+ '(link-visited ((t (:foreground "purple" :inherit (link)))))
+ '(fringe ((t (:background "SmokeWhite"))))
+ '(header-line
+   ((t (:foreground "gray10" :background "gray90" :inherit (mode-line)))))
+ '(tooltip
+   ((t (:foreground "gray10" :background "#fff6e0" :inherit variable-pitch))))
+ '(match ((t (:background "#ffedbf"))))
  '(next-error ((t (:inherit (region)))))
  '(query-replace ((t (:inherit (isearch)))))
- '(flycheck-error ((t (:underline (:color "Red1" :style wave) :background "pink"))))
- '(twittering-uri-face ((t (:underline (:color foreground-color :style line) :foreground "blue"))))
- '(git-gutter-fr:added ((t (:foreground "lime green" :background "white smoke" :inherit (git-gutter:added fringe)))))
- '(git-gutter-fr:modified ((t (:foreground "blue" :background "white smoke" :inherit (git-gutter:modified fringe)))))
- '(vhl/default-face ((t (:background "light cyan" :inherit (secondary-selection)))))
- '(ahs-plugin-defalt-face ((t :foreground "gray10" :inherit (region))))
- '(ahs-plugin-whole-buffer-face ((t (:background "light sky blue" :foreground "gray10"))))
- '(ahs-face ((t (:background "slate gray" :foreground "ghost white"))))
- '(hl-line ((t (:background "light cyan" :inherit (highlight)))))
- '(whitespace-trailing ((t (:background "lavender"))))
- '(whitespace-space ((t (:background "DarkSeaGreen1"))))
- '(whitespace-tab ((t (:background "khaki"))))
- '(whitespace-empty ((t nil)))
- '(whitespace-line ((t (:background "khaki"))))
- '(line-number ((t (:background "white smoke" :inherit (shadow default)))))
- '(web-mode-symbol-face ((t (:foreground "coral2"))))
- '(web-mode-current-element-highlight-face ((t (:foreground "gray10" :background "light sky blue"))))
- '(web-mode-current-column-highlight-face ((t (:inherit (whitespace-trailing)))))
- '(highlight-indentation-face ((t (:inherit (whitespace-trailing)))))
- ;; mode-lineから算出
- '(flycheck-color-mode-line-error-face ((t (:background "#fa8d87"))))
- '(flycheck-color-mode-line-warning-face ((t (:background "#fad987"))))
- '(flycheck-color-mode-line-running-face ((t (:foreground "#666137"))))
- '(lsp-ui-doc-background ((t (:background "gray80"))))
+ ;; パッケージカスタマイズ
+ '(isearch ((t (:foreground "gray10" :background "#fa8d87"))))
+ '(isearch-fail ((t (:foreground "gray10" :background "#ffc2bf"))))
+ '(ivy-current-match ((t (:foreground "gray90" :inherit (cursor)))))
+ '(ivy-minibuffer-match-face-1 ((t (:weight bold :background "#fa8d87"))))
+ '(ivy-minibuffer-match-face-2 ((t (:weight bold :background "#fa8d87"))))
+ '(ivy-minibuffer-match-face-4 ((t (:weight bold :background "#fa8d87"))))
+ '(twittering-uri-face ((t :inherit (link))))
+ '(git-gutter-fr:added
+   ((t (:foreground "LimeGreen" :background "WhiteSmoke"
+                    :inherit (git-gutter:added fringe)))))
+ '(git-gutter-fr:modified
+   ((t (:foreground "blue" :background "WhiteSmoke"
+                    :inherit (git-gutter:modified fringe)))))
+ '(vhl/default-face ((t :inherit (secondary-selection))))
+ '(ahs-face ((t (:inherit (region)))))
+ '(ahs-plugin-defalt-face ((t (:inherit (ahs-face)))))
+ '(ahs-plugin-default-face-unfocused ((t (:inherit (ahs-plugin-defalt-face)))))
+ '(ahs-plugin-whole-buffer-face ((t (:inherit ahs-plugin-defalt-face))))
+ '(ahs-face-unfocused ((t (:inherit (ahs-face)))))
+ '(ahs-definition-face ((t (:underline t :weight bold :inherit (ahs-face)))))
+ '(ahs-definition-face-unfocused ((t (:inherit ahs-definition-face))))
+ '(ahs-edit-mode-face ((t (:background "#ffc2bf"))))
+ '(hl-line ((t (:inherit (lazy-highlight)))))
+ '(whitespace-trailing ((t (:background "#fff6e0"))))
+ '(whitespace-space ((t (:background "#ffedbf")))) ; "　"
+ '(whitespace-tab ((t (:background "#ffedbf")))) ; "	"
+ '(whitespace-empty ((t (:background "#ffc2bf"))))
+ '(whitespace-line ((t (:background "#ffc2bf"))))
+ '(line-number ((t (:background "gray90" :inherit (shadow default)))))
+ '(web-mode-symbol-face ((t (:inherit (font-lock-builtin-face)))))
+ '(web-mode-current-element-highlight-face ((t (:inherit (highlight)))))
+ '(web-mode-current-column-highlight-face ((t (:background "gray90"))))
+ '(highlight-indentation-face ((t (:background "gray90"))))
+ '(flycheck-error
+   ((t (:underline (:color "red" :style wave) :background "#ffc2bf"))))
+ ;; mode-lineのLightSkyBlueから算出、S46、V98
+ '(flycheck-color-mode-line-error-face ((t (:background "#fa8d87"))))   ; H3
+ '(flycheck-color-mode-line-warning-face ((t (:background "#fad987")))) ; H43
+ '(flycheck-color-mode-line-running-face
+   ((t (:weight bold :foreground "#gray40"))))
+ '(company-tooltip ((t (:inherit (tooltip)))))
+ '(company-scrollbar-bg ((t (:background "#ffedbf"))))
+ '(company-scrollbar-fg ((t (:background "LightSkyBlue"))))
+ '(company-tooltip-annotation ((t (:foreground "#456980"))))
+ '(company-tooltip-selection ((t (:inherit (region)))))
+ '(company-tooltip-mouse ((t (:inherit (secondary-selection)))))
+ '(lsp-ui-doc-background ((t (:inherit (tooltip)))))
  ;; code in lsp-ui-doc
- '(markdown-inline-code-face ((t :foreground "slate blue" :inherit (fixed-pitch))))
+ '(markdown-inline-code-face
+   ((t (:inherit (fixed-pitch font-lock-keyword-face)))))
  ;; signature in lsp-ui-doc
- '(markdown-pre-face ((t :inherit (markdown-inline-code-face))))
+ '(markdown-pre-face ((t (:inherit (markdown-inline-code-face)))))
+ '(mozc-cand-overlay-even-face
+   ((t (:inherit (tooltip default)))))
+ '(mozc-cand-overlay-odd-face
+   ((t (:inherit (tooltip default)))))
+ '(mozc-cand-overlay-focused-face ((t (:inherit (region)))))
+ '(mozc-cand-overlay-footer-face
+   ((t (:background "#fad987" :inherit (default)))))
+ '(diff-refine-added ((t (:background "#c7ffbf"))))
+ '(diff-refine-changed ((t (:background "#ffedbf"))))
+ '(diff-refine-removed ((t (:background "#ffc2bf"))))
  )
 (provide-theme 'original)
+
+;;; original-theme.el ends here
