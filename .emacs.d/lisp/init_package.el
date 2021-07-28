@@ -477,7 +477,7 @@
     ;; Emacsを--with-x-toolkit=gtk3 --with-xwidgetsでビルドする必要がある
     ;; (lsp-ui-doc-use-webkit . t)
     (lsp-ui-doc-delay . 0.7)
-    :bind (:lsp-ui-mode-map ("<tab>" . lsp-ui-doc-focus-frame)))
+    :bind (:lsp-ui-mode-map ("C-c <tab>" . lsp-ui-doc-focus-frame)))
   (leaf lsp-treemacs :ensure t
     :global-minor-mode lsp-treemacs-sync-mode)
   (leaf lsp-ivy :ensure t))
