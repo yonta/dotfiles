@@ -115,7 +115,7 @@
  '(flycheck-color-mode-line-error-face ((t (:background "#fa8d87"))))   ; H3
  '(flycheck-color-mode-line-warning-face ((t (:background "#fad987")))) ; H43
  '(flycheck-color-mode-line-running-face
-   ((t (:weight bold :foreground "#gray40"))))
+   ((t (:weight bold :foreground "gray40"))))
  '(company-tooltip ((t (:inherit (tooltip)))))
  '(company-scrollbar-bg ((t (:background "#ffedbf"))))
  '(company-scrollbar-fg ((t (:background "LightSkyBlue"))))
