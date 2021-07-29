@@ -504,6 +504,8 @@
                    :post-handlers '(("|| " "SPC") (" || " "=")))
     (unbind-key "C-c C-f" web-mode-map))
 
+  (leaf impatient-mode :ensure t)
+
   ;; htmlbeautifierに必要
   (leaf reformatter :ensure t)
 
