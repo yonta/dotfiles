@@ -67,7 +67,7 @@
  '(link ((t (:underline (:color foreground-color :style line)
                         :foreground "RoyalBlue3"))))
  '(link-visited ((t (:foreground "purple" :inherit (link)))))
- '(fringe ((t (:background "SmokeWhite"))))
+ '(fringe ((t (:background "WhiteSmoke"))))
  '(header-line
    ((t (:foreground "gray10" :background "gray90" :inherit (mode-line)))))
  '(tooltip
