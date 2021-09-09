@@ -1288,6 +1288,9 @@
   (display-buffer-base-action
    . '((display-buffer-reuse-window ace-display-buffer))))
 
+(leaf goto-line-preview :ensure t
+  :bind* ("M-g M-g" . goto-line-preview))
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
