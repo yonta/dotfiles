@@ -1,6 +1,10 @@
 # Emacs Quickrun
 qr_*
 
+# Emacs grip-mode
+*.markdown.tmp
+*.md.tmp
+
 # ignore thumbnails created by windows
 Thumbs.db
 
