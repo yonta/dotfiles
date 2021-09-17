@@ -5,6 +5,9 @@ qr_*
 *.markdown.tmp
 *.md.tmp
 
+# Emacs LSP
+.log
+
 # ignore thumbnails created by windows
 Thumbs.db
 

@@ -102,12 +102,22 @@
   (leaf company-c-headers :ensure t :disabled t)
   (leaf company-arduino :ensure t :disabled t))
 
-;; pipでflake8とmypyをいれておく
+;; メジャーモードによってlspの次のcheckerを切り替える
+;; https://github.com/flycheck/flycheck/issues/1762
+(defvar-local flycheck-local-checkers nil)
 (leaf flycheck
   :init
+  ;; pipでflake8とmypyをいれておく
   (leaf flycheck :ensure t
-    :defvar (flycheck-gcc-language-standard flycheck-clang-language-standard)
+    :defvar (flycheck-checker
+             flycheck-gcc-language-standard
+             flycheck-clang-language-standard)
     :global-minor-mode global-flycheck-mode
+    :preface
+    (defun +flycheck-checker-get(fn checker property)
+      (or (alist-get property (alist-get checker flycheck-local-checkers))
+          (funcall fn checker property)))
+    (advice-add 'flycheck-checker-get :around '+flycheck-checker-get)
     :custom
     (flycheck-python-flake8-executable . "flake8")
     (flycheck-checker-error-threshold . 250)
@@ -460,7 +470,11 @@
   (leaf ruby-mode
     :custom
     (ruby-insert-encoding-magic-comment . nil)
-    :hook (ruby-mode-hook . lsp)))
+    :hook ((ruby-mode-hook . lsp)
+           (ruby-mode-hook
+            . (lambda ()
+                (setq flycheck-local-checkers
+                      '((lsp . ((next-checkers . (ruby-rubocop)))))))))))
 
 (leaf lsp
   :init
@@ -587,35 +601,19 @@
 
 (leaf typescript
   :init
+  ;; npmでtypescript-language-serverを入れておく
+  ;;   npm install -g typescript-language-server
   (leaf typescript-mode :ensure t
-    :defvar (flycheck-checker
-             flycheck-check-syntax-automatically
-             flycheck-idle-change-delay)
-    :defun (flycheck-add-next-checker flycheck-remove-next-checker)
-    :hook (typescript-mode-hook
-           . (lambda ()
-               (flycheck-remove-next-checker
-                'typescript-tide 'typescript-tslint)
-               (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
-               (setq-local flycheck-checker 'typescript-tide)
-               (setq-local flycheck-check-syntax-automatically
-                           '(save mode-enabled))))
+    :defvar flycheck-check-syntax-automatically
+    :hook ((typescript-mode-hook . lsp)
+           (typescript-mode-hook
+            . (lambda ()
+                (setq flycheck-local-checkers
+                      '((lsp . ((next-checkers . (javascript-eslint))))))
+                (setq-local flycheck-check-syntax-automatically
+                            '(save mode-enabled)))))
     :custom
     (typescript-indent-level . 2))
-
-  ;; nvmでnodeを入れておく
-  ;;   nvm install stable
-  ;;   nvm alias default stable
-  (leaf tide :ensure t
-    :diminish tide-mode
-    :hook ((typescript-mode-hook . tide-setup)
-           (tide-mode-hook . tide-hl-identifier-mode))
-    :bind ("C-c C-d" . tide-documentation-at-point)
-    :custom ((tide-completion-setup-company-backend . nil)
-             (tide-completion-ignore-case . t)
-             (tide-completion-detailed . t))
-    :config (cl-pushnew
-             '(company-tide :with company-dabbrev-code) company-backends))
 
   (leaf prettier-js :ensure t
     :diminish prettier-js-mode
