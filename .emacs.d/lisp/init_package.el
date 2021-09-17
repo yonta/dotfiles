@@ -253,7 +253,8 @@
   ;; 空権限のtokenをcustom.elのgrip-github-passwordに書き込む
   ;; gfm-modeのときにgrip-modeで起動する
   (leaf grip-mode :ensure t
-    :custom (grip-github-password . ""))
+    :custom
+    (grip-github-password . ""))
 
   :custom
   (markdown-command . "markdown")
