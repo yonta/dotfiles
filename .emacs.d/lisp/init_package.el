@@ -618,7 +618,7 @@
 
   (leaf prettier-js :ensure t
     :diminish prettier-js-mode
-    :hook ((javascript-mode-hook . prettier-js-mode)
+    :hook ((js-mode-hook . prettier-js-mode)
            (typescript-mode-hook . prettier-js-mode)))
 
   (leaf ts-comint :ensure t
