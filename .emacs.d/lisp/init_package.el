@@ -671,12 +671,13 @@
 
 ;;; Face
 
-(leaf whitespace :require t
-  :defvar whitespace-line-column
+(leaf whitespace
+  :defvar whitespace-line-column whitespace-style
   :global-minor-mode global-whitespace-mode
   :diminish global-whitespace-mode
   :custom
-  ;; 空白などの可視化、対象はタブ文字、80文字超え部、行末の空白、全角スペース
+  ;; 空白などの可視化
+  ;; 対象はタブ文字、80文字超え部、行末の空白、全角スペース、空白のみ行
   (whitespace-style . '(face tabs lines-tail trailing spaces empty))
   ;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
   (whitespace-action . '(auto-cleanup))
@@ -685,9 +686,7 @@
   ;; 一部モードで1行の最大文字数を変更する
   :hook ((java-mode-hook . (lambda () (setq-local whitespace-line-column 100)))
          (ruby-mode-hook . (lambda () (setq-local whitespace-line-column 120)))
-         (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))
-         (dired-mode-hook
-          . (lambda () (setq-local truncate-partial-width-windows t)))))
+         (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))))
 
 (leaf parens
   :init
@@ -1377,6 +1376,12 @@ Creates a buffer if necessary."
           (setq dired-listing-switches "-lgGhF")
         (setq dired-listing-switches "-lgGhFA"))
       (my-reload-current-dired-buffer)))
+  :hook
+  (dired-mode-hook
+   . (lambda ()
+       (setq-local whitespace-style (delete 'lines-tail whitespace-style))
+       (setq-local truncate-partial-width-windows t)))
+
   :init
   (leaf dired-collapse :ensure t
     :hook (dired-mode-hook . dired-collapse-mode))
