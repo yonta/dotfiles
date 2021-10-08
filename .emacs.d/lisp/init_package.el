@@ -433,27 +433,6 @@
     :diminish rufo-minor-mode
     :hook (ruby-mode-hook . rufo-minor-mode))
 
-  ;; gemでpryとpry-docを入れておく
-  ;; gem install pry pry-doc
-  (leaf robe :ensure t :disabled t
-    :if (executable-find "pry")
-    ;; :defun robe-start robe-running-p
-    :diminish t
-    :hook (ruby-mode-hook . robe-mode)
-    :hook (ruby-mode-hook
-           . (lambda ()
-               (setq-local company-backends
-                           '((company-robe :with company-yasnippet)))))
-    ;; robeはRuby REPLが必要
-    ;; 自動robe-startが不安定なので一時オフにする
-    ;; :hook (robe-mode-hook
-    ;;        . (lambda () (unless (robe-running-p) (funcall 'robe-start t))))
-    :bind (:inf-ruby-mode-map
-           :package inf-ruby
-           ("C-c @" . robe-start))
-    :custom
-    ;; RubyのSymbolをdabbrev対象にする
-    (dabbrev-abbrev-skip-leading-regexp . ":"))
 
   (leaf rspec-mode :ensure t :diminish t)
 
@@ -471,6 +450,7 @@
   (leaf ruby-mode
     :custom
     (ruby-insert-encoding-magic-comment . nil)
+    (dabbrev-abbrev-skip-leading-regexp . ":")
     :hook ((ruby-mode-hook . lsp)
            (ruby-mode-hook
             . (lambda ()
