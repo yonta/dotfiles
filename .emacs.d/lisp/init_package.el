@@ -803,6 +803,7 @@
 
 ;; コードハイライティングが賢くなるとか
 (leaf tree-sitter
+  :diminish tree-sitter-mode
   :init
   (leaf tree-sitter :ensure t
     :global-minor-mode global-tree-sitter-mode)
