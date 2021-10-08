@@ -31,6 +31,10 @@
         pager = delta --color-only | less --RAW-CONTROL-CHARS
 [interactive]
         diffFilter = delta --color-only
+[delta]
+        keep-plus-minus-markers = false
+        hunk-header-style = blue bold ul
+        file-style = yellow
 [push]
         default = simple
 [merge]
