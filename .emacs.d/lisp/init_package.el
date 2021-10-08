@@ -801,7 +801,7 @@
   :hook (after-init-hook . global-emojify-mode)
   :custom (emojify-emoji-styles . (ascii github)))
 
-;; コードはいライティングが賢くなるとか
+;; コードハイライティングが賢くなるとか
 (leaf tree-sitter
   :init
   (leaf tree-sitter :ensure t
