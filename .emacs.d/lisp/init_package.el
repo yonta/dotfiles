@@ -454,6 +454,7 @@
     :hook ((ruby-mode-hook . lsp)
            (ruby-mode-hook
             . (lambda ()
+                (setq-local company-minimum-prefix-length 4)
                 (setq flycheck-local-checkers
                       '((lsp . ((next-checkers . (ruby-rubocop)))))))))))
 
