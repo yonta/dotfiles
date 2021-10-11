@@ -44,3 +44,5 @@
         autostash = true
 [blame]
         date=format:%m/%d(%a)%R
+[help]
+        autocorrect = 1
