@@ -12,7 +12,7 @@
         co = checkout
         ci = commit --verbose
         cif = commit --amend --no-edit
-        st = status
+        st = status --short --branch
         br = branch
         l = log --graph --date=format:'%Y/%m/%d(%a) %T %z'
         a = add .
