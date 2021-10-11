@@ -10,8 +10,8 @@
 [alias]
         h = help
         co = checkout
-        ci = commit -v
-        cif = commit -v --amend -C @
+        ci = commit --verbose
+        cif = commit --amend --no-edit
         st = status
         br = branch
         l = log --graph --date=format:'%Y/%m/%d(%a) %T %z'
@@ -24,7 +24,7 @@
         pushf = push --force-with-lease
         blames = blame -s
         cp = cherry-pick
-        rbi = rebase -i
+        rbi = rebase --interactive
 [core]
         editor = emacsclient
         excludesfile = ~/.gitignore_global
