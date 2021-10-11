@@ -499,7 +499,8 @@
                    :post-handlers '(("|| " "SPC") (" || " "=")))
     (unbind-key "C-c C-f" web-mode-map))
 
-  (leaf impatient-mode :ensure t)
+  (leaf impatient-mode :ensure t
+    :doc "HTMLのライブプレビューモード")
 
   ;; htmlbeautifierに必要
   (leaf reformatter :ensure t)
@@ -544,33 +545,9 @@
 (leaf javascript
   :init
   (leaf js
+    :hook (js-mode-hook . lsp)
     :custom
     (js-indent-level . 2))
-
-  (leaf tern
-    :if (executable-find "tern")
-    :init
-    ;; npmなどで補完用のternとリント用のeslintを入れておく
-    ;; `npm install -g tern eslint'
-    ;; company-ternに必要
-    (leaf tern :ensure t
-      :diminish t
-      :defvar tern-command
-      :hook js-mode-hook
-      :config
-      ;; .tern-portファイルを作らない
-      (setq tern-command '("tern" "--no-port-file")))
-
-    ;; company-ternに必要
-    (leaf dash-functional :ensure t)
-
-    (leaf company-tern
-      :defun company-tern
-      :el-get (company-tern
-               :url "https://github.com/whitypig/company-tern.git")
-      :config
-      (add-to-list 'company-backends
-                   '(company-tern :with company-dabbrev-code))))
 
   (leaf add-node-modules-path :ensure t
     :hook ((js-mode-hook . add-node-modules-path)
@@ -582,8 +559,8 @@
 
 (leaf typescript
   :init
-  ;; npmでtypescript-language-serverを入れておく
-  ;;   npm install -g typescript-language-server
+  ;; npmでtypescript-language-serverとtypescriptを入れておく
+  ;;   npm install -g typescript-language-server typescript
   (leaf typescript-mode :ensure t
     :defvar flycheck-check-syntax-automatically
     :hook ((typescript-mode-hook . lsp)
@@ -825,8 +802,7 @@
        ("\\*helpful" :regexp t)
        ("*robe-doc*")
        ("*xref*")
-       ("*Backtrace*")
-       ("*tide-documentation*"))))
+       ("*Backtrace*"))))
 
 (leaf projectile
   :init
