@@ -25,6 +25,7 @@
         blames = blame -s
         cp = cherry-pick
         rbi = rebase --interactive
+        tags = tag --list
 [core]
         editor = emacsclient
         excludesfile = ~/.gitignore_global
