@@ -1100,7 +1100,7 @@
     :custom
     (paradox-execute-asynchronously . t))
 
-  (leaf auto-package-update :ensure t
+  (leaf auto-package-update :ensure t :disabled t
     :custom
     (auto-package-update-delete-old-versions . t)
     (auto-package-update-prompt-before-update . t)
