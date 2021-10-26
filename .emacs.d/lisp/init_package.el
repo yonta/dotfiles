@@ -18,8 +18,6 @@
 ;; `package-archive-priorities'を使って設定する。
 (add-to-list 'package-archives ; MELPAを追加
              '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives ; Marmaladeを追加
-             '("marmalade" . "https://marmalade-repo.org/packages/"))
 (eval-and-compile (package-initialize))
 
 (unless (package-installed-p 'leaf)
