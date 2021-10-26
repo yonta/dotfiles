@@ -433,6 +433,10 @@
     :diminish rufo-minor-mode
     :hook (ruby-mode-hook . rufo-minor-mode))
 
+  (leaf rubocopfmt :ensure t :disabled t
+    :if (executable-find "rubocop")
+    :diminish rubocopfmt-mode
+    :hook (ruby-mode-hook . rubocopfmt-mode))
 
   (leaf rspec-mode :ensure t :diminish t)
 
