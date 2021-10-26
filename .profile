@@ -78,34 +78,6 @@ if [ -d "${HOME}/.ochacaml" ]; then
     PATH="$PATH:$HOME/.ochacaml/OchaCaml"
 fi
 
-#=====================================================================
-# GitKraken
-#   https://www.it-swarm.dev/ja/git/%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E6%99%82%E3%81%ABsshagent%E3%82%92%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B/1042011156/
-#   http://mah.everybody.org/docs/ssh
-#=====================================================================
-
-SSH_ENV="$HOME/.ssh/environment"
-
-function start_agent {
-    echo "Initialising new SSH agent..."
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    echo succeeded
-    chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}" > /dev/null
-    /usr/bin/ssh-add;
-}
-
-# Source SSH settings, if applicable
-if [ -f "${SSH_ENV}" ]; then
-    . "${SSH_ENV}" > /dev/null
-    #ps ${SSH_AGENT_PID} doesn't work under cywgin
-    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-        start_agent;
-    }
-else
-    start_agent;
-fi
-
 # set Aliases
 alias ls='ls --color=auto --show-control-chars'
 alias grep='grep --color=auto'
