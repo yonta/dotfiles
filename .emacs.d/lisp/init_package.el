@@ -793,16 +793,17 @@
   :custom
   ;; popwin対象
   (popwin:special-display-config
-   . '(("*quickrun*" :stick t)
+   . '(("*quickrun*" :stick t :tail t)
        ("*Google Translate*")
        (completion-list-mode :noselect t) ;; 全completionを対象
+       (compilation-mode :noselect t)
        ("*Warnings*")
        (" *auto-async-byte-compile*")
        ("*Compile-Log*")
        ("*Kill Ring*")
-       (" *undo-tree*")
-       ("*Help*")
-       ("\\*helpful" :regexp t)
+       (" *undo-tree*" :width 60 :position right)
+       help-mode
+       helpful-mode
        ("*robe-doc*")
        ("*xref*")
        ("*Backtrace*"))))
