@@ -464,7 +464,13 @@
   :init
   (leaf lsp-mode :ensure t
     :diminish t
-    :hook (lsp-mode-hook . lsp-enable-which-key-integration))
+    :hook (lsp-mode-hook . lsp-enable-which-key-integration)
+    :custom
+    ;; LSPでパフォーマンスの高いplistsを使う
+    ;; .profileでexport LSP_USE_PLISTS=trueする
+    ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
+    (lsp-use-plists . t))
+
   (leaf lsp-ui :ensure t
     :custom
     (lsp-ui-sideline-enable . nil)
@@ -476,8 +482,10 @@
     ;; (lsp-ui-doc-use-webkit . t)
     (lsp-ui-doc-delay . 0.7)
     :bind (:lsp-ui-mode-map ("C-c <tab>" . lsp-ui-doc-focus-frame)))
+
   (leaf lsp-treemacs :ensure t
     :global-minor-mode lsp-treemacs-sync-mode)
+
   (leaf lsp-ivy :ensure t))
 
 (leaf html-css
@@ -572,7 +580,7 @@
                 (setq flycheck-local-checkers
                       '((lsp . ((next-checkers . (javascript-eslint))))))
                 (setq-local flycheck-check-syntax-automatically
-                            '(save mode-enabled)))))
+                            '(save idle-change mode-enabled)))))
     :custom
     (typescript-indent-level . 2))
 

@@ -60,4 +60,8 @@
 ;;; #スタートのロックファイルを作らない
 (setq create-lockfiles nil)
 
+;;; Emacsのプロセス通信の容量を上げる
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/#increase-the-amount-of-data-which-emacs-reads-from-the-process
+(setq read-process-output-max (* 1024 1024))
+
 ;;; init_behavior.el ends here
