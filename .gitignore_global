@@ -13,3 +13,6 @@ Thumbs.db
 
 # Hivemind
 Procfile*
+
+# Browsersync
+bs-config.js
