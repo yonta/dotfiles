@@ -54,7 +54,10 @@
 ;;; 画面スクロールでカーソル位置を変えないようにする
 (setq scroll-preserve-screen-position :always)
 
-;; カーソルとマウスポインタが近づいたらマウスポインタを移動する
+;;; カーソルとマウスポインタが近づいたらマウスポインタを移動する
 (mouse-avoidance-mode 'exile)
+
+;;; #スタートのロックファイルを作らない
+(setq create-lockfiles nil)
 
 ;;; init_behavior.el ends here
