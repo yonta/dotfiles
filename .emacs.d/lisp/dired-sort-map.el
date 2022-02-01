@@ -50,6 +50,7 @@
   (interactive)
   (dired-sort-other (concat dired-listing-switches " -X")))
 (bind-key "x" 'dired-sort-map-by-extension dired-sort-map)
+(bind-key "m" 'dired-sort-map-by-extension dired-sort-map) ; like major Mode
 
 (defun dired-sort-map-by-time ()
   "Sort current `dired-mode' buffer by Time."
@@ -62,11 +63,12 @@
   (interactive)
   (dired-sort-other dired-listing-switches))
 (bind-key "n" 'dired-sort-map-by-name dired-sort-map)
+(bind-key "f" 'dired-sort-map-by-name dired-sort-map) ; File name
 
 (defun dired-sort-map-help ()
   "Print help of `dired-sort-map' binding."
   (interactive)
-  (message "s Size; x eXtension; t Time; n Name"))
+  (message "s Size; x/m eXtension; t Time; n/f Name"))
 (bind-key "h" 'dired-sort-map-help dired-sort-map)
 
 (provide 'dired-sort-map)
