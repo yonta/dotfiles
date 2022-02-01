@@ -88,8 +88,8 @@ if type exa > /dev/null 2>&1 ; then
     # use exa
     alias l='exa'
     alias la='exa -a'
-    alias ll='exa -lFg --git'
-    alias lla='exa -alFg --git'
+    alias ll='exa -lFg --git --time-style=long-iso'
+    alias lla='exa -alFg --git --time-style=long-iso'
 else
     # use ls
     alias l='ls'
