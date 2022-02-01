@@ -1262,50 +1262,8 @@
 ;;; Emacs default (not package.el)
 
 (leaf dired
-  :defun (my-dired-various-sort-change my-reload-current-dired-buffer)
+  :defun my-reload-current-dired-buffer
   :preface
-  ;; サイズや拡張子による並び替えを追加する．
-  ;; http://d.hatena.ne.jp/mooz/20091207/p1
-  (defvar dired-various-sort-type
-    '(("S" . "size")
-      ("X" . "extension")
-      ("v" . "version")
-      ("t" . "date")
-      (""  . "name")))
-  (defun my-dired-various-sort-change (sort-type-alist &optional prior-pair)
-    "Dired various sort change by SORT-TYPE-ALIST and PRIOR-PAIR."
-    (when (eq major-mode 'dired-mode)
-      (let* (case-fold-search
-             get-next
-             (options
-              (mapconcat 'car sort-type-alist ""))
-             (opt-desc-pair
-              (or prior-pair
-                  (catch 'found
-                    (dolist (pair sort-type-alist)
-                      (when get-next
-                        (throw 'found pair))
-                      (setq get-next
-                            (string-match (car pair) dired-actual-switches)))
-                    (car sort-type-alist)))))
-        (setq dired-actual-switches
-              (concat "-l" (dired-replace-in-string (concat "[l" options "-]")
-                                                    ""
-                                                    dired-actual-switches)
-                      (car opt-desc-pair)))
-        (setq mode-name
-              (concat "Dired by " (cdr opt-desc-pair)))
-        (force-mode-line-update)
-        (revert-buffer))))
-  (defun my-dired-various-sort-change-or-edit (&optional arg)
-    "Dired various sort change or edit by ARG."
-    (interactive "P")
-    (when dired-sort-inhibit
-      (error "Cannot sort this dired buffer"))
-    (if arg
-        (dired-sort-other
-         (read-string "ls switches (must contain -l): " dired-actual-switches))
-      (my-dired-various-sort-change dired-various-sort-type)))
   ;; diredでディレクトリを移動してもバッファを新規に作成しない
   (defun my-dired-advertised-find-file ()
     (interactive)
@@ -1356,6 +1314,9 @@ Creates a buffer if necessary."
   (leaf dired-collapse :ensure t
     :hook (dired-mode-hook . dired-collapse-mode))
 
+  (leaf dired-sort-map :require t
+    :after dired)
+
   :custom
   ;; dired-modeがlsコマンドに渡すオプションを設定する
   ;; l: 長い表示、dired-modeに必須のオプション
@@ -1367,7 +1328,6 @@ Creates a buffer if necessary."
   ;;(setq dired-listing-switches "-gGhFA")
   (dired-listing-switches . "-lgGhF")
   :bind (:dired-mode-map
-         ("s" . my-dired-various-sort-change-or-edit)
          ("C-m" . my-dired-advertised-find-file)
          ("^" . my-dired-up-directory)
          ("C-." . my-toggle-dired-listing-switches)
