@@ -1277,8 +1277,8 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
     (interactive)
     (progn
       (if (string-match "[Aa]" dired-listing-switches)
-          (setq dired-listing-switches "-lgGhF")
-        (setq dired-listing-switches "-lgGhFA"))
+          (setq dired-listing-switches "--time-style=long-iso -lgGhF")
+        (setq dired-listing-switches "--time-style=long-iso -lgGhFA"))
       (my-reload-current-dired-buffer)))
   :hook
   (dired-mode-hook
@@ -1302,6 +1302,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
   :custom
   ;; dired-modeがlsコマンドに渡すオプションを設定する
+  ;; --time-style=long-iso: 2022-01-01 12:00 形式で日時を表示する
   ;; l: 長い表示、dired-modeに必須のオプション
   ;; g: ユーザ名を非表示
   ;; G: グループ名を非表示
@@ -1309,7 +1310,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   ;; F: ディレクトリに「/」を表示
   ;; A: 「.」と「..」を非表示でドットファイルを表示
   ;;(setq dired-listing-switches "-gGhFA")
-  (dired-listing-switches . "-lgGhF")
+  (dired-listing-switches . "--time-style=long-iso -lgGhF")
   :bind (:dired-mode-map
          ("C-." . my-toggle-dired-listing-switches)
          ("r" . wdired-change-to-wdired-mode)))
