@@ -635,7 +635,7 @@
 
 (leaf graphviz-dot-mode :ensure t)
 
-(leaf gitignore-mode :ensure t)
+(leaf git-modes :ensure t)
 
 ;;; Face
 
