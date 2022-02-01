@@ -1271,7 +1271,9 @@
       (progn (kill-buffer (current-buffer))
              (dired dir))))
   (defun my-toggle-dired-listing-switches ()
-    "Toggle `dired-mode' switch between with and without 'A' option to show or hide dot files."
+    "Toggle `dired-mode' option to show or hide dot files.
+
+Rewrite `dired-listing-switches' variable between with and without 'A'"
     (interactive)
     (progn
       (if (string-match "[Aa]" dired-listing-switches)
@@ -1323,8 +1325,7 @@
   :preface
   ;; ibuffer選択肢を考慮したibuffer-find-file関数を、counselで実現する
   (defun my-counsel-ibuffer-find-file ()
-    "Like `counsel-find-file', but default directory is set to current
-candidate of ibuffer."
+    "Like `counsel-find-file', starting with directory of ibuffer candidate."
     (interactive)
     (let ((default-directory
             (let ((buf (ibuffer-current-buffer)))
