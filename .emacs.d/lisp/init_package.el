@@ -1264,32 +1264,6 @@
 (leaf dired
   :defun my-reload-current-dired-buffer
   :preface
-  ;; diredでディレクトリを移動してもバッファを新規に作成しない
-  (defun my-dired-advertised-find-file ()
-    (interactive)
-    (let ((kill-target (current-buffer))
-          (check-file (dired-get-filename nil t)))
-      (funcall #'dired-find-file)
-      (if (file-directory-p check-file)
-          (kill-buffer kill-target))))
-  (defun my-dired-up-directory (&optional other-window)
-    "Run dired on parent directory of current directory.
-Find the parent directory either in this buffer or another buffer.
-Creates a buffer if necessary."
-    (interactive "P")
-    (let* ((dir (dired-current-directory))
-           (up (file-name-directory (directory-file-name dir))))
-      (or (dired-goto-file (directory-file-name dir))
-          ;; Only try dired-goto-subdir if buffer has more than one dir.
-          (and (cdr dired-subdir-alist)
-               (dired-goto-subdir up))
-          (progn
-            (if other-window
-                (dired-other-window up)
-              (progn
-                (kill-buffer (current-buffer))
-                (dired up))
-              (dired-goto-file dir))))))
   ;; C-.でドットファイルの表示と非表示を切り替える
   (defun my-reload-current-dired-buffer ()
     "Reload current `dired-mode' buffer."
@@ -1317,6 +1291,13 @@ Creates a buffer if necessary."
   (leaf dired-sort-map :require t
     :after dired)
 
+  (leaf dired-single :ensure t
+    :bind (:dired-mode-map
+           ("C-m" . dired-single-buffer)
+           ("^" . dired-single-up-directory)
+           ("C-." . my-toggle-dired-listing-switches)
+           ("r" . wdired-change-to-wdired-mode)))
+
   :custom
   ;; dired-modeがlsコマンドに渡すオプションを設定する
   ;; l: 長い表示、dired-modeに必須のオプション
@@ -1328,8 +1309,6 @@ Creates a buffer if necessary."
   ;;(setq dired-listing-switches "-gGhFA")
   (dired-listing-switches . "-lgGhF")
   :bind (:dired-mode-map
-         ("C-m" . my-dired-advertised-find-file)
-         ("^" . my-dired-up-directory)
          ("C-." . my-toggle-dired-listing-switches)
          ("r" . wdired-change-to-wdired-mode)))
 
