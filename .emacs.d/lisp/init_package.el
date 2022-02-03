@@ -1295,6 +1295,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
   (leaf dired-single :ensure t
     :bind (:dired-mode-map
+           :package dired
            ("C-m" . dired-single-buffer)
            ("^" . dired-single-up-directory)
            ("C-." . my-toggle-dired-listing-switches)
