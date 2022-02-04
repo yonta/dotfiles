@@ -975,7 +975,9 @@
     (ivy-count-format . "(%d/%d) ")
     (ivy-extra-directories . '("./"))
     (ivy-initial-inputs-alist . nil) ;; 先頭の^をやめる
-    (ivy-format-functions-alist . '((t . ivy-format-function-line))))
+    (ivy-format-functions-alist . '((t . ivy-format-function-line)))
+    ;; 開いていないファイルをswitch-bufferに含める
+    (ivy-use-virtual-buffers . t))
 
   (leaf swiper :ensure t
     :custom
