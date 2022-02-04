@@ -16,21 +16,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# all pip package upgrade
-if type pip > /dev/null 2>&1 ; then
-    alias pip-upgrade-all="pip list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip install -U"
-fi
-
 # GPG
 export GPG_TTY=$(tty)
 
@@ -42,9 +27,24 @@ fi
 # Emacs LSP using plist
 export LSP_USE_PLISTS=true
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 # OPAM configuration
 if [ -f "$HOME/.opam/opam-init/init.sh" ] ; then
     . /home/kei/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+fi
+
+# OchaCaml
+if [ -d "${HOME}/.ochacaml" ]; then
+    PATH="$PATH:$HOME/.ochacaml/OchaCaml"
 fi
 
 # SML/NJ PATH
@@ -53,9 +53,9 @@ if [ -d "$HOME/.smlnj" ] ; then
 fi
 
 # WSL
- if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
-     alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
- fi
+if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
+    alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+fi
 PATH="$PATH:/mnt/c/Windows"          # for wsl deb package
 PATH="$PATH:/mnt/c/Windows/System32" # for wsl deb package
 
@@ -75,11 +75,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # This loads nvm bash_completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# OchaCaml
-if [ -d "${HOME}/.ochacaml" ]; then
-    PATH="$PATH:$HOME/.ochacaml/OchaCaml"
-fi
 
 # set Aliases
 alias ls='ls --color=auto --show-control-chars'
@@ -108,4 +103,9 @@ if type emacs > /dev/null 2>&1 ; then
 fi
 if type gitkraken > /dev/null 2>&1 ; then
     alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
+fi
+
+# all pip package upgrade
+if type pip > /dev/null 2>&1 ; then
+    alias pip-upgrade-all="pip list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip install -U"
 fi
