@@ -27,6 +27,9 @@ fi
 # Emacs LSP using plist
 export LSP_USE_PLISTS=true
 
+# rlwrap home
+export RLWRAP_HOME="$HOME/.cache/rlwrap"
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
