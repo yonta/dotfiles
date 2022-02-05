@@ -43,8 +43,8 @@
 
 ;;; Company and Flycheck
 
-;; clangがあるとより便利らしいので、aptでclangをいれておく
 (leaf company
+  :req "clangがあるとより便利らしいので、aptでclangをいれておく"
   :init
   (leaf company :ensure t
     :defvar (company-mode-map company-backends)
@@ -105,8 +105,8 @@
 (defvar-local flycheck-local-checkers nil)
 (leaf flycheck
   :init
-  ;; pipでflake8とmypyをいれておく
   (leaf flycheck :ensure t
+    :req "pipでflake8とmypyをいれておく"
     :defvar (flycheck-checker
              flycheck-gcc-language-standard
              flycheck-clang-language-standard)
@@ -168,8 +168,8 @@
   (leaf auto-async-byte-compile :ensure t
     :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
 
-  ;; 設定はinit.elにある
-  (leaf auto-compile :ensure t)
+  (leaf auto-compile :ensure t
+    :doc "設定はinit.elに")
 
   (leaf lispxmp :ensure t
     :bind (:lisp-mode-shared-map
@@ -209,8 +209,8 @@
                  '(company-clang ;; company-c-headers
                    :with company-dabbrev-code company-yasnippet)))
 
-  ;; "#ff0000"などに色をつける
   (leaf rainbow-mode :ensure t
+    :doc "#ff0000などに色をつける"
     :diminish t
     :custom
     (rainbow-r-colors . t)                ; R color listを使う
@@ -219,8 +219,8 @@
 
 (leaf tuareg :ensure t)
 
-;; TODO: set compiler and libraries path by environment
-(leaf arduino-mode :ensure t :disabled t)
+(leaf arduino-mode :ensure t :disabled t
+  :doc "TODO: set compiler and libraries path by environment")
 
 (leaf quickrun :ensure t
   :custom
@@ -234,8 +234,8 @@
     :mode 'python-mode)
   :bind ("C-c c" . quickrun))
 
-;; aptでmarkdown、pipでgripをいれておく
 (leaf markdown-mode :ensure t
+  :req "aptでmarkdown、pipでgripをいれておく"
   :if (executable-find "markdown") (executable-find "grip")
   :defvar markdown-mode-map
   :mode ("README\\.md\\'" . gfm-mode)
@@ -244,13 +244,13 @@
   :bind (:gfm-mode-map ("C-c `" . markdown-edit-code-block))
 
   :init
-  ;; markdownでコードブロックの編集のために必要
-  (leaf edit-indirect :ensure t)
+  (leaf edit-indirect :ensure t
+    :doc "markdownでコードブロックの編集のために必要")
 
-  ;; GitHubのSettings/Developer settings/Personal access tokensでつくった
-  ;; 空権限のtokenをcustom.elのgrip-github-passwordに書き込む
-  ;; gfm-modeのときにgrip-modeで起動する
   (leaf grip-mode :ensure t
+    :doc "GitHubのSettings/Developer settings/Personal access tokensでつくった"
+    :doc "空権限のtokenをcustom.elのgrip-github-passwordに書き込む"
+    :doc "gfm-modeのときにgrip-modeで起動する"
     :custom
     (grip-github-password . ""))
 
@@ -380,8 +380,8 @@
   ;;   pip install -r ~/.emacs.d/requirements.txt
   (leaf company-jedi :ensure t)
 
-  ;; pipでautopep8をいれておく
   (leaf py-autopep8 :ensure t
+    :req "pipでautopep8をいれておく"
     :if (executable-find "autopep8")
     :hook (python-mode-hook . py-autopep8-enable-on-save))
 
@@ -390,18 +390,18 @@
     ;; インデントに意味のあるPythonでとりあえず使う
     :hook (python-mode-hook . highlight-indentation-mode))
 
-  ;; pipでimportmagic3とepcをいれておく
   (leaf importmagic :ensure t
+    :req "pipでimportmagic3とepcをいれておく"
     :hook (python-mode-hook . importmagic-mode))
 
-  ;; pipでisortをいれておく
   (leaf py-isort :ensure t
+    :req "pipでisortをいれておく"
     :hook (before-save-hook . py-isort-before-save)))
 
 (leaf ruby
   :init
-  ;; def/doなどに自動でendを挿入する
   (leaf ruby-electric :ensure t
+    :doc "def/doなどに自動でendを挿入する"
     :diminish t
     :hook (ruby-mode-hook . ruby-electric-mode))
 
@@ -420,13 +420,14 @@
     (inf-ruby-default-implementation . "pry")
     (inf-ruby-console-environment . "development"))
 
-  ;; gemでrubocopを入れておく
-  ;; gem install rubocop
-  (leaf rubocop :ensure t :if (executable-find "rubocop"))
+  (leaf rubocop :ensure t :if (executable-find "rubocop")
+    :req "gemでrubocopを入れておく"
+    :req "gem install rubocop")
 
-  ;; gemでrufoを入れておく
-  ;; gem install rufo
   (leaf rufo :ensure t
+    :req "gemでrufoを入れておく"
+    :req "gem install rufo"
+    :doc "TODO: rufoやめてrubocop -aに移行したい"
     :if (executable-find "rufo")
     :diminish rufo-minor-mode
     :hook (ruby-mode-hook . rufo-minor-mode))
@@ -442,14 +443,15 @@
     :diminish t
     :hook (ruby-mode-hook . yard-mode))
 
-  ;; gemでsolargraphを入れる
-  ;; gem install solargraph
-  ;; solargraph download-coreを実行
-  ;; yard gemsを実行
-  ;; （yard config --gem-install-yriでgem install時に自動生成する設定が便利）
-  ;; プロジェクトルートでsolargraph bundleを実行
-  ;; プロジェクトにマジックコメントのファイルを設置
   (leaf ruby-mode
+    :req "gemでsolargraphを入れる"
+    :req "gem install solargraph"
+    :req "solargraph download-core"
+    :req "yard gems"
+    :doc "yard config --gem-install-yriでgem install時に自動生成する設定が便利"
+    :req "プロジェクトルートでsolargraph bundleを実行"
+    :req "プロジェクトにマジックコメントのファイルを設置"
+    :url "https://solargraph.org/guides/rails"
     :custom
     (ruby-insert-encoding-magic-comment . nil)
     (dabbrev-abbrev-skip-leading-regexp . ":")
@@ -513,8 +515,8 @@
   (leaf impatient-mode :ensure t
     :doc "HTMLのライブプレビューモード")
 
-  ;; htmlbeautifierに必要
-  (leaf reformatter :ensure t)
+  (leaf reformatter :ensure t
+    :doc "el-getでいれるhtmlbeautifierが依存")
 
   (leaf htmlbeautifier
     :el-get (htmlbeautifier
@@ -570,9 +572,9 @@
 
 (leaf typescript
   :init
-  ;; npmでtypescript-language-serverとtypescriptを入れておく
-  ;;   npm install -g typescript-language-server typescript
   (leaf typescript-mode :ensure t
+    :req "npmでtypescript-language-serverとtypescriptを入れておく"
+    :req "npm install -g typescript-language-server typescript"
     :defvar flycheck-check-syntax-automatically
     :hook ((typescript-mode-hook . lsp)
            (typescript-mode-hook
@@ -616,11 +618,10 @@
 (leaf jenkinsfile-mode
   :el-get (jenkinsfile-mode
            :url "https://github.com/spotify/dockerfile-mode.git")
-
+  :mode "^Jenkinsfile\\'"
   :init
-  ;; jenkinsfile-modeに必要
-  (leaf groovy-mode :ensure t)
-  :mode "^Jenkinsfile\\'")
+  (leaf groovy-mode :ensure t
+    :doc "jenkinsfile-modeに必要"))
 
 (leaf haxe-mode :ensure t
   :custom
@@ -630,7 +631,7 @@
 (leaf proof-general :ensure t)
 
 (leaf gnuplot-mode :ensure t
-  ;; .gpl .plt、.gp .gnuplotはautoloadで登録済み
+  :doc ".gpl .plt、.gp .gnuplotはautoloadで登録済み"
   :mode ("\\.gpl\\'" "\\.plt\\'"))
 
 (leaf graphviz-dot-mode :ensure t)
@@ -761,16 +762,16 @@
     "........"
     "........"))
 
-;; アクティブかどうかでバッファーのモードラインの色を変える
-(leaf hiwin :ensure t)
+(leaf hiwin :ensure t
+  :doc "アクティブかどうかでバッファーのモードラインの色を変える")
 
 ;; GitHubの絵文字をよく使うようなら有効にする
 (leaf emojify :ensure t :disabled t
   :hook (after-init-hook . global-emojify-mode)
   :custom (emojify-emoji-styles . (ascii github)))
 
-;; コードハイライティングが賢くなるとか
 (leaf tree-sitter
+  :doc "コードハイライティングが賢くなるとか"
   :diminish tree-sitter-mode
   :init
   (leaf tree-sitter :ensure t
@@ -779,15 +780,15 @@
 
 (leaf all-the-icons
   :init
-  ;; 初回に`M-x all-the-icons-install-fonts'を実行する
-  (leaf all-the-icons :ensure t)
+  (leaf all-the-icons :ensure t
+    :req "初回に`M-x all-the-icons-install-fonts'を実行する")
 
   (leaf all-the-icons-dired :ensure t
     :diminish all-the-icons-dired-mode
     :hook (dired-mode-hook . all-the-icons-dired-mode))
 
   (leaf all-the-icons-ibuffer :ensure t
-    ;; size-h化も一緒にされる
+    :doc "sizeの-h化も一緒にされる"
     :after ibuffer
     :global-minor-mode all-the-icons-ibuffer-mode)
 
@@ -849,9 +850,9 @@
           '(("en" . "ja") ("ja" . "en")))
     :bind ("C-c C-t" . google-translate-smooth-translate)))
 
-;; aptでgnupgを入れておく
-;; alpaca.elが必要
 (leaf twittering-mode :ensure t
+  :req "aptでgnupgを入れておく"
+  :req "alpaca.elが必要"
   :defun twittering-icon-mode
   :commands twit
   :custom
@@ -904,8 +905,8 @@
                    company-shell-env
                    :with company-dabbrev-code company-yasnippet company-files)))
 
-  ;; コマンドラインと同じ色付けを使う
   (leaf ansi-color
+    :doc "コマンドラインと同じ色付けを使う"
     :commands ansi-color-for-comint-mode-on
     :hook (shell-mode-hook . ansi-color-for-comint-mode-on))
 
@@ -925,22 +926,21 @@
     (explicit-bash-args . '("--login" "-i"))
     ;; shell-modeでのファイル名補完
     (shell-file-name-chars . "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")))
-
 ;; :hook (shell-mode-hook . (lambda ()
 ;;                            ;; SHELL で ^M が付く場合は ^M を削除する
 ;;                            (set-process-coding-system
 ;;                             'undecided-dos 'sjis-unix)))
 
-;; ImageMagickをaptでいれておく
-;; 非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ
-;; BUG: ディレクトリを開く初回時にサムネイル作成に失敗する。
-;;      diredバッファでimage-dired-create-thumbsを実行して手動でサムネイル
-;;      を作ると、image-diredが問題なく動くようになる。
-;;      --no-initを使って、image-dired+だけで動かすと問題は起こらない。
-;;      何らかの自分のinitファイルが問題を引き起こしている。
-;;      Error-log
-;;      image-diredx--invoke-process: Wrong type argument: processp, [nil 23723 12045 294055 nil image-dired-thumb-queue-run nil nil 600000]
 (leaf image-dired+ :ensure t
+  :doc "非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ"
+  :req "ImageMagickをaptでいれておく"
+  ;; BUG: ディレクトリを開く初回時にサムネイル作成に失敗する。
+  ;;      diredバッファでimage-dired-create-thumbsを実行して手動でサムネイル
+  ;;      を作ると、image-diredが問題なく動くようになる。
+  ;;      --no-initを使って、image-dired+だけで動かすと問題は起こらない。
+  ;;      何らかの自分のinitファイルが問題を引き起こしている。
+  ;;      Error-log
+  ;;      image-diredx--invoke-process: Wrong type argument: processp, [nil 23723 12045 294055 nil image-dired-thumb-queue-run nil nil 600000]
   :if (executable-find "convert")
   :commands image-dired
   :config
@@ -1028,9 +1028,9 @@
   (leaf s :ensure t)
 
   (eval-and-compile (require 's))
-  ;; cmigemoをいれておく
-  ;; https://github.com/koron/cmigemo
   (leaf migemo :ensure t :require t
+    :req "cmigemoをいれておく"
+    :url "https://github.com/koron/cmigemo"
     :defun migemo-init migemo-get-pattern
     :defvar ivy-re-builders-alist
     :preface
@@ -1065,8 +1065,8 @@
     ((counsel-describe-function-function . 'helpful-callable)
      (counsel-describe-variable-function . 'helpful-variable)))
 
-  ;; MEMO: ivy-***-alistを書き換える中で最後に来ないと動かないことがある
   (leaf ivy-prescient :ensure t
+    :doc "MEMO: ivy-***-alistを書き換える中で最後に来ないと動かないことがある"
     :global-minor-mode ivy-prescient-mode))
 
 (leaf dumb-jump :ensure t
@@ -1096,8 +1096,8 @@
 
 (leaf package
   :init
-  ;; package.elのリストを綺麗で便利にする
   (leaf paradox :ensure t
+    :doc "package.elのリストを綺麗で便利にする"
     :init
     ;; paradox-enableを遅延するために、別コマンドにする
     ;; これだけは`lpp'で即呼び出しするため、`my-'をつけない
@@ -1165,11 +1165,11 @@
 
 (leaf mozc
   :init
-  ;; 予め${HOME}/bin/mozc_emacs_helperを用意するか、
-  ;; aptでemacs-mozc-binを入れておく。
-  ;; 参考: https://w.atwiki.jp/ntemacs/pages/61.html
-  ;;       https://github.com/smzht/mozc_emacs_helper
   (leaf mozc :ensure t
+    :req "予め${HOME}/bin/mozc_emacs_helperを用意するか、"
+    :req "aptでemacs-mozc-binを入れておく。"
+    :url "https://w.atwiki.jp/ntemacs/pages/61.html"
+    :url "https://github.com/smzht/mozc_emacs_helper"
     :defun mozc-session-sendkey
     :if (executable-find "mozc_emacs_helper")
     ;; mozcモードで一部キーバインドが外れるので再設定
@@ -1197,8 +1197,8 @@
 (leaf keyfreq :ensure t
   :global-minor-mode keyfreq-mode keyfreq-autosave-mode)
 
-;; projectの.editorconfigファイルを読み込む
 (leaf editorconfig :ensure t
+  :doc "projectの.editorconfigファイルを読み込む"
   :diminish t
   :global-minor-mode editorconfig-mode)
 
@@ -1220,8 +1220,8 @@
 
 (leaf flyspell
   :init
-  ;; aptでaspell-enをいれておく
   (leaf flyspell
+    :req "aptでaspell-enをいれておく"
     :diminish flyspell-mode
     ;; :hook (text-mode-hook . flyspell-mode)
     :custom
@@ -1312,7 +1312,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   ;; h: kbyte・Mbyteの使用
   ;; F: ディレクトリに「/」を表示
   ;; A: 「.」と「..」を非表示でドットファイルを表示
-  ;;(setq dired-listing-switches "-gGhFA")
+  ;; (setq dired-listing-switches "-gGhFA")
   (dired-listing-switches . "--time-style=long-iso -lgGhF")
   :bind (:dired-mode-map
          ("C-." . my-toggle-dired-listing-switches)
@@ -1403,8 +1403,8 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 (leaf recentf
   :init
   (leaf recentf
-    ;; 最近使ったファイルを.recentfファイルに保存する
-    ;; counsel-recentfで呼び出せる
+    :doc "最近使ったファイルを.recentfファイルに保存する"
+    :doc "counsel-recentfで呼び出せる"
     :global-minor-mode recentf-mode
     :custom
     (recentf-max-saved-items . 1000)
@@ -1479,9 +1479,9 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :bind* (("C-c 2" . my-split-window-below-and-switch)
           ("C-c 3" . my-split-window-right-and-switch)))
 
-;;; WSLでのブラウザ設定
-;; aptでubuntu-wslをいれておく
 (leaf browse-url
+  :doc "WSLでのブラウザ設定"
+  :req "aptでubuntu-wslをいれておく"
   :if (getenv "WSLENV") (executable-find "wslview")
   :custom
   (browse-url-browser-function . #'browse-url-generic)
