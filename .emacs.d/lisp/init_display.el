@@ -9,11 +9,13 @@
 (line-number-mode t)
 (column-number-mode t)
 
-;;; ツールバーの表示を消す
-(tool-bar-mode 0)
-
-;;; メニューバーの表示を消す
-(menu-bar-mode 0)
+;;; Emacs27からearly-initを使う
+(if (version< emacs-version "27")
+    (progn
+      ;; ツールバーの表示を消す
+      (tool-bar-mode 0)
+      ;; メニューバーの表示を消す
+      (menu-bar-mode 0)))
 
 ;;; スクロールバーを右側に配置する
 (set-scroll-bar-mode 'right)
