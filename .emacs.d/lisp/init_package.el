@@ -475,6 +475,10 @@
 
   (leaf lsp-ui :ensure t
     :custom
+    (lsp-ui-doc-show-with-cursor . t)
+    (lsp-ui-doc-header . t)
+    (lsp-ui-doc-include-signature . t)
+    (lsp-ui-doc-delay . 2)
     (lsp-ui-sideline-enable . nil)
     (lsp-ui-doc-position . 'at-point)
     (lsp-ui-doc-border . "gray10")

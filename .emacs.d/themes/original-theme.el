@@ -123,6 +123,8 @@
  '(company-tooltip-selection ((t (:inherit (region)))))
  '(company-tooltip-mouse ((t (:inherit (secondary-selection)))))
  '(lsp-ui-doc-background ((t (:inherit (tooltip)))))
+ '(lsp-ui-doc-header ((t (:inherit (diff-file-header)))))
+ '(lsp-ui-doc-background ((t (:inherit (tooltip)))))
  ;; code in lsp-ui-doc
  '(markdown-inline-code-face
    ((t (:inherit (fixed-pitch font-lock-keyword-face)))))
