@@ -455,7 +455,7 @@
     :custom
     (ruby-insert-encoding-magic-comment . nil)
     (dabbrev-abbrev-skip-leading-regexp . ":")
-    :hook ((ruby-mode-hook . lsp)
+    :hook ((ruby-mode-hook . lsp-deferred)
            (ruby-mode-hook
             . (lambda ()
                 (setq-local company-minimum-prefix-length 4)
@@ -558,7 +558,7 @@
 (leaf javascript
   :init
   (leaf js
-    :hook (js-mode-hook . lsp)
+    :hook (js-mode-hook . lsp-deferred)
     :custom
     (js-indent-level . 2))
 
@@ -576,7 +576,7 @@
     :req "npmでtypescript-language-serverとtypescriptを入れておく"
     :req "npm install -g typescript-language-server typescript"
     :defvar flycheck-check-syntax-automatically
-    :hook ((typescript-mode-hook . lsp)
+    :hook ((typescript-mode-hook . lsp-deferred)
            (typescript-mode-hook
             . (lambda ()
                 (setq flycheck-local-checkers
