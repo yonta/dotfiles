@@ -443,6 +443,9 @@
     :diminish t
     :hook (ruby-mode-hook . yard-mode))
 
+  (leaf ruby-tools :ensure t
+    :hook (ruby-mode-hook . ruby-tools-mode))
+
   (leaf ruby-mode
     :req "gemでsolargraphを入れる"
     :req "gem install solargraph"
