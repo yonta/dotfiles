@@ -469,7 +469,8 @@
   :init
   (leaf lsp-mode :ensure t
     :diminish t
-    :hook (lsp-mode-hook . lsp-enable-which-key-integration)
+    :hook ((lsp-mode-hook . lsp-enable-which-key-integration)
+           (lsp-mode-hook . lsp-ui-mode))
     :custom
     ;; LSPでパフォーマンスの高いplistsを使う
     ;; .profileでexport LSP_USE_PLISTS=trueする
@@ -482,7 +483,7 @@
     (lsp-ui-doc-header . t)
     (lsp-ui-doc-include-signature . t)
     (lsp-ui-doc-delay . 2)
-    (lsp-ui-sideline-enable . nil)
+    (lsp-ui-sideline-code-action . t)
     (lsp-ui-doc-position . 'at-point)
     (lsp-ui-doc-border . "gray10")
     ;; WSL2ではexport WEBKIT_FORCE_SANDBOX=0すればXwidgetが使える
