@@ -566,7 +566,11 @@
 (leaf javascript
   :init
   (leaf js
-    :hook (js-mode-hook . lsp-deferred)
+    :hook ((js-mode-hook . lsp-deferred)
+           (js-mode-hook
+            . (lambda ()
+                (setq flycheck-local-checkers
+                      '((lsp . ((next-checkers . (javascript-eslint)))))))))
     :custom
     (js-indent-level . 2))
 
