@@ -12,7 +12,7 @@ qr_*
 Thumbs.db
 
 # Hivemind
-Procfile*
+Procfile.dev.mine
 
 # Browsersync
 bs-config.js

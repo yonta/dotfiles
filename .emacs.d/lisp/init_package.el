@@ -921,6 +921,8 @@
     :hook (shell-mode-hook . ansi-color-for-comint-mode-on))
 
   (leaf sh-script
+    :mode (("Procfile" . sh-mode)
+           ("dotenv" . sh-mode))
     :config
     (unbind-key "C-c C-d" sh-mode-map)
     :hook (sh-mode-hook
