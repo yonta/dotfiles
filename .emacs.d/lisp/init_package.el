@@ -592,9 +592,7 @@
            (typescript-mode-hook
             . (lambda ()
                 (setq flycheck-local-checkers
-                      '((lsp . ((next-checkers . (javascript-eslint))))))
-                (setq-local flycheck-check-syntax-automatically
-                            '(save idle-change mode-enabled)))))
+                      '((lsp . ((next-checkers . (javascript-eslint)))))))))
     :custom
     (typescript-indent-level . 2))
 
