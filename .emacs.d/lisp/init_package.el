@@ -732,7 +732,8 @@
     (ahs-disabled-minor-modes . '(iedit-mode ivy-mode))
     :config
     (push 'sml-mode ahs-modes)
-    :bind (("M-<up>" . ahs-backward)
+    :bind (:auto-highlight-symbol-mode-map
+           ("M-<up>" . ahs-backward)
            ("M-<down>" . ahs-forward)))
 
   (leaf volatile-highlights :ensure t
