@@ -1255,6 +1255,7 @@
   ;; defcustomだがデフォルト値に追加の形で書く
   (add-to-list 'aggressive-indent-excluded-modes 'web-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'dockerfile-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'js-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'typescript-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'compilation-mode))
 
