@@ -158,10 +158,7 @@
     (defun my-eval-region-or-line ()
       "Eval active region or current line."
       (interactive) (call-with-region-or-line #'eval-region))
-    :bind ((:lisp-mode-shared-map ("C-c C-r" . my-eval-region-or-line)))
-    :config
-    (add-to-list 'company-backends
-                 '(company-capf :with company-dabbrev-code company-yasnippet)))
+    :bind ((:lisp-mode-shared-map ("C-c C-r" . my-eval-region-or-line))))
 
   (leaf eldoc :diminish eldoc-mode)
 
@@ -193,7 +190,7 @@
     :hook (c-mode-hook . my-c-mode-hook)
     :config
     (add-to-list 'company-backends
-                 '(company-clang :with company-dabbrev-code company-yasnippet)))
+                 '(company-clang :with company-dabbrev-code)))
 
   (leaf c++-mode
     :preface
@@ -207,7 +204,7 @@
     :config
     (add-to-list 'company-backends
                  '(company-clang ;; company-c-headers
-                   :with company-dabbrev-code company-yasnippet)))
+                   :with company-dabbrev-code)))
 
   (leaf rainbow-mode :ensure t
     :doc "#ff0000などに色をつける"
@@ -317,7 +314,7 @@
     (add-to-list 'company-backends
                  '(company-mlton-keyword
                    company-mlton-basis
-                   :with company-dabbrev-code company-yasnippet))
+                   :with company-dabbrev-code))
     :hook
     (sml-mode-hook . company-mlton-basis-autodetect))
 
@@ -357,8 +354,7 @@
     :config
     (add-to-list 'company-backends
                  '(company-jedi
-                   :with company-dabbrev-code company-dabbrev
-                   company-yasnippet))
+                   :with company-dabbrev-code company-dabbrev))
     (require 'smartparens-python))
 
   (leaf pip-requirements :ensure t)
@@ -914,7 +910,7 @@
     (add-to-list 'company-backends
                  '(company-shell
                    company-shell-env
-                   :with company-dabbrev-code company-yasnippet company-files)))
+                   :with company-dabbrev-code company-files)))
 
   (leaf ansi-color
     :doc "コマンドラインと同じ色付けを使う"
