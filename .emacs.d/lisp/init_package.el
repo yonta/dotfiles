@@ -557,7 +557,29 @@
     (add-to-list 'company-backends
                  '(company-css
                    :with company-bootstrap5
-                   company-dabbrev-code company-dabbrev))))
+                   company-dabbrev-code company-dabbrev)))
+
+  (leaf scss-mode
+    :preface
+    ;; scssで正しいcheckerが走らない暫定対処
+    ;; https://github.com/flycheck/flycheck/issues/1912
+    (flycheck-define-checker general-stylelint
+      "A checker for CSS and related languages using Stylelint"
+      :command ("stylelint"
+                (eval flycheck-stylelint-args)
+                (option-flag "--quiet" flycheck-stylelint-quiet)
+                (config-file "--config" flycheck-general-stylelintrc))
+      :standard-input t
+      :error-parser flycheck-parse-stylelint
+      :predicate flycheck-buffer-nonempty-p
+      :modes (scss-mode))
+    (flycheck-def-config-file-var flycheck-general-stylelintrc
+        (general-stylelint) nil)
+    :init
+    (add-to-list 'flycheck-checkers 'general-stylelint)
+    (add-hook 'scss-mode-hook
+              (lambda ()
+                (flycheck-disable-checker 'scss-stylelint)))))
 
 (leaf javascript
   :init
