@@ -440,6 +440,17 @@
   (leaf ruby-tools :ensure t
     :hook (ruby-mode-hook . ruby-tools-mode))
 
+  (leaf company-ignore
+    :el-get (company-ignore
+             :url "https://github.com/yonta/company-ignore.git")
+    :hook (ruby-mode-hook
+           . (lambda ()
+               (company-ignore 'company-capf '("do" "end"))
+               (company-ignore 'company-keywords '("do" "end"))
+               (company-ignore 'company-dabbrev-code '("do" "end"))
+               (company-ignore 'company-dabbrev '("do" "end"))
+               (company-ignore 'company-yasnippet '("do" "end")))))
+
   (leaf ruby-mode
     :req "gemでsolargraphを入れる"
     :req "gem install solargraph"
@@ -455,7 +466,6 @@
     :hook ((ruby-mode-hook . lsp-deferred)
            (ruby-mode-hook
             . (lambda ()
-                (setq-local company-minimum-prefix-length 4)
                 (setq flycheck-local-checkers
                       '((lsp . ((next-checkers . (ruby-rubocop)))))))))))
 
