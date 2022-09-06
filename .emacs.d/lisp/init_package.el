@@ -1300,6 +1300,9 @@
 (leaf goto-line-preview :ensure t
   :bind* ("M-g M-g" . goto-line-preview))
 
+(leaf demap :ensure t
+  :bind* ("M-m" . demap-toggle))
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
