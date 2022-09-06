@@ -79,6 +79,9 @@ export NVM_DIR="$HOME/.nvm"
 # This loads nvm bash_completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+# Docker
+PATH="/usr/libexec/docker/cli-plugins:$PATH"
+
 # set Aliases
 alias ls='ls --color=auto --show-control-chars'
 alias grep='grep --color=auto'
