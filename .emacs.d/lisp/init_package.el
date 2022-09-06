@@ -412,8 +412,6 @@
             ("C-c C-p" . inf-ruby)
             ("C-c p" . inf-ruby-console-auto)))
     :custom
-    ;; irbだとpromptが重複するため、Ruby REPLにpryを使う
-    (inf-ruby-default-implementation . "pry")
     (inf-ruby-console-environment . "development"))
 
   (leaf rubocop :ensure t :if (executable-find "rubocop")
