@@ -17,12 +17,12 @@
 ;;; ウィンドウについての設定
 (setq default-frame-alist
       ;; 起動時の表示位置とサイズ。上から、左から、幅、高さの順
-      (append (list '(top . 55) '(left . 5) '(width . 252) '(height . 56))
+      (append (list '(top . 55) '(left . 5) '(width . 237) '(height . 62))
               default-frame-alist))
 
 ;;; フォント設定
 (if window-system
-    (add-to-list 'default-frame-alist '(font . "VL ゴシック-22")))
+    (add-to-list 'default-frame-alist '(font . "VL ゴシック-24")))
 
 ;;; カラーテーマの設定
 (setq custom-theme-directory "~/.emacs.d/themes")
