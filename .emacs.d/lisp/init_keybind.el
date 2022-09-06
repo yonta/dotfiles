@@ -70,4 +70,18 @@ A default format is start with 1, end with 10, and only number string."
     (bind-key "C-M-:" #'my-insert-repeat-numbers)
   (bind-key "C-c M-:" #'my-insert-repeat-numbers))
 
+(defun my-next-lines ()
+  "Move cursor vertically down 5 lines."
+  (interactive)
+  (let ((current-prefix-arg 5))
+    (call-interactively 'next-line)))
+(bind-key "M-<down>" 'my-next-lines)
+
+(defun my-previous-lines ()
+  "Move cursor vertically up 5 lines."
+  (interactive)
+  (let ((current-prefix-arg 5))
+    (call-interactively 'previous-line)))
+(bind-key "M-<up>" 'my-previous-lines)
+
 ;;; init_keybind.el ends here
