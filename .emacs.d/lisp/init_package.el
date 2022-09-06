@@ -575,9 +575,8 @@
         (general-stylelint) nil)
     :init
     (add-to-list 'flycheck-checkers 'general-stylelint)
-    (add-hook 'scss-mode-hook
-              (lambda ()
-                (flycheck-disable-checker 'scss-stylelint)))))
+    :custom
+    (flycheck-disabled-checkers . '(scss-stylelint))))
 
 (leaf javascript
   :init
