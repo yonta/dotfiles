@@ -138,10 +138,10 @@
 
   (leaf flycheck-pos-tip :ensure t
     :after flycheck
+    :global-minor-mode flycheck-pos-tip-mode
     :custom
-    (flycheck-pos-tip-timeout . 0) ; pos-tipを自動で消さない
-    :config
-    (flycheck-pos-tip-mode))
+    ;; pos-tipを自動で消さない
+    (flycheck-pos-tip-timeout . 0))
 
   (leaf flycheck-color-mode-line :ensure t
     :after flycheck
