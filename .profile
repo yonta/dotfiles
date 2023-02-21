@@ -100,7 +100,7 @@ else
 fi
 if type vim > /dev/null 2>&1 ; then
     alias vi='vim'
-    alias lessv='/usr/share/vim/vim81/macros/less.sh'
+    alias lessv='/usr/share/vim/vim82/macros/less.sh'
     alias vless='lessv'
 fi
 if type emacs > /dev/null 2>&1 ; then
