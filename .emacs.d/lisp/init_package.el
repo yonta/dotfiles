@@ -94,8 +94,7 @@
     :config
     ;; yas-expandは使わず、companyからyasを使う。
     (unbind-key "<tab>" yas-minor-mode-map)
-    (unbind-key "TAB" yas-minor-mode-map)
-    (add-to-list 'company-backends #'company-yasnippet))
+    (unbind-key "TAB" yas-minor-mode-map))
 
   (leaf company-c-headers :ensure t :disabled t)
   (leaf company-arduino :ensure t :disabled t))
