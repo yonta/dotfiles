@@ -176,5 +176,7 @@ if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
         # Scale for High DPI Display
         export GDK_SCALE=2
         export QT_AUTO_SCREEN_SCALE_FACTOR=1
+        # WSL2のGUIでキーボード配列がUSになる暫定対処
+        setxkbmap -layout jp
     fi
 fi
