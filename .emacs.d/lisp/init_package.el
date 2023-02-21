@@ -849,6 +849,7 @@
        help-mode
        helpful-mode
        ("*robe-doc*")
+       ("^ \\*Rubocop.*\\*$" :regexp t)
        ("*xref*")
        ("*Backtrace*"))))
 
