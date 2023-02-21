@@ -862,7 +862,11 @@
            ("C-c b" . projectile-switch-to-buffer)
            ("C-c C-x k" . projectile-kill-buffers))
     :custom
-    (projectile-completion-system . 'ivy))
+    (projectile-completion-system . 'ivy)
+    (projectile-globally-ignored-directories
+     . '(".yarn" ".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg"
+         ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".pijul" ".tox" ".svn"
+         ".stack-work" ".ccls-cache" ".cache" ".clangd")))
 
   (leaf ripgrep :ensure t ; projectile-ripgrepの依存関係なので使う
     :bind ("C-c f" . ripgrep-regexp))
