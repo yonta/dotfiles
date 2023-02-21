@@ -157,13 +157,6 @@ if uname -a | grep -e 'Microsoft' > /dev/null 2>&1 ; then
     fi
 fi
 
-# WSL2
-if uname -a | grep -e 'microsoft' > /dev/null 2>&1 ; then
-    if [ -z "$SSH_CLIENT" ]; then # not via ssh
-        export DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2}'):0.0
-    fi
-fi
-
 # WSL1 or WSL2
 if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
        [ -z "$SSH_CLIENT" ]; then
