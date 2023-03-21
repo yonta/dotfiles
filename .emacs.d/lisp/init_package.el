@@ -482,7 +482,25 @@
     ;; LSPでパフォーマンスの高いplistsを使う
     ;; .profileでexport LSP_USE_PLISTS=trueする
     ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
-    (lsp-use-plists . t))
+    (lsp-use-plists . t)
+    ;; BUG:
+    ;; Emacs28.1ではlsp-modeがjson parse errorする
+    ;; Emacs29が出るまで暫定対処する
+    ;; https://github.com/emacs-lsp/lsp-mode/issues/2681#issuecomment-1214902146
+    :advice
+    ;; same definition as mentioned earlier
+    (:around json-parse-string
+             (lambda (orig string &rest rest)
+               (apply orig (s-replace "\\u0000" "" string)
+                      rest)))
+    ;; minor changes:
+    ;; saves excursion and uses search-forward instead of re-search-forward
+    (:around json-parse-buffer
+             (lambda (oldfn &rest args)
+               (save-excursion
+                 (while (search-forward "\\u0000" nil t)
+                   (replace-match "" nil t)))
+               (apply oldfn args))))
 
   (leaf lsp-ui :ensure t
     :custom
