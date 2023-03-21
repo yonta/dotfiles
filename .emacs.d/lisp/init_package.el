@@ -18,6 +18,7 @@
 ;; `package-archive-priorities'を使って設定する。
 (add-to-list 'package-archives ; MELPAを追加
              '("melpa" . "https://melpa.org/packages/"))
+(setq package-quickstart t)
 (eval-and-compile (package-initialize))
 
 (unless (package-installed-p 'leaf)
@@ -664,7 +665,7 @@
   (tab-width . 4)
   (fill-column . 80))
 
-(leaf proof-general :ensure t)
+(leaf proof-general :ensure t :disabled t)
 
 (leaf gnuplot-mode :ensure t
   :doc ".gpl .plt、.gp .gnuplotはautoloadで登録済み"
