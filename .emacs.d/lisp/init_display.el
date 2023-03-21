@@ -5,10 +5,6 @@
 
 ;;; Code:
 
-;;; 行番号と列番号を表示する
-(line-number-mode t)
-(column-number-mode t)
-
 ;;; Emacs27からearly-initを使う
 (if (version< emacs-version "27")
     (progn

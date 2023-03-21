@@ -1393,7 +1393,10 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
          ("C-M-<right>" . winner-redo)))
 
 (leaf line-number
+  :global-minor-mode column-number-mode
   :init
+  (line-number-mode -1)
+
   (leaf display-line-numbers
     :if (version<= "26" emacs-version) ; Emacs26以降
     :global-minor-mode global-display-line-numbers-mode)
@@ -1403,7 +1406,10 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
     :defvar linum-format
     :global-minor-mode global-linum-mode
     :init
-    (setq linum-format "%4d ")))
+    (setq linum-format "%4d "))
+
+  ;; 列番号を1オリジンで表示する
+  :custom (mode-line-position-column-format . '(" %C")))
 
 (leaf autoinsert
   :global-minor-mode auto-insert-mode
