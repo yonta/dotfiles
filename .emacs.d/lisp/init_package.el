@@ -451,6 +451,8 @@
                (company-ignore 'company-dabbrev '("do" "end"))
                (company-ignore 'company-yasnippet '("do" "end")))))
 
+  (leaf seeing-is-believing :ensure t)
+
   (leaf ruby-mode
     :req "gemでsolargraphを入れる"
     :req "gem install solargraph"
@@ -464,6 +466,7 @@
     (ruby-insert-encoding-magic-comment . nil)
     (dabbrev-abbrev-skip-leading-regexp . ":")
     :hook ((ruby-mode-hook . lsp-deferred)
+           (ruby-mode-hook . seeing-is-believing)
            (ruby-mode-hook
             . (lambda ()
                 (setq flycheck-local-checkers
