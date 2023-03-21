@@ -674,6 +674,10 @@
 
 (leaf git-modes :ensure t)
 
+(leaf wakatime-mode :ensure t
+  :global-minor-mode global-wakatime-mode
+  :diminish t)
+
 ;;; Face
 
 (leaf whitespace
