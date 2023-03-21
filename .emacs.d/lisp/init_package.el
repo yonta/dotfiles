@@ -1051,6 +1051,8 @@
       . ,(concat "\\(\\`\\.\\)\\|"
                  (regexp-opt completion-ignored-extensions)))
     (counsel-mark-ring-sort-selections . nil)
+    :custom
+    (counsel-switch-buffer-preview-virtual-buffers . nil)
     :config
     ;; counsel-yank-popの高さをデフォルト5から10に拡大する
     (setq ivy-height-alist
