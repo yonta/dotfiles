@@ -615,6 +615,8 @@
     :hook ((typescript-mode-hook . lsp-deferred)
            (typescript-mode-hook
             . (lambda ()
+                (setq-local flycheck-check-syntax-automatically
+                            '(save mode-enabled))
                 (setq flycheck-local-checkers
                       '((lsp . ((next-checkers . (javascript-eslint)))))))))
     :custom
