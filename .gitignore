@@ -29,4 +29,5 @@
 .emacs.d/.lsp-session-v1
 .emacs.d/eln-cache
 .emacs.d/package-quickstart.el
+.emacs.d/projects
 flycheck_*.el
