@@ -530,7 +530,7 @@
 (leaf html-css
   :init
   (leaf web-mode :ensure t
-    :mode "\\.html\\.erb\\'"
+    :mode "\\.erb\\'"
     :custom
     (web-mode-enable-comment-interpolation . t)
     (web-mode-enable-auto-pairing . nil)
