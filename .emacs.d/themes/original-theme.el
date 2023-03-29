@@ -11,10 +11,18 @@
  'original
  '(default
     ((t (
-         :family "VL ゴシック" :foundry "VL  " :width normal :height 121
-         :weight normal :slant normal :underline nil :overline nil
-         :strike-through nil :box nil :inverse-video nil
-         :foreground "gray10" :background "WhiteSmoke" :stipple nil
+         :family "VL ゴシック"
+         :width normal
+         :weight normal
+         :slant normal
+         :foreground "gray10"
+         :background "WhiteSmoke"
+         :underline nil
+         :overline nil
+         :strike-through nil
+         :box nil
+         :inverse-video nil
+         :stipple nil
          :inherit nil))))
  '(shadow ((t (:foreground "gray50"))))
  '(cursor ((t (:background "#456980"))))
