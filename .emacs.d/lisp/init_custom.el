@@ -19,7 +19,10 @@
       ;; 起動時の表示位置とサイズ。上から、左から、幅、高さの順
       (append (list '(top . 55) '(left . 5) '(width . 252) '(height . 66))
               default-frame-alist))
-(setq-default line-spacing 2)
+
+;;; 行間スペース
+;; BUG: pos-tipに設定されると何も表示されなくなるので、prog-modeにだけ設定する
+(add-hook 'prog-mode-hook (lambda () (setq line-spacing 2)))
 
 ;;; フォント設定
 (if window-system
