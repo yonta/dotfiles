@@ -453,6 +453,8 @@
                (company-ignore 'company-yasnippet '("do" "end")))))
 
   (leaf seeing-is-believing :ensure t :require t
+    :config
+    (diminish 'seeing-is-believing nil)
     :req "gem install seeing_is_believing")
 
   (leaf ruby-mode
