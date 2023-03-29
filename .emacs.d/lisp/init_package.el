@@ -188,7 +188,7 @@
       (c-set-style "k&r")
       (require 'smartparens-c))
     :hook (c-mode-hook . my-c-mode-hook)
-    :config
+    :defer-config
     (add-to-list 'company-backends
                  '(company-clang :with company-dabbrev-code)))
 
@@ -201,7 +201,7 @@
       (require 'smartparens-c)
       (c-set-style "k&r"))
     :hook (c++-mode-hook . my-c++-mode-hook)
-    :config
+    :defer-config
     (add-to-list 'company-backends
                  '(company-clang ;; company-c-headers
                    :with company-dabbrev-code)))
@@ -222,7 +222,7 @@
 (leaf quickrun :ensure t
   :custom
   (quickrun-timeout-seconds . -1)       ; タイムアウトで処理を中止させない
-  :config
+  :defer-config
   ;; python-modeでpython3を使う
   (quickrun-add-command "python"
     '((:command . "python3")
@@ -236,7 +236,7 @@
   :if (executable-find "markdown") (executable-find "grip")
   :defvar markdown-mode-map
   :mode ("README\\.md\\'" . gfm-mode)
-  :config
+  :defer-config
   (unbind-key "C-c '" gfm-mode-map)
   :bind (:gfm-mode-map ("C-c `" . markdown-edit-code-block))
 
@@ -255,7 +255,7 @@
   (markdown-command . "markdown")
   ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
   (markdown-css-paths . '("style.css"))
-  :config
+  :defer-config
   (require 'smartparens-markdown)
   (unbind-key "C-c C-f" markdown-mode-map))
 
@@ -310,7 +310,7 @@
     ;; MLtonのbasisを除き、SMLのbasisを使う
     (company-mlton-basis-file
      . "~/.emacs.d/el-get/company-mlton/sml-basis-lib.basis")
-    :config
+    :defer-config
     (add-to-list 'company-backends
                  '(company-mlton-keyword
                    company-mlton-basis
@@ -351,7 +351,7 @@
     :custom
     (python-shell-interpreter . "python3")
     (python-indent-offset . 4)
-    :config
+    :defer-config
     (add-to-list 'company-backends
                  '(company-jedi
                    :with company-dabbrev-code company-dabbrev))
@@ -543,7 +543,7 @@
     ;; web-modeとwhitespace-modeのコンフリクトでfaceがおかしくなるのを解消する
     ;; https://github.com/fxbois/web-mode/issues/119a
     (web-mode-display-table . nil)
-    :config
+    :defer-config
     (require 'smartparens-html)
     (sp-local-pair 'web-mode "<%" "%>"
                    :post-handlers '(("|| " "SPC") (" || " "=")))
@@ -575,7 +575,7 @@
              :url "https://github.com/yonta/company-bootstrap-icons.git"))
 
   (leaf company-web :ensure t
-    :after company
+    :after web-mode
     :config
     (add-to-list 'company-backends
                  '(company-web-html
@@ -586,7 +586,7 @@
   (leaf css-mode
     :custom
     (css-indent-offset . 2)
-    :config
+    :defer-config
     (add-to-list 'company-backends
                  '(company-css
                    :with company-bootstrap5
@@ -917,11 +917,13 @@
     :global-minor-mode projectile-rails-global-mode
     :diminish projectile-rails-mode))
 
-(leaf google-translate :ensure t
-  :config
+(leaf google-translate
+  :init
+  (leaf google-translate :ensure t)
+
   (leaf google-translate-smooth-ui
     :defvar google-translate-translation-directions-alist
-    :config
+    :defer-config
     (setq google-translate-translation-directions-alist
           '(("en" . "ja") ("ja" . "en")))
     :bind ("C-c C-t" . google-translate-smooth-translate)))
@@ -959,7 +961,7 @@
   (twittering-retweet-format . " %u")
   (twittering-fill-column . 80)
   (twittering-edit-skeleton . 'inherit-mentions)
-  :config
+  :defer-config
   (twittering-icon-mode t)              ; use icon
   :bind (:twittering-mode-map
          ("R" . twittering-native-retweet)
@@ -975,6 +977,7 @@
 (leaf shell
   :init
   (leaf company-shell :ensure t
+    :after sh-mode
     :config
     (add-to-list 'company-backends
                  '(company-shell
@@ -989,7 +992,7 @@
   (leaf sh-script
     :mode (("Procfile" . sh-mode)
            ("dotenv" . sh-mode))
-    :config
+    :defer-config
     (unbind-key "C-c C-d" sh-mode-map)
     :hook (sh-mode-hook
            . (lambda () (setq-local flycheck-checker 'sh-posix-bash)))
@@ -1021,7 +1024,7 @@
   ;;      image-diredx--invoke-process: Wrong type argument: processp, [nil 23723 12045 294055 nil image-dired-thumb-queue-run nil nil 600000]
   :if (executable-find "convert")
   :commands image-dired
-  :config
+  :defer-config
   ;; Emacs26からは非同期なimage-diredがあり、コンフリクトするのでオンしない
   (if (version< emacs-version "26") ; Emacs25以下
       (progn (image-diredx-async-mode 1)
@@ -1079,7 +1082,7 @@
     (counsel-mark-ring-sort-selections . nil)
     :custom
     (counsel-switch-buffer-preview-virtual-buffers . nil)
-    :config
+    :defer-config
     ;; counsel-yank-popの高さをデフォルト5から10に拡大する
     (setq ivy-height-alist
           (cons '(counsel-yank-pop . 10)
@@ -1113,6 +1116,7 @@
     :url "https://github.com/koron/cmigemo"
     :defun migemo-init migemo-get-pattern
     :defvar ivy-re-builders-alist
+    :after swiper
     :preface
     ;; swiperでもmigemoを使う
     ;; 参考: https://www.yewton.net/2020/05/21/migemo-ivy/
@@ -1151,7 +1155,7 @@
 
 (leaf dumb-jump :ensure t
   :defvar dumb-jump-selector
-  :config
+  :defer-config
   (setq dumb-jump-selector 'ivy)
   :hook (xref-backend-functions . dumb-jump-xref-activate)
   :bind (("M-g o" . dumb-jump-go-other-window)
@@ -1162,11 +1166,11 @@
   :bind ("C-`" . er/expand-region))
 
 (leaf which-key :ensure t
+  :global-minor-mode which-key-mode
   :diminish which-key-mode
   :custom
   (which-key-side-window-max-height . 0.4)
   :config
-  (which-key-mode)
   (which-key-setup-side-window-bottom))
 
 (leaf sudo-edit :ensure t)
@@ -1265,7 +1269,7 @@
                     (lambda (&rest args)
                       (when (eq (nth 0 args) 'CreateSession)
                         (mozc-session-sendkey '(Hankaku/Zenkaku)))))
-    :config
+    :defer-config
     (set-language-environment "Japanese")
     (prefer-coding-system 'utf-8))
 
@@ -1306,7 +1310,7 @@
     ;; :hook (text-mode-hook . flyspell-mode)
     :custom
     (ispell-local-dictionary . "en_US")
-    :config
+    :defer-config
     ;; 日本語まじりをチェック対象外にする
     (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
 
