@@ -843,7 +843,11 @@
   :init
   (leaf tree-sitter :ensure t
     :global-minor-mode global-tree-sitter-mode)
-  (leaf tree-sitter-langs :ensure t))
+
+  (leaf tree-sitter-langs :ensure t)
+
+  (leaf tsc
+    :custom (tsc-dyn-get-from . '(:compilation))))
 
 (leaf all-the-icons
   :init
