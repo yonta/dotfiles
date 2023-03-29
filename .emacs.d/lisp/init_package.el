@@ -451,7 +451,8 @@
                (company-ignore 'company-dabbrev '("do" "end"))
                (company-ignore 'company-yasnippet '("do" "end")))))
 
-  (leaf seeing-is-believing :ensure t)
+  (leaf seeing-is-believing :ensure t :require t
+    :req "gem install seeing_is_believing")
 
   (leaf ruby-mode
     :req "gemでsolargraphを入れる"
