@@ -78,8 +78,6 @@
  '(fringe ((t (:background "WhiteSmoke"))))
  '(header-line
    ((t (:foreground "gray10" :background "gray90" :inherit (mode-line)))))
- '(tooltip
-   ((t (:foreground "gray10" :background "#fff6e0" :inherit variable-pitch))))
  '(match ((t (:background "#ffedbf"))))
  '(next-error ((t (:inherit (region)))))
  '(query-replace ((t (:inherit (isearch)))))
@@ -132,7 +130,6 @@
  '(company-tooltip-mouse ((t (:inherit (secondary-selection)))))
  '(lsp-ui-doc-background ((t (:inherit (tooltip)))))
  '(lsp-ui-doc-header ((t (:inherit (diff-file-header)))))
- '(lsp-ui-doc-background ((t (:inherit (tooltip)))))
  ;; code in lsp-ui-doc
  '(markdown-inline-code-face
    ((t (:inherit (fixed-pitch font-lock-keyword-face)))))
