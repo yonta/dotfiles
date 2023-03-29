@@ -441,6 +441,7 @@
     :hook (ruby-mode-hook . ruby-tools-mode))
 
   (leaf company-ignore
+    :defun company-ignore
     :el-get (company-ignore
              :url "https://github.com/yonta/company-ignore.git")
     :hook (ruby-mode-hook
