@@ -494,6 +494,8 @@
     ;; Emacs28.1ではlsp-modeがjson parse errorする
     ;; Emacs29が出るまで暫定対処する
     ;; https://github.com/emacs-lsp/lsp-mode/issues/2681#issuecomment-1214902146
+    :defer-config
+    (eval-and-compile (require 's))
     :advice
     ;; same definition as mentioned earlier
     (:around json-parse-string
@@ -1100,14 +1102,17 @@
 
   (leaf s :ensure t)
 
-  (eval-and-compile (require 's))
   (leaf migemo :ensure t :require t
     :req "cmigemoをいれておく"
     :url "https://github.com/koron/cmigemo"
     :defun migemo-init migemo-get-pattern
     :defvar ivy-re-builders-alist
     :after swiper
-    :preface
+    :if (executable-find "cmigemo")
+    :custom
+    (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
+    :defer-config
+    (eval-and-compile (require 's))
     ;; swiperでもmigemoを使う
     ;; 参考: https://www.yewton.net/2020/05/21/migemo-ivy/
     (defun my-ivy-migemo-re-builder (str)
@@ -1120,10 +1125,6 @@
                                 ((s-matches? sep it) it)
                                 (t (migemo-get-pattern it)))
                           splitted))))
-    :if (executable-find "cmigemo")
-    :custom
-    (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
-    :config
     (migemo-init)
     (setq ivy-re-builders-alist '((t . ivy--regex-plus)
                                   (swiper . my-ivy-migemo-re-builder))))
