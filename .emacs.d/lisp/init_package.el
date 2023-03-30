@@ -112,11 +112,13 @@
              flycheck-gcc-language-standard
              flycheck-clang-language-standard)
     :global-minor-mode global-flycheck-mode
+    ;; 先にflycheck-local-checkersを探索する
     :preface
     (defun +flycheck-checker-get(fn checker property)
       (or (alist-get property (alist-get checker flycheck-local-checkers))
           (funcall fn checker property)))
-    (advice-add 'flycheck-checker-get :around '+flycheck-checker-get)
+    :advice
+    (:around flycheck-checker-get +flycheck-checker-get)
     :custom
     (flycheck-python-flake8-executable . "flake8")
     (flycheck-checker-error-threshold . 250)
@@ -155,7 +157,7 @@
 (leaf emacs-lisp
   :init
   (leaf elisp-mode
-    :preface
+    :defer-config
     (defun my-eval-region-or-line ()
       "Eval active region or current line."
       (interactive) (call-with-region-or-line #'eval-region))
@@ -182,30 +184,29 @@
 (leaf cc-mode
   :init
   (leaf c-mode
-    :defvar c-basic-offset
     :preface
-    (defun my-c-mode-hook ()
-      "Setting for c-mode."
-      (c-set-style "k&r")
-      (require 'smartparens-c))
-    :hook (c-mode-hook . my-c-mode-hook)
+    :custom
+    ;; 基本的にK&Rスタイルを使う
+    (c-default-style . '((java-mode . "java")
+                         (awk-mode . "awk")
+                         (other . "k&r")))
     :defer-config
     (add-to-list 'company-backends
-                 '(company-clang :with company-dabbrev-code)))
+                 '(company-clang :with company-dabbrev-code))
+    (require 'smartparens-c))
 
   (leaf c++-mode
     :preface
     (defun my-c++-mode-hook ()
       "Setting for c++-mode."
       (setq-local flycheck-gcc-language-standard "c++11")
-      (setq-local flycheck-clang-language-standard "c++11")
-      (require 'smartparens-c)
-      (c-set-style "k&r"))
+      (setq-local flycheck-clang-language-standard "c++11"))
     :hook (c++-mode-hook . my-c++-mode-hook)
     :defer-config
     (add-to-list 'company-backends
                  '(company-clang ;; company-c-headers
-                   :with company-dabbrev-code)))
+                   :with company-dabbrev-code))
+    (require 'smartparens-c))
 
   (leaf rainbow-mode :ensure t
     :doc "#ff0000などに色をつける"
@@ -270,11 +271,26 @@
     :el-get (sml-mode
              :url "https://github.com/yonta/sml-mode.git"
              :branch "add-smlsharp")
+    :mode ("\\.smi\\'" "\\.ppg\\'")
+    :interpreter "smlsharp"
     :defun (sml-prog-proc-proc
             sml-prog-proc-send-string
             my-sml-prog-proc-send-region-by-string)
     :defvar company-minimum-prefix-length
     :preface
+    (defun my-sml-set-company-settings ()
+      "Set company settings for SML mode."
+      (setq-local completion-ignore-case nil)
+      (setq-local company-minimum-prefix-length 3))
+    :hook ((sml-mode-hook . my-sml-set-company-settings)
+           (inferior-sml-mode-hook . my-sml-set-company-settings))
+    :custom
+    (sml-indent-level . 2)
+    (sml-indent-args . 2)
+    ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
+    (sml-program-name . "smlsharp")
+    (sml-electric-pipe-mode . nil)
+    :defer-config
     (defun my-sml-prog-proc-send-region-by-string (begin end)
       (interactive "r")
       (let ((proc (sml-prog-proc-proc))
@@ -284,24 +300,10 @@
       "Call REPL with active region or current line."
       (interactive)
       (call-with-region-or-line #'my-sml-prog-proc-send-region-by-string))
-    (defun my-sml-set-company-settings ()
-      "Set company settings for SML mode."
-      (setq-local completion-ignore-case nil)
-      (setq-local company-minimum-prefix-length 3))
-    :mode ("\\.smi\\'" "\\.ppg\\'")
-    :hook ((sml-mode-hook . my-sml-set-company-settings)
-           (inferior-sml-mode-hook . my-sml-set-company-settings))
     :bind (:sml-mode-map
            ("C-c C-r" . my-sml-prog-proc-send-region-or-line)
            ("C-c C-p" . sml-run)
-           ("M-." . dumb-jump-go))
-    :interpreter "smlsharp"
-    :custom
-    (sml-indent-level . 2)
-    (sml-indent-args . 2)
-    ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
-    (sml-program-name . "smlsharp")
-    (sml-electric-pipe-mode . nil))
+           ("M-." . dumb-jump-go)))
 
   (leaf company-mlton
     :el-get (company-mlton
@@ -340,7 +342,7 @@
   :init
   (leaf python
     :defun python-shell-send-region
-    :preface
+    :defer-config
     (defun my-python-shell-send-region-or-line ()
       "Call REPL with active region or current line."
       (interactive) (call-with-region-or-line #'python-shell-send-region))
@@ -598,7 +600,7 @@
                    company-dabbrev-code company-dabbrev)))
 
   (leaf scss-mode
-    :preface
+    :defer-config
     ;; scssで正しいcheckerが走らない暫定対処
     ;; https://github.com/flycheck/flycheck/issues/1912
     (flycheck-define-checker general-stylelint
@@ -613,7 +615,6 @@
       :modes (scss-mode))
     (flycheck-def-config-file-var flycheck-general-stylelintrc
         (general-stylelint) nil)
-    :init
     (add-to-list 'flycheck-checkers 'general-stylelint)
     :custom
     (flycheck-disabled-checkers . '(scss-stylelint))))
@@ -751,7 +752,8 @@
 
   (leaf rainbow-delimiters :ensure t
     :defvar rainbow-delimiters-max-face-count
-    :preface
+    :defun my-rainbow-delimiters-using-stronger-colors
+    :defer-config
     ;; 白背景地には括弧の色をより強くする
     ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
     (defun my-rainbow-delimiters-using-stronger-colors ()
@@ -762,8 +764,8 @@
            (let ((face
                   (intern (format "rainbow-delimiters-depth-%d-face" index))))
              (cl-callf color-saturate-name (face-foreground face) 30)))))
-    :hook ((emacs-startup-hook . my-rainbow-delimiters-using-stronger-colors)
-           (prog-mode-hook . rainbow-delimiters-mode)))
+    (my-rainbow-delimiters-using-stronger-colors)
+    :hook (prog-mode-hook . rainbow-delimiters-mode))
 
   (leaf color :require t
     :after rainbow-delimiters
@@ -1343,31 +1345,46 @@
 ;;; Emacs default (not package.el)
 
 (leaf dired
-  :defun my-reload-current-dired-buffer
-  :preface
-  ;; C-.でドットファイルの表示と非表示を切り替える
-  (defun my-reload-current-dired-buffer ()
-    "Reload current `dired-mode' buffer."
-    (let* ((dir (dired-current-directory)))
-      (progn (kill-buffer (current-buffer))
-             (dired dir))))
-  (defun my-toggle-dired-listing-switches ()
-    "Toggle `dired-mode' option to show or hide dot files.
+  :init
+  (leaf dired
+    :defun my-reload-current-dired-buffer
+    :custom
+    ;; dired-modeがlsコマンドに渡すオプションを設定する
+    ;; --time-style=long-iso: 2022-01-01 12:00 形式で日時を表示する
+    ;; l: 長い表示、dired-modeに必須のオプション
+    ;; g: ユーザ名を非表示
+    ;; G: グループ名を非表示
+    ;; h: kbyte・Mbyteの使用
+    ;; F: ディレクトリに「/」を表示
+    ;; A: 「.」と「..」を非表示でドットファイルを表示
+    ;; (setq dired-listing-switches "-gGhFA")
+    (dired-listing-switches . "--time-style=long-iso -lgGhF")
+    :defer-config
+    ;; C-.でドットファイルの表示と非表示を切り替える
+    (defun my-reload-current-dired-buffer ()
+      "Reload current `dired-mode' buffer."
+      (let* ((dir (dired-current-directory)))
+        (progn (kill-buffer (current-buffer))
+               (dired dir))))
+    (defun my-toggle-dired-listing-switches ()
+      "Toggle `dired-mode' option to show or hide dot files.
 
 Rewrite `dired-listing-switches' variable between with and without 'A'"
-    (interactive)
-    (progn
-      (if (string-match "[Aa]" dired-listing-switches)
-          (setq dired-listing-switches "--time-style=long-iso -lgGhF")
-        (setq dired-listing-switches "--time-style=long-iso -lgGhFA"))
-      (my-reload-current-dired-buffer)))
-  :hook
-  (dired-mode-hook
-   . (lambda ()
-       (setq-local whitespace-style (delete 'lines-tail whitespace-style))
-       (setq-local truncate-partial-width-windows t)))
+      (interactive)
+      (progn
+        (if (string-match "[Aa]" dired-listing-switches)
+            (setq dired-listing-switches "--time-style=long-iso -lgGhF")
+          (setq dired-listing-switches "--time-style=long-iso -lgGhFA"))
+        (my-reload-current-dired-buffer)))
+    :hook
+    (dired-mode-hook
+     . (lambda ()
+         (setq-local whitespace-style (delete 'lines-tail whitespace-style))
+         (setq-local truncate-partial-width-windows t)))
+    :bind (:dired-mode-map
+           ("C-." . my-toggle-dired-listing-switches)
+           ("r" . wdired-change-to-wdired-mode)))
 
-  :init
   (leaf dired-collapse :ensure t
     :hook (dired-mode-hook . dired-collapse-mode))
 
@@ -1380,22 +1397,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
            ("C-m" . dired-single-buffer)
            ("^" . dired-single-up-directory)
            ("C-." . my-toggle-dired-listing-switches)
-           ("r" . wdired-change-to-wdired-mode)))
-
-  :custom
-  ;; dired-modeがlsコマンドに渡すオプションを設定する
-  ;; --time-style=long-iso: 2022-01-01 12:00 形式で日時を表示する
-  ;; l: 長い表示、dired-modeに必須のオプション
-  ;; g: ユーザ名を非表示
-  ;; G: グループ名を非表示
-  ;; h: kbyte・Mbyteの使用
-  ;; F: ディレクトリに「/」を表示
-  ;; A: 「.」と「..」を非表示でドットファイルを表示
-  ;; (setq dired-listing-switches "-gGhFA")
-  (dired-listing-switches . "--time-style=long-iso -lgGhF")
-  :bind (:dired-mode-map
-         ("C-." . my-toggle-dired-listing-switches)
-         ("r" . wdired-change-to-wdired-mode)))
+           ("r" . wdired-change-to-wdired-mode))))
 
 (leaf help-mode
   ;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r
@@ -1405,7 +1407,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
 (leaf ibuffer
   :defun ibuffer-current-buffer
-  :preface
+  :defer-config
   ;; ibuffer選択肢を考慮したibuffer-find-file関数を、counselで実現する
   (defun my-counsel-ibuffer-find-file ()
     "Like `counsel-find-file', starting with directory of ibuffer candidate."
