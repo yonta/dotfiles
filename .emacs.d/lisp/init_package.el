@@ -1494,7 +1494,8 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
     (recentf-max-saved-items . 1000)
     (recentf-auto-cleanup . 'never))
 
-  (leaf recentf-ext :ensure t :require t))
+  (leaf recentf-ext :ensure t :require t
+    :after recentf))
 
 (leaf subword
   :global-minor-mode global-subword-mode
