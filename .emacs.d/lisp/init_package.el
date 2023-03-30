@@ -26,11 +26,12 @@
   (package-install 'leaf))
 
 (eval-and-compile
-  (leaf leaf-keywords :ensure t
+  (leaf leaf-keywords
+    ;; :diminishを有効にし、モードラインをスッキリさせる
+    :ensure t diminish
     :config
     (leaf el-get :ensure t
       :custom ((el-get-git-shallow-clone . t)))
-    ;; :diminishを有効にし、モードラインをスッキリさせる
     (leaf diminish :ensure t)
     (leaf-keywords-init)))
 
@@ -663,27 +664,19 @@
            ("C-c C-p" . run-ts))))
 
 (leaf docker
-  :init
-  (leaf dockerfile-mode :ensure t)
-
-  (leaf docker-compose-mode :ensure t)
-
-  (leaf docker :ensure t
-    :bind ("C-c C-x d" . docker))
-
-  (leaf docker-tramp :ensure t)
-
-  (leaf counsel-tramp :ensure t))
-
-(leaf yaml-mode :ensure t)
+  :ensure (t
+           dockerfile-mode
+           docker-compose-mode
+           docker-tramp
+           counsel-tramp
+           yaml-mode)
+  :bind ("C-c C-x d" . docker))
 
 (leaf jenkinsfile-mode
+  :ensure groovy-mode
   :el-get (jenkinsfile-mode
            :url "https://github.com/spotify/dockerfile-mode.git")
-  :mode "^Jenkinsfile\\'"
-  :init
-  (leaf groovy-mode :ensure t
-    :doc "jenkinsfile-modeに必要"))
+  :mode "^Jenkinsfile\\'")
 
 (leaf haxe-mode :ensure t
   :custom
@@ -839,15 +832,10 @@
 
 (leaf tree-sitter
   :doc "コードハイライティングが賢くなるとか"
+  :ensure t tree-sitter-langs
   :diminish tree-sitter-mode
-  :init
-  (leaf tree-sitter :ensure t
-    :global-minor-mode global-tree-sitter-mode)
-
-  (leaf tree-sitter-langs :ensure t)
-
-  (leaf tsc
-    :custom (tsc-dyn-get-from . '(:compilation))))
+  :global-minor-mode global-tree-sitter-mode
+  :custom (tsc-dyn-get-from . '(:compilation)))
 
 (leaf all-the-icons
   :init
