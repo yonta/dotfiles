@@ -215,7 +215,9 @@
     (rainbow-html-colors . t)             ; html color listを使う
     :hook (c++-mode-hook arduino-mode-hook)))
 
-(leaf tuareg :ensure t)
+(leaf tuareg :ensure t
+  :doc "ocaml mode"
+  :req "opam install tuareg")
 
 (leaf arduino-mode :ensure t :disabled t
   :doc "TODO: set compiler and libraries path by environment")
