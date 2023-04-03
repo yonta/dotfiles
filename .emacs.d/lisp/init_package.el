@@ -87,12 +87,11 @@
   (leaf company-prescient :ensure t
     :global-minor-mode company-prescient-mode)
 
-  (leaf yasnippet :ensure t
+  (leaf yasnippet :disabled t
+    :ensure t yasnippet-snippets
     :defvar yas-minor-mode-map
     :global-minor-mode yas-global-mode
     :diminish yas-minor-mode
-    :init
-    (leaf yasnippet-snippets :ensure t)
     :config
     ;; yas-expandは使わず、companyからyasを使う。
     (unbind-key "<tab>" yas-minor-mode-map)
