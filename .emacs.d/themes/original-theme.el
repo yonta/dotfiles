@@ -70,7 +70,7 @@
  ;; 元からあったやつ
  '(escape-glyph ((t (:inherit (font-lock-comment-face)))))
  '(homoglyph ((t (:inherit (font-lock-comment-face)))))
- '(minibuffer-prompt ((t (:foreground "blue"))))
+ '(minibuffer-prompt ((t (:foreground "#456980" :background "#e0f3ff"))))
  '(button ((t (:inherit (link)))))
  '(link ((t (:underline (:color foreground-color :style line)
                         :foreground "RoyalBlue3"))))
