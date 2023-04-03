@@ -98,6 +98,16 @@
     (unbind-key "<tab>" yas-minor-mode-map)
     (unbind-key "TAB" yas-minor-mode-map))
 
+  ;; 絵文字入力2種を試してみる 🚀
+  (leaf company-emoji :ensure t
+    ;; :symbol 入力時に補完されるのが邪魔なので、backendsには入れない
+    ;; :config
+    ;; (add-to-list 'company-backends 'company-emoji)
+    :bind* ("C-M-o" . company-emoji))
+
+  (leaf ivy-emoji :ensure t
+    :after ivy)
+
   (leaf company-c-headers :ensure t :disabled t)
   (leaf company-arduino :ensure t :disabled t))
 
