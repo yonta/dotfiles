@@ -102,7 +102,13 @@
     ;; :symbol 入力時に補完されるのが邪魔なので、backendsには入れない
     ;; :config
     ;; (add-to-list 'company-backends 'company-emoji)
-    :bind* ("C-M-o" . company-emoji))
+    :preface
+    (defun company-emoji-only ()
+      "Complete only with emoji."
+      (interactive)
+      (let ((company-backends '(company-emoji)))
+        (company-complete)))
+    :bind* ("C-M-o" . company-emoji-only))
 
   (leaf ivy-emoji :ensure t
     :after ivy)
