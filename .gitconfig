@@ -39,7 +39,7 @@
 [push]
         default = simple
 [merge]
-        conflictstyle = diff3
+        conflictstyle = zdiff3
 [rebase]
         autostash = true
 [blame]
