@@ -1248,7 +1248,18 @@
                          (persp-window-switch . nil)
                          (persp-frame-switch  . nil))))))))
 
-(leaf rebecca-theme :ensure t)
+(leaf theme
+  :init
+  (leaf rebecca-theme :ensure t :disabled t)
+
+  (leaf solo-jazz-theme :disabled t
+    :ensure t :require t
+    :config
+    (load-theme 'solo-jazz t))
+
+  (leaf humanoid-themes :ensure t :disabled t)
+
+  (leaf github-modern-theme :ensure t :disabled t))
 
 (leaf mozc
   :init
