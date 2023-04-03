@@ -191,7 +191,10 @@
            :package elisp-mode
            ("C-M-;" . lispxmp)))
 
-  (leaf macrostep :ensure t
+  (leaf macrostep
+    :el-get (macrostep
+             :url "https://github.com/justbur/macrostep.git"
+             :branch "fix-missing-map")
     :bind (:lisp-mode-shared-map
            :package elisp-mode
            ("C-c e" . macrostep-expand))))
