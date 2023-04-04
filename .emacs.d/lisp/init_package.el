@@ -859,7 +859,8 @@
   :ensure t tree-sitter-langs
   :diminish tree-sitter-mode
   :global-minor-mode global-tree-sitter-mode
-  :custom (tsc-dyn-get-from . '(:compilation)))
+  :custom (tsc-dyn-get-from . '(:compilation))
+  :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
 
 (leaf all-the-icons
   :init
