@@ -900,7 +900,11 @@
                                 "^ \\*Rubocop.*\\*$"
                                 "\\*xref\\*"
                                 "\\*Backtrace\\*"
-                                "\\*ripgrep-search\\*"))
+                                "\\*ripgrep-search\\*"
+                                ;; lsp
+                                "\\*Call Hierarchy\\*"
+                                "\\*LSP Error List\\*"
+                                ))
   (popper-group-function . 'popper-group-by-projectile)
   :bind* ("M-o" . popper-cycle))
 
