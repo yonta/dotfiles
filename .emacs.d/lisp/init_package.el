@@ -907,7 +907,10 @@
                                 "\\*LSP Error List\\*"
                                 ))
   (popper-group-function . 'popper-group-by-projectile)
-  :bind* ("M-o" . popper-cycle))
+  ;; popper-echoでk/^コマンドを有効化
+  (popper-echo-dispatch-actions . t)
+  (popper-echo-dispatch-keys . '("1" "2" "3" "4" "5" "6" "7" "8" "9" "0"))
+  :bind* ("M-o" . popper-toggle-latest))
 
 (leaf projectile
   :init
