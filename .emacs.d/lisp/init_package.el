@@ -1197,8 +1197,7 @@
   :bind ("M-&" . vr/query-replace))
 
 (leaf async :ensure t
-  :custom
-  (async-bytecomp-allowed-packages . '(all))))
+  :hook (emacs-lisp-mode-hook . async-bytecomp-package-mode))
 
 (leaf undo-tree :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
