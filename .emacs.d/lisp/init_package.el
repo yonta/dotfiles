@@ -503,6 +503,7 @@
   :init
   (leaf lsp-mode :ensure t
     :diminish t
+    :defun lsp-find-definition lsp-find-references
     :hook ((lsp-mode-hook . lsp-enable-which-key-integration)
            (lsp-mode-hook . lsp-ui-mode))
     :custom
@@ -1171,14 +1172,43 @@
     :doc "MEMO: ivy-***-alistを書き換える中で最後に来ないと動かないことがある"
     :global-minor-mode ivy-prescient-mode))
 
-(leaf dumb-jump :ensure t
-  :defvar dumb-jump-selector
+(leaf smart-jump
+  :ensure t dumb-jump rg ivy-xref
+  :defvar dumb-jump-find-rules
+  :defun smart-jump-simple-find-references smart-jump-find-references-with-rg
+  :custom
+  ;; ripgrepを使う
+  (smart-jump-find-references-fallback-function
+   . #'smart-jump-find-references-with-rg)
+  ;; xrefをivyで選択表示する
+  (xref-show-definitions-function . #'ivy-xref-show-defs)
+  (xref-show-xrefs-function . #'ivy-xref-show-xrefs)
+  ;; legacyなdumb-jump-goなどをivyにする
+  (dumb-jump-selector . 'ivy)
+  ;; xrefをdumb-jumpで行うhook
+  ;; :hook (xref-backend-functions . dumb-jump-xref-activate)
   :defer-config
-  (setq dumb-jump-selector 'ivy)
-  :hook (xref-backend-functions . dumb-jump-xref-activate)
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g i" . dumb-jump-go-prompt)))
+  ;; dump-jump対応言語はすべて登録する
+  (require 'dumb-jump)
+  (let* ((languages-dup (--map (plist-get it :language) dumb-jump-find-rules))
+         (languages (delete-dups languages-dup))
+         (modes-str (--map (concat it "-mode") languages))
+         (modes (mapcar 'intern modes-str)))
+    (smart-jump-register :modes modes
+                         :jump-fn #'dumb-jump-go
+                         :pop-fn #'dumb-jump-back
+                         :refs-fn #'smart-jump-simple-find-references
+                         :heuristic 'point
+                         :order 100))
+  (smart-jump-register :modes '(ruby-mode typescript-mode js-mode)
+                       :jump-fn #'lsp-find-definition
+                       :refs-fn #'lsp-find-references
+                       :heuristic 'point
+                       :async 300       ; サーバとの通信のため300msまで待つ
+                       :order 1)
+  :bind (("M-." . smart-jump-go)
+         ("M-," . smart-jump-back)
+         ("M-?" . smart-jump-references)))
 
 (leaf expand-region :ensure t
   :bind ("C-`" . er/expand-region))
