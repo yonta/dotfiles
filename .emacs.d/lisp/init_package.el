@@ -1376,7 +1376,7 @@
 (leaf ace-window :ensure t
   :custom
   ;; 参考: https://github.com/abo-abo/ace-window/wiki/display-buffer
-  (aw-keys . '(?h ?j ?k ?l ?a ?s ?d ?f ? g))
+  (aw-keys . '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
   (display-buffer-base-action
    . '((display-buffer-reuse-window ace-display-buffer))))
 
