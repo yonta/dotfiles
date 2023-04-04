@@ -1196,33 +1196,9 @@
 (leaf visual-regexp :ensure t
   :bind ("M-&" . vr/query-replace))
 
-(leaf package
-  :init
-  (leaf paradox :ensure t
-    :doc "package.elのリストを綺麗で便利にする"
-    :init
-    ;; paradox-enableを遅延するために、別コマンドにする
-    ;; これだけは`lpp'で即呼び出しするため、`my-'をつけない
-    (defun list-packages-paradox ()
-      "Call `list-packages' function with paradox initialization."
-      (interactive)
-      (paradox-enable)
-      (call-interactively #'list-packages))
-    :custom
-    (paradox-execute-asynchronously . t))
-
-  (leaf auto-package-update :ensure t :disabled t
-    :custom
-    (auto-package-update-delete-old-versions . t)
-    (auto-package-update-prompt-before-update . t)
-    ;; (auto-package-update-hide-results . t)
-    :config
-    (auto-package-update-maybe))
-
-  (leaf async :ensure t
-    :global-minor-mode async-bytecomp-package-mode
-    :custom
-    (async-bytecomp-allowed-packages . '(all))))
+(leaf async :ensure t
+  :custom
+  (async-bytecomp-allowed-packages . '(all))))
 
 (leaf undo-tree :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
