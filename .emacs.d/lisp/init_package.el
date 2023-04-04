@@ -880,26 +880,27 @@
 
 ;;; OTHER
 
-(leaf popwin :ensure t :require t
-  :global-minor-mode popwin-mode
+(leaf popper :ensure t
+  :require t popper-echo
+  :global-minor-mode popper-mode popper-echo-mode
   :custom
-  ;; popwin対象
-  (popwin:special-display-config
-   . '(("*quickrun*" :stick t :tail t)
-       ("*Google Translate*")
-       (completion-list-mode :noselect t) ;; 全completionを対象
-       (compilation-mode :noselect t)
-       ("*Warnings*")
-       (" *auto-async-byte-compile*")
-       ("*Compile-Log*")
-       ("*Kill Ring*")
-       (" *undo-tree*" :width 60 :position right)
-       help-mode
-       helpful-mode
-       ("*robe-doc*")
-       ("^ \\*Rubocop.*\\*$" :regexp t)
-       ("*xref*")
-       ("*Backtrace*"))))
+  (popper-reference-buffers . '(help-mode
+                                helpful-mode
+                                "\\*quickrun\\*"
+                                "\\*Google Translate\\*"
+                                (completion-list-mode . hide) ;; 全completionを対象
+                                (compilation-mode . hide)
+                                "\\*Warnings\\*"
+                                " \\*auto-async-byte-compile\\*"
+                                "\\*Compile-Log\\*"
+                                " \\*undo-tree\\*"
+                                "\\*robe-doc\\*"
+                                "^ \\*Rubocop.*\\*$"
+                                "\\*xref\\*"
+                                "\\*Backtrace\\*"
+                                "\\*ripgrep-search\\*"))
+  (popper-group-function . 'popper-group-by-projectile)
+  :bind* ("M-o" . popper-cycle))
 
 (leaf projectile
   :init
