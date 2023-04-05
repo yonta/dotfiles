@@ -651,6 +651,10 @@
     (js-indent-level . 2))
 
   (leaf add-node-modules-path :ensure t
+    :custom
+    ;; npm v9より`npm bin'が削除されたため、暫定対処
+    ;; https://github.com/codesuki/add-node-modules-path/issues/23
+    (add-node-modules-path-command . "echo \"$(npm root)/.bin\"")
     :hook ((js-mode-hook . add-node-modules-path)
            (typescript-mode-hook . add-node-modules-path)
            (markdown-mode-hook . add-node-modules-path)
