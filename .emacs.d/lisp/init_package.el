@@ -1177,6 +1177,8 @@
     :global-minor-mode ivy-prescient-mode))
 
 (leaf smart-jump
+  :doc "ripgrepをpcre2サポートありでインストールしておく"
+  :doc "cargo install ripgrep --features 'pcre2'"
   :ensure t dumb-jump rg ivy-xref
   :defvar dumb-jump-find-rules
   :defun smart-jump-simple-find-references smart-jump-find-references-with-rg
