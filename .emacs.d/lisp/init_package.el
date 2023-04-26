@@ -1180,6 +1180,9 @@
 (leaf smart-jump
   :doc "ripgrepをpcre2サポートありでインストールしておく"
   :doc "cargo install ripgrep --features 'pcre2'"
+  :doc "またはデフォルトのripgrepを使う場合は、"
+  :doc "custom値を設定してpcre2を使わないようにする"
+  :doc ":custom (dumb-jump-rg-search-args . \"\")"
   :ensure t dumb-jump rg ivy-xref
   :defvar dumb-jump-find-rules
   :defun smart-jump-simple-find-references smart-jump-find-references-with-rg
