@@ -620,7 +620,7 @@
                    company-dabbrev-code company-dabbrev)))
 
   (leaf scss-mode
-    :defer-config
+    :config
     ;; scssで正しいcheckerが走らない暫定対処
     ;; https://github.com/flycheck/flycheck/issues/1912
     (flycheck-define-checker general-stylelint
