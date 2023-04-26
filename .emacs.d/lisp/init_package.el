@@ -931,13 +931,12 @@
          ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".pijul" ".tox" ".svn"
          ".stack-work" ".ccls-cache" ".cache" ".clangd")))
 
-  (leaf ripgrep :ensure t ; projectile-ripgrepの依存関係なので使う
-    :bind ("C-c f" . ripgrep-regexp))
-
-  (leaf projectile-ripgrep :ensure t
-    :bind (:projectile-mode-map
-           :package projectile
-           ("C-c f" . projectile-ripgrep)))
+  (leaf projectile-ripgrep :ensure t ripgrep wgrep
+    :doc "wgrepはripgrep検索結果をC-cC-pで編集可にする"
+    :bind (("C-c f" . ripgrep-regexp)
+           (:projectile-mode-map
+            :package projectile
+            ("C-c f" . projectile-ripgrep))))
 
   (leaf projectile-rails :ensure t
     :global-minor-mode projectile-rails-global-mode
