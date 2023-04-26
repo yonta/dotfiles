@@ -320,8 +320,7 @@
       (call-with-region-or-line #'my-sml-prog-proc-send-region-by-string))
     :bind (:sml-mode-map
            ("C-c C-r" . my-sml-prog-proc-send-region-or-line)
-           ("C-c C-p" . sml-run)
-           ("M-." . dumb-jump-go)))
+           ("C-c C-p" . sml-run)))
 
   (leaf company-mlton
     :el-get (company-mlton
