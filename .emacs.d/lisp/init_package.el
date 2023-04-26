@@ -893,8 +893,9 @@
                                 helpful-mode
                                 "\\*quickrun\\*"
                                 "\\*Google Translate\\*"
-                                (completion-list-mode . hide) ;; 全completionを対象
-                                (compilation-mode . hide)
+                                ;; 全completionを対象
+                                completion-list-mode
+                                compilation-mode
                                 "\\*Warnings\\*"
                                 " \\*auto-async-byte-compile\\*"
                                 "\\*Compile-Log\\*"
