@@ -1372,7 +1372,8 @@
   (add-to-list 'aggressive-indent-excluded-modes 'dockerfile-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'js-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'typescript-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'compilation-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'compilation-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'inferior-sml-mode))
 
 (leaf git-timemachine :ensure t
   :bind ("C-c C-x t" . git-timemachine))
