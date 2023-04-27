@@ -305,6 +305,7 @@
     :custom
     (sml-indent-level . 2)
     (sml-indent-args . 2)
+    (sml-struct-indent-level . 2)
     ;; sml-modeのrun-smlでデフォルトSMLコマンドをsmlsharpにする
     (sml-program-name . "smlsharp")
     (sml-electric-pipe-mode . nil)
