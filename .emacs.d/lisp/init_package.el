@@ -884,6 +884,59 @@
   (leaf all-the-icons-ivy-rich :ensure t
     :global-minor-mode all-the-icons-ivy-rich-mode))
 
+(leaf centaur-tabs :ensure t
+  :global-minor-mode centaur-tabs-mode
+  :defun
+  centaur-tabs-headline-match
+  centaur-tabs-enable-buffer-reordering
+  centaur-tabs-change-fonts
+  centaur-tabs-group-by-projectile-project
+  centaur-tabs-get-group-name
+  :defvar centaur-tabs-icon-scale-factor
+  :config
+  (setq centaur-tabs-icon-scale-factor 0.7)
+  (centaur-tabs-headline-match)
+  (centaur-tabs-enable-buffer-reordering)
+  (centaur-tabs-group-by-projectile-project)
+  (defun centaur-tabs-buffer-groups ()
+    "`centaur-tabs-buffer-groups' control buffers' group rules.
+
+Group centaur-tabs with mode if buffer is derived from `eshell-mode'
+`emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+All buffer name start with * will group to \"Emacs\".
+All buffer name start with \" *\" will group to \"*Emacs\".
+Other buffer group by `centaur-tabs-get-group-name' with project name."
+    (list
+     (cond
+      ((string-equal "*" (substring (buffer-name) 0 1)) "Emacs")
+      ((string-equal " *" (substring (buffer-name) 0 2)) "*Emacs")
+      ((derived-mode-p 'prog-mode) "Editing")
+      ((derived-mode-p 'dired-mode) "Dired")
+      (t (centaur-tabs-get-group-name (current-buffer))))))
+  (defun centaur-tabs-hide-tab (x)
+    "Do no to show buffer X in tabs."
+    (let ((name (format "%s" x)))
+      (or
+       ;; Current window is not dedicated window.
+       (window-dedicated-p (selected-window))
+       ;; Buffer name not match below blacklist.
+       (and (string-prefix-p "*" name)
+            (not (string= "*scratch*" name)))
+       )))
+  :custom
+  ;; (centaur-tabs-style . "rounded")
+  (centaur-tabs-set-icons . t)
+  (centaur-tabs-set-close-button . nil)
+  (centaur-tabs-cycle-scope . 'tabs)
+  ;; (centaur-tabs-label-fixed-length . 10)
+  (centaur-tabs-show-count . t)
+  :hook
+  ;; centaur-tabsを無効とする対象をHookで指定する
+  (package-menu-mode-hook . centaur-tabs-local-mode)
+  :bind (("C-<tab>" . centaur-tabs-forward)
+         ("C-<iso-lefttab>" . centaur-tabs-backward)
+         ("C-c C-<tab>" . centaur-tabs-counsel-switch-group)))
+
 ;;; OTHER
 
 (leaf popper :ensure t
