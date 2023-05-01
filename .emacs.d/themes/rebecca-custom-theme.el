@@ -53,6 +53,8 @@
  '(smerge-base ((t (:background "#606000"))))
  '(flycheck-color-mode-line-error-face ((t (:background "#993333" :foreground "#ccccff"))))
  '(flycheck-color-mode-line-warning-face ((t (:background "#826831" :foreground "#ccccff"))))
+ '(centaur-tabs-selected-modified ((t (:foreground "DarkOrange"))))
+ '(centaur-tabs-unselected-modified ((t (:foreground "DarkOrange"))))
  )
 
 (provide-theme 'rebecca-custom)
