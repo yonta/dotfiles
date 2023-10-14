@@ -1427,7 +1427,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (add-to-list 'aggressive-indent-excluded-modes 'js-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'typescript-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'compilation-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'inferior-sml-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'inferior-sml-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'shell-mode))
 
 (leaf git-timemachine :ensure t
   :bind ("C-c C-x t" . git-timemachine))
