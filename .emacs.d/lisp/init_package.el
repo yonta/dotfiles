@@ -1122,10 +1122,10 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
           ("h" . image-dired-backward-image)
           ("l" . image-dired-forward-image)
           ("g" . revert-buffer)) ; 更新
-         (:image-dired-display-image-mode-map
+         (:image-dired-image-mode-map
           :package image-dired
-          ("f" . image-dired-display-current-image-full)
-          ("0" . image-dired-display-current-image-sized))))
+          ("f" . image-transform-reset-to-original)
+          ("0" . image-mode-fit-frame))))
 
 (leaf swiper
   :init
