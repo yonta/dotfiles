@@ -68,6 +68,8 @@
     :config
     (setq completion-ignore-case t)
     (bind-key [remap completion-at-point] #'company-complete company-mode-map)
+    (unbind-key "RET" company-active-map)
+    (unbind-key [return] company-active-map)
     :bind* ("C-M-i" . company-complete)
     :bind ((:company-active-map
             ("C-n" . company-select-next)
