@@ -1276,7 +1276,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                        :order 1)
   :bind (("M-." . smart-jump-go)
          ("M-," . smart-jump-back)
-         ("M-?" . smart-jump-references)))
+         ("M-/" . smart-jump-references)))
 
 (leaf expand-region :ensure t
   :bind ("C-`" . er/expand-region))
