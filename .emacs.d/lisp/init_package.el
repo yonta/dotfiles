@@ -948,6 +948,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (popper-reference-buffers . '(help-mode
                                 helpful-mode
                                 "\\*quickrun\\*"
+                                inf-ruby-mode
+                                inferior-sml-mode
                                 "\\*Google Translate\\*"
                                 ;; 全completionを対象
                                 completion-list-mode
