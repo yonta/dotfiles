@@ -862,12 +862,27 @@
   :custom (emojify-emoji-styles . (ascii github)))
 
 (leaf tree-sitter
-  :doc "コードハイライティングが賢くなるとか"
+  :doc "GitHubがAtom用に開発したインクリメンタルパーサ"
+  :doc "高速で正確なsyntax highlightingを提供する"
+  :doc "Emacs29では同梱されるようになった"
+  :if (version< emacs-version "29") ; Emacs28以下
   :ensure t tree-sitter-langs
   :diminish tree-sitter-mode
   :global-minor-mode global-tree-sitter-mode
   :custom (tsc-dyn-get-from . '(:compilation))
   :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
+
+(leaf treesit
+  :if (version<= "29" emacs-version) ; Emacs29以降
+  :custom
+  (treesit-auto-install . 'prompt)
+
+  :init
+  (leaf treesit-auto
+    :ensure t
+    :global-minor-mode global-treesit-auto-mode
+    :custom
+    (treesit-font-lock-level . 4)))
 
 (leaf all-the-icons
   :init
