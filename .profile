@@ -85,18 +85,18 @@ PATH="/usr/libexec/docker/cli-plugins:$PATH"
 # set Aliases
 alias ls='ls --color=auto --show-control-chars'
 alias grep='grep --color=auto'
-if type exa > /dev/null 2>&1 ; then
-    # use exa
-    alias l='exa'
-    alias la='exa -a'
-    alias ll='exa -lFg --git --time-style=long-iso'
-    alias lla='exa -alFg --git --time-style=long-iso'
+if type eza > /dev/null 2>&1 ; then
+    # use eza
+    alias l='eza'
+    alias la='eza --all'
+    alias ll='eza --long --classify --group --git --time-style=long-iso'
+    alias lla='ll --all'
 else
     # use ls
     alias l='ls'
-    alias la='ls -A'
-    alias ll='ls -lFh'
-    alias lla='ls -AlFh'
+    alias la='ls --all'
+    alias ll='ls -l --classify --human-readable'
+    alias lla='ll --all'
 fi
 if type vim > /dev/null 2>&1 ; then
     alias vi='vim'
