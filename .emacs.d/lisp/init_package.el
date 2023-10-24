@@ -1686,4 +1686,30 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   (browse-url-browser-function . #'browse-url-generic)
   (browse-url-generic-program . "wslview"))
 
+(leaf clipboard
+  :doc "emacs29でクリップボードが文字化けする問題を対処"
+  :doc "credit: yorickvP on Github"
+  :req "wl-clipboardをインストールしておく"
+  :req "sudo apt install wl-clipboard"
+  :url "https://zenn.dev/ignorant/scraps/4456a9fb017eb3"
+  :url "https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4"
+  :if (version<= "29" emacs-version) ; Emacs29以降
+  :if (and (executable-find "wl-copy") (executable-find "wl-paste"))
+  :defvar wl-copy-process
+  :init
+  (setq wl-copy-process nil)
+  (defun wl-copy (text)
+    (setq wl-copy-process (make-process :name "wl-copy"
+                                        :buffer nil
+                                        :command '("wl-copy" "-f" "-n")
+                                        :connection-type 'pipe))
+    (process-send-string wl-copy-process text)
+    (process-send-eof wl-copy-process))
+  (defun wl-paste ()
+    (if (and wl-copy-process (process-live-p wl-copy-process))
+        nil ; should return nil if we're the current paste owner
+      (shell-command-to-string "wl-paste -n | tr -d \r")))
+  (setq interprogram-cut-function 'wl-copy)
+  (setq interprogram-paste-function 'wl-paste))
+
 ;;; init_package.el ends here
