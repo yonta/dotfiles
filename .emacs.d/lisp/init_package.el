@@ -698,7 +698,6 @@
   :ensure (t
            dockerfile-mode
            docker-compose-mode
-           docker-tramp
            counsel-tramp
            yaml-mode)
   :bind ("C-c C-x d" . docker))
