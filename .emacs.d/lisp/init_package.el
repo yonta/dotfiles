@@ -1712,4 +1712,10 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   (setq interprogram-cut-function 'wl-copy)
   (setq interprogram-paste-function 'wl-paste))
 
+(leaf pixel-scroll
+  :doc "スクロールをなめらかにするグローバルマイナーモード"
+  :if (version<= "29" emacs-version) ; Emacs29以降
+  :config
+  (pixel-scroll-precision-mode))
+
 ;;; init_package.el ends here
