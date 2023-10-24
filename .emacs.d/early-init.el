@@ -14,4 +14,7 @@
 ;;; 起動時に暗黙の画面サイズでチカチカさせない
 (setq frame-inhibit-implied-resize t)
 
+;;; ネイティブコンパイル時にでる大量の警告を表示しない
+(custom-set-variables '(warning-suppress-types '((comp))))
+
 ;;; early-init.el ends here
