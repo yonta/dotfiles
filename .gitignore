@@ -9,6 +9,7 @@ flycheck_*.el
 .emacs.d/transient/
 .emacs.d/.cache/
 .emacs.d/eln-cache/
+.emacs.d/eshell/
 .emacs.d/abbrev_defs
 .emacs.d/ac-comphist.dat
 .emacs.d/icons.gz
