@@ -19,6 +19,7 @@
         addw = !git diff --ignore-all-space --no-color | git apply --cached
         aw = !git diff --ignore-all-space --no-color | git apply --cached
         addp = add --patch
+        ap = add --patch
         diffs = diff --staged
         diffw = diff --color-words
         pushf = push --force-with-lease
