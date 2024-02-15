@@ -594,6 +594,13 @@
     :custom
     (erblint-check-command . "erblint --lint-all"))
 
+  (leaf flycheck-markuplint
+    :el-get (flycheck-markuplint
+             :url "https://github.com/yonta/flycheck-markuplint.git")
+    :hook ((web-mode-hook . flycheck-markuplint-setup)
+           (html-mode-hook . flycheck-markuplint-setup)
+           (mhtml-mode-hook . flycheck-markuplint-setup)))
+
   (leaf company-bootstrap5
     :defun company-bootstrap5
     :el-get (company-bootstrap5
@@ -660,7 +667,8 @@
     :hook ((js-mode-hook . add-node-modules-path)
            (typescript-mode-hook . add-node-modules-path)
            (markdown-mode-hook . add-node-modules-path)
-           (css-mode-hook . add-node-modules-path)))
+           (css-mode-hook . add-node-modules-path)
+           (web-mode-hook . add-node-modules-path)))
 
   (leaf json-mode :ensure t))
 
