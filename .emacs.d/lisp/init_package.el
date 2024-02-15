@@ -954,6 +954,15 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (centaur-tabs-cycle-scope . 'tabs)
   ;; (centaur-tabs-label-fixed-length . 10)
   (centaur-tabs-show-count . t)
+  (centaur-tabs-show-new-tab-button . nil)
+  :custom-face
+  (tab-line . '((t (:background "white"))))
+  (centaur-tabs-default . '((t (:foreground "black" :background "gray90"))))
+  (centaur-tabs-selected . '((t (:inherit region))))
+  (centaur-tabs-selected-modified . '((t (:inherit region :foreground "red"))))
+  (centaur-tabs-unselected . '((t (:inherit highlight))))
+  (centaur-tabs-unselected-modified
+   . '((t (:inherit highlight :foreground "red"))))
   :hook
   ;; centaur-tabsを無効とする対象をHookで指定する
   (package-menu-mode-hook . centaur-tabs-local-mode)
