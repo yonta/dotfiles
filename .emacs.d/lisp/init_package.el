@@ -1691,7 +1691,9 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
 (leaf files
   :custom
-  (confirm-kill-emacs . 'y-or-n-p))
+  (confirm-kill-emacs . 'y-or-n-p)
+  ;; wl-copyのキルを確認せずに終了する
+  (confirm-kill-processes . nil))
 
 (leaf window
   :defun split-windown-right split-windown-below
