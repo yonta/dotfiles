@@ -973,7 +973,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 ;;; OTHER
 
 (leaf popper :ensure t
-  :require t popper-echo
   :global-minor-mode popper-mode popper-echo-mode
   :custom
   (popper-reference-buffers . '(help-mode
