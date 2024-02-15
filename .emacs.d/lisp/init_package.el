@@ -494,20 +494,22 @@
     :custom
     (ruby-insert-encoding-magic-comment . nil)
     (dabbrev-abbrev-skip-leading-regexp . ":")
-    :hook ((ruby-mode-hook . lsp-deferred)
+    :hook (;; (ruby-mode-hook . lsp-deferred)
            (ruby-mode-hook . seeing-is-believing)
-           (ruby-mode-hook
-            . (lambda ()
-                (setq flycheck-local-checkers
-                      '((lsp . ((next-checkers . (ruby-rubocop)))))))))))
+           ;; (ruby-mode-hook
+           ;;  . (lambda ()
+           ;;      (setq flycheck-local-checkers
+           ;;            '((lsp . ((next-checkers . (ruby-rubocop))))))))
+           )))
 
-(leaf lsp
+(leaf lsp :disabled t
   :init
   (leaf lsp-mode :ensure t
     :diminish t
     :defun lsp-find-definition lsp-find-references
     :hook ((lsp-mode-hook . lsp-enable-which-key-integration)
-           (lsp-mode-hook . lsp-ui-mode))
+           (lsp-mode-hook . lsp-ui-mode)
+           (ruby-mode-hook . lsp-deferred))
     :custom
     ;; LSPでパフォーマンスの高いplistsを使う
     ;; .profileでexport LSP_USE_PLISTS=trueする
@@ -651,11 +653,11 @@
 (leaf javascript
   :init
   (leaf js
-    :hook ((js-mode-hook . lsp-deferred)
-           (js-mode-hook
-            . (lambda ()
-                (setq flycheck-local-checkers
-                      '((lsp . ((next-checkers . (javascript-eslint)))))))))
+    ;; :hook ((js-mode-hook . lsp-deferred)
+    ;;        (js-mode-hook
+    ;;         . (lambda ()
+    ;;             (setq flycheck-local-checkers
+    ;;                   '((lsp . ((next-checkers . (javascript-eslint)))))))))
     :custom
     (js-indent-level . 2))
 
@@ -678,13 +680,14 @@
     :req "npmでtypescript-language-serverとtypescriptを入れておく"
     :req "npm install -g typescript-language-server typescript"
     :defvar flycheck-check-syntax-automatically
-    :hook ((typescript-mode-hook . lsp-deferred)
+    :hook (;; (typescript-mode-hook . lsp-deferred)
            (typescript-mode-hook
             . (lambda ()
                 (setq-local flycheck-check-syntax-automatically
                             '(save mode-enabled))
-                (setq flycheck-local-checkers
-                      '((lsp . ((next-checkers . (javascript-eslint)))))))))
+                ;; (setq flycheck-local-checkers
+                ;;       '((lsp . ((next-checkers . (javascript-eslint))))))
+                )))
     :custom
     (typescript-indent-level . 2))
 
@@ -1294,12 +1297,12 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                          :refs-fn #'smart-jump-simple-find-references
                          :heuristic 'point
                          :order 100))
-  (smart-jump-register :modes '(ruby-mode typescript-mode js-mode)
-                       :jump-fn #'lsp-find-definition
-                       :refs-fn #'lsp-find-references
-                       :heuristic 'point
-                       :async 300       ; サーバとの通信のため300msまで待つ
-                       :order 1)
+  ;; (smart-jump-register :modes '(ruby-mode typescript-mode js-mode)
+  ;;                      :jump-fn #'lsp-find-definition
+  ;;                      :refs-fn #'lsp-find-references
+  ;;                      :heuristic 'point
+  ;;                      :async 300       ; サーバとの通信のため300msまで待つ
+  ;;                      :order 1)
   :bind (("M-." . smart-jump-go)
          ("M-," . smart-jump-back)
          ("M-/" . smart-jump-references)))
