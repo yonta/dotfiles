@@ -881,15 +881,11 @@
 
 (leaf treesit
   :if (version<= "29" emacs-version) ; Emacs29以降
+  :ensure treesit-auto
+  :global-minor-mode global-treesit-auto-mode
   :custom
-  (treesit-auto-install . 'prompt)
-
-  :init
-  (leaf treesit-auto
-    :ensure t
-    :global-minor-mode global-treesit-auto-mode
-    :custom
-    (treesit-font-lock-level . 4)))
+  (treesit-font-lock-level . 4)
+  (treesit-auto-install . 'prompt))
 
 (leaf all-the-icons
   :init
