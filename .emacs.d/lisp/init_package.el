@@ -558,6 +558,14 @@
 
   (leaf lsp-ivy :ensure t))
 
+(leaf eglot
+  :ensure flycheck-eglot
+  :global-minor-mode global-flycheck-eglot-mode
+  :hook ((ruby-base-mode-hook
+          js-base-mode-hook
+          typescript-ts-base-mode-hook)
+         . eglot-ensure))
+
 (leaf html-css
   :init
   (leaf web-mode :ensure t
