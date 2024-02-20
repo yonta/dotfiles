@@ -833,7 +833,7 @@
   :doc "GitHubがAtom用に開発したインクリメンタルパーサ"
   :doc "高速で正確なsyntax highlightingを提供する"
   :doc "Emacs29では同梱されるようになった"
-  :if (version< emacs-version "29") ; Emacs28以下
+  :emacs< 29
   :ensure t tree-sitter-langs
   :diminish tree-sitter-mode
   :global-minor-mode global-tree-sitter-mode
@@ -841,7 +841,7 @@
   :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
 
 (leaf treesit
-  :if (version<= "29" emacs-version) ; Emacs29以降
+  :emacs>= 29
   :ensure treesit-auto
   :global-minor-mode (global-treesit-auto-mode . treesit-auto)
   :custom
@@ -1524,11 +1524,11 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   (line-number-mode -1)
 
   (leaf display-line-numbers
-    :if (version<= "26" emacs-version) ; Emacs26以降
+    :emacs>= 26
     :global-minor-mode global-display-line-numbers-mode)
 
   (leaf linum
-    :if (version< emacs-version "26") ; Emacs25以下
+    :emacs<= 25
     :defvar linum-format
     :global-minor-mode global-linum-mode
     :init
@@ -1675,7 +1675,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :req "sudo apt install wl-clipboard"
   :url "https://zenn.dev/ignorant/scraps/4456a9fb017eb3"
   :url "https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4"
-  :if (version<= "29" emacs-version) ; Emacs29以降
+  :emacs>= 29
   :if (and (executable-find "wl-copy") (executable-find "wl-paste"))
   :defvar wl-copy-process
   :init
@@ -1696,7 +1696,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
 (leaf pixel-scroll
   :doc "スクロールをなめらかにするグローバルマイナーモード"
-  :if (version<= "29" emacs-version) ; Emacs29以降
+  :emacs>= 29
   :config
   (pixel-scroll-precision-mode))
 
