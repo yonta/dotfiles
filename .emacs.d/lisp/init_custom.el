@@ -18,9 +18,7 @@
 (push '(font . "VL ゴシック-23") default-frame-alist)
 
 ;;; 行間スペース
-;; MEMO: setq-defaultで設定するとpos-tipに設定されると何も表示されなくなる。
-;;       setqだけだと適用されない。prog-mode-hookで対応する。
-(add-hook 'prog-mode-hook (lambda () (setq line-spacing 2)))
+(setq-default line-spacing 2)
 
 ;;; 起動時の表示位置とサイズ。上から、左から、幅、高さ
 (push '(top . 0) default-frame-alist)
