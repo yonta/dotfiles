@@ -808,7 +808,7 @@
 (leaf treesit
   :if (version<= "29" emacs-version) ; Emacs29以降
   :ensure treesit-auto
-  :global-minor-mode global-treesit-auto-mode
+  :global-minor-mode (global-treesit-auto-mode . treesit-auto)
   :custom
   (treesit-font-lock-level . 4)
   (treesit-auto-install . 'prompt))
