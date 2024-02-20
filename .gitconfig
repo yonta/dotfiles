@@ -51,3 +51,5 @@
 	enable = true
 [commit]
 	verbose = true
+[diff]
+	algorithm = histogram
