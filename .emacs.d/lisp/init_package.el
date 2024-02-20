@@ -915,6 +915,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                                 "\\*xref\\*"
                                 "\\*Backtrace\\*"
                                 "\\*ripgrep-search\\*"
+                                " \\*tip\\*"
+                                " \\*eglot doc\\*"
                                 ))
   (popper-group-function . 'popper-group-by-projectile)
   ;; popper-echoでk/^コマンドを有効化
