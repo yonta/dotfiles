@@ -940,10 +940,9 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                                 "\\*Google Translate\\*"
                                 ;; 全completionを対象
                                 completion-list-mode
-                                compilation-mode
+                                (compilation-mode . hide)
                                 ("\\*Warnings\\*" . hide)
                                 (" \\*auto-async-byte-compile\\*" . hide)
-                                ("\\*Compile-Log\\*" . hide)
                                 " \\*undo-tree\\*"
                                 "\\*robe-doc\\*"
                                 "^ \\*Rubocop.*\\*$"
