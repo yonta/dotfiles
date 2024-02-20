@@ -1,51 +1,51 @@
 [user]
-        name = SAITOU Keita
-        email = keita44.f4@gmail.com
+	name = SAITOU Keita
+	email = keita44.f4@gmail.com
 [color]
-        ui = auto
-        status = auto
-        diff = auto
-        log = auto
-        branch = auto
+	ui = auto
+	status = auto
+	diff = auto
+	log = auto
+	branch = auto
 [alias]
-        h = help
-        co = checkout
-        ci = commit --verbose
-        cif = commit --amend --no-edit
-        st = status --short --branch
-        br = branch
-        l = log --graph --date=format:'%Y/%m/%d(%a) %T %z'
-        a = add .
-        addw = !git diff --ignore-all-space --no-color | git apply --cached
-        aw = !git diff --ignore-all-space --no-color | git apply --cached
-        addp = add --patch
-        ap = add --patch
-        diffs = diff --staged
-        diffw = diff --color-words
-        pushf = push --force-with-lease
-        blames = blame -s
-        cp = cherry-pick
-        rbi = rebase --interactive
-        tags = tag --list
+	h = help
+	co = checkout
+	ci = commit --verbose
+	cif = commit --amend --no-edit
+	st = status --short --branch
+	br = branch
+	l = log --graph --date=format:'%Y/%m/%d(%a) %T %z'
+	a = add .
+	addw = !git diff --ignore-all-space --no-color | git apply --cached
+	aw = !git diff --ignore-all-space --no-color | git apply --cached
+	addp = add --patch
+	ap = add --patch
+	diffs = diff --staged
+	diffw = diff --color-words
+	pushf = push --force-with-lease
+	blames = blame -s
+	cp = cherry-pick
+	rbi = rebase --interactive
+	tags = tag --list
 [core]
-        editor = emacsclient
-        excludesfile = ~/.gitignore_global
-        pager = delta --color-only
+	editor = emacsclient
+	excludesfile = ~/.gitignore_global
+	pager = delta --color-only
 [interactive]
-        diffFilter = delta --color-only
+	diffFilter = delta --color-only
 [delta]
-        keep-plus-minus-markers = false
-        hunk-header-style = blue bold ul
-        file-style = yellow
+	keep-plus-minus-markers = false
+	hunk-header-style = blue bold ul
+	file-style = yellow
 [push]
-        default = simple
+	default = simple
 [merge]
-        conflictstyle = zdiff3
+	conflictstyle = zdiff3
 [rebase]
-        autostash = true
+	autostash = true
 [blame]
-        date=format:%m/%d(%a)%R
+	date=format:%m/%d(%a)%R
 [help]
-        autocorrect = 1
+	autocorrect = 1
 [rerere]
-        enable = true
+	enable = true
