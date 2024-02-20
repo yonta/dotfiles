@@ -44,20 +44,20 @@
   (custom-theme-set-faces
    'original
    `(default
-      ((t (
-           :family "VL ゴシック"
-           :width normal
-           :weight normal
-           :slant normal
-           :foreground ,dark1
-           :background ,light1
-           :underline nil
-           :overline nil
-           :strike-through nil
-           :box nil
-           :inverse-video nil
-           :stipple nil
-           :inherit nil))))
+     ((t (
+          :family "VL ゴシック"
+          :width normal
+          :weight normal
+          :slant normal
+          :foreground ,dark1
+          :background ,light1
+          :underline nil
+          :overline nil
+          :strike-through nil
+          :box nil
+          :inverse-video nil
+          :stipple nil
+          :inherit nil))))
    `(shadow ((t (:foreground ,dark2))))
    `(cursor ((t (:background ,dark-blue))))
    '(fixed-pitch ((t (:family "Monospace"))))
