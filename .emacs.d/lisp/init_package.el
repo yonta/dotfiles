@@ -118,9 +118,6 @@
   (leaf company-c-headers :ensure t :disabled t)
   (leaf company-arduino :ensure t :disabled t))
 
-;; メジャーモードによってlspの次のcheckerを切り替える
-;; https://github.com/flycheck/flycheck/issues/1762
-(defvar-local flycheck-local-checkers nil)
 (leaf flycheck
   :init
   (leaf flycheck :ensure t
@@ -129,13 +126,6 @@
              flycheck-gcc-language-standard
              flycheck-clang-language-standard)
     :global-minor-mode global-flycheck-mode
-    ;; 先にflycheck-local-checkersを探索する
-    :preface
-    (defun +flycheck-checker-get(fn checker property)
-      (or (alist-get property (alist-get checker flycheck-local-checkers))
-          (funcall fn checker property)))
-    :advice
-    (:around flycheck-checker-get +flycheck-checker-get)
     :custom
     (flycheck-python-flake8-executable . "flake8")
     (flycheck-checker-error-threshold . 250)
@@ -494,49 +484,7 @@
     :custom
     (ruby-insert-encoding-magic-comment . nil)
     (dabbrev-abbrev-skip-leading-regexp . ":")
-    :hook (;; (ruby-mode-hook . lsp-deferred)
-           (ruby-mode-hook . seeing-is-believing)
-           ;; (ruby-mode-hook
-           ;;  . (lambda ()
-           ;;      (setq flycheck-local-checkers
-           ;;            '((lsp . ((next-checkers . (ruby-rubocop))))))))
-           )))
-
-(leaf lsp :disabled t
-  :init
-  (leaf lsp-mode :ensure t
-    :diminish t
-    :defun lsp-find-definition lsp-find-references
-    :hook ((lsp-mode-hook . lsp-enable-which-key-integration)
-           (lsp-mode-hook . lsp-ui-mode)
-           (ruby-mode-hook . lsp-deferred))
-    :custom
-    ;; LSPでパフォーマンスの高いplistsを使う
-    ;; early-initで(setenv "LSP_USE_PLISTS" "true")をする
-    ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
-    (lsp-use-plists . t))
-
-  (leaf lsp-ui :ensure t
-    :custom
-    (lsp-ui-doc-show-with-cursor . t)
-    (lsp-ui-doc-header . t)
-    (lsp-ui-doc-include-signature . t)
-    (lsp-ui-doc-delay . 2)
-    (lsp-ui-sideline-code-action . t)
-    (lsp-ui-doc-position . 'at-point)
-    (lsp-ui-doc-border . "gray10")
-    ;; WSL2ではexport WEBKIT_FORCE_SANDBOX=0すればXwidgetが使える
-    ;; ただし、HighDPI対応をどうすればいいのかわからない。
-    ;; Emacsを--with-x-toolkit=gtk3 --with-xwidgetsでビルドする必要がある
-    ;; (lsp-ui-doc-use-webkit . t)
-    (lsp-ui-doc-delay . 0.7)
-    :bind (:lsp-ui-mode-map (("C-c <tab>" . lsp-ui-doc-focus-frame)
-                             ("C->" . lsp-ui-imenu))))
-
-  (leaf lsp-treemacs :ensure t
-    :global-minor-mode lsp-treemacs-sync-mode)
-
-  (leaf lsp-ivy :ensure t))
+    :hook (ruby-mode-hook . seeing-is-believing)))
 
 (leaf eglot
   :ensure flycheck-eglot
@@ -641,11 +589,6 @@
 (leaf javascript
   :init
   (leaf js
-    ;; :hook ((js-mode-hook . lsp-deferred)
-    ;;        (js-mode-hook
-    ;;         . (lambda ()
-    ;;             (setq flycheck-local-checkers
-    ;;                   '((lsp . ((next-checkers . (javascript-eslint)))))))))
     :custom
     (js-indent-level . 2))
 
@@ -668,14 +611,10 @@
     :req "npmでtypescript-language-serverとtypescriptを入れておく"
     :req "npm install -g typescript-language-server typescript"
     :defvar flycheck-check-syntax-automatically
-    :hook (;; (typescript-mode-hook . lsp-deferred)
-           (typescript-mode-hook
-            . (lambda ()
-                (setq-local flycheck-check-syntax-automatically
-                            '(save mode-enabled))
-                ;; (setq flycheck-local-checkers
-                ;;       '((lsp . ((next-checkers . (javascript-eslint))))))
-                )))
+    :hook (typescript-mode-hook
+           . (lambda ()
+               (setq-local flycheck-check-syntax-automatically
+                           '(save mode-enabled))))
     :custom
     (typescript-indent-level . 2))
 
@@ -980,9 +919,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                                 "\\*xref\\*"
                                 "\\*Backtrace\\*"
                                 "\\*ripgrep-search\\*"
-                                ;; lsp
-                                "\\*Call Hierarchy\\*"
-                                "\\*LSP Error List\\*"
                                 ))
   (popper-group-function . 'popper-group-by-projectile)
   ;; popper-echoでk/^コマンドを有効化
@@ -1285,12 +1221,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                          :refs-fn #'smart-jump-simple-find-references
                          :heuristic 'point
                          :order 100))
-  ;; (smart-jump-register :modes '(ruby-mode typescript-mode js-mode)
-  ;;                      :jump-fn #'lsp-find-definition
-  ;;                      :refs-fn #'lsp-find-references
-  ;;                      :heuristic 'point
-  ;;                      :async 300       ; サーバとの通信のため300msまで待つ
-  ;;                      :order 1)
   :bind (("M-." . smart-jump-go)
          ("M-," . smart-jump-back)
          ("M-/" . smart-jump-references)))
