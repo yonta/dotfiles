@@ -47,3 +47,5 @@
         date=format:%m/%d(%a)%R
 [help]
         autocorrect = 1
+[rerere]
+        enable = true
