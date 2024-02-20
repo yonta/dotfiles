@@ -484,13 +484,48 @@
     (dabbrev-abbrev-skip-leading-regexp . ":")
     :hook (ruby-mode-hook . seeing-is-believing)))
 
+(defvar-local my/flycheck-local-cache nil)
 (leaf eglot
-  :ensure flycheck-eglot
-  :global-minor-mode global-flycheck-eglot-mode
-  :hook ((ruby-base-mode-hook
-          js-base-mode-hook
-          typescript-ts-base-mode-hook)
-         . eglot-ensure))
+  :leaf-autoload nil
+  :leaf-defun nil
+  :leaf-path nil
+  :preface
+  ;; メジャーモードによってlspの次のcheckerを切り替える
+  ;; https://github.com/flycheck/flycheck/issues/1762
+  (leaf my/flycheck
+    :leaf-autoload nil
+    :leaf-defun nil
+    :leaf-path nil
+    :preface
+    (defun my/flycheck-checker-get (fn checker property)
+      (or (alist-get property (alist-get checker my/flycheck-local-cache))
+          (funcall fn checker property)))
+    :advice (:around flycheck-checker-get my/flycheck-checker-get)
+    :hook
+    ((eglot-managed-mode-hook
+      . (lambda ()
+          (when (derived-mode-p 'ruby-base-mode)
+            (setq my/flycheck-local-cache
+                  '((eglot-check . ((next-checker . (ruby-rubocop)))))))))
+     (eglot-managed-mode-hook
+      . (lambda ()
+          (when (derived-mode-p 'js-base-mode)
+            (setq my/flycheck-local-cache
+                  '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
+     (eglot-managed-mode-hook
+      . (lambda ()
+          (when (derived-mode-p 'typescript-ts-base-mode)
+            (setq my/flycheck-local-cache
+                  '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
+     ))
+
+  (leaf eglot
+    :ensure flycheck-eglot
+    :global-minor-mode global-flycheck-eglot-mode
+    :hook ((ruby-base-mode-hook
+            js-base-mode-hook
+            typescript-ts-base-mode-hook)
+           . eglot-ensure)))
 
 (leaf html-css
   :init
