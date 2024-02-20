@@ -68,7 +68,7 @@
    `(region ((t (:background ,blue2))))
    `(secondary-selection ((t (:background ,blue3))))
    `(tooltip ((t (:foreground ,dark1 :background ,light2))))
-   `(success ((t (:foreground ,green1))))
+   `(success ((t (:foreground "ForestGreen"))))
    ;; 基本色、HSVでH203 S46 V98
    `(mode-line ((t (:box (:line-width -1 :color nil :style released-button)
                          :foreground ,dark1 :background ,blue1))))
