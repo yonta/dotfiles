@@ -17,4 +17,7 @@
 ;;; ネイティブコンパイル時にでる大量の警告を表示しない
 (custom-set-variables '(warning-suppress-types '((comp))))
 
+;;; lsp-mode向け高速化、lsp-modeインストール時に必要
+(setenv "LSP_USE_PLISTS" "true")
+
 ;;; early-init.el ends here

@@ -512,7 +512,7 @@
            (ruby-mode-hook . lsp-deferred))
     :custom
     ;; LSPでパフォーマンスの高いplistsを使う
-    ;; .profileでexport LSP_USE_PLISTS=trueする
+    ;; early-initで(setenv "LSP_USE_PLISTS" "true")をする
     ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
     (lsp-use-plists . t)
     ;; BUG:

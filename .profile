@@ -24,9 +24,6 @@ if type vim > /dev/null 2>&1 ; then
     export EDITOR=vim
 fi
 
-# Emacs LSP using plist
-export LSP_USE_PLISTS=true
-
 # rlwrap home
 export RLWRAP_HOME="$HOME/.cache/rlwrap"
 
