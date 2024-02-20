@@ -639,9 +639,7 @@
   :bind ("C-c C-x d" . docker))
 
 (leaf jenkinsfile-mode
-  :ensure groovy-mode
-  :el-get (jenkinsfile-mode
-           :url "https://github.com/spotify/dockerfile-mode.git")
+  :ensure t
   :mode "^Jenkinsfile\\'")
 
 (leaf haxe-mode :ensure t
