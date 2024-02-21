@@ -1504,8 +1504,12 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
          ("C-M-<right>" . winner-redo)))
 
 (leaf line-number
+  :leaf-autoload nil
+  :leaf-defun nil
+  :leaf-path nil
   :global-minor-mode column-number-mode
-  :init
+  :preface
+  ;; mode-lineの表示からラインナンバーを消す ex. (10,1) -> 1
   (line-number-mode -1)
 
   (leaf display-line-numbers
