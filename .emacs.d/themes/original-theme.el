@@ -185,6 +185,8 @@
    `(diff-refine-added ((t (:background ,green2))))
    `(diff-refine-changed ((t (:background ,yellow2))))
    `(diff-refine-removed ((t (:background ,red2))))
+   `(tab-line ((t (:background ,light1))))
+   `(centaur-tabs-unselected ((t (:background ,light2))))
    ))
 
 (provide-theme 'original)
