@@ -119,6 +119,9 @@
   (leaf company-arduino :ensure t :disabled t))
 
 (leaf flycheck
+  :leaf-autoload nil
+  :leaf-defun nil
+  :leaf-path nil
   :init
   (leaf flycheck :ensure t
     :req "pipでflake8とmypyをいれておく"
@@ -134,24 +137,10 @@
            ("M-p" . flycheck-previous-error)
            ("M-n" . flycheck-next-error)))
 
-  :init
-  (leaf pos-tip :ensure t
-    :config
-    ;; HiDPIでpos-tipのフォントサイズが小さくなる問題に暫定対処
-    ;; pos-tipはframeのデフォルトフォントを使用するので、
-    ;; 強制的に書き換えて対処する
-    (set-frame-font
-     "-VL  -VL ゴシック-normal-normal-normal-*-29-*-*-*-*-0-iso10646-1"
-     nil t)
-    :custom
-    (pos-tip-use-relative-coordinates . t)) ; pos-tipをフレームに収める
-
-  (leaf flycheck-pos-tip :ensure t
+  (leaf flycheck-posframe
+    :ensure t
     :after flycheck
-    :global-minor-mode flycheck-pos-tip-mode
-    :custom
-    ;; pos-tipを自動で消さない
-    (flycheck-pos-tip-timeout . 0))
+    :hook (flycheck-mode-hook . flycheck-posframe-mode))
 
   (leaf flycheck-color-mode-line :ensure t
     :after flycheck
