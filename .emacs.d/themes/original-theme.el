@@ -158,6 +158,7 @@
    `(flycheck-color-mode-line-warning-face ((t (:background ,yellow1))))
    `(flycheck-color-mode-line-running-face
      ((t (:weight bold :foreground ,dark2))))
+   `(flycheck-posframe-background-face ((t (:background ,yellow3))))
    '(company-tooltip ((t (:inherit (tooltip)))))
    `(company-scrollbar-bg ((t (:background ,blue3))))
    `(company-scrollbar-fg ((t (:background ,blue1))))
