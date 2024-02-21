@@ -119,9 +119,6 @@
         (company-complete)))
     :bind* ("C-M-o" . company-emoji-only))
 
-  (leaf ivy-emoji :ensure t
-    :after ivy)
-
   (leaf company-c-headers :ensure t :disabled t)
   (leaf company-arduino :ensure t :disabled t))
 
@@ -664,7 +661,6 @@
   :ensure (t
            dockerfile-mode
            docker-compose-mode
-           counsel-tramp
            yaml-mode)
   :bind ("C-c C-x d" . docker))
 
@@ -772,7 +768,7 @@
     :diminish auto-highlight-symbol-mode
     :custom
     (ahs-default-range . 'ahs-range-whole-buffer)
-    (ahs-disabled-minor-modes . '(iedit-mode ivy-mode))
+    (ahs-disabled-minor-modes . '(iedit-mode))
     :config
     (push 'sml-mode ahs-modes)
     :bind (:auto-highlight-symbol-mode-map
@@ -844,10 +840,7 @@
   (leaf all-the-icons-ibuffer :ensure t
     :doc "sizeの-h化も一緒にされる"
     :after ibuffer
-    :global-minor-mode all-the-icons-ibuffer-mode)
-
-  (leaf all-the-icons-ivy-rich :ensure t
-    :global-minor-mode all-the-icons-ivy-rich-mode))
+    :global-minor-mode all-the-icons-ibuffer-mode))
 
 (leaf centaur-tabs :ensure t
   :global-minor-mode centaur-tabs-mode
@@ -908,8 +901,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   ;; centaur-tabsを無効とする対象をHookで指定する
   (package-menu-mode-hook . centaur-tabs-local-mode)
   :bind (("C-<tab>" . centaur-tabs-forward)
-         ("C-<iso-lefttab>" . centaur-tabs-backward)
-         ("C-c C-<tab>" . centaur-tabs-counsel-switch-group)))
+         ("C-<iso-lefttab>" . centaur-tabs-backward)))
 
 ;;; OTHER
 
@@ -954,7 +946,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
            ("C-c b" . projectile-switch-to-buffer)
            ("C-c C-x k" . projectile-kill-buffers))
     :custom
-    (projectile-completion-system . 'ivy)
     (projectile-globally-ignored-directories
      . '(".yarn" ".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg"
          ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".pijul" ".tox" ".svn"
@@ -1102,109 +1093,19 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
           ("f" . image-transform-reset-to-original)
           ("0" . image-mode-fit-frame))))
 
-(leaf swiper
-  :init
-  (leaf ivy :ensure t
-    :defvar ivy-height-alist ivy-initial-inputs-alist
-    :custom
-    (ivy-count-format . "(%d/%d) ")
-    (ivy-extra-directories . '("./"))
-    (ivy-initial-inputs-alist . nil) ;; 先頭の^をやめる
-    (ivy-format-functions-alist . '((t . ivy-format-function-line)))
-    ;; 開いていないファイルをswitch-bufferに含める
-    (ivy-use-virtual-buffers . t))
+(leaf migemo :disabled t
+  :ensure t
+  :require t
+  :req "cmigemoをいれておく"
+  :url "https://github.com/koron/cmigemo"
+  :defun migemo-init migemo-get-pattern
+  :if (executable-find "cmigemo")
+  :custom
+  (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict"))
 
-  (leaf swiper :ensure t
-    :custom
-    (swiper-include-line-number-in-search . t)
-    :bind (("C-s" . swiper)
-           ("C-M-s" . swiper-all)
-           ("C-c s" . isearch-forward)
-           (:swiper-map
-            ("M-%" . swiper-query-replace)
-            ("C-w" . ivy-yank-word)
-            ("C-M-y" . ivy-yank-char))))
-
-  (leaf counsel :ensure t
-    :init
-    :custom
-    ;; dotファイルとコンパイルファイルなどを無視する
-    ;; .キーを押せばdotスタートファイルは表示される
-    `(counsel-find-file-ignore-regexp
-      . ,(concat "\\(\\`\\.\\)\\|"
-                 (regexp-opt completion-ignored-extensions)))
-    (counsel-mark-ring-sort-selections . nil)
-    :custom
-    (counsel-switch-buffer-preview-virtual-buffers . nil)
-    :defer-config
-    ;; counsel-yank-popの高さをデフォルト5から10に拡大する
-    (setq ivy-height-alist
-          (cons '(counsel-yank-pop . 10)
-                (assq-delete-all 'counsel-yank-pop ivy-height-alist)))
-    :bind* (("M-x" . counsel-M-x)
-            ("M-r" . counsel-command-history)
-            ("C-x f" . counsel-recentf)
-            ("C-c C-x g" . counsel-git-grep)
-            ("C-x b" . counsel-switch-buffer)
-            ("C-M-y" . counsel-yank-pop)
-            ("C-c C-SPC" . counsel-mark-ring))
-    :bind (("C-x C-f" . counsel-find-file) ;; ibufferで上書きがある
-           ("<f1> f" . counsel-describe-function)
-           ("<f1> v" . counsel-describe-variable)
-           ("C-c d" . counsel-describe-symbol)
-           (:counsel-find-file-map
-            ("<C-return>" . ivy-immediate-done) ;; C-M-jをよく忘れるので
-            ("C-c <C-return>" . ivy-immediate-done)
-            ("^" . counsel-up-directory))))
-
-  (leaf ivy-rich :ensure t
-    :global-minor-mode ivy-rich-mode
-    :custom
-    (ivy-rich-path-style . 'abbrev))
-
-  (leaf s :ensure t)
-
-  (leaf migemo :ensure t :require t
-    :req "cmigemoをいれておく"
-    :url "https://github.com/koron/cmigemo"
-    :defun migemo-init migemo-get-pattern
-    :defvar ivy-re-builders-alist
-    :after swiper
-    :if (executable-find "cmigemo")
-    :custom
-    (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
-    :defer-config
-    (eval-and-compile (require 's))
-    ;; swiperでもmigemoを使う
-    ;; 参考: https://www.yewton.net/2020/05/21/migemo-ivy/
-    (defun my-ivy-migemo-re-builder (str)
-      (let* ((sep " \\|\\^\\|\\.\\|\\*")
-             (splitted
-              (--map (s-join "" it)
-                     (--partition-by (s-matches-p " \\|\\^\\|\\.\\|\\*" it)
-                                     (s-split "" str t)))))
-        (s-join "" (--map (cond ((s-equals? it " ") ".*?")
-                                ((s-matches? sep it) it)
-                                (t (migemo-get-pattern it)))
-                          splitted))))
-    (migemo-init)
-    (setq ivy-re-builders-alist '((t . ivy--regex-plus)
-                                  (swiper . my-ivy-migemo-re-builder))))
-
-  (leaf counsel-fd :ensure t
-    :if (executable-find "fd")
-    :bind ("C-c C-f" . counsel-fd-file-jump))
-
-  (leaf helpful :ensure t
-    :bind* ("<f1> k" . helpful-key)
-    :bind ("C-c C-d" . helpful-at-point)
-    :custom
-    ((counsel-describe-function-function . 'helpful-callable)
-     (counsel-describe-variable-function . 'helpful-variable)))
-
-  (leaf ivy-prescient :ensure t
-    :doc "MEMO: ivy-***-alistを書き換える中で最後に来ないと動かないことがある"
-    :global-minor-mode ivy-prescient-mode))
+(leaf helpful :ensure t
+  :bind* ("<f1> k" . helpful-key)
+  :bind ("C-c C-d" . helpful-at-point))
 
 (leaf smart-jump
   :req "ripgrepをpcre2サポートありでインストールしておく"
@@ -1212,18 +1113,13 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   :doc "またはデフォルトのripgrepを使う場合は、"
   :doc "custom値を設定してpcre2を使わないようにする"
   :doc ":custom (dumb-jump-rg-search-args . \"\")"
-  :ensure t dumb-jump rg ivy-xref
+  :ensure t dumb-jump rg
   :defvar dumb-jump-find-rules
   :defun smart-jump-simple-find-references smart-jump-find-references-with-rg
   :custom
   ;; ripgrepを使う
   (smart-jump-find-references-fallback-function
    . #'smart-jump-find-references-with-rg)
-  ;; xrefをivyで選択表示する
-  (xref-show-definitions-function . #'ivy-xref-show-defs)
-  (xref-show-xrefs-function . #'ivy-xref-show-xrefs)
-  ;; legacyなdumb-jump-goなどをivyにする
-  (dumb-jump-selector . 'ivy)
   ;; xrefをdumb-jumpで行うhook
   ;; :hook (xref-backend-functions . dumb-jump-xref-activate)
   :defer-config
@@ -1270,7 +1166,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (leaf persp-mode :ensure t
     :global-minor-mode persp-mode
     :defun get-current-persp persp-contain-buffer-p
-    :defvar ivy-sort-functions-alist
     :bind* (("M-<right>" . persp-prev)
             ("M-<left>" . persp-next))
     :custom
@@ -1279,27 +1174,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     (persp-auto-save-num-of-backups . 10)
     (persp-kill-foreign-buffer-behaviour . nil)
     `(persp-keymap-prefix . ,(kbd "C-x x"))
-    (persp-add-buffer-on-after-change-major-mode . t)
-    :config
-    ;; counsel-switch-bufferで現ワークスペースのbufferのみを選択肢とする
-    ;; 参考：https://gist.github.com/Bad-ptr/1aca1ec54c3bdb2ee80996eb2b68ad2d#file-persp-ivy-el
-    (eval-after-load 'ivy
-      '(progn
-         (add-hook 'ivy-ignore-buffers
-                   #'(lambda (b)
-                       (when persp-mode
-                         (let ((persp (get-current-persp)))
-                           (if persp
-                               (not (persp-contain-buffer-p b persp))
-                             nil)))))
-         (setq ivy-sort-functions-alist
-               (append ivy-sort-functions-alist
-                       '((persp-kill-buffer   . nil)
-                         (persp-remove-buffer . nil)
-                         (persp-add-buffer    . nil)
-                         (persp-switch        . nil)
-                         (persp-window-switch . nil)
-                         (persp-frame-switch  . nil))))))))
+    (persp-add-buffer-on-after-change-major-mode . t)))
 
 (leaf theme
   :init
@@ -1358,10 +1233,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (leaf imenu-list :ensure t
     :bind ("C->" . imenu-list-smart-toggle)
     :custom
-    (imenu-list-focus-after-activation . t))
-
-  (leaf imenu-anywhere :ensure t
-    :bind ("C-." . ivy-imenu-anywhere)))
+    (imenu-list-focus-after-activation . t)))
 
 (leaf buffer-move :ensure t
   :bind* (("C-S-h" . buf-move-left)
@@ -1483,20 +1355,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
 (leaf ibuffer
   :defun ibuffer-current-buffer
-  :defer-config
-  ;; ibuffer選択肢を考慮したibuffer-find-file関数を、counselで実現する
-  (defun my-counsel-ibuffer-find-file ()
-    "Like `counsel-find-file', starting with directory of ibuffer candidate."
-    (interactive)
-    (let ((default-directory
-            (let ((buf (ibuffer-current-buffer)))
-              (if (buffer-live-p buf)
-                  (with-current-buffer buf
-                    default-directory)
-                default-directory))))
-      (counsel-find-file default-directory)))
-  :bind* ("C-x C-b" . ibuffer)
-  :bind (:ibuffer-mode-map ("C-x C-f" . my-counsel-ibuffer-find-file)))
+  :bind* ("C-x C-b" . ibuffer))
 
 (leaf winner
   :global-minor-mode winner-mode
@@ -1571,7 +1430,6 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :init
   (leaf recentf
     :doc "最近使ったファイルを.recentfファイルに保存する"
-    :doc "counsel-recentfで呼び出せる"
     :global-minor-mode recentf-mode
     :custom
     (recentf-max-saved-items . 1000)
