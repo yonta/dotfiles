@@ -167,6 +167,7 @@
    '(company-tooltip-mouse ((t (:inherit (secondary-selection)))))
    '(company-tooltip-search ((t (:inherit (match)))))
    '(company-tooltip-search-selection ((t (:inherit (match)))))
+   `(company-posframe-quickhelp ((t (:background ,light3))))
    '(lsp-ui-doc-background ((t (:inherit (tooltip)))))
    '(lsp-ui-doc-header ((t (:inherit (diff-file-header)))))
    ;; code in lsp-ui-doc
@@ -184,8 +185,7 @@
    `(diff-refine-added ((t (:background ,green2))))
    `(diff-refine-changed ((t (:background ,yellow2))))
    `(diff-refine-removed ((t (:background ,red2))))
-   )
-  (customize-set-variable 'company-quickhelp-color-background light3))
+   ))
 
 (provide-theme 'original)
 ;;; original-theme.el ends here

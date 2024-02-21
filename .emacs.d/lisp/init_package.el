@@ -46,11 +46,15 @@
 ;;; Company and Flycheck
 
 (leaf company
-  :req "clangがあるとより便利らしいので、aptでclangをいれておく"
-  :init
+  :leaf-autoload nil
+  :leaf-defun nil
+  :leaf-path nil
+  :preface
   (leaf company :ensure t
+    :req "clangがあるとより便利らしいので、aptでclangをいれておく"
     :defvar (company-mode-map company-backends)
     :global-minor-mode global-company-mode
+    :diminish t
     :custom
     (company-idle-delay . 0)
     (company-minimum-prefix-length . 2)
@@ -81,10 +85,13 @@
             ("C-s" . company-filter-candidates)
             ("C-o" . company-other-backend))))
 
-  (leaf company-quickhelp :ensure t
-    :global-minor-mode company-quickhelp-mode
+  (leaf company-posframe
+    :ensure t
+    :diminish t
+    :global-minor-mode t
     :custom
-    (company-quickhelp-delay . 0.5))
+    (company-posframe-quickhelp-delay . 0.3)
+    (company-posframe-show-indicator . t))
 
   (leaf company-prescient :ensure t
     :global-minor-mode company-prescient-mode)
