@@ -792,29 +792,18 @@
     (toggle-hl-line-when-idle 1)
     (hl-line-when-idle-interval 4)))
 
-(leaf git-gutter-fringe :ensure t :require t
+(leaf git-gutter
+  :ensure t
   :global-minor-mode global-git-gutter-mode
   :diminish git-gutter-mode
-  :config
-  (eval-when-compile (require 'fringe-helper))
-  (fringe-helper-define 'git-gutter-fr:modified nil
-    "X......."
-    "XXXX...."
-    "XXXXXX.."
-    "XXXXXXXX"
-    "XXXXXXXX"
-    "XXXXXX.."
-    "XXXX...."
-    "XX......")
-  (fringe-helper-define 'git-gutter-fr:deleted nil
-    "........"
-    "........"
-    "........"
-    "XXXXXXXX"
-    "XXXXXXXX"
-    "XXXXXXXX"
-    "........"
-    "........"))
+  :custom
+  (git-gutter:modified-sign . " ")
+  (git-gutter:added-sign . " ")
+  (git-gutter:deleted-sign . " ")
+  :custom-face
+  (git-gutter:modified . '((t (:background "#87cefa"))))
+  (git-gutter:added . '((t (:background "#95fa87"))))
+  (git-gutter:deleted . '((t (:background "#fa8d87")))))
 
 (leaf hiwin :ensure t
   :doc "アクティブかどうかでバッファーのモードラインの色を変える")
