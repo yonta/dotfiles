@@ -23,8 +23,9 @@
 ;;; 起動時の表示位置とサイズ。上から、左から、幅、高さ
 (push '(top . 0) default-frame-alist)
 (push '(left . 0) default-frame-alist)
-(push '(width . 232) default-frame-alist)
-(push '(height . 63) default-frame-alist)
+(push '(width . 228) default-frame-alist)
+(push '(height . 67) default-frame-alist)
+;; (set-frame-parameter nil 'fullscreen 'maximized)
 
 ;;; カラーテーマの設定
 (setq custom-theme-directory "~/.emacs.d/themes")
