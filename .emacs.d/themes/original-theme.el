@@ -163,6 +163,8 @@
    `(company-tooltip-annotation ((t (:foreground ,dark-blue))))
    '(company-tooltip-selection ((t (:inherit (region)))))
    '(company-tooltip-mouse ((t (:inherit (secondary-selection)))))
+   '(company-tooltip-search ((t (:inherit (match)))))
+   '(company-tooltip-search-selection ((t (:inherit (match)))))
    '(lsp-ui-doc-background ((t (:inherit (tooltip)))))
    '(lsp-ui-doc-header ((t (:inherit (diff-file-header)))))
    ;; code in lsp-ui-doc
