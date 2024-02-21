@@ -927,25 +927,27 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 (leaf popper :ensure t
   :global-minor-mode popper-mode popper-echo-mode
   :custom
-  (popper-reference-buffers . '(help-mode
-                                helpful-mode
-                                "\\*quickrun\\*"
-                                inf-ruby-mode
-                                inferior-sml-mode
-                                "\\*Google Translate\\*"
-                                ;; 全completionを対象
-                                completion-list-mode
-                                (compilation-mode . hide)
+  (popper-reference-buffers . '(;; hide
                                 ("\\*Warnings\\*" . hide)
                                 (" \\*auto-async-byte-compile\\*" . hide)
-                                " \\*undo-tree\\*"
-                                "\\*robe-doc\\*"
-                                "^ \\*Rubocop.*\\*$"
+                                ("\\*Compile-Log\\*" . hide)
+                                ;; not hide
+                                compilation-mode
+                                completion-list-mode ; 全completionを対象
+                                help-mode
+                                helpful-mode
+                                inf-ruby-mode
+                                inferior-sml-mode
+                                "\\*quickrun\\*"
                                 "\\*xref\\*"
                                 "\\*Backtrace\\*"
                                 "\\*ripgrep-search\\*"
+                                "\\*Google Translate\\*"
+                                "\\*robe-doc\\*"
+                                " \\*undo-tree\\*"
                                 " \\*tip\\*"
                                 " \\*eglot doc\\*"
+                                "^ \\*Rubocop.*\\*$"
                                 ))
   (popper-group-function . 'popper-group-by-projectile)
   ;; popper-echoでk/^コマンドを有効化
