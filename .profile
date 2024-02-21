@@ -64,6 +64,10 @@ if [ -d "$HOME/.cargo" ] ; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+# Starship
+# cargo install starship
+eval "$(starship init bash)"
+
 # Ruby
 if [ -d "$HOME/.rbenv" ] ; then
     PATH="$HOME/.rbenv/bin:$PATH"

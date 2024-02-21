@@ -1,0 +1,24 @@
+[username]
+show_always = true
+format = '[$user]($style)[@](green)'
+style_user = 'bold green'
+[hostname]
+ssh_only = false
+format = '[$ssh_symbol$hostname]($style):'
+style = 'bold green'
+[directory]
+truncation_length = 10
+truncate_to_repo = false
+before_repo_root_style = 'blue'
+repo_root_style = 'bold cyan'
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+[git_status]
+ahead = '>'
+behind = '<'
+diverged = '<>'
+modified = '*'
+typechanged = '!'
+[character]
+success_symbol = '[\$](bold green)'
+error_symbol = '[\$](bold red)'

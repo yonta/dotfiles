@@ -16,3 +16,4 @@ mklink /D %home%\.emacs.d %repopath%\.emacs.d
 mklink %home%\.inputrc %repopath%\.inputrc
 mklink %home%\.screenrc %repopath%\.screenrc
 mklink %home%\.vimrc %repopath%\.vimrc
+mklink %home%\.config\starship.toml %repopath%\.config\starship.toml
