@@ -18,7 +18,7 @@
 (push '(font . "VL ゴシック-23") default-frame-alist)
 
 ;;; 行間スペース
-(setq-default line-spacing 2)
+(setq-default line-spacing 0)
 
 ;;; 起動時の表示位置とサイズ。上から、左から、幅、高さ
 (push '(top . 0) default-frame-alist)
