@@ -490,7 +490,6 @@
   ;; https://github.com/flycheck/flycheck/issues/1762
   (leaf my/flycheck
     :leaf-autoload nil
-    :leaf-defun nil
     :leaf-path nil
     :preface
     (defun my/flycheck-checker-get (fn checker property)
