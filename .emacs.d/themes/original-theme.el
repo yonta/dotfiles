@@ -20,8 +20,9 @@
 (let* ((dark1 "#1a1a1a")  ; 0, 0, 10 gray10
        (dark2 "#808080")  ; 0, 0, 50 gray50
        (dark3 "#cccccc")  ; 0, 0, 80
-       (light1 "#f5f5f5") ; 0, 0, 96 WhiteSmoke
+       (light1 "#f5f5f5") ; 0, 0, 96 gray96 WhiteSmoke
        (light2 "#e6e6e6") ; 0, 0, 90 gray90
+       (light3 "#d6d6d6") ; 0, 0, 84 gray84
        (blue1 "#87cefa")
        (blue2 "#bbe2fa")
        (blue3 "#dceefa")
@@ -182,7 +183,8 @@
    `(diff-refine-added ((t (:background ,green2))))
    `(diff-refine-changed ((t (:background ,yellow2))))
    `(diff-refine-removed ((t (:background ,red2))))
-   ))
-(provide-theme 'original)
+   )
+  (customize-set-variable 'company-quickhelp-color-background light3))
 
+(provide-theme 'original)
 ;;; original-theme.el ends here
