@@ -1093,6 +1093,59 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
           ("f" . image-transform-reset-to-original)
           ("0" . image-mode-fit-frame))))
 
+(leaf vertico
+  :leaf-autoload nil
+  :leaf-defun nil
+  :leaf-path nil
+  :preface
+  (leaf vertico
+    :doc "コンプリージョンをまとめてモダンにする"
+    :ensure t
+    :global-minor-mode t
+    :custom
+    (vertico-count . 15))
+
+  (leaf vertico-prescient
+    :doc "verticoのソート順に最近利用を反映させる"
+    :ensure t
+    :global-minor-mode t)
+
+  (leaf consult
+    :doc "便利コマンドを提供する"
+    :ensure t
+    :bind*
+    ("C-s" . consult-line)
+    ("C-M-s" . consult-line-multi)
+    ("C-c s" . isearch-forward)
+    ("C-x b" . consult-buffer)
+    ("C-x f" . consult-recent-file)
+    ("M-g M-g" . consult-goto-line)
+    ("C-M-y" . consult-yank-pop)
+    ("C-." . consult-imenu)
+    ("C-c C-." . consult-outline)
+    ("M-r" . consult-complex-command)
+    ("C-c g" . consult-git-grep)
+    ("C-c C-SPC" . consult-mark))
+
+  (leaf orderless
+    :doc "保管候補を順番関係なし、空白区切りで複数検索可能にする"
+    :ensure t
+    :custom
+    (completion-styles . '(orderless  basic))
+    (completion-category-overrides
+     . '((file (styles basic partial-completion)))))
+
+  (leaf marginalia
+    :doc "候補リストを彩る"
+    :ensure t
+    :global-minor-mode t)
+
+  (leaf nerd-icons-completion
+    :ensure t
+    :doc "コンプリージョンリストにアイコンをつける"
+    :global-minor-mode t
+    :hook (marginalia-mode-hook . nerd-icons-completion-marginalia-setup)))
+
 (leaf migemo :disabled t
   :ensure t
   :require t
@@ -1283,9 +1336,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (aw-keys . '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
   (display-buffer-base-action
    . '((display-buffer-reuse-window ace-display-buffer))))
-
-(leaf goto-line-preview :ensure t
-  :bind* ("M-g M-g" . goto-line-preview))
 
 (leaf demap :ensure t
   :bind* ("M-m" . demap-toggle))
