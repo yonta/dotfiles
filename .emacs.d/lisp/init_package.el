@@ -828,19 +828,22 @@
   (treesit-font-lock-level . 4)
   (treesit-auto-install . 'prompt))
 
-(leaf all-the-icons
-  :init
-  (leaf all-the-icons :ensure t
-    :req "初回に`M-x all-the-icons-install-fonts'を実行する")
+(leaf nerd-icons
+  :leaf-autoload nil
+  :leaf-defun nil
+  :leaf-path nil
+  :preface
+  (leaf nerd-icons
+    :ensure t
+    :req "初回に`M-x nerd-icons-install-fonts`を実行する")
 
-  (leaf all-the-icons-dired :ensure t
-    :diminish all-the-icons-dired-mode
-    :hook (dired-mode-hook . all-the-icons-dired-mode))
+  (leaf nerd-icons-dired
+    :ensure t
+    :hook (dired-mode-hook . nerd-icons-dired-mode))
 
-  (leaf all-the-icons-ibuffer :ensure t
-    :doc "sizeの-h化も一緒にされる"
-    :after ibuffer
-    :global-minor-mode all-the-icons-ibuffer-mode))
+  (leaf nerd-icons-ibuffer
+    :ensure t
+    :hook (ibuffer-mode-hook . nerd-icons-ibuffer-mode)))
 
 (leaf centaur-tabs :ensure t
   :global-minor-mode centaur-tabs-mode
