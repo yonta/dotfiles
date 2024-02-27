@@ -46,8 +46,6 @@
 ;;; Company and Flycheck
 
 (leaf company
-  :leaf-autoload nil
-  :leaf-defun nil
   :leaf-path nil
   :preface
   (leaf company :ensure t
@@ -123,10 +121,8 @@
   (leaf company-arduino :ensure t :disabled t))
 
 (leaf flycheck
-  :leaf-autoload nil
-  :leaf-defun nil
   :leaf-path nil
-  :init
+  :preface
   (leaf flycheck :ensure t
     :req "pipでflake8とmypyをいれておく"
     :defvar (flycheck-checker
@@ -155,7 +151,8 @@
 ;;; MODE
 
 (leaf emacs-lisp
-  :init
+  :leaf-path nil
+  :preface
   (leaf elisp-mode
     :defer-config
     (defun my-eval-region-or-line ()
@@ -183,7 +180,8 @@
            ("C-c e" . macrostep-expand))))
 
 (leaf cc-mode
-  :init
+  :leaf-path nil
+  :preface
   (leaf c-mode
     :preface
     :custom
@@ -267,7 +265,8 @@
 (leaf csv-mode :ensure t)
 
 (leaf sml-mode
-  :init
+  :leaf-path nil
+  :preface
   (leaf sml-mode
     :el-get (sml-mode
              :url "https://github.com/yonta/sml-mode.git"
@@ -340,8 +339,10 @@
     :hook (sml-mode-hook . sml-eldoc-turn-on)))
 
 (leaf python
-  :init
+  :leaf-path nil
+  :preface
   (leaf python
+    :leaf-path nil
     :defun python-shell-send-region
     :defer-config
     (defun my-python-shell-send-region-or-line ()
@@ -401,7 +402,8 @@
     :hook (before-save-hook . py-isort-before-save)))
 
 (leaf ruby
-  :init
+  :leaf-path nil
+  :preface
   (leaf ruby-electric :ensure t
     :doc "def/doなどに自動でendを挿入する"
     :diminish t
@@ -472,6 +474,7 @@
     :req "プロジェクトルートでsolargraph bundleを実行"
     :req "プロジェクトにマジックコメントのファイルを設置"
     :url "https://solargraph.org/guides/rails"
+    :leaf-path nil
     :custom
     (ruby-insert-encoding-magic-comment . nil)
     (dabbrev-abbrev-skip-leading-regexp . ":")
@@ -479,8 +482,6 @@
 
 (defvar-local my/flycheck-local-cache nil)
 (leaf eglot
-  :leaf-autoload nil
-  :leaf-defun nil
   :leaf-path nil
   :preface
   ;; メジャーモードによってlspの次のcheckerを切り替える
@@ -520,7 +521,8 @@
            . eglot-ensure)))
 
 (leaf html-css
-  :init
+  :leaf-path nil
+  :preface
   (leaf web-mode :ensure t
     :mode "\\.erb\\'"
     :custom
@@ -612,7 +614,8 @@
     (flycheck-disabled-checkers . '(scss-stylelint))))
 
 (leaf javascript
-  :init
+  :leaf-path nil
+  :preface
   (leaf js
     :custom
     (js-indent-level . 2))
@@ -631,7 +634,8 @@
   (leaf json-mode :ensure t))
 
 (leaf typescript
-  :init
+  :leaf-path nil
+  :preface
   (leaf typescript-mode :ensure t
     :req "npmでtypescript-language-serverとtypescriptを入れておく"
     :req "npm install -g typescript-language-server typescript"
@@ -760,7 +764,8 @@
     :hook (prog-mode-hook . highlight-parentheses-mode)))
 
 (leaf highlight
-  :init
+  :leaf-path nil
+  :preface
   (leaf auto-highlight-symbol :ensure t
     :leaf-defer nil
     :defvar ahs-modes
@@ -829,8 +834,6 @@
   (treesit-auto-install . 'prompt))
 
 (leaf nerd-icons
-  :leaf-autoload nil
-  :leaf-defun nil
   :leaf-path nil
   :preface
   (leaf nerd-icons
@@ -941,6 +944,9 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   :bind* ("M-o" . popper-toggle))
 
 (leaf projectile
+  :leaf-autoload nil
+  :leaf-defun nil
+  :leaf-path nil
   :init
   (leaf projectile :ensure t
     :global-minor-mode t
@@ -1098,8 +1104,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
           ("0" . image-mode-fit-frame))))
 
 (leaf vertico
-  :leaf-autoload nil
-  :leaf-defun nil
   :leaf-path nil
   :preface
   (leaf vertico
@@ -1264,7 +1268,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     (persp-add-buffer-on-after-change-major-mode . t)))
 
 (leaf theme
-  :init
+  :leaf-path nil
+  :preface
   (leaf rebecca-theme :ensure t :disabled t)
 
   (leaf solo-jazz-theme :disabled t
@@ -1277,7 +1282,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (leaf github-modern-theme :ensure t :disabled t))
 
 (leaf mozc
-  :init
+  :leaf-path nil
+  :preface
   (leaf mozc :ensure t
     :req "予め${HOME}/bin/mozc_emacs_helperを用意するか、"
     :req "aptでemacs-mozc-binを入れておく。"
@@ -1329,7 +1335,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
           ("C-S-l" . buf-move-right)))
 
 (leaf flyspell
-  :init
+  :leaf-path nil
+  :preface
   (leaf flyspell
     :req "aptでaspell-enをいれておく"
     :diminish flyspell-mode
@@ -1377,7 +1384,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 ;;; Emacs default (not package.el)
 
 (leaf dired
-  :init
+  :leaf-path nil
+  :preface
   (leaf dired
     :defun my-reload-current-dired-buffer
     :custom
@@ -1511,7 +1519,8 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
          auto-insert-alist)))
 
 (leaf recentf
-  :init
+  :leaf-path nil
+  :preface
   (leaf recentf
     :doc "最近使ったファイルを.recentfファイルに保存する"
     :global-minor-mode t
