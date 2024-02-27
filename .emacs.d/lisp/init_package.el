@@ -920,6 +920,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                                 completion-list-mode ; 全completionを対象
                                 help-mode
                                 helpful-mode
+                                man-mode
                                 inf-ruby-mode
                                 inferior-sml-mode
                                 "\\*quickrun\\*"
