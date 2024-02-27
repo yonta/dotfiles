@@ -1130,13 +1130,54 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     ("C-c g" . consult-git-grep)
     ("C-c C-SPC" . consult-mark))
 
+  (leaf migemo
+    :req "cmigemoをいれておく"
+    :url "https://github.com/koron/cmigemo"
+    :ensure t
+    :defun migemo-init migemo-get-pattern
+    :if (executable-find "cmigemo")
+    :after orderless
+    :custom
+    (migemo-user-dictionary . nil)
+    (migemo-regex-dictionary . nil)
+    (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
+    :require t
+    :config (migemo-init))
+
   (leaf orderless
     :doc "保管候補を順番関係なし、空白区切りで複数検索可能にする"
+    :doc "migemo化の参考：https://nyoho.jp/diary/?date=20210615"
     :ensure t
+    :after consult
+    :config
+    (eval-when-compile (require 'orderless))
+    (defun orderless-migemo (component)
+      (let ((pattern (migemo-get-pattern component)))
+        (condition-case nil
+            (progn (string-match-p pattern "") pattern)
+          (invalid-regexp nil))))
+    (orderless-define-completion-style orderless-default-style
+      (orderless-matching-styles '(orderless-literal
+                                   orderless-regexp)))
+    (orderless-define-completion-style orderless-migemo-style
+      (orderless-matching-styles '(orderless-literal
+                                   orderless-regexp
+                                   orderless-migemo)))
     :custom
-    (completion-styles . '(orderless  basic))
+    (completion-styles . '(orderless basic))
     (completion-category-overrides
-     . '((file (styles basic partial-completion)))))
+     . '(;; without migemo
+         (command (styles orderless-default-style))
+         (symbol (styles orderless-default-style))
+         (variable (styles orderless-default-style))
+         ;; with migemo
+         (file (styles orderless-migemo-style))
+         (buffer (styles orderless-migemo-style))
+         (unicode-name (styles orderless-migemo-style))
+         ;; consult with migemo
+         (consult-location (styles orderless-migemo-style)) ; consult-line
+         (consult-multi (styles orderless-migemo-style))    ; consult-buffer
+         )))
 
   (leaf marginalia
     :doc "候補リストを彩る"
@@ -1148,16 +1189,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :doc "コンプリージョンリストにアイコンをつける"
     :global-minor-mode t
     :hook (marginalia-mode-hook . nerd-icons-completion-marginalia-setup)))
-
-(leaf migemo :disabled t
-  :ensure t
-  :require t
-  :req "cmigemoをいれておく"
-  :url "https://github.com/koron/cmigemo"
-  :defun migemo-init migemo-get-pattern
-  :if (executable-find "cmigemo")
-  :custom
-  (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict"))
 
 (leaf helpful :ensure t
   :bind* ("<f1> k" . helpful-key)
