@@ -1119,7 +1119,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :bind*
     ("C-s" . consult-line)
     ("C-M-s" . consult-line-multi)
-    ("C-c s" . isearch-forward)
+    ("C-c C-s" . cunsult-ripgrep)
     ("C-x b" . consult-buffer)
     ("C-x f" . consult-recent-file)
     ("M-g M-g" . consult-goto-line)
@@ -1566,7 +1566,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
 (leaf sticky-buffer
   :bind*
-  ("C-c C-s" . sticky-buffer-mode))
+  ("C-c s" . sticky-buffer-mode))
 
 (leaf files
   :custom
