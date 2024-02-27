@@ -1146,7 +1146,10 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 
   (leaf orderless
     :doc "保管候補を順番関係なし、空白区切りで複数検索可能にする"
-    :doc "migemo化の参考：https://nyoho.jp/diary/?date=20210615"
+    :doc "migemo化の参考"
+    :doc "  https://nyoho.jp/diary/?date=20210615"
+    :doc "orderlessのドキュメント"
+    :doc "  https://github.com/oantolin/orderless#defining-custom-orderless-styles"
     :ensure t
     :after consult
     :config
@@ -1156,27 +1159,23 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
         (condition-case nil
             (progn (string-match-p pattern "") pattern)
           (invalid-regexp nil))))
-    (orderless-define-completion-style orderless-default-style
-      (orderless-matching-styles '(orderless-literal
-                                   orderless-regexp)))
-    (orderless-define-completion-style orderless-migemo-style
-      (orderless-matching-styles '(orderless-literal
-                                   orderless-regexp
-                                   orderless-migemo)))
+    (orderless-define-completion-style
+        orderless+migemo
+      (orderless-matching-styles
+       '(orderless-literal orderless-regexp orderless-migemo)))
     :custom
     (completion-styles . '(orderless basic))
+    ;; カテゴリによってcompletion-stylesを変更する
+    ;; 利用できるcategoryはEmacs28移行で定義されている
+    ;; consult.el内を:categoryタグで検索するとよい
     (completion-category-overrides
-     . '(;; without migemo
-         (command (styles orderless-default-style))
-         (symbol (styles orderless-default-style))
-         (variable (styles orderless-default-style))
-         ;; with migemo
-         (file (styles orderless-migemo-style))
-         (buffer (styles orderless-migemo-style))
-         (unicode-name (styles orderless-migemo-style))
+     . '((file (styles orderless+migemo basic partial-completiohn))
+         (buffer (styles orderless+migemo basic))
+         (unicode-name (styles orderless+migemo basic))
+         (kill-ring (styles orderless+migemo basic))
          ;; consult with migemo
-         (consult-location (styles orderless-migemo-style)) ; consult-line
-         (consult-multi (styles orderless-migemo-style))    ; consult-buffer
+         (consult-location (styles orderless+migemo basic)) ; consult-line
+         (consult-multi (styles orderless+migemo basic))    ; consult-buffer
          )))
 
   (leaf marginalia
