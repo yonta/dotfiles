@@ -94,7 +94,7 @@
     (company-posframe-show-indicator . t))
 
   (leaf company-prescient :ensure t
-    :global-minor-mode company-prescient-mode)
+    :global-minor-mode t)
 
   (leaf yasnippet :disabled t
     :ensure t yasnippet-snippets
@@ -846,7 +846,7 @@
     :hook (ibuffer-mode-hook . nerd-icons-ibuffer-mode)))
 
 (leaf centaur-tabs :ensure t
-  :global-minor-mode centaur-tabs-mode
+  :global-minor-mode t
   :defun
   centaur-tabs-headline-match
   centaur-tabs-enable-buffer-reordering
@@ -909,7 +909,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 ;;; OTHER
 
 (leaf popper :ensure t
-  :global-minor-mode popper-mode popper-echo-mode
+  :global-minor-mode t popper-echo-mode
   :custom
   (popper-reference-buffers . '(;; hide
                                 ("\\*Warnings\\*" . hide)
@@ -942,7 +942,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 (leaf projectile
   :init
   (leaf projectile :ensure t
-    :global-minor-mode projectile-mode
+    :global-minor-mode t
     :diminish projectile-mode
     :bind (:projectile-mode-map
            ("C-c C-f" . projectile-find-file)
@@ -1229,7 +1229,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   :bind ("C-`" . er/expand-region))
 
 (leaf which-key :ensure t
-  :global-minor-mode which-key-mode
+  :global-minor-mode t
   :diminish which-key-mode
   :custom
   (which-key-side-window-max-height . 0.4)
@@ -1250,7 +1250,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 (leaf persp-mode
   :init
   (leaf persp-mode :ensure t
-    :global-minor-mode persp-mode
+    :global-minor-mode t
     :defun get-current-persp persp-contain-buffer-p
     :bind* (("M-<right>" . persp-prev)
             ("M-<left>" . persp-next))
@@ -1307,12 +1307,12 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     (mozc-candidate-style . 'popup)))
 
 (leaf keyfreq :ensure t
-  :global-minor-mode keyfreq-mode keyfreq-autosave-mode)
+  :global-minor-mode t keyfreq-autosave-mode)
 
 (leaf editorconfig :ensure t
   :doc "projectの.editorconfigファイルを読み込む"
   :diminish t
-  :global-minor-mode editorconfig-mode)
+  :global-minor-mode t)
 
 (leaf imenu
   :init
@@ -1441,7 +1441,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :bind* ("C-x C-b" . ibuffer))
 
 (leaf winner
-  :global-minor-mode winner-mode
+  :global-minor-mode t
   :bind (("C-M-<left>" . winner-undo)
          ("C-M-<right>" . winner-redo)))
 
@@ -1513,7 +1513,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :init
   (leaf recentf
     :doc "最近使ったファイルを.recentfファイルに保存する"
-    :global-minor-mode recentf-mode
+    :global-minor-mode t
     :custom
     (recentf-max-saved-items . 1000)
     (recentf-auto-cleanup . 'never))
