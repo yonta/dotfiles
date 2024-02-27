@@ -842,6 +842,7 @@
 
   (leaf nerd-icons-dired
     :ensure t
+    :diminish t
     :hook (dired-mode-hook . nerd-icons-dired-mode))
 
   (leaf nerd-icons-ibuffer
