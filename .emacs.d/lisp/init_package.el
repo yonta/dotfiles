@@ -7,8 +7,15 @@
 
 ;;; Code:
 
-;; パッケージの全てをclからcl-libに移行しきれないので警告を無視する
+;; byte compileの警告をしない
+;; cl: cl-libに移行すれば消せるが、依存先すべての対応が不可能
 (with-no-warnings (require 'cl))
+;; autload: Emacs29でautoloadも警告になる、議論中っぽい？
+(with-no-warnings (require 'autoload))
+
+;; 起動時にのdeprecatedメッセージを隠す
+;; ときどきオフにして確認したほうがよさそう
+(customize-set-variable 'byte-compile-warnings '(not obsolete))
 
 (require 'package)
 ;; パッケージアーカイブの順番は関係ない。
