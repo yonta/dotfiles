@@ -1253,6 +1253,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   :diminish which-key-mode
   :custom
   (which-key-side-window-max-height . 0.4)
+  (which-key-max-description-length . 50)
   :config
   (which-key-setup-side-window-bottom))
 
