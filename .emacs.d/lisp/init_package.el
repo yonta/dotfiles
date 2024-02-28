@@ -13,10 +13,6 @@
 ;; autload: Emacs29でautoloadも警告になる、議論中っぽい？
 (with-no-warnings (require 'autoload))
 
-;; 起動時にのdeprecatedメッセージを隠す
-;; ときどきオフにして確認したほうがよさそう
-(customize-set-variable 'byte-compile-warnings '(not obsolete))
-
 (require 'package)
 ;; パッケージアーカイブの順番は関係ない。
 ;; 優先度はバージョン番号が大きい方が優先されるため、

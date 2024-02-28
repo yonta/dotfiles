@@ -15,6 +15,10 @@
 ;; (initchart-record-execution-time-of load file)
 ;; (initchart-record-execution-time-of require feature)
 
+;; 起動時にのdeprecatedメッセージを隠す
+;; ときどきオフにして確認したほうがよさそう
+(customize-set-variable 'byte-compile-warnings '(not obsolete))
+
 (require 'cl-lib)
 
 ;;; GCのしきい値を上げ、アイドル時にGCしておく
