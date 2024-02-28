@@ -939,10 +939,14 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 
   (leaf projectile-ripgrep :ensure t ripgrep wgrep
     :doc "wgrepはripgrep検索結果をC-cC-pで編集可にする"
-    :bind (("C-c f" . ripgrep-regexp)
-           (:projectile-mode-map
-            :package projectile
-            ("C-c f" . projectile-ripgrep))))
+    :bind*
+    (("M-s r" . ripgrep-regexp)
+     ("M-s e" . projectile-ripgrep))
+    :bind
+    (("C-c f" . ripgrep-regexp)
+     (:projectile-mode-map
+      :package projectile
+      ("C-c f" . projectile-ripgrep))))
 
   (leaf projectile-rails :ensure t
     :global-minor-mode projectile-rails-global-mode
@@ -1132,6 +1136,9 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :bind*
     ("C-s" . consult-line)
     ("C-M-s" . consult-line-multi)
+    ("M-s f" . consult-ripgrep)
+    ("M-s t" . consult-fd)
+    ("M-s g" . consult-git-gpre)
     ("C-c C-s" . cunsult-ripgrep)
     ("C-x b" . consult-buffer)
     ("C-x f" . consult-recent-file)
