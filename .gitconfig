@@ -53,3 +53,5 @@
 	verbose = true
 [diff]
 	algorithm = histogram
+[pull]
+	ff = only
