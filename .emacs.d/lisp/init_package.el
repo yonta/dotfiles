@@ -1119,6 +1119,34 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :ensure t
     :global-minor-mode t
     :custom
+    ;; verticoの最上部と最下部のサイクルをオンにする
+    ;; consult-lineにおいて、開始位置よりも前行の検索結果は最下部となる。
+    ;; これをswiperの直感どおりに検索するためにこれをオンにする。
+    ;;
+    ;; ex. 3行目で検索開始
+    ;;   3 ghi <= start
+    ;;   4 jkl
+    ;;   1 abc
+    ;;   2 def
+    ;;
+    ;; 他解法に(consult-line-start-from-top . t)がある
+    ;; これは表示結果がつねに行番号順に並ぶ。
+    ;; 検索結果一覧の見やすさは優れる。
+    ;; しかし、検索開始時にカーソルが先頭行に固定される。
+    ;; このときどの行で検索開始してもプレビューが先頭行になる。
+    ;; これが見づらいため採用しない。
+    ;;
+    ;; ex. 3行目で検索開始
+    ;;   1 abc <= start
+    ;;   2 def
+    ;;   3 ghi
+    ;;   4 jkl
+    ;;
+    ;; なお、consultレポジトリにて何度か議論されPRもレジェクトされている。
+    ;; consult的には利便性よりも簡素さを優先する、
+    ;; またパッチされるとすればverticoへのほうが適切、のようだ。
+    ;; https://github.com/minad/consult/issues/795#issuecomment-1528030324
+    (vertico-cycle . t)
     (vertico-count . 15))
 
   (leaf vertico-prescient
