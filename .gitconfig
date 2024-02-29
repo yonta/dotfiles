@@ -55,6 +55,7 @@
 [diff]
 	algorithm = histogram
 	submodule = log
+	context = 7
 [pull]
 	ff = only
 [init]
