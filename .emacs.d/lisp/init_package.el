@@ -1134,7 +1134,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     ("C-M-s" . consult-line-multi)
     ("M-s f" . consult-ripgrep)
     ("M-s t" . consult-fd)
-    ("M-s g" . consult-git-gpre)
+    ("M-s g" . consult-git-grep)
     ("C-c C-s" . cunsult-ripgrep)
     ("C-x b" . consult-buffer)
     ("C-x f" . consult-recent-file)
