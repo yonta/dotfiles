@@ -43,6 +43,7 @@
 	conflictstyle = zdiff3
 [rebase]
 	autostash = true
+	autosquash = true
 [blame]
 	date=format:%m/%d(%a)%R
 [help]
