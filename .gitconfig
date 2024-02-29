@@ -54,7 +54,12 @@
 	verbose = true
 [diff]
 	algorithm = histogram
+	submodule = log
 [pull]
 	ff = only
 [init]
 	defaultBranch = main
+[status]
+	submoduleSummary = true
+[submodule]
+	recurse = true
