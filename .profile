@@ -122,3 +122,6 @@ if type bat > /dev/null 2>&1 ; then
         "$@" --help 2>&1 | bat --plain --language=help
     }
 fi
+
+# fzf
+[ -f ~/.fzf.bash ]  && source ~/.fzf.bash
