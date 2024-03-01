@@ -1188,12 +1188,12 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :ensure t
     :defun migemo-init migemo-get-pattern
     :if (executable-find "cmigemo")
-    :after orderless
+    :preface
+    (autoload 'migemo-get-pattern "migemo")
     :custom
     (migemo-user-dictionary . nil)
     (migemo-regex-dictionary . nil)
     (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
-    :require t
     :config (migemo-init))
 
   (leaf orderless
