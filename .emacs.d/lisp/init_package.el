@@ -1203,7 +1203,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :doc "orderlessのドキュメント"
     :doc "  https://github.com/oantolin/orderless#defining-custom-orderless-styles"
     :ensure t
-    :after consult
     :config
     (defun orderless-migemo (component)
       (let ((pattern (migemo-get-pattern component)))
