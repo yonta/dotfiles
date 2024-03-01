@@ -1157,12 +1157,20 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   (leaf consult
     :doc "便利コマンドを提供する"
     :ensure t
+    :defvar consult-ripgrep-args
+    :config
+    (defun consult-ripgrep-including-hidden (&optional DIR INITIAL)
+      "Search with rg for files including hidden ones in DIR with INITIAL input"
+      (interactive "P")
+      (let ((consult-ripgrep-args (concat consult-ripgrep-args " --hidden")))
+        (consult-ripgrep DIR INITIAL)))
     :bind*
     ("C-s" . consult-line)
     ("C-M-s" . consult-line-multi)
     ("M-s f" . consult-ripgrep)
     ("M-s t" . consult-fd)
     ("M-s g" . consult-git-grep)
+    ("M-s v" . consult-ripgrep-including-hidden)
     ("C-c C-s" . cunsult-ripgrep)
     ("C-x b" . consult-buffer)
     ("C-x f" . consult-recent-file)
