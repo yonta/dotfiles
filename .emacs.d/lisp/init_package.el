@@ -1205,14 +1205,13 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :ensure t
     :after consult
     :config
-    (eval-when-compile (require 'orderless))
     (defun orderless-migemo (component)
       (let ((pattern (migemo-get-pattern component)))
         (condition-case nil
             (progn (string-match-p pattern "") pattern)
           (invalid-regexp nil))))
-    (orderless-define-completion-style
-        orderless+migemo
+    (eval-when-compile (require 'orderless))
+    (orderless-define-completion-style orderless+migemo
       (orderless-matching-styles
        '(orderless-literal orderless-regexp orderless-migemo)))
     :custom
