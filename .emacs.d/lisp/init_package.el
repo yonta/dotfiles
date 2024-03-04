@@ -982,7 +982,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   :bind* ("M-o" . popper-toggle))
 
 (leaf google-translate
-  :init
+  :leaf-path nil
+  :preface
   (leaf google-translate :ensure t)
 
   (leaf google-translate-smooth-ui
@@ -1039,7 +1040,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
          ("u" . twittering-toggle-show-replied-statuses)))
 
 (leaf shell
-  :init
+  :leaf-path nil
+  :preface
   (leaf company-shell :ensure t
     :after sh-mode
     :config
@@ -1429,7 +1431,8 @@ targets."
   :global-minor-mode t)
 
 (leaf imenu
-  :init
+  :leaf-path nil
+  :preface
   (leaf imenu-list :ensure t
     :bind ("C->" . imenu-list-smart-toggle)
     :custom
