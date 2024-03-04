@@ -1369,10 +1369,11 @@ targets."
     (set-language-environment "Japanese")
     (prefer-coding-system 'utf-8))
 
-  (leaf mozc-popup :ensure t :require t
+  (leaf mozc-cand-posframe
+    :ensure t
     :after mozc
     :custom
-    (mozc-candidate-style . 'popup)))
+    (mozc-candidate-style . 'posframe)))
 
 (leaf keyfreq :ensure t
   :global-minor-mode t keyfreq-autosave-mode)
