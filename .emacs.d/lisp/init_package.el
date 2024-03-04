@@ -1361,20 +1361,18 @@ targets."
 (leaf undo-tree :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
 
-(leaf persp-mode
-  :init
-  (leaf persp-mode :ensure t
-    :global-minor-mode t
-    :defun get-current-persp persp-contain-buffer-p
-    :bind* (("M-<right>" . persp-prev)
-            ("M-<left>" . persp-next))
-    :custom
-    (persp-save-dir . "~/.emacs.d/.persp-confs/")
-    (persp-auto-save-persps-to-their-file-before-kill . t)
-    (persp-auto-save-num-of-backups . 10)
-    (persp-kill-foreign-buffer-behaviour . nil)
-    `(persp-keymap-prefix . ,(kbd "C-x x"))
-    (persp-add-buffer-on-after-change-major-mode . t)))
+(leaf persp-mode :ensure t
+  :global-minor-mode t
+  :defun get-current-persp persp-contain-buffer-p
+  :bind* (("M-<right>" . persp-prev)
+          ("M-<left>" . persp-next))
+  :custom
+  (persp-save-dir . "~/.emacs.d/.persp-confs/")
+  (persp-auto-save-persps-to-their-file-before-kill . t)
+  (persp-auto-save-num-of-backups . 10)
+  (persp-kill-foreign-buffer-behaviour . nil)
+  `(persp-keymap-prefix . ,(kbd "C-x x"))
+  (persp-add-buffer-on-after-change-major-mode . t))
 
 (leaf theme
   :leaf-path nil
