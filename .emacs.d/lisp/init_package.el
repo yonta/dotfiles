@@ -990,52 +990,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
           '(("en" . "ja") ("ja" . "en")))
     :bind ("C-c C-t" . google-translate-smooth-translate)))
 
-(leaf twittering-mode :ensure t
-  :req "aptでgnupgを入れておく"
-  :req "alpaca.elが必要"
-  :defun twittering-icon-mode
-  :commands twit
-  :custom
-  ;; use master passworad compressed by GnuPG
-  (twittering-use-master-password . t)
-  (twittering-private-info-file . "~/.emacs.d/twittering-mode.gpg")
-  (twittering-use-icon-storage . t)
-  (twittering-icon-storage-file . "~/.emacs.d/icons.gz")
-  `(twittering-status-format
-    . ,(concat
-        "%i %S(@%s) "
-        "[%FACE[underline]{%@{%Y-%m-%d %H:%M}}]"
-        "%FACE[twittering-timeline-footer-face]{"
-        "%FIELD-IF-NONZERO[  ↩%s]{retweet_count}"
-        " %FIELD-IF-NONZERO[♡%s]{favorite_count}"
-        "}"
-        "\n"
-        "%RT{ %FACE[bold]{RT} by %S(@%s)\n}"
-        "%FOLD[]{%T}\n"
-        "-------------------------------------------------------------------------------"))
-  ;;(twittering-convert-fix-size . 24)
-  (twittering-timer-interval . 600)
-  (twittering-number-of-tweets-on-retrieval . 100)
-  (twittering-display-remaining . t)
-  (twittering-initial-timeline-spec-string
-   . '("keita44_f4/friend" ":replies" ":home"))
-  ;;(twittering-retweet-format . " RT @%s %t")
-  (twittering-retweet-format . " %u")
-  (twittering-fill-column . 80)
-  (twittering-edit-skeleton . 'inherit-mentions)
-  :defer-config
-  (twittering-icon-mode t)              ; use icon
-  :bind (:twittering-mode-map
-         ("R" . twittering-native-retweet)
-         ("r" . twittering-enter)
-         ("T" . twittering-organic-retweet)
-         ("t" . twittering-update-status-interactive)
-         ("o" . twittering-goto-next-uri)
-         ("O" . twittering-push-uri-onto-kill-ring)
-         ("J" . end-of-buffer)
-         ("K" . twittering-goto-first-status)
-         ("u" . twittering-toggle-show-replied-statuses)))
-
 (leaf shell
   :leaf-path nil
   :preface
