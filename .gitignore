@@ -33,3 +33,5 @@ flycheck_*.el
 .emacs.d/.lsp-session-v1
 .emacs.d/package-quickstart.el
 .emacs.d/projects
+.emacs.d/bookmarks
+.emacs.d/persist/

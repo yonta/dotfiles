@@ -778,10 +778,7 @@
     (ahs-default-range . 'ahs-range-whole-buffer)
     (ahs-disabled-minor-modes . '(iedit-mode))
     :config
-    (push 'sml-mode ahs-modes)
-    :bind (:auto-highlight-symbol-mode-map
-           ("M-<up>" . ahs-backward)
-           ("M-<down>" . ahs-forward)))
+    (push 'sml-mode ahs-modes))
 
   (leaf volatile-highlights :ensure t
     :diminish volatile-highlights-mode
@@ -1363,18 +1360,19 @@ targets."
 (leaf undo-tree :ensure t
   :bind ("C-c C-/" . undo-tree-visualize))
 
-(leaf persp-mode :ensure t
+(leaf activities
+  :ensure t
   :global-minor-mode t
-  :defun get-current-persp persp-contain-buffer-p
-  :bind* (("M-<right>" . persp-prev)
-          ("M-<left>" . persp-next))
-  :custom
-  (persp-save-dir . "~/.emacs.d/.persp-confs/")
-  (persp-auto-save-persps-to-their-file-before-kill . t)
-  (persp-auto-save-num-of-backups . 10)
-  (persp-kill-foreign-buffer-behaviour . nil)
-  `(persp-keymap-prefix . ,(kbd "C-x x"))
-  (persp-add-buffer-on-after-change-major-mode . t))
+  :bind
+  (("C-x a n" . activities-new)
+   ("C-x a r" . activities-resume)
+   ("C-x a a" . activities-resume)
+   ("C-x a s" . activities-suspend)
+   ("C-x a k" . activities-kill)
+   ("C-x a RET" . activities-switch)
+   ("C-x a b" . activities-switch-buffer)
+   ("C-x a g" . activities-revert)
+   ("C-x a l" . activities-list)))
 
 (leaf theme
   :leaf-path nil
