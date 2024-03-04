@@ -1618,7 +1618,8 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
           ))
 
 (leaf indent
-  :init
+  :leaf-path nil
+  :preface
   ;; Cソースコードの変数だが、indentにまとめておく
   (setq-default tab-width 2)
   (setq-default indent-tabs-mode nil)
@@ -1678,10 +1679,11 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :req "sudo apt install wl-clipboard"
   :url "https://zenn.dev/ignorant/scraps/4456a9fb017eb3"
   :url "https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4"
+  :leaf-path nil
   :emacs>= 29
   :if (and (executable-find "wl-copy") (executable-find "wl-paste"))
   :defvar wl-copy-process
-  :init
+  :preface
   (setq wl-copy-process nil)
   (defun wl-copy (text)
     (setq wl-copy-process (make-process :name "wl-copy"
