@@ -1237,7 +1237,69 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :ensure t
     :doc "コンプリージョンリストにアイコンをつける"
     :global-minor-mode t
-    :hook (marginalia-mode-hook . nerd-icons-completion-marginalia-setup)))
+    :hook (marginalia-mode-hook . nerd-icons-completion-marginalia-setup))
+
+  (leaf embark
+    :ensure t
+    :defvar embark-indicators
+    :defer-config
+    (autoload 'which-key--hide-popup-ignore-command "which-key")
+    (autoload 'which-key--show-keymap "which-key")
+    :custom (embark-help-key . "?")
+    :bind* ("M-C-x" . embark-bindings)
+    :bind ("<mouse-3>" . embark-act))
+
+  (leaf embark-consult
+    :ensure t
+    :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+  (leaf embark-which-key
+    :doc "embark wikiより"
+    :doc "embarkのコンプリージョンリストをwhich-keyでだす"
+    :doc "https://github.com/oantolin/embark/wiki/Additional-Configuration#use-which-key-like-a-key-menu-prompt"
+    :leaf-path nil
+    :defun
+    embark-which-key-indicator
+    (embark--truncate-target . embark)
+    (which-key--hide-popup-ignore-command . which-key)
+    (which-key--show-keymap . which-key)
+    :after embark which-key
+    :init
+    (defun embark-which-key-indicator ()
+      "An embark indicator that displays keymaps using which-key.
+The which-key help message will show the type and value of the
+current target followed by an ellipsis if there are further
+targets."
+      (lambda (&optional keymap targets prefix)
+        (if (null keymap)
+            (which-key--hide-popup-ignore-command)
+          (which-key--show-keymap
+           (if (eq (plist-get (car targets) :type) 'embark-become)
+               "Become"
+             (format "Act on %s '%s'%s"
+                     (plist-get (car targets) :type)
+                     (embark--truncate-target (plist-get (car targets) :target))
+                     (if (cdr targets) "…" "")))
+           (if prefix
+               (pcase (lookup-key keymap prefix 'accept-default)
+                 ((and (pred keymapp) km) km)
+                 (_ (key-binding prefix 'accept-default)))
+             keymap)
+           nil nil t (lambda (binding)
+                       (not (string-suffix-p "-argument" (cdr binding))))))))
+    (defun embark-hide-which-key-indicator (fn &rest args)
+      "Hide the which-key indicator when using the completing-read."
+      (which-key--hide-popup-ignore-command)
+      (let ((embark-indicators
+             (remq #'embark-which-key-indicator embark-indicators)))
+        (apply fn args)))
+    :advice
+    (:around embark-completing-read-prompter embark-hide-which-key-indicator)
+    :custom
+    (embark-indicators
+     . '(embark-which-key-indicator
+         embark-highlight-indicator
+         embark-isearch-highlight-indicator))))
 
 (leaf helpful :ensure t
   :bind* ("<f1> k" . helpful-key)
