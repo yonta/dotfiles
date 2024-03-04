@@ -963,6 +963,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                                 man-mode
                                 inf-ruby-mode
                                 inferior-sml-mode
+                                "\\*scratch\\*"
                                 "\\*quickrun\\*"
                                 "\\*xref\\*"
                                 "\\*Backtrace\\*"
