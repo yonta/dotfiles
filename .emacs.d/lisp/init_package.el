@@ -802,7 +802,7 @@
   (git-gutter:added-sign . " ")
   (git-gutter:deleted-sign . " ")
   :custom-face
-  (git-gutter:modified . '((t (:background "#87cefa"))))
+  (git-gutter:modified . '((t (:background "#fad987"))))
   (git-gutter:added . '((t (:background "#95fa87"))))
   (git-gutter:deleted . '((t (:background "#fa8d87")))))
 

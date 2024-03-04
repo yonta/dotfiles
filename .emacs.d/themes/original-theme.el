@@ -127,7 +127,7 @@
      ((t (:foreground ,green1 :background ,light1
                       :inherit (git-gutter:added fringe)))))
    `(git-gutter-fr:modified
-     ((t (:foreground ,blue1 :background ,light1
+     ((t (:foreground ,yellow1 :background ,light1
                       :inherit (git-gutter:modified fringe)))))
    `(git-gutter-fr:deleted
      ((t (:foreground ,red1 :background ,light1
