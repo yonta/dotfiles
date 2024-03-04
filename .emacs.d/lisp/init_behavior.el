@@ -5,9 +5,6 @@
 
 ;;; Code:
 
-;;; 起動時のメッセージを表示しない
-(setq inhibit-startup-message t)
-
 ;;; emacs lispの変数評価結果の表示桁数制限をなくす，デフォルトは(12,4)
 (setq eval-expression-print-length nil)
 (setq eval-expression-print-level nil)
@@ -15,9 +12,6 @@
 ;;; file名補完で大文字・小文字を区別しない
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
-
-;;; バックアップファイルを作らない
-(setq make-backup-files nil)
 
 ;;; 画像ファイルを表示する
 (auto-image-file-mode t)
@@ -56,9 +50,6 @@
 
 ;;; カーソルとマウスポインタが近づいたらマウスポインタを移動する
 (mouse-avoidance-mode 'exile)
-
-;;; #スタートのロックファイルを作らない
-(setq create-lockfiles nil)
 
 ;;; Emacsのプロセス通信の容量を上げる
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/#increase-the-amount-of-data-which-emacs-reads-from-the-process

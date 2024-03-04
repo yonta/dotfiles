@@ -21,9 +21,8 @@
 
 (require 'cl-lib)
 
-;;; GCのしきい値を上げ、アイドル時にGCしておく
-(setq gc-cons-threshold (eval-when-compile (* 128 1024 1024)))
-(run-with-idle-timer 300 t #'garbage-collect)
+;;; アイドル時にGCを走らせる
+(run-with-idle-timer (eval-when-compile (* 5 60)) t #'garbage-collect)
 
 ;;; .el/.elcで新しい方を読み込む
 (setq load-prefer-newer t)
