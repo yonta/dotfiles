@@ -1140,15 +1140,15 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :req "cmigemoをいれておく"
     :url "https://github.com/koron/cmigemo"
     :ensure t
-    :defun migemo-init migemo-get-pattern
+    :defun migemo-init
     :if (executable-find "cmigemo")
-    :preface
-    (autoload 'migemo-get-pattern "migemo")
+    :after consult
+    :require t
     :custom
     (migemo-user-dictionary . nil)
     (migemo-regex-dictionary . nil)
     (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
-    :config (migemo-init))
+    :defer-config (migemo-init))
 
   (leaf orderless
     :doc "保管候補を順番関係なし、空白区切りで複数検索可能にする"
@@ -1156,6 +1156,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :doc "  https://nyoho.jp/diary/?date=20210615"
     :doc "orderlessのドキュメント"
     :doc "  https://github.com/oantolin/orderless#defining-custom-orderless-styles"
+    :defun (migemo-get-pattern . migemo)
     :ensure t
     :config
     (defun orderless-migemo (component)
