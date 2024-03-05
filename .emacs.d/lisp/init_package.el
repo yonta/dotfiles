@@ -925,8 +925,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 ;;; OTHER
 
 (leaf projectile
-  :leaf-autoload nil
-  :leaf-defun nil
   :leaf-path nil
   :init
   (leaf projectile :ensure t
