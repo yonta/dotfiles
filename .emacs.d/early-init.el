@@ -53,4 +53,8 @@
 ;;; lsp-mode向け高速化、lsp-modeインストール時に必要
 (setenv "LSP_USE_PLISTS" "true")
 
+;;; package-quickstartを使う
+;; 何らかのエラーが起きたらpackage-quickstart-refreshを実行する必要があるかも
+(setq package-quickstart t)
+
 ;;; early-init.el ends here

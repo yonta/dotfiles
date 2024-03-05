@@ -21,7 +21,6 @@
 ;; `package-archive-priorities'を使って設定する。
 (add-to-list 'package-archives ; MELPAを追加
              '("melpa" . "https://melpa.org/packages/"))
-(setq package-quickstart t)
 (eval-and-compile (package-initialize))
 
 (unless (package-installed-p 'leaf)
