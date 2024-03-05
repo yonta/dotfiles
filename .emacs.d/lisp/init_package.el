@@ -1386,6 +1386,7 @@ targets."
   (leaf mozc-cand-posframe
     :ensure t
     :after mozc
+    :require t
     :custom
     (mozc-candidate-style . 'posframe)))
 
