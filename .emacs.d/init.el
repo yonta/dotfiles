@@ -24,8 +24,6 @@
 ;; ときどきオフにして確認したほうがよさそう
 (customize-set-variable 'byte-compile-warnings '(not obsolete))
 
-(eval-when-compile (require 'cl-lib))
-
 ;;; アイドル時にGCを走らせる
 (run-with-idle-timer (eval-when-compile (* 5 60)) t #'garbage-collect)
 
