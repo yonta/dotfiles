@@ -29,7 +29,6 @@
 
 ;;; .elcが古ければauto-compileする
 ;; 初回起動時はインストールされてないため、次回から有効になる
-(require 'package)
 (if (package-installed-p 'auto-compile)
     (progn
       (require 'auto-compile)
