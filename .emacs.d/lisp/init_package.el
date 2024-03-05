@@ -953,7 +953,9 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
       :package projectile
       ("C-c f" . projectile-ripgrep))))
 
-  (leaf projectile-rails :ensure t
+  (leaf projectile-rails
+    :ensure t
+    :after ruby-mode
     :global-minor-mode projectile-rails-global-mode
     :diminish projectile-rails-mode))
 
