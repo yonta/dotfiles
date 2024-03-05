@@ -407,13 +407,15 @@
 (leaf ruby
   :leaf-path nil
   :preface
-  (leaf ruby-electric :ensure t
+  (leaf ruby-electric
+    :ensure t
     :doc "def/doなどに自動でendを挿入する"
     :diminish t
-    :hook (ruby-mode-hook . ruby-electric-mode))
+    :hook (ruby-base-mode-hook . ruby-electric-mode))
 
-  (leaf inf-ruby :ensure t
-    :hook (ruby-mode-hook . inf-ruby-minor-mode)
+  (leaf inf-ruby
+    :ensure t
+    :hook (ruby-base-mode-hook . inf-ruby-minor-mode)
     :bind ((:ruby-mode-map
             :package ruby-mode
             ("C-c C-p" . inf-ruby)
@@ -425,37 +427,44 @@
     :custom
     (inf-ruby-console-environment . "development"))
 
-  (leaf rubocop :ensure t :if (executable-find "rubocop")
+  (leaf rubocop
     :req "gemでrubocopを入れておく"
-    :req "gem install rubocop")
+    :req "gem install rubocop"
+    :ensure t
+    :if (executable-find "rubocop"))
 
-  (leaf rufo :ensure t
+  (leaf rufo
     :req "gemでrufoを入れておく"
     :req "gem install rufo"
     :doc "TODO: rufoやめてrubocop -aに移行したい"
+    :ensure t
     :if (executable-find "rufo")
     :diminish rufo-minor-mode
-    :hook (ruby-mode-hook . rufo-minor-mode))
+    :hook (ruby-base-mode-hook . rufo-minor-mode))
 
-  (leaf rubocopfmt :ensure t :disabled t
+  (leaf rubocopfmt
+    :ensure t
+    :disabled t
     :if (executable-find "rubocop")
     :diminish rubocopfmt-mode
-    :hook (ruby-mode-hook . rubocopfmt-mode))
+    :hook (ruby-base-mode-hook . rubocopfmt-mode))
 
   (leaf rspec-mode :ensure t :diminish t)
 
-  (leaf yard-mode :ensure t
+  (leaf yard-mode
+    :ensure t
     :diminish t
-    :hook (ruby-mode-hook . yard-mode))
+    :hook (ruby-base-mode-hook . yard-mode))
 
-  (leaf ruby-tools :ensure t
-    :hook (ruby-mode-hook . ruby-tools-mode))
+  (leaf ruby-tools
+    :ensure t
+    :hook (ruby-base-mode-hook . ruby-tools-mode))
 
   (leaf company-ignore
     :defun company-ignore
     :el-get (company-ignore
              :url "https://github.com/yonta/company-ignore.git")
-    :hook (ruby-mode-hook
+    :hook (ruby-base-mode-hook
            . (lambda ()
                (company-ignore 'company-capf '("do" "end"))
                (company-ignore 'company-keywords '("do" "end"))
@@ -463,10 +472,12 @@
                (company-ignore 'company-dabbrev '("do" "end"))
                (company-ignore 'company-yasnippet '("do" "end")))))
 
-  (leaf seeing-is-believing :ensure t :require t
+  (leaf seeing-is-believing
+    :req "gem install seeing_is_believing"
+    :ensure t
     :config
     (diminish 'seeing-is-believing nil)
-    :req "gem install seeing_is_believing")
+    :hook (ruby-base-mode-hook . seeing-is-believing))
 
   (leaf ruby-mode
     :req "gemでsolargraphを入れる"
@@ -480,8 +491,8 @@
     :leaf-path nil
     :custom
     (ruby-insert-encoding-magic-comment . nil)
-    (dabbrev-abbrev-skip-leading-regexp . ":")
-    :hook (ruby-mode-hook . seeing-is-believing)))
+    ;; ruby symbol
+    (dabbrev-abbrev-skip-leading-regexp . ":")))
 
 (defvar-local my/flycheck-local-cache nil)
 (leaf eglot
@@ -710,7 +721,8 @@
   (whitespace-space-regexp . "\\(　+\\)")
   ;; 一部モードで1行の最大文字数を変更する
   :hook ((java-mode-hook . (lambda () (setq-local whitespace-line-column 100)))
-         (ruby-mode-hook . (lambda () (setq-local whitespace-line-column 120)))
+         (ruby-base-mode-hook
+          . (lambda () (setq-local whitespace-line-column 120)))
          (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))))
 
 (leaf parens
