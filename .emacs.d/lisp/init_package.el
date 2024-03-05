@@ -1720,4 +1720,26 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :config
   (pixel-scroll-precision-mode))
 
+(leaf comp
+  :leaf-path nil
+  :doc "native compile"
+  :if (native-comp-available-p)
+  :preface
+  (defvar my/comp-init-files-list
+    '("~/.emacs.d/init.el" "~/.emacs.d/early-init.el" "~/.emacs.d/lisp"))
+  (defun my/comp-all-files ()
+    "Compile configuration files with native compilation."
+    (interactive)
+    (native-compile-async
+     (append
+      ;; directories
+      '("~/.emacs.d/lisp" "~/.emacs.d/el-get" "~/.emacs.d/elpa")
+      my/comp-init-files-list)
+     'recursively))
+  (defun my/comp-init-files ()
+    "Compile configuration files with native compilation."
+    (interactive)
+    (native-compile-async my/comp-init-files-list 'recursively))
+  :custom (native-comp-async-jobs-number . 3))
+
 ;;; init_package.el ends here
