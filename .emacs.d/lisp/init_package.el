@@ -1373,7 +1373,7 @@ targets."
            ("C-x h" . mark-hole-buffer))
     :custom
     (default-input-method . "japanese-mozc")
-    (mozc-leim-title . "[も]")
+    (mozc-mode-string . " [も]")
     ;; WindowsのGoogle日本語入力を使う
     :advice (:after mozc-session-execute-command
                     (lambda (&rest args)
