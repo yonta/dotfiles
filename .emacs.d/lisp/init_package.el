@@ -964,6 +964,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                                 ("\\*Warnings\\*" . hide)
                                 (" \\*auto-async-byte-compile\\*" . hide)
                                 ("\\*Compile-Log\\*" . hide)
+                                ("[lL]og\\*$" . hide) ; log終わり
                                 ;; not hide
                                 compilation-mode
                                 completion-list-mode ; 全completionを対象
