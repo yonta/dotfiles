@@ -1115,11 +1115,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     (vertico-cycle . t)
     (vertico-count . 15))
 
-  (leaf vertico-prescient
-    :doc "verticoのソート順に最近利用を反映させる"
-    :ensure t
-    :global-minor-mode t)
-
   (leaf consult
     :doc "便利コマンドを提供する"
     :ensure t
@@ -1181,18 +1176,18 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
       (orderless-matching-styles
        '(orderless-literal orderless-regexp orderless-migemo)))
     :custom
-    (completion-styles . '(orderless basic))
+    (completion-styles . '(orderless))
     ;; カテゴリによってcompletion-stylesを変更する
     ;; 利用できるcategoryはEmacs28移行で定義されている
     ;; consult.el内を:categoryタグで検索するとよい
     (completion-category-overrides
-     . '((file (styles orderless+migemo basic partial-completiohn))
-         (buffer (styles orderless+migemo basic))
-         (unicode-name (styles orderless+migemo basic))
-         (kill-ring (styles orderless+migemo basic))
+     . '((file (styles orderless+migemo partial-completiohn))
+         (buffer (styles orderless+migemo))
+         (unicode-name (styles orderless+migemo))
+         (kill-ring (styles orderless+migemo))
          ;; consult with migemo
-         (consult-location (styles orderless+migemo basic)) ; consult-line
-         (consult-multi (styles orderless+migemo basic))    ; consult-buffer
+         (consult-location (styles orderless+migemo)) ; consult-line
+         (consult-multi (styles orderless+migemo))    ; consult-buffer
          )))
 
   (leaf marginalia
