@@ -35,3 +35,4 @@ flycheck_*.el
 .emacs.d/projects
 .emacs.d/bookmarks
 .emacs.d/persist/
+.emacs.d/lisp/hotfuzz-module.so

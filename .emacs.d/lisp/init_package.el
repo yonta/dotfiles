@@ -85,6 +85,23 @@
             ("C-s" . company-filter-candidates)
             ("C-o" . company-other-backend))))
 
+  (leaf hotfuzz
+    :req "GitHubリポジトリをクローンする"
+    :req "READMEに従いhotfuzz-module.soをビルドする"
+    :req "hotfuzz-module.soを.emacs.d/lispに配置する"
+    :doc "company-capfではhotfuzzを使う"
+    :doc "capfはEmacs標準の補完機能を使っている"
+    :doc "そのため、completion-styles変数の変更が効く"
+    :doc "  https://github.com/oantolin/orderless?tab=readme-ov-file#company"
+    :doc "fuzzy系の中ではひじょうに高速らしい"
+    :doc "  https://github.com/axelf4/emacs-completion-bench?tab=readme-ov-file#results"
+    :defun my/company-completion-sort-by-hotfuzz
+    :config
+    (defun my/company-completion-sort-by-hotfuzz (capf-fn &rest args)
+      (let ((completion-styles '(hotfuzz)))
+        (apply capf-fn args)))
+    (advice-add 'company-capf :around #'my/company-completion-sort-by-hotfuzz))
+
   (leaf company-posframe
     :ensure t
     :diminish t
@@ -92,9 +109,6 @@
     :custom
     (company-posframe-quickhelp-delay . 0.3)
     (company-posframe-show-indicator . t))
-
-  (leaf company-prescient :ensure t
-    :global-minor-mode t)
 
   (leaf yasnippet :disabled t
     :ensure t yasnippet-snippets
