@@ -102,6 +102,19 @@
         (apply capf-fn args)))
     (advice-add 'company-capf :around #'my/company-completion-sort-by-hotfuzz))
 
+  (leaf fuz-bin
+    :doc "caompany-fuzzyでのソートに使用するバイナリ入りパッケージ"
+    :el-get (fuz-bin :url "https://github.com/jcs-legacy/fuz-bin.git"))
+
+  (leaf company-fuzzy
+    :req "fuz-binが必要"
+    :doc "capf以外ではこのパッケージでfuzzy化する"
+    :doc "具体的にはLSP非対応の言語系"
+    :doc "fuzzy化したい言語系のモードhookにcompany-fuzzy-modeを追加すればよい"
+    :doc "ただし、候補の種類（typeやval）や型のようなdoc情報が失われる"
+    :ensure t
+    :custom (company-fuzzy-sorting-backend . 'fuz-bin-skim))
+
   (leaf company-posframe
     :ensure t
     :diminish t
@@ -293,13 +306,6 @@
             sml-prog-proc-send-string
             my-sml-prog-proc-send-region-by-string)
     :defvar company-minimum-prefix-length
-    :preface
-    (defun my-sml-set-company-settings ()
-      "Set company settings for SML mode."
-      (setq-local completion-ignore-case nil)
-      (setq-local company-minimum-prefix-length 3))
-    :hook ((sml-mode-hook . my-sml-set-company-settings)
-           (inferior-sml-mode-hook . my-sml-set-company-settings))
     :custom
     (sml-indent-level . 2)
     (sml-indent-args . 2)
@@ -337,6 +343,8 @@
                    company-mlton-basis
                    :with company-dabbrev-code))
     :hook
+    ;; hookがfuzzy -> mltonの順番じゃないとダメ
+    (sml-mode-hook . company-fuzzy-mode)
     (sml-mode-hook . company-mlton-basis-autodetect))
 
   (leaf flycheck-smlsharp
