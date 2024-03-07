@@ -1142,13 +1142,23 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     :ensure t
     :defvar consult-ripgrep-args
     :config
+    ;; 隠しファイル込みでのconsult-ripgrep
     (defun consult-ripgrep-including-hidden (&optional DIR INITIAL)
       "Search with rg for files including hidden ones in DIR with INITIAL input"
       (interactive "P")
       (let ((consult-ripgrep-args (concat consult-ripgrep-args " --hidden")))
         (consult-ripgrep DIR INITIAL)))
+    ;; consult-lineにおいてC-sC-sで最後の検索を再検索
+    ;; isearchやswiperでの手癖に対応する
+    ;;   https://github.com/minad/consult/wiki#add-command-local-keybinding
+    (defvar my/consult-line-map
+      (let ((map (make-sparse-keymap)))
+        (bind-key "C-s" #'previous-history-element map)
+        map))
+    (eval-when-compile (require 'consult))
+    (consult-customize consult-line :keymap my/consult-line-map)
+    :bind ("C-s" . consult-line)
     :bind*
-    ("C-s" . consult-line)
     ("C-M-s" . consult-line-multi)
     ("M-s f" . consult-ripgrep)
     ("M-s t" . consult-fd)
