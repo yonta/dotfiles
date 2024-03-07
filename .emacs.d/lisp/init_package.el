@@ -86,6 +86,11 @@
            ("C-M-i" . corfu-prompt-end)
            ("C-s" . corfu-insert-separator)))
 
+  (leaf nerd-icons-corfu
+    :ensure t
+    :config
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)))
+
 (leaf company
   :disabled t
   :leaf-path nil
