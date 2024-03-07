@@ -19,6 +19,8 @@ behind = '<'
 diverged = '<>'
 modified = '*'
 typechanged = '!'
+up_to_date = "="
+conflicted = "|CONFLICT"
 [character]
 success_symbol = '[\$](bold green)'
 error_symbol = '[\$](bold red)'
