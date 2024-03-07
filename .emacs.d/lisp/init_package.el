@@ -45,7 +45,46 @@
   :el-get (initchart
            :url "https://github.com/yuttie/initchart.git"))
 
-;;; Company and Flycheck
+;;; Corfu and Flycheck
+
+(leaf corfu
+  :leaf-path nil
+  :preface
+  (leaf corfu
+    :ensure t
+    :global-minor-mode
+    global-corfu-mode
+    corfu-popupinfo-mode
+    corfu-history-mode
+    :init
+    (setq completion-ignore-case t)
+    ;; インデント済みのときTABキーで補完開始
+    ;; C-M-iが身についているからいらないかも
+    (setq tab-always-indent 'complete)
+    :custom
+    (corfu-cycle . t)
+    (corfu-auto . t)
+    ;; corfu中に選択候補をカーソル先に表示しない
+    (corfu-preview-current . nil)
+    (corfu-auto-prefix . 2)
+    (corfu-popupinfo-delay . '(0.3 . 0.3))
+    :advice (:around eglot-completion-at-point cape-wrap-buster)
+    :hook
+    ;; shellではすぐにcorfuしない
+    ;; https://github.com/minad/corfu?tab=readme-ov-file#completing-in-the-eshell-or-shell
+    (eshell-mode-hook
+     . (lambda ()
+         (setq-local corfu-auto nil)
+         (corfu-mode)))
+    :bind (:corfu-map
+           ("C-f" . corfu-insert)
+           ("C-d" . corfu-info-documentation)
+           ("<tab>" . corfu-next)
+           ("<backtab>" . corfu-previous)
+           ("RET" . nil)
+           ;; 手癖のC-M-i連打で何も起こらないようにする
+           ("C-M-i" . corfu-prompt-end)
+           ("C-s" . corfu-insert-separator)))
 
 (leaf company
   :disabled t
