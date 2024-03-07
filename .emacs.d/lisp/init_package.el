@@ -76,6 +76,9 @@
      . (lambda ()
          (setq-local corfu-auto nil)
          (corfu-mode)))
+    ;; corfuではhotfuzzでフィルター/ソートする
+    (corfu-mode-hook
+     . (lambda () (setq-local completion-styles '(hotfuzz))))
     :bind (:corfu-map
            ("C-f" . corfu-insert)
            ("C-d" . corfu-info-documentation)
@@ -85,6 +88,12 @@
            ;; 手癖のC-M-i連打で何も起こらないようにする
            ("C-M-i" . corfu-prompt-end)
            ("C-s" . corfu-insert-separator)))
+
+  (leaf hotfuzz
+    :ensure t
+    :req "GitHubリポジトリをクローンする"
+    :req "READMEに従いhotfuzz-module.soをビルドする"
+    :req "hotfuzz-module.soを.emacs.d/lispに配置する")
 
   (leaf cape
     :ensure t
