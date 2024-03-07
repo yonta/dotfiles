@@ -1010,7 +1010,10 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   ;; popper-echoでk/^コマンドを有効化
   (popper-echo-dispatch-actions . t)
   (popper-echo-dispatch-keys . '("1" "2" "3" "4" "5" "6" "7" "8" "9" "0"))
-  :bind* ("M-o" . popper-toggle))
+  :bind
+  ("C-^" . popper-toggle-type)
+  :bind*
+  ("M-o" . popper-toggle))
 
 (leaf google-translate
   :leaf-path nil
