@@ -48,6 +48,7 @@
 ;;; Company and Flycheck
 
 (leaf company
+  :disabled t
   :leaf-path nil
   :preface
   (leaf company :ensure t
@@ -219,8 +220,8 @@
                          (awk-mode . "awk")
                          (other . "k&r")))
     :defer-config
-    (add-to-list 'company-backends
-                 '(company-clang :with company-dabbrev-code))
+    ;; (add-to-list 'company-backends
+    ;;              '(company-clang :with company-dabbrev-code))
     (require 'smartparens-c))
 
   (leaf c++-mode
@@ -231,9 +232,9 @@
       (setq-local flycheck-clang-language-standard "c++11"))
     :hook (c++-mode-hook . my-c++-mode-hook)
     :defer-config
-    (add-to-list 'company-backends
-                 '(company-clang ;; company-c-headers
-                   :with company-dabbrev-code))
+    ;; (add-to-list 'company-backends
+    ;;              '(company-clang ;; company-c-headers
+    ;;                :with company-dabbrev-code))
     (require 'smartparens-c))
 
   (leaf rainbow-mode :ensure t
@@ -305,7 +306,6 @@
     :defun (sml-prog-proc-proc
             sml-prog-proc-send-string
             my-sml-prog-proc-send-region-by-string)
-    :defvar company-minimum-prefix-length
     :custom
     (sml-indent-level . 2)
     (sml-indent-args . 2)
@@ -328,6 +328,7 @@
            ("C-c C-p" . sml-run)))
 
   (leaf company-mlton
+    :disabled t
     :el-get (company-mlton
              :url "https://github.com/yonta/company-mlton.git"
              :branch "add-smlsharp")
@@ -383,9 +384,9 @@
     (python-shell-interpreter . "python3")
     (python-indent-offset . 4)
     :defer-config
-    (add-to-list 'company-backends
-                 '(company-jedi
-                   :with company-dabbrev-code company-dabbrev))
+    ;; (add-to-list 'company-backends
+    ;;              '(company-jedi
+    ;;                :with company-dabbrev-code company-dabbrev))
     (require 'smartparens-python))
 
   (leaf pip-requirements :ensure t)
@@ -405,7 +406,7 @@
   ;; 必要に応じて補完したいライブラリを、activateしてpip installする
   ;;   source ~/.emacs.d/.python-environments/python3-default/bin/activate
   ;;   pip install -r ~/.emacs.d/requirements.txt
-  (leaf company-jedi :ensure t)
+  (leaf company-jedi :ensure t :disabled t)
 
   (leaf py-autopep8 :ensure t
     :req "pipでautopep8をいれておく"
@@ -482,6 +483,7 @@
     :hook (ruby-base-mode-hook . ruby-tools-mode))
 
   (leaf company-ignore
+    :disabled t
     :defun company-ignore
     :el-get (company-ignore
              :url "https://github.com/yonta/company-ignore.git")
@@ -602,15 +604,18 @@
            (mhtml-mode-hook . flycheck-markuplint-setup)))
 
   (leaf company-bootstrap5
+    :disabled t
     :defun company-bootstrap5
     :el-get (company-bootstrap5
              :url "https://github.com/yonta/company-bootstrap5.git"))
 
   (leaf company-bootstrap-icons
+    :disabled t
     :el-get (company-bootstrap-icons
              :url "https://github.com/yonta/company-bootstrap-icons.git"))
 
   (leaf company-web :ensure t
+    :disabled t
     :after web-mode
     :config
     (add-to-list 'company-backends
@@ -622,11 +627,12 @@
   (leaf css-mode
     :custom
     (css-indent-offset . 2)
-    :defer-config
-    (add-to-list 'company-backends
-                 '(company-css
-                   :with company-bootstrap5
-                   company-dabbrev-code company-dabbrev)))
+    ;; :defer-config
+    ;; (add-to-list 'company-backends
+    ;;              '(company-css
+    ;;                :with company-bootstrap5
+    ;;                company-dabbrev-code company-dabbrev))
+    )
 
   (leaf scss-mode
     :config
@@ -1029,7 +1035,9 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 (leaf shell
   :leaf-path nil
   :preface
-  (leaf company-shell :ensure t
+  (leaf company-shell
+    :disabled t
+    :ensure t
     :after sh-mode
     :config
     (add-to-list 'company-backends
