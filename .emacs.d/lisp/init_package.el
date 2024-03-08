@@ -137,7 +137,14 @@
     ("C-c i :" . cape-emoji)
     ("C-c i x" . cape-tex)
     ("C-c i g" . cape-sgml)
-    ("C-c i r" . cape-rfc1345)))
+    ("C-c i r" . cape-rfc1345))
+
+  (leaf company
+    :ensure t
+    :custom
+    (company-dabbrev-ignore-case . t)
+    (company-dabbrev-code-ignore-case . t)
+    (company-etags-ignore-case . t)))
 
 (leaf company
   :disabled t
@@ -415,25 +422,32 @@
            ("C-c C-p" . sml-run)))
 
   (leaf company-mlton
-    :disabled t
     :el-get (company-mlton
              :url "https://github.com/yonta/company-mlton.git"
              :branch "add-smlsharp")
-    :defun company-mlton-basis-autodetect
+    :defun
+    company-mlton-basis
+    company-mlton-keyword
     :custom
     (company-mlton-modes . '(sml-mode inferior-sml-mode))
     ;; MLtonのbasisを除き、SMLのbasisを使う
     (company-mlton-basis-file
      . "~/.emacs.d/el-get/company-mlton/sml-basis-lib.basis")
-    :defer-config
-    (add-to-list 'company-backends
-                 '(company-mlton-keyword
-                   company-mlton-basis
-                   :with company-dabbrev-code))
+    :config
+    (defun my/company-mlton-init ()
+      "Set company backends for completion"
+      (setq-local completion-at-point-functions
+                  (list
+                   (cape-capf-super
+                    ;; company-mlton系だけcase sensitiveになる
+                    (cape-company-to-capf #'company-mlton-basis)
+                    (cape-company-to-capf #'company-mlton-keyword)
+                    (cape-company-to-capf #'company-dabbrev-code))
+                   #'cape-dabbrev
+                   #'cape-file)))
     :hook
-    ;; hookがfuzzy -> mltonの順番じゃないとダメ
-    (sml-mode-hook . company-fuzzy-mode)
-    (sml-mode-hook . company-mlton-basis-autodetect))
+    (sml-mode-hook . company-mlton-basis-autodetect)
+    (sml-mode-hook . my/company-mlton-init))
 
   (leaf flycheck-smlsharp
     :el-get (flycheck-smlsharp
