@@ -53,6 +53,7 @@
   (leaf hotfuzz
     :ensure t
     :req "GitHubリポジトリをクローンする"
+    :req "https://github.com/axelf4/hotfuzz"
     :req "READMEに従いhotfuzz-module.soをビルドする"
     :req "hotfuzz-module.soを.emacs.d/lispに配置する")
 
