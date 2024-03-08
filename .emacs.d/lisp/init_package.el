@@ -50,6 +50,12 @@
 (leaf corfu
   :leaf-path nil
   :preface
+  (leaf hotfuzz
+    :ensure t
+    :req "GitHubリポジトリをクローンする"
+    :req "READMEに従いhotfuzz-module.soをビルドする"
+    :req "hotfuzz-module.soを.emacs.d/lispに配置する")
+
   (leaf corfu
     :ensure t
     :global-minor-mode
@@ -88,12 +94,6 @@
            ;; 手癖のC-M-i連打で何も起こらないようにする
            ("C-M-i" . corfu-prompt-end)
            ("C-s" . corfu-insert-separator)))
-
-  (leaf hotfuzz
-    :ensure t
-    :req "GitHubリポジトリをクローンする"
-    :req "READMEに従いhotfuzz-module.soをビルドする"
-    :req "hotfuzz-module.soを.emacs.d/lispに配置する")
 
   (leaf cape
     :ensure t
