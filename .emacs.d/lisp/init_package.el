@@ -92,7 +92,7 @@
            ("<backtab>" . corfu-previous)
            ("RET" . nil)
            ;; 手癖のC-M-i連打で何も起こらないようにする
-           ("C-M-i" . corfu-prompt-end)
+           ("C-M-i" . corfu-next)
            ("C-s" . corfu-insert-separator)))
 
   (leaf cape
