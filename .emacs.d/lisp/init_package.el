@@ -95,6 +95,11 @@
            ("C-M-i" . corfu-next)
            ("C-s" . corfu-insert-separator)))
 
+  (leaf nerd-icons-corfu
+    :ensure t
+    :custom
+    (corfu-margin-formatters . '(nerd-icons-corfu-formatter)))
+
   (leaf cape
     :ensure t
     :doc "バックエンド合成やcompanyバックエンドの変換を提供する"
@@ -116,10 +121,6 @@
     ;; (add-to-list 'completion-at-point-functions #'cape-emoji)
     )
 
-  (leaf nerd-icons-corfu
-    :ensure t
-    :custom
-    (corfu-margin-formatters . '(nerd-icons-corfu-formatter))))
 
 (leaf company
   :disabled t
