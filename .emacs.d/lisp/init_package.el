@@ -122,8 +122,21 @@
     ;; (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
     ;; (add-to-list 'completion-at-point-functions #'cape-line)
     ;; (add-to-list 'completion-at-point-functions #'cape-emoji)
-    )
-
+    :bind
+    ("C-c i t" . complete-tag)
+    ("C-c i d" . cape-dabbrev)
+    ("C-c i h" . cape-history)
+    ("C-c i f" . cape-file)
+    ("C-c i k" . cape-keyword)
+    ("C-c i s" . cape-elisp-symbol)
+    ("C-c i e" . cape-elisp-block)
+    ("C-c i a" . cape-abbrev)
+    ("C-c i l" . cape-line)
+    ("C-c i w" . cape-dict)
+    ("C-c i :" . cape-emoji)
+    ("C-c i x" . cape-tex)
+    ("C-c i g" . cape-sgml)
+    ("C-c i r" . cape-rfc1345)))
 
 (leaf company
   :disabled t
