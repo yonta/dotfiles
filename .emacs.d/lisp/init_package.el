@@ -118,8 +118,8 @@
 
   (leaf nerd-icons-corfu
     :ensure t
-    :config
-    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)))
+    :custom
+    (corfu-margin-formatters . '(nerd-icons-corfu-formatter))))
 
 (leaf company
   :disabled t
