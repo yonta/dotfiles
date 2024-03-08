@@ -579,19 +579,6 @@
     :ensure t
     :hook (ruby-base-mode-hook . ruby-tools-mode))
 
-  (leaf company-ignore
-    :disabled t
-    :defun company-ignore
-    :el-get (company-ignore
-             :url "https://github.com/yonta/company-ignore.git")
-    :hook (ruby-base-mode-hook
-           . (lambda ()
-               (company-ignore 'company-capf '("do" "end"))
-               (company-ignore 'company-keywords '("do" "end"))
-               (company-ignore 'company-dabbrev-code '("do" "end"))
-               (company-ignore 'company-dabbrev '("do" "end"))
-               (company-ignore 'company-yasnippet '("do" "end")))))
-
   (leaf seeing-is-believing
     :req "gem install seeing_is_believing"
     :ensure t
