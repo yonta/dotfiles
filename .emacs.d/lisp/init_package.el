@@ -1211,18 +1211,18 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
       (orderless-matching-styles
        '(orderless-literal orderless-regexp orderless-migemo)))
     :custom
-    (completion-styles . '(orderless))
+    (completion-styles . '(orderless basic))
     ;; カテゴリによってcompletion-stylesを変更する
     ;; 利用できるcategoryはEmacs28移行で定義されている
     ;; consult.el内を:categoryタグで検索するとよい
     (completion-category-overrides
-     . '((file (styles orderless+migemo partial-completiohn))
-         (buffer (styles orderless+migemo))
-         (unicode-name (styles orderless+migemo))
-         (kill-ring (styles orderless+migemo))
+     . '((file (styles orderless+migemo partial-completiohn basic))
+         (buffer (styles orderless+migemo basic))
+         (unicode-name (styles orderless+migemo basic))
+         (kill-ring (styles orderless+migemo basic))
          ;; consult with migemo
-         (consult-location (styles orderless+migemo)) ; consult-line
-         (consult-multi (styles orderless+migemo))    ; consult-buffer
+         (consult-location (styles orderless+migemo basic)) ; consult-line
+         (consult-multi (styles orderless+migemo basic))    ; consult-buffer
          )))
 
   (leaf marginalia
