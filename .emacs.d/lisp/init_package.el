@@ -97,6 +97,9 @@
 
   (leaf nerd-icons-corfu
     :ensure t
+    :doc "VLゴシックと組み合わせると下記不具合がでる"
+    :doc "cape-emojiのプレビューが壊れて____表示になる"
+    :doc "corfuの補完候補高さの計算が壊れて、補完候補が多いときに一番下が見切れる"
     :custom
     (corfu-margin-formatters . '(nerd-icons-corfu-formatter)))
 
