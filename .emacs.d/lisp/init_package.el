@@ -485,9 +485,6 @@
     (python-shell-interpreter . "python3")
     (python-indent-offset . 4)
     :defer-config
-    ;; (add-to-list 'company-backends
-    ;;              '(company-jedi
-    ;;                :with company-dabbrev-code company-dabbrev))
     (require 'smartparens-python))
 
   (leaf pip-requirements :ensure t)
@@ -507,7 +504,6 @@
   ;; 必要に応じて補完したいライブラリを、activateしてpip installする
   ;;   source ~/.emacs.d/.python-environments/python3-default/bin/activate
   ;;   pip install -r ~/.emacs.d/requirements.txt
-  (leaf company-jedi :ensure t :disabled t)
 
   (leaf py-autopep8 :ensure t
     :req "pipでautopep8をいれておく"
