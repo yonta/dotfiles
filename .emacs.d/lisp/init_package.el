@@ -312,8 +312,6 @@
                          (awk-mode . "awk")
                          (other . "k&r")))
     :defer-config
-    ;; (add-to-list 'company-backends
-    ;;              '(company-clang :with company-dabbrev-code))
     (require 'smartparens-c))
 
   (leaf c++-mode
@@ -324,9 +322,6 @@
       (setq-local flycheck-clang-language-standard "c++11"))
     :hook (c++-mode-hook . my-c++-mode-hook)
     :defer-config
-    ;; (add-to-list 'company-backends
-    ;;              '(company-clang ;; company-c-headers
-    ;;                :with company-dabbrev-code))
     (require 'smartparens-c))
 
   (leaf rainbow-mode :ensure t
