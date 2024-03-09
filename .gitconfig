@@ -38,7 +38,7 @@
 	hunk-header-style = blue bold ul
 	file-style = yellow
 [push]
-	default = current
+	autoSetupRemote = true
 [merge]
 	conflictstyle = zdiff3
 [rebase]
