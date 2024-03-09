@@ -1,5 +1,13 @@
+# Emacs byte compiled files
 *.elc
+
+# Flycheck temp files
 flycheck_*.el
+
+# hotfuzz binary
+.emacs.d/lisp/hotfuzz-module.so
+
+# Emacs auto generated directories
 .emacs.d/auto-save-list/
 .emacs.d/elpa/
 .emacs.d/el-get/
@@ -11,6 +19,9 @@ flycheck_*.el
 .emacs.d/eln-cache/
 .emacs.d/eshell/
 .emacs.d/tree-sitter/
+.emacs.d/persist/
+
+# Emacsa auto generated files
 .emacs.d/abbrev_defs
 .emacs.d/ac-comphist.dat
 .emacs.d/icons.gz
@@ -34,5 +45,3 @@ flycheck_*.el
 .emacs.d/package-quickstart.el
 .emacs.d/projects
 .emacs.d/bookmarks
-.emacs.d/persist/
-.emacs.d/lisp/hotfuzz-module.so
