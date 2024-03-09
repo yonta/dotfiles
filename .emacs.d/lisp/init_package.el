@@ -644,7 +644,22 @@
 (leaf html-css
   :leaf-path nil
   :preface
+  (leaf company-bootstrap5
+    :defun company-bootstrap5
+    :el-get (company-bootstrap5
+             :url "https://github.com/yonta/company-bootstrap5.git"))
+
+  (leaf company-bootstrap-icons
+    :el-get (company-bootstrap-icons
+             :url "https://github.com/yonta/company-bootstrap-icons.git"))
+
+  (leaf company-web :ensure t)
+
   (leaf web-mode :ensure t
+    :defun
+    (company-web-html . company-web)
+    (company-bootstrap5 . company-bootstrap5)
+    (company-bootstrap-icons . company-bootstrap-icons)
     :mode "\\.erb\\'"
     :custom
     (web-mode-enable-comment-interpolation . t)
@@ -658,11 +673,24 @@
     ;; web-modeとwhitespace-modeのコンフリクトでfaceがおかしくなるのを解消する
     ;; https://github.com/fxbois/web-mode/issues/119a
     (web-mode-display-table . nil)
-    :defer-config
+    :config
     (require 'smartparens-html)
     (sp-local-pair 'web-mode "<%" "%>"
                    :post-handlers '(("|| " "SPC") (" || " "=")))
-    (unbind-key "C-c C-f" web-mode-map))
+    (unbind-key "C-c C-f" web-mode-map)
+    (defun my/company-web-mode-init ()
+      "Set company backends for completion"
+      (setq-local completion-at-point-functions
+                  (list
+                   (cape-capf-super
+                    ;; company-mlton系だけcase sensitiveになる
+                    (cape-company-to-capf #'company-web-html)
+                    (cape-company-to-capf #'company-bootstrap5)
+                    (cape-company-to-capf #'company-bootstrap-icons)
+                    (cape-company-to-capf #'company-dabbrev-code))
+                   #'cape-dabbrev
+                   #'cape-file)))
+    :hook (web-mode-hook . my/company-web-mode-init))
 
   (leaf impatient-mode :ensure t
     :doc "HTMLのライブプレビューモード")
@@ -687,36 +715,22 @@
            (html-mode-hook . flycheck-markuplint-setup)
            (mhtml-mode-hook . flycheck-markuplint-setup)))
 
-  (leaf company-bootstrap5
-    :disabled t
-    :defun company-bootstrap5
-    :el-get (company-bootstrap5
-             :url "https://github.com/yonta/company-bootstrap5.git"))
-
-  (leaf company-bootstrap-icons
-    :disabled t
-    :el-get (company-bootstrap-icons
-             :url "https://github.com/yonta/company-bootstrap-icons.git"))
-
-  (leaf company-web :ensure t
-    :disabled t
-    :after web-mode
-    :config
-    (add-to-list 'company-backends
-                 '(company-web-html
-                   :with company-bootstrap5
-                   company-bootstrap-icons
-                   company-dabbrev-code company-dabbrev)))
-
   (leaf css-mode
     :custom
     (css-indent-offset . 2)
-    ;; :defer-config
-    ;; (add-to-list 'company-backends
-    ;;              '(company-css
-    ;;                :with company-bootstrap5
-    ;;                company-dabbrev-code company-dabbrev))
-    )
+    :config
+    (defun my/company-web-mode-init ()
+      "Set company backends for completion"
+      (setq-local completion-at-point-functions
+                  (list
+                   (cape-capf-super
+                    ;; company-mlton系だけcase sensitiveになる
+                    (cape-company-to-capf #'company-css)
+                    (cape-company-to-capf #'company-bootstrap5)
+                    (cape-company-to-capf #'company-dabbrev-code))
+                   #'cape-dabbrev
+                   #'cape-file)))
+    :hook (css-base-mode-hook . my/company-web-mode-init))
 
   (leaf scss-mode
     :config
