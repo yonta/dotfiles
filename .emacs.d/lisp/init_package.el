@@ -1216,7 +1216,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     ;; 利用できるcategoryはEmacs28移行で定義されている
     ;; consult.el内を:categoryタグで検索するとよい
     (completion-category-overrides
-     . '((file (styles orderless+migemo partial-completiohn basic))
+     . '((file (styles orderless+migemo partial-completion basic))
          (buffer (styles orderless+migemo basic))
          (unicode-name (styles orderless+migemo basic))
          (kill-ring (styles orderless+migemo basic))
