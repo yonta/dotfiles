@@ -20,6 +20,7 @@ flycheck_*.el
 .emacs.d/eshell/
 .emacs.d/tree-sitter/
 .emacs.d/persist/
+.emacs.d/multisession/
 
 # Emacsa auto generated files
 .emacs.d/abbrev_defs
