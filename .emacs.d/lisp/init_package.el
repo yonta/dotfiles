@@ -71,7 +71,6 @@
     (corfu-preview-current . nil)
     (corfu-auto-prefix . 2)
     (corfu-popupinfo-delay . '(0.3 . 0.3))
-    :advice (:around eglot-completion-at-point cape-wrap-buster)
     :hook
     ;; corfuではhotfuzzでフィルター/ソートする
     (corfu-mode-hook
