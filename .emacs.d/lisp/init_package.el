@@ -59,10 +59,6 @@
 
   (leaf corfu
     :ensure t
-    :global-minor-mode
-    global-corfu-mode
-    corfu-popupinfo-mode
-    corfu-history-mode
     :init
     (setq completion-ignore-case t)
     ;; インデント済みのときTABキーで補完開始
@@ -77,15 +73,27 @@
     (corfu-popupinfo-delay . '(0.3 . 0.3))
     :advice (:around eglot-completion-at-point cape-wrap-buster)
     :hook
-    ;; shellではすぐにcorfuしない
-    ;; https://github.com/minad/corfu?tab=readme-ov-file#completing-in-the-eshell-or-shell
-    (eshell-mode-hook
-     . (lambda ()
-         (setq-local corfu-auto nil)
-         (corfu-mode)))
     ;; corfuではhotfuzzでフィルター/ソートする
     (corfu-mode-hook
      . (lambda () (setq-local completion-styles '(hotfuzz))))
+    ;; shellではすぐにcorfuしない
+    ;; https://github.com/minad/corfu?tab=readme-ov-file#completing-in-the-eshell-or-shell
+    ((shell-mode-hook eshell-mode-hook)
+     . (lambda ()
+         (setq-local corfu-auto nil)
+         (corfu-mode)
+         (corfu-popupinfo-mode)
+         (corfu-history-mode)))
+    ;; BUG?: global-corfu-modeを使うとconsult-lineでバグが起きる
+    ;; 具体的には、consult-lineで検索時に下記エラーがでて、
+    ;; プレビューと検索結果へ移動がうまく動かなくなる。
+    ;; Error in post-command-hook (consult--preview-post-command-hook): (quit)
+    ;; おそらくcompletion-stylesをhotfuzzに設定する方法がよくなさそう。
+    (prog-mode-hook
+     . (lambda ()
+         (corfu-mode)
+         (corfu-popupinfo-mode)
+         (corfu-history-mode)))
     :bind (:corfu-map
            ("C-f" . corfu-insert)
            ("C-d" . corfu-info-documentation)
