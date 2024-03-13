@@ -45,7 +45,205 @@
   :el-get (initchart
            :url "https://github.com/yuttie/initchart.git"))
 
-;;; Corfu and Flycheck
+;;; Vertico
+
+(leaf vertico
+  :leaf-path nil
+  :preface
+  (leaf vertico
+    :doc "コンプリージョンをまとめてモダンにする"
+    :ensure t
+    :global-minor-mode t
+    :custom
+    ;; verticoの最上部と最下部のサイクルをオンにする
+    ;; consult-lineにおいて、開始位置よりも前行の検索結果は最下部となる。
+    ;; これをswiperの直感どおりに検索するためにこれをオンにする。
+    ;;
+    ;; ex. 3行目で検索開始
+    ;;   3 ghi <= start
+    ;;   4 jkl
+    ;;   1 abc
+    ;;   2 def
+    ;;
+    ;; 他解法に(consult-line-start-from-top . t)がある
+    ;; これは表示結果がつねに行番号順に並ぶ。
+    ;; 検索結果一覧の見やすさは優れる。
+    ;; しかし、検索開始時にカーソルが先頭行に固定される。
+    ;; このときどの行で検索開始してもプレビューが先頭行になる。
+    ;; これが見づらいため採用しない。
+    ;;
+    ;; ex. 3行目で検索開始
+    ;;   1 abc <= start
+    ;;   2 def
+    ;;   3 ghi
+    ;;   4 jkl
+    ;;
+    ;; なお、consultレポジトリにて何度か議論されPRもレジェクトされている。
+    ;; consult的には利便性よりも簡素さを優先する、
+    ;; またパッチされるとすればverticoへのほうが適切、のようだ。
+    ;; https://github.com/minad/consult/issues/795#issuecomment-1528030324
+    (vertico-cycle . t)
+    (vertico-count . 15))
+
+  (leaf consult
+    :doc "便利コマンドを提供する"
+    :ensure t
+    :defvar consult-ripgrep-args
+    :config
+    ;; 隠しファイル込みでのconsult-ripgrep
+    (defun consult-ripgrep-including-hidden (&optional DIR INITIAL)
+      "Search with rg for files including hidden ones in DIR with INITIAL input"
+      (interactive "P")
+      (let ((consult-ripgrep-args (concat consult-ripgrep-args " --hidden")))
+        (consult-ripgrep DIR INITIAL)))
+    ;; consult-lineにおいてC-sC-sで最後の検索を再検索
+    ;; isearchやswiperでの手癖に対応する
+    ;;   https://github.com/minad/consult/wiki#add-command-local-keybinding
+    (defvar my/consult-line-map
+      (let ((map (make-sparse-keymap)))
+        (bind-key "C-s" #'previous-history-element map)
+        map))
+    (eval-when-compile (require 'consult))
+    (consult-customize consult-line :keymap my/consult-line-map)
+    :bind ("C-s" . consult-line)
+    :bind*
+    ("C-M-s" . consult-line-multi)
+    ("M-s f" . consult-ripgrep)
+    ("M-s t" . consult-fd)
+    ("M-s g" . consult-git-grep)
+    ("M-s v" . consult-ripgrep-including-hidden)
+    ("C-c C-s" . cunsult-ripgrep)
+    ("C-x b" . consult-buffer)
+    ("C-x f" . consult-recent-file)
+    ("M-g M-g" . consult-goto-line)
+    ("C-M-y" . consult-yank-pop)
+    ("C-." . consult-imenu)
+    ("C-c C-." . consult-outline)
+    ("M-r" . consult-complex-command)
+    ("C-c g" . consult-git-grep)
+    ("C-c C-SPC" . consult-mark))
+
+  (leaf migemo
+    :req "cmigemoをいれておく"
+    :url "https://github.com/koron/cmigemo"
+    :ensure t
+    :defun migemo-init
+    :if (executable-find "cmigemo")
+    :after consult
+    :require t
+    :custom
+    (migemo-user-dictionary . nil)
+    (migemo-regex-dictionary . nil)
+    (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
+    :defer-config (migemo-init))
+
+  (leaf orderless
+    :doc "保管候補を順番関係なし、空白区切りで複数検索可能にする"
+    :doc "migemo化の参考"
+    :doc "  https://nyoho.jp/diary/?date=20210615"
+    :doc "orderlessのドキュメント"
+    :doc "  https://github.com/oantolin/orderless#defining-custom-orderless-styles"
+    :defun (migemo-get-pattern . migemo)
+    :ensure t
+    :config
+    (defun orderless-migemo (component)
+      (let ((pattern (migemo-get-pattern component)))
+        (condition-case nil
+            (progn (string-match-p pattern "") pattern)
+          (invalid-regexp nil))))
+    (eval-when-compile (require 'orderless))
+    (orderless-define-completion-style orderless+migemo
+      (orderless-matching-styles
+       '(orderless-literal orderless-regexp orderless-migemo)))
+    :custom
+    (completion-styles . '(orderless))
+    ;; カテゴリによってcompletion-stylesを変更する
+    ;; 利用できるcategoryはEmacs28移行で定義されている
+    ;; consult.el内を:categoryタグで検索するとよい
+    (completion-category-overrides
+     . '((file (styles orderless+migemo partial-completion))
+         (buffer (styles orderless+migemo))
+         (unicode-name (styles orderless+migemo))
+         (kill-ring (styles orderless+migemo))
+         ;; consult with migemo
+         (consult-location (styles orderless+migemo)) ; consult-line
+         (consult-multi (styles orderless+migemo))    ; consult-buffer
+         )))
+
+  (leaf marginalia
+    :doc "候補リストを彩る"
+    :ensure t
+    :global-minor-mode t)
+
+  (leaf nerd-icons-completion
+    :ensure t
+    :doc "コンプリージョンリストにアイコンをつける"
+    :global-minor-mode t
+    :hook (marginalia-mode-hook . nerd-icons-completion-marginalia-setup))
+
+  (leaf embark
+    :ensure t
+    :defvar embark-indicators
+    :defer-config
+    (autoload 'which-key--hide-popup-ignore-command "which-key")
+    (autoload 'which-key--show-keymap "which-key")
+    :custom (embark-help-key . "?")
+    :bind* ("M-C-x" . embark-bindings)
+    :bind ("<mouse-3>" . embark-act))
+
+  (leaf embark-consult
+    :ensure t
+    :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+  (leaf embark-which-key
+    :doc "embark wikiより"
+    :doc "embarkのコンプリージョンリストをwhich-keyでだす"
+    :doc "https://github.com/oantolin/embark/wiki/Additional-Configuration#use-which-key-like-a-key-menu-prompt"
+    :leaf-path nil
+    :defun
+    embark-which-key-indicator
+    (embark--truncate-target . embark)
+    (which-key--hide-popup-ignore-command . which-key)
+    (which-key--show-keymap . which-key)
+    :after embark which-key
+    :init
+    (defun embark-which-key-indicator ()
+      "An embark indicator that displays keymaps using which-key.
+The which-key help message will show the type and value of the
+current target followed by an ellipsis if there are further
+targets."
+      (lambda (&optional keymap targets prefix)
+        (if (null keymap)
+            (which-key--hide-popup-ignore-command)
+          (which-key--show-keymap
+           (if (eq (plist-get (car targets) :type) 'embark-become)
+               "Become"
+             (format "Act on %s '%s'%s"
+                     (plist-get (car targets) :type)
+                     (embark--truncate-target (plist-get (car targets) :target))
+                     (if (cdr targets) "…" "")))
+           (if prefix
+               (pcase (lookup-key keymap prefix 'accept-default)
+                 ((and (pred keymapp) km) km)
+                 (_ (key-binding prefix 'accept-default)))
+             keymap)
+           nil nil t (lambda (binding)
+                       (not (string-suffix-p "-argument" (cdr binding))))))))
+    (defun embark-hide-which-key-indicator (fn &rest args)
+      "Hide the which-key indicator when using the completing-read."
+      (which-key--hide-popup-ignore-command)
+      (let ((embark-indicators
+             (remq #'embark-which-key-indicator embark-indicators)))
+        (apply fn args)))
+    :advice
+    (:around embark-completing-read-prompter embark-hide-which-key-indicator)
+    :custom
+    (embark-indicators
+     . '(embark-which-key-indicator
+         embark-highlight-indicator
+         embark-isearch-highlight-indicator))))
+
+;;; Corfu
 
 (leaf corfu
   :leaf-path nil
@@ -57,6 +255,12 @@
     :req "READMEに従いhotfuzz-module.soをビルドする"
     :req "hotfuzz-module.soを.emacs.d/lispに配置する")
 
+  ;; BUG?: consult-lineで2キーを同時押しするとバグが起きる
+  ;; 具体的には、consult-lineで検索時に下記エラーがでて、
+  ;; プレビューと検索結果へ移動がうまく動かなくなる。
+  ;; Error in post-command-hook (consult--preview-post-command-hook): (quit)
+  ;; おそらくcompletion-stylesをconsultとcorfuとで設定しているせい。
+  ;; 対処のために、vertico系 -> corfuの設定順にする
   (leaf corfu
     :ensure t
     :init
@@ -84,11 +288,6 @@
          (corfu-mode)
          (corfu-popupinfo-mode)
          (corfu-history-mode)))
-    ;; BUG?: global-corfu-modeを使うとconsult-lineでバグが起きる
-    ;; 具体的には、consult-lineで検索時に下記エラーがでて、
-    ;; プレビューと検索結果へ移動がうまく動かなくなる。
-    ;; Error in post-command-hook (consult--preview-post-command-hook): (quit)
-    ;; おそらくcompletion-stylesをhotfuzzに設定する方法がよくなさそう。
     (prog-mode-hook
      . (lambda ()
          (corfu-mode)
@@ -256,6 +455,8 @@
 
   (leaf company-c-headers :ensure t :disabled t)
   (leaf company-arduino :ensure t :disabled t))
+
+;;; Flycheck
 
 (leaf flycheck
   :leaf-path nil
@@ -1214,202 +1415,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
           :package image-dired
           ("f" . image-transform-reset-to-original)
           ("0" . image-mode-fit-frame))))
-
-(leaf vertico
-  :leaf-path nil
-  :preface
-  (leaf vertico
-    :doc "コンプリージョンをまとめてモダンにする"
-    :ensure t
-    :global-minor-mode t
-    :custom
-    ;; verticoの最上部と最下部のサイクルをオンにする
-    ;; consult-lineにおいて、開始位置よりも前行の検索結果は最下部となる。
-    ;; これをswiperの直感どおりに検索するためにこれをオンにする。
-    ;;
-    ;; ex. 3行目で検索開始
-    ;;   3 ghi <= start
-    ;;   4 jkl
-    ;;   1 abc
-    ;;   2 def
-    ;;
-    ;; 他解法に(consult-line-start-from-top . t)がある
-    ;; これは表示結果がつねに行番号順に並ぶ。
-    ;; 検索結果一覧の見やすさは優れる。
-    ;; しかし、検索開始時にカーソルが先頭行に固定される。
-    ;; このときどの行で検索開始してもプレビューが先頭行になる。
-    ;; これが見づらいため採用しない。
-    ;;
-    ;; ex. 3行目で検索開始
-    ;;   1 abc <= start
-    ;;   2 def
-    ;;   3 ghi
-    ;;   4 jkl
-    ;;
-    ;; なお、consultレポジトリにて何度か議論されPRもレジェクトされている。
-    ;; consult的には利便性よりも簡素さを優先する、
-    ;; またパッチされるとすればverticoへのほうが適切、のようだ。
-    ;; https://github.com/minad/consult/issues/795#issuecomment-1528030324
-    (vertico-cycle . t)
-    (vertico-count . 15))
-
-  (leaf consult
-    :doc "便利コマンドを提供する"
-    :ensure t
-    :defvar consult-ripgrep-args
-    :config
-    ;; 隠しファイル込みでのconsult-ripgrep
-    (defun consult-ripgrep-including-hidden (&optional DIR INITIAL)
-      "Search with rg for files including hidden ones in DIR with INITIAL input"
-      (interactive "P")
-      (let ((consult-ripgrep-args (concat consult-ripgrep-args " --hidden")))
-        (consult-ripgrep DIR INITIAL)))
-    ;; consult-lineにおいてC-sC-sで最後の検索を再検索
-    ;; isearchやswiperでの手癖に対応する
-    ;;   https://github.com/minad/consult/wiki#add-command-local-keybinding
-    (defvar my/consult-line-map
-      (let ((map (make-sparse-keymap)))
-        (bind-key "C-s" #'previous-history-element map)
-        map))
-    (eval-when-compile (require 'consult))
-    (consult-customize consult-line :keymap my/consult-line-map)
-    :bind ("C-s" . consult-line)
-    :bind*
-    ("C-M-s" . consult-line-multi)
-    ("M-s f" . consult-ripgrep)
-    ("M-s t" . consult-fd)
-    ("M-s g" . consult-git-grep)
-    ("M-s v" . consult-ripgrep-including-hidden)
-    ("C-c C-s" . cunsult-ripgrep)
-    ("C-x b" . consult-buffer)
-    ("C-x f" . consult-recent-file)
-    ("M-g M-g" . consult-goto-line)
-    ("C-M-y" . consult-yank-pop)
-    ("C-." . consult-imenu)
-    ("C-c C-." . consult-outline)
-    ("M-r" . consult-complex-command)
-    ("C-c g" . consult-git-grep)
-    ("C-c C-SPC" . consult-mark))
-
-  (leaf migemo
-    :req "cmigemoをいれておく"
-    :url "https://github.com/koron/cmigemo"
-    :ensure t
-    :defun migemo-init
-    :if (executable-find "cmigemo")
-    :after consult
-    :require t
-    :custom
-    (migemo-user-dictionary . nil)
-    (migemo-regex-dictionary . nil)
-    (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
-    :defer-config (migemo-init))
-
-  (leaf orderless
-    :doc "保管候補を順番関係なし、空白区切りで複数検索可能にする"
-    :doc "migemo化の参考"
-    :doc "  https://nyoho.jp/diary/?date=20210615"
-    :doc "orderlessのドキュメント"
-    :doc "  https://github.com/oantolin/orderless#defining-custom-orderless-styles"
-    :defun (migemo-get-pattern . migemo)
-    :ensure t
-    :config
-    (defun orderless-migemo (component)
-      (let ((pattern (migemo-get-pattern component)))
-        (condition-case nil
-            (progn (string-match-p pattern "") pattern)
-          (invalid-regexp nil))))
-    (eval-when-compile (require 'orderless))
-    (orderless-define-completion-style orderless+migemo
-      (orderless-matching-styles
-       '(orderless-literal orderless-regexp orderless-migemo)))
-    :custom
-    (completion-styles . '(orderless))
-    ;; カテゴリによってcompletion-stylesを変更する
-    ;; 利用できるcategoryはEmacs28移行で定義されている
-    ;; consult.el内を:categoryタグで検索するとよい
-    (completion-category-overrides
-     . '((file (styles orderless+migemo partial-completion))
-         (buffer (styles orderless+migemo))
-         (unicode-name (styles orderless+migemo))
-         (kill-ring (styles orderless+migemo))
-         ;; consult with migemo
-         (consult-location (styles orderless+migemo)) ; consult-line
-         (consult-multi (styles orderless+migemo))    ; consult-buffer
-         )))
-
-  (leaf marginalia
-    :doc "候補リストを彩る"
-    :ensure t
-    :global-minor-mode t)
-
-  (leaf nerd-icons-completion
-    :ensure t
-    :doc "コンプリージョンリストにアイコンをつける"
-    :global-minor-mode t
-    :hook (marginalia-mode-hook . nerd-icons-completion-marginalia-setup))
-
-  (leaf embark
-    :ensure t
-    :defvar embark-indicators
-    :defer-config
-    (autoload 'which-key--hide-popup-ignore-command "which-key")
-    (autoload 'which-key--show-keymap "which-key")
-    :custom (embark-help-key . "?")
-    :bind* ("M-C-x" . embark-bindings)
-    :bind ("<mouse-3>" . embark-act))
-
-  (leaf embark-consult
-    :ensure t
-    :hook (embark-collect-mode . consult-preview-at-point-mode))
-
-  (leaf embark-which-key
-    :doc "embark wikiより"
-    :doc "embarkのコンプリージョンリストをwhich-keyでだす"
-    :doc "https://github.com/oantolin/embark/wiki/Additional-Configuration#use-which-key-like-a-key-menu-prompt"
-    :leaf-path nil
-    :defun
-    embark-which-key-indicator
-    (embark--truncate-target . embark)
-    (which-key--hide-popup-ignore-command . which-key)
-    (which-key--show-keymap . which-key)
-    :after embark which-key
-    :init
-    (defun embark-which-key-indicator ()
-      "An embark indicator that displays keymaps using which-key.
-The which-key help message will show the type and value of the
-current target followed by an ellipsis if there are further
-targets."
-      (lambda (&optional keymap targets prefix)
-        (if (null keymap)
-            (which-key--hide-popup-ignore-command)
-          (which-key--show-keymap
-           (if (eq (plist-get (car targets) :type) 'embark-become)
-               "Become"
-             (format "Act on %s '%s'%s"
-                     (plist-get (car targets) :type)
-                     (embark--truncate-target (plist-get (car targets) :target))
-                     (if (cdr targets) "…" "")))
-           (if prefix
-               (pcase (lookup-key keymap prefix 'accept-default)
-                 ((and (pred keymapp) km) km)
-                 (_ (key-binding prefix 'accept-default)))
-             keymap)
-           nil nil t (lambda (binding)
-                       (not (string-suffix-p "-argument" (cdr binding))))))))
-    (defun embark-hide-which-key-indicator (fn &rest args)
-      "Hide the which-key indicator when using the completing-read."
-      (which-key--hide-popup-ignore-command)
-      (let ((embark-indicators
-             (remq #'embark-which-key-indicator embark-indicators)))
-        (apply fn args)))
-    :advice
-    (:around embark-completing-read-prompter embark-hide-which-key-indicator)
-    :custom
-    (embark-indicators
-     . '(embark-which-key-indicator
-         embark-highlight-indicator
-         embark-isearch-highlight-indicator))))
 
 (leaf helpful :ensure t
   :bind* ("<f1> k" . helpful-key)
