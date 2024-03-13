@@ -71,6 +71,7 @@
     (corfu-preview-current . nil)
     (corfu-auto-prefix . 2)
     (corfu-popupinfo-delay . '(0.3 . 0.3))
+    (corfu-popupinfo-max-height . 30)
     :hook
     ;; corfuではhotfuzzでフィルター/ソートする
     (corfu-mode-hook
