@@ -96,7 +96,7 @@
          (corfu-history-mode)))
     :bind (:corfu-map
            ("C-f" . corfu-insert)
-           ("C-d" . corfu-info-documentation)
+           ("C-c C-d" . corfu-info-documentation)
            ("<tab>" . corfu-next)
            ("<backtab>" . corfu-previous)
            ("RET" . nil)
