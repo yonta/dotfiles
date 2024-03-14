@@ -887,19 +887,18 @@ targets."
     (sp-local-pair 'web-mode "<%" "%>"
                    :post-handlers '(("|| " "SPC") (" || " "=")))
     (unbind-key "C-c C-f" web-mode-map)
-    (defun my/company-web-mode-init ()
+    (defun my/web-mode-init ()
       "Set company backends for completion"
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
-                    ;; company-mlton系だけcase sensitiveになる
                     (cape-company-to-capf #'company-web-html)
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-bootstrap-icons)
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
                    #'cape-file)))
-    :hook (web-mode-hook . my/company-web-mode-init))
+    :hook (web-mode-hook . my/web-mode-init))
 
   (leaf impatient-mode :ensure t
     :doc "HTMLのライブプレビューモード")
@@ -928,18 +927,17 @@ targets."
     :custom
     (css-indent-offset . 2)
     :config
-    (defun my/company-web-mode-init ()
+    (defun my/css-mode-init ()
       "Set company backends for completion"
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
-                    ;; company-mlton系だけcase sensitiveになる
                     (cape-company-to-capf #'company-css)
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
                    #'cape-file)))
-    :hook (css-base-mode-hook . my/company-web-mode-init))
+    :hook (css-base-mode-hook . my/css-mode-init))
 
   (leaf scss-mode
     :config
