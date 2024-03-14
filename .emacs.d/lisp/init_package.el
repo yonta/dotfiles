@@ -1340,16 +1340,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 (leaf shell
   :leaf-path nil
   :preface
-  (leaf company-shell
-    :disabled t
-    :ensure t
-    :after sh-mode
-    :config
-    (add-to-list 'company-backends
-                 '(company-shell
-                   company-shell-env
-                   :with company-dabbrev-code company-files)))
-
   (leaf ansi-color
     :doc "コマンドラインと同じ色付けを使う"
     :commands ansi-color-for-comint-mode-on
