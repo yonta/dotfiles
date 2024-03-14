@@ -271,6 +271,7 @@ targets."
     :custom
     (corfu-cycle . t)
     (corfu-auto . t)
+    (corfu-auto-delay . 0.1)
     ;; corfu中に選択候補をカーソル先に表示しない
     (corfu-preview-current . nil)
     (corfu-auto-prefix . 2)
