@@ -349,6 +349,8 @@ targets."
 
   (leaf company
     :ensure t
+    :doc "capeで既存のcompany補完も利用できるためいれておく"
+    :doc "特に、company-dabbrev-codeが便利"
     :custom
     (company-dabbrev-ignore-case . t)
     (company-dabbrev-code-ignore-case . t)
