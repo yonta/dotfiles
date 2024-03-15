@@ -1006,7 +1006,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                                 " \\*eglot doc\\*"
                                 "^ \\*Rubocop.*\\*$"
                                 ))
-  (popper-group-function . 'popper-group-by-projectile)
   ;; popper-echoでk/^コマンドを有効化
   (popper-echo-dispatch-actions . t)
   (popper-echo-dispatch-keys . '("1" "2" "3" "4" "5" "6" "7" "8" "9" "0"))
