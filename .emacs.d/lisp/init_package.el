@@ -154,9 +154,16 @@
     (eval-when-compile (require 'orderless))
     (orderless-define-completion-style orderless+migemo
       (orderless-matching-styles
-       '(orderless-literal orderless-regexp orderless-migemo)))
+       '(orderless-literal
+         orderless-regexp
+         orderless-initialism
+         orderless-migemo)))
     :custom
     (completion-styles . '(orderless))
+    (orderless-matching-styles
+     . '(orderless-literal
+         orderless-regexp
+         orderless-initialism))
     ;; カテゴリによってcompletion-stylesを変更する
     ;; 利用できるcategoryはEmacs28移行で定義されている
     ;; consult.el内を:categoryタグで検索するとよい
