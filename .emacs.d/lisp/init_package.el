@@ -1211,6 +1211,7 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                                 helpful-mode
                                 man-mode
                                 inf-ruby-mode
+                                ts-comint-mode
                                 inferior-sml-mode
                                 "\\*scratch\\*"
                                 "\\*quickrun\\*"
