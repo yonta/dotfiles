@@ -716,6 +716,35 @@ targets."
     ;; ruby symbol
     (dabbrev-abbrev-skip-leading-regexp . ":")))
 
+(leaf lsp-bridge
+  :req "pip install epc orjson sexpdata six setuptools paramiko rapidfuzz"
+  :ensure markdown-mode yasnippet
+  :diminish t
+  :el-get (lsp-bridge
+           :url "https://github.com/manateelazycat/lsp-bridge.git")
+  :defun global-lsp-bridge-mode
+  :init
+  (global-lsp-bridge-mode)
+  :custom
+  (lsp-bridge-find-def-fallback-function . #'smart-jump-go)
+  (lsp-bridge-find-ref-fallback-function . #'smart-jump-references)
+  (acm-doc-frame-max-lines . 30)
+  (acm-candidate-match-function . 'orderless-flex)
+  (acm-backend-search-file-words-enable-fuzzy-match . t)
+  :bind
+  ("M-." . lsp-bridge-find-def)
+  ("M-," . lsp-bridge-find-def-return)
+  ("M-/" . lsp-bridge-find-references)
+  (:acm-mode-map
+   :package acm
+   ("C-f" . acm-complete)
+   ("<tab>" . acm-insert-common)
+   ("<backtab>" . acm-select-prev)
+   ("C-s" . acm-filter)
+   ("C-c C-d" . acm-doc-toggle)
+   ("M-<up>" . acm-doc-scroll-up)
+   ("M-<down>" . acm-doc-scroll-down)))
+
 (defvar-local my/flycheck-local-cache nil)
 (leaf eglot
   :disabled t
