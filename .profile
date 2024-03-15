@@ -66,7 +66,16 @@ fi
 
 # Starship
 # cargo install starship
-eval "$(starship init bash)"
+if [ -n INSIDE_EMACS ] ; then # Emacs shell
+    # Emacs内ではTERM=dumpでシェルが開かれる
+    # これにより、starshipがdumpモードで起動するのを防ぐ
+    export TERM=xterm-256color
+    eval "$(starship init bash)"
+    export TERM=dump
+else
+    eval "$(starship init bash)"
+fi
+
 
 # Ruby
 if [ -d "$HOME/.rbenv" ] ; then
