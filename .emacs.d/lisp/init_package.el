@@ -878,10 +878,10 @@ targets."
     ;; npm v9より`npm bin'が削除されたため、暫定対処
     ;; https://github.com/codesuki/add-node-modules-path/issues/23
     (add-node-modules-path-command . "echo \"$(npm root)/.bin\"")
-    :hook ((js-mode-hook . add-node-modules-path)
-           (typescript-mode-hook . add-node-modules-path)
+    :hook ((js-base-mode-hook . add-node-modules-path)
+           (typescript-ts-base-mode-hook . add-node-modules-path)
            (markdown-mode-hook . add-node-modules-path)
-           (css-mode-hook . add-node-modules-path)
+           (css-base-mode-hook . add-node-modules-path)
            (web-mode-hook . add-node-modules-path)))
 
   (leaf json-mode :ensure t))
@@ -893,7 +893,7 @@ targets."
     :req "npmでtypescript-language-serverとtypescriptを入れておく"
     :req "npm install -g typescript-language-server typescript"
     :defvar flycheck-check-syntax-automatically
-    :hook (typescript-mode-hook
+    :hook (typescript-ts-base-mode-hook
            . (lambda ()
                (setq-local flycheck-check-syntax-automatically
                            '(save mode-enabled))))
@@ -902,15 +902,15 @@ targets."
 
   (leaf prettier-js :ensure t
     :diminish prettier-js-mode
-    :hook ((js-mode-hook . prettier-js-mode)
-           (typescript-mode-hook . prettier-js-mode)))
+    :hook ((js-base-mode-hook . prettier-js-mode)
+           (typescript-ts-base-mode-hook . prettier-js-mode)))
 
   (leaf ts-comint :ensure t
     :if (executable-find "ts-node")
     :custom
     (ts-comint-program-command . "ts-node")
-    :bind (:typescript-mode-map
-           :package typescript-mode
+    :bind (:typescript-ts-base-mode-map
+           :package typescript-ts-mode
            ("C-c C-r" . ts-send-region)
            ("C-c C-p" . run-ts))))
 
@@ -984,12 +984,12 @@ targets."
     (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
     (sp-local-pair 'tuareg-mode "'" nil :actions nil)
     ;; /*の後をいい感じにする
-    (sp-with-modes '(js-mode typescript-mode)
+    (sp-with-modes '(js-base-mode typescript-ts-base-mode)
       (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
                                                 ("* [i]||\n[i]" "RET")))) ;bug?
     ;; ｛の後にEnterすると｝の前に改行をつける
     (sp-with-modes
-        '(web-mode js-mode css-mode typescript-mode)
+        '(web-mode js-base-mode css-base-mode typescript-ts-base-mode)
       (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
   (leaf rainbow-delimiters :ensure t
@@ -1479,8 +1479,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   ;; defcustomだがデフォルト値に追加の形で書く
   (add-to-list 'aggressive-indent-excluded-modes 'web-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'dockerfile-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'js-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'typescript-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'js-base-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'typescript-ts-base-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'compilation-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'inferior-sml-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'shell-mode))
