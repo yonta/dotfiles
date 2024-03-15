@@ -693,6 +693,7 @@ targets."
 
   (leaf ruby-tools
     :ensure t
+    :diminish t
     :hook (ruby-base-mode-hook . ruby-tools-mode))
 
   (leaf seeing-is-believing
