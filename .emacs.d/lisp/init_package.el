@@ -692,12 +692,14 @@ targets."
     :hook (ruby-base-mode-hook . yard-mode))
 
   (leaf ruby-tools
+    :doc "Rubyでダブルクオート・シングルクオート・シンボルを自動切り替え"
     :ensure t
     :diminish t
     :hook (ruby-base-mode-hook . ruby-tools-mode))
 
   (leaf seeing-is-believing
     :req "gem install seeing_is_believing"
+    :doc "実行結果をコメントで表示・クリアする"
     :ensure t
     :config
     (diminish 'seeing-is-believing nil)
