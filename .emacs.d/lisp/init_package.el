@@ -296,11 +296,6 @@ targets."
          (corfu-mode)
          (corfu-popupinfo-mode)
          (corfu-history-mode)))
-    (prog-mode-hook
-     . (lambda ()
-         (corfu-mode)
-         (corfu-popupinfo-mode)
-         (corfu-history-mode)))
     :bind (:corfu-map
            ("C-f" . corfu-insert)
            ("C-c C-d" . corfu-info-documentation)
@@ -325,8 +320,8 @@ targets."
     :init
     ;; リスト先頭のほうが優先
     ;; ここでいうと下ほど優先
-    (add-to-list 'completion-at-point-functions #'cape-file)
-    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    ;; (add-to-list 'completion-at-point-functions #'cape-file)
+    ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
     ;; (add-to-list 'completion-at-point-functions #'cape-elisp-block)
     ;; (add-to-list 'completion-at-point-functions #'cape-history)
     ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
@@ -560,7 +555,8 @@ targets."
                     (cape-company-to-capf #'company-mlton-keyword)
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
-                   #'cape-file)))
+                   #'cape-file))
+      (corfu-mode))
     :hook
     (sml-mode-hook . company-mlton-basis-autodetect)
     (sml-mode-hook . my/company-mlton-init))
@@ -808,7 +804,8 @@ targets."
                     (cape-company-to-capf #'company-bootstrap-icons)
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
-                   #'cape-file)))
+                   #'cape-file))
+      (corfu-mode))
     :hook (web-mode-hook . my/web-mode-init))
 
   (leaf impatient-mode :ensure t
@@ -847,7 +844,8 @@ targets."
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
-                   #'cape-file)))
+                   #'cape-file))
+      (corfu-mode))
     :hook (css-base-mode-hook . my/css-mode-init))
 
   (leaf scss-mode
