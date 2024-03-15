@@ -46,3 +46,4 @@ flycheck_*.el
 .emacs.d/package-quickstart.el
 .emacs.d/projects
 .emacs.d/bookmarks
+.emacs.d/history

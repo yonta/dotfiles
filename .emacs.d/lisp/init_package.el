@@ -1788,4 +1788,9 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
     (native-compile-async my/comp-init-files-list 'recursively))
   :custom (native-comp-async-jobs-number . 3))
 
+(leaf savehist
+  :doc "minibufferの履歴を保存する"
+  :leaf-path nil
+  :global-minor-mode t)
+
 ;;; init_package.el ends here
