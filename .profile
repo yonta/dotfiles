@@ -66,7 +66,7 @@ fi
 
 # Starship
 # cargo install starship
-if [ -n INSIDE_EMACS ] ; then # Emacs shell
+if [ -n "$INSIDE_EMACS" ] ; then # Emacs shell
     # Emacs内ではTERM=dumpでシェルが開かれる
     # これにより、starshipがdumpモードで起動するのを防ぐ
     export TERM=xterm-256color
