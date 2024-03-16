@@ -180,6 +180,7 @@
   (leaf marginalia
     :doc "候補リストを彩る"
     :ensure t
+    :defvar marginalia-command-categories
     :global-minor-mode t
     :config
     ;; projectileにカテゴリを与えて彩る
