@@ -180,7 +180,15 @@
   (leaf marginalia
     :doc "候補リストを彩る"
     :ensure t
-    :global-minor-mode t)
+    :global-minor-mode t
+    :config
+    ;; projectileにカテゴリを与えて彩る
+    (setq marginalia-command-categories
+          (append '((projectile-switch-to-buffer . buffer)
+                    (projectile-find-file . project-file)
+                    (projectile-find-dir . project-file)
+                    (projectile-switch-project . file))
+                  marginalia-command-categories)))
 
   (leaf nerd-icons-completion
     :ensure t
