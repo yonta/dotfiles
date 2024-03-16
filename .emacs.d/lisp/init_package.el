@@ -390,6 +390,85 @@ targets."
 
   (leaf flycheck-ocaml :ensure t))
 
+;;; LSP
+
+(leaf lsp-bridge
+  :req "pip install epc orjson sexpdata six setuptools paramiko rapidfuzz"
+  :ensure markdown-mode yasnippet
+  :diminish t
+  :el-get (lsp-bridge
+           :url "https://github.com/manateelazycat/lsp-bridge.git")
+  :defun global-lsp-bridge-mode
+  :init
+  ;; lsp-bridgeではacmを使うため、prog-mode全体でのcorfuをオフ
+  (remove-hook 'prog-mode-hook 'my/corfu-mode)
+  (global-lsp-bridge-mode)
+  :custom
+  (lsp-bridge-find-def-fallback-function . #'smart-jump-go)
+  (lsp-bridge-find-ref-fallback-function . #'smart-jump-references)
+  (acm-doc-frame-max-lines . 30)
+  (acm-candidate-match-function . 'orderless-flex)
+  (acm-backend-search-file-words-enable-fuzzy-match . t)
+  :hook
+  ;; LSPを使わない言語ではcorfuを使う
+  ((sml-mode-hook web-mode-hook css-base-mode-hook) . my/corfu-mode)
+  :bind
+  ("M-." . lsp-bridge-find-def)
+  ("M-," . lsp-bridge-find-def-return)
+  ("M-/" . lsp-bridge-find-references)
+  ;; lsp-bridgeではcorfuがオンになっておらずcape-emojiが使いづらい
+  (:lsp-bridge-mode-map ("C-c i :" . isearch-emoji-by-name))
+  (:acm-mode-map
+   :package acm
+   ("C-f" . acm-complete)
+   ("<tab>" . acm-insert-common)
+   ("<backtab>" . acm-select-prev)
+   ("C-s" . acm-filter)
+   ("C-c C-d" . acm-doc-toggle)
+   ("M-<up>" . acm-doc-scroll-up)
+   ("M-<down>" . acm-doc-scroll-down)))
+
+(defvar-local my/flycheck-local-cache nil)
+(leaf eglot
+  :disabled t
+  :leaf-path nil
+  :preface
+  ;; メジャーモードによってlspの次のcheckerを切り替える
+  ;; https://github.com/flycheck/flycheck/issues/1762
+  (leaf my/flycheck
+    :leaf-autoload nil
+    :leaf-path nil
+    :preface
+    (defun my/flycheck-checker-get (fn checker property)
+      (or (alist-get property (alist-get checker my/flycheck-local-cache))
+          (funcall fn checker property)))
+    :advice (:around flycheck-checker-get my/flycheck-checker-get)
+    :hook
+    ((eglot-managed-mode-hook
+      . (lambda ()
+          (when (derived-mode-p 'ruby-base-mode)
+            (setq my/flycheck-local-cache
+                  '((eglot-check . ((next-checker . (ruby-rubocop)))))))))
+     (eglot-managed-mode-hook
+      . (lambda ()
+          (when (derived-mode-p 'js-base-mode)
+            (setq my/flycheck-local-cache
+                  '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
+     (eglot-managed-mode-hook
+      . (lambda ()
+          (when (derived-mode-p 'typescript-ts-base-mode)
+            (setq my/flycheck-local-cache
+                  '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
+     ))
+
+  (leaf eglot
+    :ensure flycheck-eglot
+    :global-minor-mode global-flycheck-eglot-mode
+    :hook ((ruby-base-mode-hook
+            js-base-mode-hook
+            typescript-ts-base-mode-hook)
+           . eglot-ensure)))
+
 ;;; MODE
 
 (leaf emacs-lisp
@@ -716,85 +795,6 @@ targets."
     (ruby-insert-encoding-magic-comment . nil)
     ;; ruby symbol
     (dabbrev-abbrev-skip-leading-regexp . ":")))
-
-;;; LSP
-
-(leaf lsp-bridge
-  :req "pip install epc orjson sexpdata six setuptools paramiko rapidfuzz"
-  :ensure markdown-mode yasnippet
-  :diminish t
-  :el-get (lsp-bridge
-           :url "https://github.com/manateelazycat/lsp-bridge.git")
-  :defun global-lsp-bridge-mode
-  :init
-  ;; lsp-bridgeではacmを使うため、prog-mode全体でのcorfuをオフ
-  (remove-hook 'prog-mode-hook 'my/corfu-mode)
-  (global-lsp-bridge-mode)
-  :custom
-  (lsp-bridge-find-def-fallback-function . #'smart-jump-go)
-  (lsp-bridge-find-ref-fallback-function . #'smart-jump-references)
-  (acm-doc-frame-max-lines . 30)
-  (acm-candidate-match-function . 'orderless-flex)
-  (acm-backend-search-file-words-enable-fuzzy-match . t)
-  :hook
-  ;; LSPを使わない言語ではcorfuを使う
-  ((sml-mode-hook web-mode-hook css-base-mode-hook) . my/corfu-mode)
-  :bind
-  ("M-." . lsp-bridge-find-def)
-  ("M-," . lsp-bridge-find-def-return)
-  ("M-/" . lsp-bridge-find-references)
-  ;; lsp-bridgeではcorfuがオンになっておらずcape-emojiが使いづらい
-  (:lsp-bridge-mode-map ("C-c i :" . isearch-emoji-by-name))
-  (:acm-mode-map
-   :package acm
-   ("C-f" . acm-complete)
-   ("<tab>" . acm-insert-common)
-   ("<backtab>" . acm-select-prev)
-   ("C-s" . acm-filter)
-   ("C-c C-d" . acm-doc-toggle)
-   ("M-<up>" . acm-doc-scroll-up)
-   ("M-<down>" . acm-doc-scroll-down)))
-
-(defvar-local my/flycheck-local-cache nil)
-(leaf eglot
-  :disabled t
-  :leaf-path nil
-  :preface
-  ;; メジャーモードによってlspの次のcheckerを切り替える
-  ;; https://github.com/flycheck/flycheck/issues/1762
-  (leaf my/flycheck
-    :leaf-autoload nil
-    :leaf-path nil
-    :preface
-    (defun my/flycheck-checker-get (fn checker property)
-      (or (alist-get property (alist-get checker my/flycheck-local-cache))
-          (funcall fn checker property)))
-    :advice (:around flycheck-checker-get my/flycheck-checker-get)
-    :hook
-    ((eglot-managed-mode-hook
-      . (lambda ()
-          (when (derived-mode-p 'ruby-base-mode)
-            (setq my/flycheck-local-cache
-                  '((eglot-check . ((next-checker . (ruby-rubocop)))))))))
-     (eglot-managed-mode-hook
-      . (lambda ()
-          (when (derived-mode-p 'js-base-mode)
-            (setq my/flycheck-local-cache
-                  '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
-     (eglot-managed-mode-hook
-      . (lambda ()
-          (when (derived-mode-p 'typescript-ts-base-mode)
-            (setq my/flycheck-local-cache
-                  '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
-     ))
-
-  (leaf eglot
-    :ensure flycheck-eglot
-    :global-minor-mode global-flycheck-eglot-mode
-    :hook ((ruby-base-mode-hook
-            js-base-mode-hook
-            typescript-ts-base-mode-hook)
-           . eglot-ensure)))
 
 (leaf html-css
   :leaf-path nil
