@@ -105,7 +105,38 @@
         map))
     (eval-when-compile (require 'consult))
     (consult-customize consult-line :keymap my/consult-line-map)
-    :bind ("C-s" . consult-line)
+    ;; C-<left>/C-<right>でconsult対象グループを変更する
+    ;; 例えばswitch-bufferではファイル、プロジェクト、hiddenバッファと切り替わる
+    ;; https://github.com/minad/consult/wiki#cycle-through-narrowing-keys
+    (defun consult-narrow-cycle-backward ()
+      "Cycle backward through the narrowing keys."
+      (interactive)
+      (when consult--narrow-keys
+        (consult-narrow
+         (if consult--narrow
+             (let ((idx (seq-position
+                         consult--narrow-keys
+                         (assq consult--narrow consult--narrow-keys))))
+               (unless (eq idx 0)
+                 (car (nth (1- idx) consult--narrow-keys))))
+           (caar (last consult--narrow-keys))))))
+    (defun consult-narrow-cycle-forward ()
+      "Cycle forward through the narrowing keys."
+      (interactive)
+      (when consult--narrow-keys
+        (consult-narrow
+         (if consult--narrow
+             (let ((idx (seq-position
+                         consult--narrow-keys
+                         (assq consult--narrow consult--narrow-keys))))
+               (unless (eq idx (1- (length consult--narrow-keys)))
+                 (car (nth (1+ idx) consult--narrow-keys))))
+           (caar consult--narrow-keys)))))
+    :bind
+    ("C-s" . consult-line)
+    (:consult-narrow-map
+     ("M-<left>" . consult-narrow-cycle-backward)
+     ("M-<right>" . consult-narrow-cycle-forward))
     :bind*
     ("C-M-s" . consult-line-multi)
     ("M-s f" . consult-ripgrep)
