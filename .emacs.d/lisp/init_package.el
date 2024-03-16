@@ -275,6 +275,11 @@ targets."
     ;; インデント済みのときTABキーで補完開始
     ;; C-M-iが身についているからいらないかも
     (setq tab-always-indent 'complete)
+    (defun my/corfu-mode ()
+      "Turn on corfu mode."
+      (corfu-mode)
+      (corfu-popupinfo-mode)
+      (corfu-history-mode))
     :custom
     (corfu-cycle . t)
     (corfu-auto . t)
@@ -291,11 +296,8 @@ targets."
     ;; shellではすぐにcorfuしない
     ;; https://github.com/minad/corfu?tab=readme-ov-file#completing-in-the-eshell-or-shell
     ((shell-mode-hook eshell-mode-hook)
-     . (lambda ()
-         (setq-local corfu-auto nil)
-         (corfu-mode)
-         (corfu-popupinfo-mode)
-         (corfu-history-mode)))
+     . (lambda () (setq-local corfu-auto nil) (my/corfu-mode)))
+    (prog-mode-hook . my/corfu-mode)
     :bind (:corfu-map
            ("C-f" . corfu-insert)
            ("C-c C-d" . corfu-info-documentation)
@@ -555,8 +557,7 @@ targets."
                     (cape-company-to-capf #'company-mlton-keyword)
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
-                   #'cape-file))
-      (corfu-mode))
+                   #'cape-file)))
     :hook
     (sml-mode-hook . company-mlton-basis-autodetect)
     (sml-mode-hook . my/company-mlton-init))
@@ -716,6 +717,8 @@ targets."
     ;; ruby symbol
     (dabbrev-abbrev-skip-leading-regexp . ":")))
 
+;;; LSP
+
 (leaf lsp-bridge
   :req "pip install epc orjson sexpdata six setuptools paramiko rapidfuzz"
   :ensure markdown-mode yasnippet
@@ -724,6 +727,8 @@ targets."
            :url "https://github.com/manateelazycat/lsp-bridge.git")
   :defun global-lsp-bridge-mode
   :init
+  ;; lsp-bridgeではacmを使うため、prog-mode全体でのcorfuをオフ
+  (remove-hook 'prog-mode-hook 'my/corfu-mode)
   (global-lsp-bridge-mode)
   :custom
   (lsp-bridge-find-def-fallback-function . #'smart-jump-go)
@@ -731,6 +736,9 @@ targets."
   (acm-doc-frame-max-lines . 30)
   (acm-candidate-match-function . 'orderless-flex)
   (acm-backend-search-file-words-enable-fuzzy-match . t)
+  :hook
+  ;; LSPを使わない言語ではcorfuを使う
+  ((sml-mode-hook web-mode-hook css-base-mode-hook) . my/corfu-mode)
   :bind
   ("M-." . lsp-bridge-find-def)
   ("M-," . lsp-bridge-find-def-return)
@@ -833,8 +841,7 @@ targets."
                     (cape-company-to-capf #'company-bootstrap-icons)
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
-                   #'cape-file))
-      (corfu-mode))
+                   #'cape-file)))
     :hook (web-mode-hook . my/web-mode-init))
 
   (leaf impatient-mode :ensure t
@@ -873,8 +880,7 @@ targets."
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
-                   #'cape-file))
-      (corfu-mode))
+                   #'cape-file)))
     :hook (css-base-mode-hook . my/css-mode-init))
 
   (leaf scss-mode
