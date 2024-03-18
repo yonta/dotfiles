@@ -513,6 +513,7 @@ targets."
   (leaf eglot
     :ensure flycheck-eglot
     :global-minor-mode global-flycheck-eglot-mode
+    :custom (eglot-events-buffer-size . 0) ; debug出力なしでスピードアップ
     :hook ((ruby-base-mode-hook
             js-base-mode-hook
             typescript-ts-base-mode-hook)
