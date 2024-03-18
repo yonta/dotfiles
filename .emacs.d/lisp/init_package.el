@@ -1660,7 +1660,21 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
            ("C-m" . dired-single-buffer)
            ("^" . dired-single-up-directory)
            ("C-." . my-toggle-dired-listing-switches)
-           ("r" . wdired-change-to-wdired-mode))))
+           ("r" . wdired-change-to-wdired-mode)))
+
+  (leaf dired-subtree
+    :doc "diredでiを使うとサブツリー展開をする"
+    :ensure t
+    ;; nerd-iconsをうまく処理する
+    ;; https://github.com/rainstormstudio/nerd-icons-dired/issues/3#issuecomment-1663217291
+    :preface
+    (defun my/dired-subtree-reflesh-nerd-icons ()
+      (interactive)
+      (revert-buffer))
+    :advice (:after dired-subtree-toggle my/dired-subtree-reflesh-nerd-icons)
+    :bind (:dired-mode-map
+           :package dired
+           ("i" . dired-subtree-toggle))))
 
 (leaf help-mode
   ;; Alt+左右でヘルプの進む・戻るを行う、デフォルトはl/r

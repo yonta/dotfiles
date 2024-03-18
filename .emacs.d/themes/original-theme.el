@@ -187,6 +187,12 @@
    `(diff-refine-removed ((t (:background ,red2))))
    `(tab-line ((t (:background ,light1))))
    `(centaur-tabs-unselected ((t (:background ,light2))))
+   `(dired-subtree-depth-1-face ((t (:background ,light2))))
+   `(dired-subtree-depth-2-face ((t (:background ,light2))))
+   `(dired-subtree-depth-3-face ((t (:background ,light2))))
+   `(dired-subtree-depth-4-face ((t (:background ,light2))))
+   `(dired-subtree-depth-5-face ((t (:background ,light2))))
+   `(dired-subtree-depth-6-face ((t (:background ,light2))))
    ))
 
 (provide-theme 'original)
