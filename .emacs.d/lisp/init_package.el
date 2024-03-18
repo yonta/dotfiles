@@ -464,7 +464,9 @@ targets."
   ("M-," . lsp-bridge-find-def-return)
   ("M-/" . lsp-bridge-find-references)
   ;; lsp-bridgeではcorfuがオンになっておらずcape-emojiが使いづらい
-  (:lsp-bridge-mode-map ("C-c i :" . isearch-emoji-by-name))
+  (:lsp-bridge-mode-map
+   ("C-c i :" . isearch-emoji-by-name)
+   ("C-M-i" . nil))
   (:acm-mode-map
    :package acm
    ("C-f" . acm-complete)
