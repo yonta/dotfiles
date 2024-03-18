@@ -140,11 +140,10 @@
                  (car (nth (1+ idx) consult--narrow-keys))))
            (caar consult--narrow-keys)))))
     :bind
-    ("C-s" . consult-line)
     (:consult-narrow-map
      ("M-<left>" . consult-narrow-cycle-backward)
      ("M-<right>" . consult-narrow-cycle-forward))
-    :bind*
+    ("C-s" . consult-line)
     ("C-M-s" . consult-line-multi)
     ("M-s f" . consult-ripgrep)
     ("M-s t" . consult-fd)
