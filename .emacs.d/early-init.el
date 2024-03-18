@@ -5,6 +5,21 @@
 
 ;;; Code:
 
+;;; フォント
+(push '(font . "VL ゴシック-23") default-frame-alist)
+
+;;; フレーム位置、上から・左から
+(push '(top . 0) default-frame-alist)
+(push '(left . 0) default-frame-alist)
+
+;; フレームサイズ、、幅、高さ
+(push '(width . 230) default-frame-alist)
+(push '(height . 66) default-frame-alist)
+
+;; フレームの最大化
+;; (push '(fullscreen . 'maximized) default-frame-alist)
+;; (push '(fullscreen . 'fullboth) default-frame-alist)
+
 ;;; メニューバーを表示しない
 (push '(menu-bar-lines . 0) default-frame-alist)
 
