@@ -37,6 +37,13 @@
     (leaf diminish :ensure t)
     (leaf-keywords-init)))
 
+(leaf leaf
+  :bind
+  ;; MEMO: lisp-shared-mode-mapだと既存でC-cC-eに割り当てられた
+  ;;       elisp-eval-region-or-bufferを上書きできない
+  (:emacs-lisp-mode-map :package elisp-mode ("C-c C-e" . leaf-expand))
+  (:lisp-interaction-mode-map :package elisp-mode ("C-c C-e" . leaf-expand)))
+
 (leaf bind-key :ensure t :require t)
 
 (leaf util :defun call-with-region-or-line) ; dummy, init_util.el
