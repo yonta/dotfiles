@@ -24,9 +24,4 @@
 ;;; フリンジのサイズを調整する
 (fringe-mode '(15 . 10))
 
-;;; カラー絵文字を表示する
-;; ./configure --with-cairo でビルドし、NotoColorEmojiをいれると使える
-;; https://tsuu32.hatenablog.com/entry/2019/06/20/113923
-(set-fontset-font t '(#x1F000 . #x1FAFF) "Noto Color Emoji")
-
 ;;; init_custom.el ends here
