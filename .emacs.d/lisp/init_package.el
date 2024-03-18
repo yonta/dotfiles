@@ -600,33 +600,47 @@ targets."
     :mode 'python-mode)
   :bind ("C-c c" . quickrun))
 
-(leaf markdown-mode :ensure t
-  :req "aptでmarkdown、pipでgripをいれておく"
-  :if (executable-find "markdown") (executable-find "grip")
-  :defvar markdown-mode-map
-  :mode ("README\\.md\\'" . gfm-mode)
-  :defer-config
-  (unbind-key "C-c '" gfm-mode-map)
-  :bind (:gfm-mode-map ("C-c `" . markdown-edit-code-block))
+(leaf markdown
+  :leaf-path nil
+  :preface
+  (leaf edit-indirect
+    :doc "markdownでコードブロックの編集のために必要"
+    :ensure t)
 
-  :init
-  (leaf edit-indirect :ensure t
-    :doc "markdownでコードブロックの編集のために必要")
-
-  (leaf grip-mode :ensure t
-    :doc "GitHubのSettings/Developer settings/Personal access tokensでつくった"
-    :doc "空権限のtokenをcustom.elのgrip-github-passwordに書き込む"
-    :doc "gfm-modeのときにgrip-modeで起動する"
+  (leaf markdown-mode
+    :req "apt install markdown"
+    :doc "markdown用メジャーモード。GitHub flavordのgfm-modeも同梱される。"
+    :ensure t
+    :if (executable-find "markdown")
+    :defvar markdown-mode-map
+    :mode ("README\\.md\\'" . gfm-mode)
     :custom
-    (grip-github-password . ""))
+    (markdown-command . "markdown")
+    ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
+    (markdown-css-paths . '("style.css"))
+    :config
+    ;; markdown-outline-next-same-level
+    (unbind-key "C-c C-f" markdown-mode-map)
+    :hook
+    ;; lsp-bridgeがmarkdownをrequireしているためconfigの内容が起動時に実行される
+    ;; そのため重たいsmartparensはhookにいれておく
+    ((markdown-mode-hook gfm-mode-hook)
+     . (lambda () (require 'smartparens-markdown)))
+    :bind
+    ;; originalはC-c'にマッピングされているcode block編集
+    (:markdown-mode-map ("C-c `" . markdown-edit-code-block))
+    (:gfm-mode-map ("C-c `" . markdown-edit-code-block)))
 
-  :custom
-  (markdown-command . "markdown")
-  ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
-  (markdown-css-paths . '("style.css"))
-  :defer-config
-  (require 'smartparens-markdown)
-  (unbind-key "C-c C-f" markdown-mode-map))
+  (leaf grip-mode
+    :req "pip install grip"
+    :req "GitHubのSettings/Developer settings/Personal access tokensでつくった"
+    :req "空権限のtokenをcustom.elのgrip-github-passwordに書き込む"
+    :doc "GitHub flavoredなスタイルシートによるMarkdownプレビューを行う"
+    :ensure t
+    :if (executable-find "grip")
+    :custom (grip-github-password . "")
+    ;; gfm-modeのときは自動でgrip-mode
+    :hook (gfm-mode-hook . grip-mode)))
 
 (leaf csv-mode :ensure t)
 
