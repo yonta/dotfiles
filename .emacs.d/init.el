@@ -10,9 +10,44 @@
 (defconst my/saved-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
+;; 起動処理中における各パッケージロードのタイミング・依存関係を解析する
+;; コメントアウトを外してEmacsを起動するとsetup-trackerバッファに結果がでる
+;; https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4/viewer/4d0a9dde1043c6eaffad
+;;
+;; (defvar setup-tracker--level 0)
+;; (defvar setup-tracker--parents nil)
+;; (defvar setup-tracker--times nil)
+;; (when load-file-name
+;;   (push load-file-name setup-tracker--parents)
+;;   (push (current-time) setup-tracker--times)
+;;   (setq setup-tracker--level (1+ setup-tracker--level)))
+;; (add-variable-watcher
+;;  'load-file-name
+;;  (lambda (_ v &rest __)
+;;    (cond ((equal v (car setup-tracker--parents))
+;;           nil)
+;;          ((equal v (cadr setup-tracker--parents))
+;;           (setq setup-tracker--level (1- setup-tracker--level))
+;;           (let* ((now (current-time))
+;;                  (start (pop setup-tracker--times))
+;;                  (elapsed (+ (* (- (nth 1 now) (nth 1 start)) 1000)
+;;                              (/ (- (nth 2 now) (nth 2 start)) 1000))))
+;;             (with-current-buffer (get-buffer-create "*setup-tracker*")
+;;               (save-excursion
+;;                 (goto-char (point-min))
+;;                 (dotimes (_ setup-tracker--level) (insert "> "))
+;;                 (insert
+;;                  (file-name-nondirectory (pop setup-tracker--parents))
+;;                  " (" (number-to-string elapsed) " msec)\n")))))
+;;          (t
+;;           (push v setup-tracker--parents)
+;;           (push (current-time) setup-tracker--times)
+;;           (setq setup-tracker--level (1+ setup-tracker--level))))))
+
 ;;; Emacs起動時の機能読み込みをログしてsvgに吐く
 ;; コメントアウトを外し、Emacsを起動して、
 ;; `initchart-visualize-init-sequence'を実行して出力先を指定する。
+;;
 ;; (let ((default-directory  "~/.emacs.d/el-get/initchart"))
 ;;   (normal-top-level-add-to-load-path '("."))
 ;;   (normal-top-level-add-subdirs-to-load-path))
