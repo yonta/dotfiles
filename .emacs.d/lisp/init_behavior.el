@@ -13,9 +13,6 @@
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 
-;;; 画像ファイルを表示する
-(auto-image-file-mode t)
-
 ;;; grep-modeなどdefaultをjp utf-8にする
 (set-language-environment 'Japanese)
 (prefer-coding-system 'utf-8-unix)
