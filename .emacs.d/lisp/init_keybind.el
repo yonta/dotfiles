@@ -58,7 +58,7 @@
 ;; my-window-resizerをC-crにセット
 (bind-key "C-c r" #'my-window-resizer)
 
-;;; C-M-:に連番Evalを割り当て、ただしterminalならM-*
+;;; C-M-:に連番Evalを割り当て、ただしterminalならC-c M-:
 (defun my-insert-repeat-numbers ()
   "Insert ordered number with formatt.
 A default format is start with 1, end with 10, and only number string."
