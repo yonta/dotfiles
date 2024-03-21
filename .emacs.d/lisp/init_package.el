@@ -1000,6 +1000,8 @@ targets."
            ("C-c C-r" . ts-send-region)
            ("C-c C-p" . run-ts))))
 
+(leaf yaml-ts-mode :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
+
 (leaf docker
   :ensure (t
            dockerfile-mode
