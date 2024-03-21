@@ -855,11 +855,12 @@ targets."
     :req "プロジェクトルートでsolargraph bundleを実行"
     :req "プロジェクトにマジックコメントのファイルを設置"
     :url "https://solargraph.org/guides/rails"
-    :leaf-path nil
     :custom
     (ruby-insert-encoding-magic-comment . nil)
-    ;; ruby symbol
-    (dabbrev-abbrev-skip-leading-regexp . ":")))
+    :hook (ruby-base-mode-hook
+           . (lambda ()
+               ;; ruby symbol
+               (setq-local dabbrev-abbrev-skip-leading-regexp ":")))))
 
 (leaf html-css
   :leaf-path nil
