@@ -70,6 +70,6 @@
 
 ;;; package-quickstartを使う
 ;; 何らかのエラーが起きたらpackage-quickstart-refreshを実行する必要があるかも
-(setq package-quickstart t)
+;; (setq package-quickstart t)
 
 ;;; early-init.el ends here
