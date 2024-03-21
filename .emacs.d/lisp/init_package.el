@@ -1009,6 +1009,7 @@ targets."
            dockerfile-mode
            docker-compose-mode
            yaml-mode)
+  :mode ("compose\\.ya?ml\\'" . docker-compose-mode)
   :bind ("C-c C-x d" . docker))
 
 (leaf jenkinsfile-mode :ensure t)
