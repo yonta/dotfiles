@@ -560,9 +560,7 @@ targets."
     ;; 基本的にK&Rスタイルを使う
     (c-default-style . '((java-mode . "java")
                          (awk-mode . "awk")
-                         (other . "k&r")))
-    :defer-config
-    (require 'smartparens-c))
+                         (other . "k&r"))))
 
   (leaf c++-mode
     :preface
@@ -570,9 +568,7 @@ targets."
       "Setting for c++-mode."
       (setq-local flycheck-gcc-language-standard "c++11")
       (setq-local flycheck-clang-language-standard "c++11"))
-    :hook (c++-mode-hook . my-c++-mode-hook)
-    :defer-config
-    (require 'smartparens-c))
+    :hook (c++-mode-hook . my-c++-mode-hook))
 
   (leaf rainbow-mode :ensure t
     :doc "#ff0000などに色をつける"
@@ -622,11 +618,6 @@ targets."
     :config
     ;; markdown-outline-next-same-level
     (unbind-key "C-c C-f" markdown-mode-map)
-    :hook
-    ;; lsp-bridgeがmarkdownをrequireしているためconfigの内容が起動時に実行される
-    ;; そのため重たいsmartparensはhookにいれておく
-    ((markdown-mode-hook gfm-mode-hook)
-     . (lambda () (require 'smartparens-markdown)))
     :bind
     ;; originalはC-c'にマッピングされているcode block編集
     (:markdown-mode-map ("C-c `" . markdown-edit-code-block))
@@ -740,9 +731,7 @@ targets."
            ("<backtab>" . python-indent-shift-left))
     :custom
     (python-shell-interpreter . "python3")
-    (python-indent-offset . 4)
-    :defer-config
-    (require 'smartparens-python))
+    (python-indent-offset . 4))
 
   (leaf pip-requirements :ensure t)
 
@@ -895,9 +884,6 @@ targets."
     ;; https://github.com/fxbois/web-mode/issues/119a
     (web-mode-display-table . nil)
     :config
-    (require 'smartparens-html)
-    (sp-local-pair 'web-mode "<%" "%>"
-                   :post-handlers '(("|| " "SPC") (" || " "=")))
     (unbind-key "C-c C-f" web-mode-map)
     (defun my/web-mode-init ()
       "Set company backends for completion"
@@ -1067,6 +1053,17 @@ targets."
     :global-minor-mode smartparens-global-mode
     :diminish smartparens-mode
     :config
+    (with-eval-after-load 'c-ts-mode (require 'smartparens-c))
+    (with-eval-after-load 'c++-ts-mode (require 'smartparens-c))
+    (with-eval-after-load 'python-ts-mode (require 'smartparens-python))
+    (with-eval-after-load 'web-mode (require 'smartparens-html))
+    (with-eval-after-load 'ruby-ts-mode (require 'smartparens-ruby))
+    :hook
+    ;; lsp-bridgeがmarkdownをrequireしているためconfigの内容が起動時に実行される
+    ;; そのため重たいsmartparensはhookにいれておく
+    ((markdown-mode-hook gfm-mode-hook)
+     . (lambda () (require 'smartparens-markdown)))
+    :config
     ;; 一部のモードでは'での補完を行わない
     (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
     (sp-local-pair 'lisp-mode "'" nil :actions nil)
@@ -1082,6 +1079,10 @@ targets."
     (sp-with-modes '(js-base-mode typescript-ts-base-mode)
       (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
                                                 ("* [i]||\n[i]" "RET")))) ;bug?
+    ;; <%に%>を対応させる
+    (sp-with-modes '(web-mode)
+      (sp-local-pair 'web-mode "<%" "%>"
+                     :post-handlers '(("|| " "SPC") (" || " "="))))
     ;; ｛の後にEnterすると｝の前に改行をつける
     (sp-with-modes
         '(web-mode js-base-mode css-base-mode typescript-ts-base-mode)
