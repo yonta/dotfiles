@@ -92,10 +92,15 @@
     (vertico-cycle . t)
     (vertico-count . 15))
 
+  ;; なぜかconsult-narrowでエラーがでる
+  ;; なぜか:defunとrequireの2つで消せる
+  ;;   the function 'consult-narrow' might not be defined at runtime.
+  (eval-when-compile (require 'consult))
   (leaf consult
     :doc "便利コマンドを提供する"
     :ensure t
     :defvar consult-ripgrep-args
+    :defun consult-narrow
     :config
     ;; 隠しファイル込みでのconsult-ripgrep
     (defun consult-ripgrep-including-hidden (&optional DIR INITIAL)
