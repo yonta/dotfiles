@@ -33,7 +33,7 @@
 
 ;;; Code:
 (require 'dired)
-(require 'bind-key)
+(eval-when-compile (require 'bind-key))
 
 (defvar dired-sort-map (make-sparse-keymap))
 
