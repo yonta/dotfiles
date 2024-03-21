@@ -33,7 +33,7 @@
     :ensure t diminish
     :config
     (leaf el-get :ensure t
-      :custom ((el-get-git-shallow-clone . t)))
+      :custom (el-get-git-shallow-clone . t))
     (leaf diminish :ensure t)
     (leaf-keywords-init)))
 
