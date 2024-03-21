@@ -1003,6 +1003,8 @@ targets."
 (leaf yaml-ts-mode :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
 
 (leaf docker
+  :doc "TODO: yaml-modeの削除"
+  :doc "      docker-compose-modeが依存している"
   :ensure (t
            dockerfile-mode
            docker-compose-mode
