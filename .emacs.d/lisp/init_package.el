@@ -530,7 +530,9 @@ targets."
       (interactive) (call-with-region-or-line #'eval-region))
     :bind ((:lisp-mode-shared-map ("C-c C-r" . my-eval-region-or-line))))
 
-  (leaf eldoc :diminish eldoc-mode)
+  (leaf eldoc
+    :diminish eldoc-mode
+    :custom (eldoc-idle-delay . 0.3))
 
   (leaf auto-async-byte-compile :ensure t
     :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
