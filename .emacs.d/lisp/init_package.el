@@ -1007,9 +1007,7 @@ targets."
            yaml-mode)
   :bind ("C-c C-x d" . docker))
 
-(leaf jenkinsfile-mode
-  :ensure t
-  :mode "^Jenkinsfile\\'")
+(leaf jenkinsfile-mode :ensure t)
 
 (leaf haxe-mode :ensure t
   :custom
