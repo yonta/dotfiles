@@ -12,7 +12,7 @@
 (show-paren-mode t)
 
 ;;; 同じ名前のバッファをわかりやすく名前付けする
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+(setq uniquify-buffer-name-style 'forward)
 
 ;;; マウスの色を変える
 (set-mouse-color "blue")
