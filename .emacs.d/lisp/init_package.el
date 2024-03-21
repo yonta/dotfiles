@@ -989,8 +989,15 @@ targets."
 
   (leaf prettier-js :ensure t
     :diminish prettier-js-mode
-    :hook ((js-base-mode-hook . prettier-js-mode)
-           (typescript-ts-base-mode-hook . prettier-js-mode)))
+    :hook (html-mode-hook
+           css-base-mode-hook
+           scss-mode-hook
+           js-base-mode-hook
+           json-ts-mode-hook
+           typescript-ts-base-mode-hook
+           markdown-mode-hook
+           yaml-ts-mode-hook
+           . prettier-js-mode))
 
   (leaf ts-comint :ensure t
     :if (executable-find "ts-node")
