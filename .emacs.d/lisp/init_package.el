@@ -971,9 +971,7 @@ targets."
            (typescript-ts-base-mode-hook . add-node-modules-path)
            (markdown-mode-hook . add-node-modules-path)
            (css-base-mode-hook . add-node-modules-path)
-           (web-mode-hook . add-node-modules-path)))
-
-  (leaf json-mode :ensure t))
+           (web-mode-hook . add-node-modules-path))))
 
 (leaf typescript
   :leaf-path nil
