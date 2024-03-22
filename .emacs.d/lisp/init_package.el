@@ -1087,14 +1087,13 @@ targets."
     (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
     (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
     (sp-local-pair 'tuareg-mode "'" nil :actions nil)
+    ;; <%に%>を対応させる
+    (sp-local-pair
+     'web-mode "<%" "%>" :post-handlers '(("|| " "SPC") (" || " "=")))
     ;; /*の後をいい感じにする
     (sp-with-modes '(js-base-mode typescript-ts-base-mode)
       (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
                                                 ("* [i]||\n[i]" "RET")))) ;bug?
-    ;; <%に%>を対応させる
-    (sp-with-modes '(web-mode)
-      (sp-local-pair 'web-mode "<%" "%>"
-                     :post-handlers '(("|| " "SPC") (" || " "="))))
     ;; ｛の後にEnterすると｝の前に改行をつける
     (sp-with-modes
         '(web-mode js-base-mode css-base-mode typescript-ts-base-mode)
