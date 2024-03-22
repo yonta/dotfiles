@@ -1479,8 +1479,11 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
   :bind ("C-c C-/" . undo-tree-visualize))
 
 (leaf activities
+  :doc "activities-modeは自動保存を行うグローバルモード"
+  :doc "そこで、activities-resumeするまでグローバルモードを遅延する"
+  :doc "これによりactivitiesの読み込みを遅延する"
   :ensure t
-  :global-minor-mode t
+  :config (activities-mode 1) ; HACK
   :bind
   (("C-x a n" . activities-new)
    ("C-x a r" . activities-resume)
