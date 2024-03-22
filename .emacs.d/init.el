@@ -62,9 +62,6 @@
 ;;; アイドル時にGCを走らせる
 (run-with-idle-timer (eval-when-compile (* 5 60)) t #'garbage-collect)
 
-;;; .el/.elcで新しい方を読み込む
-(setq load-prefer-newer t)
-
 ;;; .elcが古ければauto-compileする
 ;; 初回起動時はインストールされてないため、次回から有効になる
 (if (package-installed-p 'auto-compile)

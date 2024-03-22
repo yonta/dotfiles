@@ -72,4 +72,7 @@
 ;; 何らかのエラーが起きたらpackage-quickstart-refreshを実行する必要があるかも
 ;; (setq package-quickstart t)
 
+;;; .el/.elcで新しい方を読み込む
+(setq load-prefer-newer t)
+
 ;;; early-init.el ends here
