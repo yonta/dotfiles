@@ -539,11 +539,15 @@ targets."
     :diminish eldoc-mode
     :custom (eldoc-idle-delay . 0.3))
 
-  (leaf auto-async-byte-compile :ensure t
+  (leaf auto-async-byte-compile
+    :ensure t
+    :doc "save時に非同期で自動コンパイルする"
     :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
 
-  (leaf auto-compile :ensure t
-    :doc "設定はinit.elに")
+  (leaf auto-compile
+    :ensure t
+    :doc "設定はearly-init.elに"
+    :doc "load時にelcが古ければ自動コンパイルする")
 
   (leaf lispxmp :ensure t
     :bind (:lisp-mode-shared-map
