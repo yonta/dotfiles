@@ -22,7 +22,7 @@
 ;; 参考： https://www.emacswiki.org/emacs/StickyWindows
 (define-minor-mode sticky-buffer-mode
   "Make the current window always display this buffer."
-  nil " [S]" nil
+  :lighter " [S]"
   (set-window-dedicated-p (selected-window) sticky-buffer-mode))
 
 (provide 'sticky-buffer)
