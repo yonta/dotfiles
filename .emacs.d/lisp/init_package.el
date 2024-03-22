@@ -1207,66 +1207,51 @@ targets."
     :ensure t
     :hook (ibuffer-mode-hook . nerd-icons-ibuffer-mode)))
 
-(leaf centaur-tabs :ensure t
-  :global-minor-mode t
+(leaf tab-line-mode
+  :global-minor-mode global-tab-line-mode
+  :defvar tab-line-tabs-buffer-list-function
   :defun
-  centaur-tabs-headline-match
-  centaur-tabs-enable-buffer-reordering
-  centaur-tabs-change-fonts
-  centaur-tabs-group-by-projectile-project
-  centaur-tabs-get-group-name
-  :defvar centaur-tabs-icon-scale-factor
-  :config
-  (setq centaur-tabs-icon-scale-factor 0.7)
-  (centaur-tabs-headline-match)
-  (centaur-tabs-enable-buffer-reordering)
-  (centaur-tabs-group-by-projectile-project)
-  (defun centaur-tabs-buffer-groups ()
-    "`centaur-tabs-buffer-groups' control buffers' group rules.
-
-Group centaur-tabs with mode if buffer is derived from `eshell-mode'
-`emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
-All buffer name start with * will group to \"Emacs\".
-All buffer name start with \" *\" will group to \"*Emacs\".
-Other buffer group by `centaur-tabs-get-group-name' with project name."
-    (list
-     (cond
-      ((string-equal "*" (substring (buffer-name) 0 1)) "Emacs")
-      ((string-equal " *" (substring (buffer-name) 0 2)) "*Emacs")
-      ((derived-mode-p 'prog-mode) "Editing")
-      ((derived-mode-p 'dired-mode) "Dired")
-      (t (centaur-tabs-get-group-name (current-buffer))))))
-  (defun centaur-tabs-hide-tab (x)
-    "Do no to show buffer X in tabs."
-    (let ((name (format "%s" x)))
-      (or
-       ;; Current window is not dedicated window.
-       (window-dedicated-p (selected-window))
-       ;; Buffer name not match below blacklist.
-       (and (string-prefix-p "*" name)
-            (not (string= "*scratch*" name)))
-       )))
+  tab-line-tab-name-truncated-buffer
+  tab-line-tabs-mode-buffers
+  my/tab-line-tabs-buffer-list
   :custom
-  ;; (centaur-tabs-style . "rounded")
-  (centaur-tabs-set-icons . t)
-  (centaur-tabs-set-close-button . nil)
-  (centaur-tabs-cycle-scope . 'tabs)
-  ;; (centaur-tabs-label-fixed-length . 10)
-  (centaur-tabs-show-count . t)
-  (centaur-tabs-show-new-tab-button . nil)
+  (tab-line-new-button-show . nil)
+  (tab-line-close-button-show . nil)
+  ;; タブ名を短く
+  (tab-line-tab-name-function . #'tab-line-tab-name-truncated-buffer)
+  ;; メジャーモードでタブをまとめる
+  (tab-line-tabs-function . #'tab-line-tabs-mode-buffers)
+  (tab-line-switch-cycling . t)
+  ;; lisp-interactionではタブを出さない
+  (tab-line-exclude-modes . '(completion-list-mode lisp-interaction-mode))
   :custom-face
-  (tab-line . '((t (:background "white"))))
-  (centaur-tabs-default . '((t (:foreground "black" :background "gray90"))))
-  (centaur-tabs-selected . '((t (:inherit region))))
-  (centaur-tabs-selected-modified . '((t (:inherit region :foreground "red"))))
-  (centaur-tabs-unselected . '((t (:inherit highlight))))
-  (centaur-tabs-unselected-modified
-   . '((t (:inherit highlight :foreground "red"))))
-  :hook
-  ;; centaur-tabsを無効とする対象をHookで指定する
-  (package-menu-mode-hook . centaur-tabs-local-mode)
-  :bind (("C-<tab>" . centaur-tabs-forward)
-         ("C-<iso-lefttab>" . centaur-tabs-backward)))
+  (tab-line . '((t (:foreground "black" :background "gray90"))))
+  (tab-line-tab-current . '((t (:inherit highlight))))
+  (tab-line-tab-modified . '((t (:foreground "red"))))
+  (tab-line-tab-inactive . '((t (:background "gray84"))))
+  :init
+  ;; scratchバッファがemacs lispタブグループを壊す
+  ;; scratchバッファをタブの対象外にする
+  (defun my/tab-line-tabs-buffer-list ()
+    "Return a list of buffers excluded Lisp Interaction mode.
+
+Because, for example, scratch buffer is matching with Lisp Interaction mode,
+and also Emacs Lisp mode.
+So this means that scratch buffer breaks Emacs Lisp mode tabs."
+    (seq-filter
+     (lambda (b) (and (buffer-live-p b)
+                      (/= (aref (buffer-name b) 0) ?\s)
+                      ;; ADDED: not lisp-interaction-mode
+                      (with-current-buffer b
+                        (not (derived-mode-p 'lisp-interaction-mode)))))
+     (seq-uniq (append (list (current-buffer))
+                       (mapcar #'car (window-prev-buffers))
+                       (buffer-list)))))
+  (setq tab-line-tabs-buffer-list-function #'my/tab-line-tabs-buffer-list)
+  :bind (("C-<tab>" . tab-line-switch-to-next-tab)
+         ("C-<iso-lefttab>" . tab-line-switch-to-prev-tab)
+         ;; ブラウザのタブ復元風ショートカット
+         ("C-S-t" . recentf-open-most-recent-file)))
 
 ;;; OTHER
 
