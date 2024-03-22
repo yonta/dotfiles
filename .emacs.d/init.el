@@ -62,14 +62,6 @@
 ;;; アイドル時にGCを走らせる
 (run-with-idle-timer (eval-when-compile (* 5 60)) t #'garbage-collect)
 
-;;; .elcが古ければauto-compileする
-;; 初回起動時はインストールされてないため、次回から有効になる
-(if (package-installed-p 'auto-compile)
-    (progn
-      (require 'auto-compile)
-      (declare-function auto-compile-on-load-mode "auto-compile")
-      (auto-compile-on-load-mode)))
-
 ;;; 自分のカスタムemacs lispのpath
 ;; 参考： https://www.emacswiki.org/emacs/LoadPath
 (let ((default-directory  "~/.emacs.d/lisp/"))
