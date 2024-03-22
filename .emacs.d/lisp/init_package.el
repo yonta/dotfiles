@@ -1270,38 +1270,15 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 
 ;;; OTHER
 
-(leaf projectile
-  :leaf-path nil
-  :init
-  (leaf projectile :ensure t
-    :global-minor-mode t
-    :diminish projectile-mode
-    :bind (:projectile-mode-map
-           ("C-c C-f" . projectile-find-file)
-           ("C-c b" . projectile-switch-to-buffer)
-           ("C-c C-x k" . projectile-kill-buffers))
-    :custom
-    (projectile-globally-ignored-directories
-     . '(".yarn" ".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg"
-         ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".pijul" ".tox" ".svn"
-         ".stack-work" ".ccls-cache" ".cache" ".clangd")))
+(leaf project
+  :doc "C-x pにコマンドがまとまっている"
+  :bind* ("C-c C-f" . project-find-file))
 
-  (leaf projectile-ripgrep :ensure t ripgrep wgrep
-    :doc "wgrepはripgrep検索結果をC-cC-pで編集可にする"
-    :bind*
-    (("M-s r" . ripgrep-regexp)
-     ("M-s e" . projectile-ripgrep))
-    :bind
-    (("C-c f" . ripgrep-regexp)
-     (:projectile-mode-map
-      :package projectile
-      ("C-c f" . projectile-ripgrep))))
-
-  (leaf projectile-rails
-    :ensure t
-    :after ruby-mode
-    :global-minor-mode projectile-rails-global-mode
-    :diminish projectile-rails-mode))
+(leaf ripgrep
+  :ensure t
+  :bind
+  ("M-s r" . ripgrep-regexp)
+  ("C-c f" . ripgrep-regexp))
 
 (leaf popper :ensure t
   :global-minor-mode t popper-echo-mode
