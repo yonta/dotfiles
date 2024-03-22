@@ -1145,9 +1145,14 @@ targets."
     :config
     (push 'sml-mode ahs-modes))
 
-  (leaf volatile-highlights :ensure t
+  (leaf volatile-highlights
+    :defvar vhl/.installed-extensions
+    :ensure t
+    :require t
     :diminish volatile-highlights-mode
     :config
+    ;; etags.elcのロードに100msecほどかかるのでオフ
+    (cl-delete 'etags vhl/.installed-extensions)
     (volatile-highlights-mode t))
 
   (leaf hl-line+
