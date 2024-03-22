@@ -144,11 +144,18 @@
                (unless (eq idx (1- (length consult--narrow-keys)))
                  (car (nth (1+ idx) consult--narrow-keys))))
            (caar consult--narrow-keys)))))
+    ;; カーソル位置のワードを検索する
+    ;; https://github.com/minad/consult/wiki#start-consult-line-search-with-symbol-at-point
+    (defun consult-line-symbol-at-point ()
+      "Search for a matching line with a symbol found near point."
+      (interactive)
+      (consult-line (thing-at-point 'symbol)))
     :bind
     (:consult-narrow-map
      ("M-<left>" . consult-narrow-cycle-backward)
      ("M-<right>" . consult-narrow-cycle-forward))
     ("C-s" . consult-line)
+    ("C-S-s" . consult-line-symbol-at-point)
     ("C-M-s" . consult-line-multi)
     ("M-s c" . consult-ripgrep)
     ("M-s f" . consult-fd)
