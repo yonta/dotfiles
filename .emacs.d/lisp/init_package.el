@@ -522,13 +522,16 @@ targets."
                      . ((next-checkers . (javascript-eslint)))))))))))
 
   (leaf eglot
-    :ensure flycheck-eglot
-    :global-minor-mode global-flycheck-eglot-mode
-    :custom (eglot-events-buffer-size . 0) ; debug出力なしでスピードアップ
-    :hook ((ruby-base-mode-hook
-            js-base-mode-hook
-            typescript-ts-base-mode-hook)
-           . eglot-ensure)))
+    ;; debug出力なしでスピードアップ
+    :custom (eglot-events-buffer-size . 0)
+    :hook
+    ((ruby-base-mode-hook js-base-mode-hook typescript-ts-base-mode-hook)
+     . eglot-ensure))
+
+  (leaf flycheck-eglot
+    :ensure t
+    :after eglot
+    :global-minor-mode global-flycheck-eglot-mode))
 
 ;;; MODE
 
