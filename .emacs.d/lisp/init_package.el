@@ -522,11 +522,24 @@ targets."
                      . ((next-checkers . (javascript-eslint)))))))))))
 
   (leaf eglot
+    :defun eglot-completion-at-point
     ;; debug出力なしでスピードアップ
     :custom (eglot-events-buffer-size . 0)
+    :config
+    (defun my/eglot-completion-at-point-with-cape ()
+      "Completion function by `eglot-completion-at-point` with cape"
+      (cape-wrap-super #'eglot-completion-at-point
+                       #'cape-file
+                       #'cape-dabbrev))
     :hook
     ((ruby-base-mode-hook js-base-mode-hook typescript-ts-base-mode-hook)
-     . eglot-ensure))
+     . eglot-ensure)
+    ;; Eglotがlocal変数でcompletion-at-point-functionsを上書きする
+    ;; capeと組み合わせを手動で設定する
+    (eglot-managed-mode-hook
+     . (lambda ()
+         (setq-local completion-at-point-functions
+                     '(my/eglot-completion-at-point-with-cape)))))
 
   (leaf flycheck-eglot
     :ensure t
