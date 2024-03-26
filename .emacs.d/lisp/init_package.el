@@ -508,7 +508,7 @@ targets."
       . (lambda ()
           (when (derived-mode-p 'ruby-base-mode)
             (setq my/flycheck-local-cache
-                  '((eglot-check . ((next-checker . (ruby-rubocop)))))))))
+                  '((eglot-check . ((next-checkers . (ruby-rubocop)))))))))
      (eglot-managed-mode-hook
       . (lambda ()
           (when (derived-mode-p 'js-base-mode)
