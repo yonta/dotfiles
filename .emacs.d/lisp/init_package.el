@@ -518,8 +518,8 @@ targets."
       . (lambda ()
           (when (derived-mode-p 'typescript-ts-base-mode)
             (setq my/flycheck-local-cache
-                  '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
-     ))
+                  '((eglot-check
+                     . ((next-checkers . (javascript-eslint)))))))))))
 
   (leaf eglot
     :ensure flycheck-eglot
