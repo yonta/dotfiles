@@ -1084,17 +1084,21 @@ targets."
     ((markdown-mode-hook gfm-mode-hook)
      . (lambda () (require 'smartparens-markdown)))
     :config
-    ;; 一部のモードでは'での補完を行わない
+    ;; Lisp系ではクオートの補完を行わない
     (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
+    (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
     (sp-local-pair 'lisp-mode "'" nil :actions nil)
     (sp-local-pair 'lisp-mode "`" nil :actions nil)
+    ;; MLのコメント補完をし、クオートの補完を行わない
     (sp-local-pair 'sml-mode "(*" "*)")
     (sp-local-pair 'sml-mode "'" nil :actions nil)
     (sp-local-pair 'sml-mode "`" nil :actions nil)
     (sp-local-pair 'inferior-sml-mode "(*" "*)")
     (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
     (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
+    (sp-local-pair 'tuareg-mode "(*" "*)")
     (sp-local-pair 'tuareg-mode "'" nil :actions nil)
+    (sp-local-pair 'tuareg-mode "`" nil :actions nil)
     ;; <%に%>を対応させる
     (sp-local-pair
      'web-mode "<%" "%>" :post-handlers '(("|| " "SPC") (" || " "=")))
