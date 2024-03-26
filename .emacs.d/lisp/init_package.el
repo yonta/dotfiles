@@ -882,7 +882,9 @@ targets."
     :hook (ruby-base-mode-hook
            . (lambda ()
                ;; ruby symbol
-               (setq-local dabbrev-abbrev-skip-leading-regexp ":")))))
+               (setq-local dabbrev-abbrev-skip-leading-regexp ":"))))
+
+  (leaf rbs-mode :ensure t))
 
 (leaf html-css
   :leaf-path nil
