@@ -648,7 +648,8 @@ targets."
     :if (executable-find "grip")
     :custom (grip-github-password . "")
     ;; gfm-modeのときは自動でgrip-mode
-    :hook (gfm-mode-hook . grip-mode)))
+    ;; :hook (gfm-mode-hook . grip-mode)
+    ))
 
 (leaf csv-mode :ensure t)
 
