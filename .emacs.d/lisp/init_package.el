@@ -1116,7 +1116,9 @@ targets."
     :ensure t
     :hook (prog-mode-hook . rainbow-delimiters-mode))
 
-  (leaf highlight-parentheses :ensure t
+  (leaf highlight-parentheses
+    :doc "カーソル位置をくくるカッコをハイライトする"
+    :ensure t
     :diminish highlight-parentheses-mode
     :hook (prog-mode-hook . highlight-parentheses-mode)))
 

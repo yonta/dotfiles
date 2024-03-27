@@ -199,6 +199,10 @@
    `(show-paren-match ((t (:foreground ,dark1 :background ,blue1))))
    `(show-paren-mismatch ((t (:foreground ,dark1 :background ,red1))))
    )
+  ;; カーソル位置ハイライトは1段階のみ、背景色blue2のみを設定
+  (customize-set-variable 'highlight-parentheses-colors nil)
+  (customize-set-variable
+   'highlight-parentheses-background-colors `(,blue2))
   )
 
 (provide-theme 'original)
