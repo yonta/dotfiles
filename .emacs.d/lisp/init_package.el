@@ -1078,46 +1078,33 @@ targets."
          (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))))
 
 (leaf parens
-  :init
-  (eval-when-compile (require 'smartparens)) ; sp-with-modesマクロの読み込み
-  (leaf smartparens :ensure t
+  :leaf-path nil
+  :preface
+  ;; sp-with-modesマクロの読み込み
+  (eval-when-compile (require 'smartparens))
+  (leaf smartparens
+    :ensure t
     :defun sp-local-pair
     :global-minor-mode smartparens-global-mode
     :diminish smartparens-mode
     :config
-    (with-eval-after-load 'c-ts-mode (require 'smartparens-c))
-    (with-eval-after-load 'c++-ts-mode (require 'smartparens-c))
-    (with-eval-after-load 'python-ts-mode (require 'smartparens-python))
-    (with-eval-after-load 'web-mode (require 'smartparens-html))
-    (with-eval-after-load 'ruby-ts-mode (require 'smartparens-ruby))
-    :hook
-    ;; lsp-bridgeがmarkdownをrequireしているためconfigの内容が起動時に実行される
-    ;; そのため重たいsmartparensはhookにいれておく
-    ((markdown-mode-hook gfm-mode-hook)
-     . (lambda () (require 'smartparens-markdown)))
-    :config
-    ;; Lisp系ではクオートの補完を行わない
-    (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
-    (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
-    (sp-local-pair 'lisp-mode "'" nil :actions nil)
-    (sp-local-pair 'lisp-mode "`" nil :actions nil)
-    ;; MLのコメント補完をし、クオートの補完を行わない
-    (sp-local-pair 'sml-mode "(*" "*)")
-    (sp-local-pair 'sml-mode "'" nil :actions nil)
-    (sp-local-pair 'sml-mode "`" nil :actions nil)
-    (sp-local-pair 'inferior-sml-mode "(*" "*)")
-    (sp-local-pair 'inferior-sml-mode "'" nil :actions nil)
-    (sp-local-pair 'inferior-sml-mode "`" nil :actions nil)
-    (sp-local-pair 'tuareg-mode "(*" "*)")
-    (sp-local-pair 'tuareg-mode "'" nil :actions nil)
-    (sp-local-pair 'tuareg-mode "`" nil :actions nil)
+    (require 'smartparens-config)
+    ;; SML
+    (sp-with-modes '(sml-mode inferior-sml-mode)
+      (sp-local-pair "'" nil :actions nil)
+      (sp-local-pair "`" nil :actions nil)
+      (sp-local-pair "sig" "end")
+      (sp-local-pair "struct" "end")
+      (sp-local-pair "(*" "*)" :post-handlers '(("|| " "SPC")
+                                                ("* [i]||\n[i]" "RET"))))
     ;; <%に%>を対応させる
-    (sp-local-pair
-     'web-mode "<%" "%>" :post-handlers '(("|| " "SPC") (" || " "=")))
+    (sp-with-modes '(web-mode)
+      (sp-local-pair
+       "<%" "%>" :post-handlers '(("|| " "SPC") (" || " "=") (" || " "#"))))
     ;; /*の後をいい感じにする
     (sp-with-modes '(js-base-mode typescript-ts-base-mode)
       (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
-                                                ("* [i]||\n[i]" "RET")))) ;bug?
+                                                ("* [i]||\n[i]" "RET"))))
     ;; ｛の後にEnterすると｝の前に改行をつける
     (sp-with-modes
         '(web-mode js-base-mode css-base-mode typescript-ts-base-mode)
