@@ -1110,26 +1110,11 @@ targets."
         '(web-mode js-base-mode css-base-mode typescript-ts-base-mode)
       (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
-  (leaf rainbow-delimiters :ensure t
-    :defvar rainbow-delimiters-max-face-count
-    :defun my-rainbow-delimiters-using-stronger-colors
-    :defer-config
-    ;; 白背景地には括弧の色をより強くする
-    ;; https://qiita.com/megane42/items/ee71f1ff8652dbf94cf7
-    (defun my-rainbow-delimiters-using-stronger-colors ()
-      "Set delimiter to more strong color for white background."
-      (if (string> (background-color-at-point) "#808080")
-          (cl-loop
-           for index from 1 to rainbow-delimiters-max-face-count do
-           (let ((face
-                  (intern (format "rainbow-delimiters-depth-%d-face" index))))
-             (cl-callf color-saturate-name (face-foreground face) 30)))))
-    (my-rainbow-delimiters-using-stronger-colors)
+  (leaf rainbow-delimiters
+    :doc "デフォルトの色合いがだいぶ淡い"
+    :doc "変更はテーマにて自分で設定する"
+    :ensure t
     :hook (prog-mode-hook . rainbow-delimiters-mode))
-
-  (leaf color :require t
-    :after rainbow-delimiters
-    :defun color-saturate-name)
 
   (leaf highlight-parentheses :ensure t
     :diminish highlight-parentheses-mode
