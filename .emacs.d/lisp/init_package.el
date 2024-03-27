@@ -805,12 +805,6 @@ targets."
 (leaf ruby
   :leaf-path nil
   :preface
-  (leaf ruby-electric
-    :ensure t
-    :doc "def/doなどに自動でendを挿入する"
-    :diminish t
-    :hook (ruby-base-mode-hook . ruby-electric-mode))
-
   (leaf inf-ruby
     :ensure t
     :hook (ruby-base-mode-hook . inf-ruby-minor-mode)
