@@ -82,6 +82,7 @@ if [ -d "$HOME/.rbenv" ] ; then
     PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
+export SOLARGRAPH_CACHE="$HOME/.cache/solargraph"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
