@@ -17,3 +17,4 @@ mklink %home%\.inputrc %repopath%\.inputrc
 mklink %home%\.screenrc %repopath%\.screenrc
 mklink %home%\.vimrc %repopath%\.vimrc
 mklink %home%\.config\starship.toml %repopath%\.config\starship.toml
+mklink %home%\.config\ripgrep.conf %repopath%\.config\ripgrep.conf

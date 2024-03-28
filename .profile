@@ -135,3 +135,6 @@ fi
 
 # fzf
 [ -f ~/.fzf.bash ]  && source ~/.fzf.bash
+
+# ripgrep
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf"
