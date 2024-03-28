@@ -1,0 +1,16 @@
+;; 変換候補の日本語設定
+(define uim-xim-use-xft-font? #t)
+(define uim-xim-xft-font-name "VL ゴシック")
+
+;; 日本語入力切り替え
+(define-key generic-on-key? '("zenkaku-hankaku"))
+(define-key generic-off-key? '("zenkaku-hankaku"))
+
+;; 変換中のショートカット
+;(define-key anthy-next-candidate-key '(" "))
+;(define-key anthy-prev-candidate-key '("<Shift> "))
+
+;; Local Variables:
+;; mode: scheme
+;; coding: euc-jp
+;; End:
