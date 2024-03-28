@@ -90,6 +90,9 @@ export NVM_DIR="$HOME/.nvm"
 # This loads nvm bash_completion
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+# ts-node
+export TS_NODE_HISTORY="$HOME/.cache/ts-node/history"
+
 # Docker
 PATH="/usr/libexec/docker/cli-plugins:$PATH"
 
