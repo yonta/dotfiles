@@ -60,8 +60,10 @@ PATH="$PATH:/mnt/c/Windows"          # for wsl deb package
 PATH="$PATH:/mnt/c/Windows/System32" # for wsl deb package
 
 # Rust and cargo
-if [ -d "$HOME/.cargo" ] ; then
-    PATH="$HOME/.cargo/bin:$PATH"
+export RUSTUP_HOME="$HOME/.local/share/rustup"
+export CARGO_HOME="$HOME/.local/share/cargo"
+if [ -d "${CARGO_HOME}" ] ; then
+    PATH="${CARGO_HOME}/bin:$PATH"
 fi
 
 # Starship
