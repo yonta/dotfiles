@@ -80,8 +80,9 @@ fi
 
 
 # Ruby
-if [ -d "$HOME/.rbenv" ] ; then
-    PATH="$HOME/.rbenv/bin:$PATH"
+export RBENV_ROOT="$HOME/.local/share/rbenv"
+if [ -d "$RBENV_ROOT" ] ; then
+    PATH="$RBENV_ROOT/bin:$PATH"
     eval "$(rbenv init -)"
 fi
 export SOLARGRAPH_CACHE="$HOME/.cache/solargraph"
