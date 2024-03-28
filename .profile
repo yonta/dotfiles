@@ -138,3 +138,6 @@ fi
 
 # ripgrep
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf"
+
+# Wakatime
+export WAKATIME_HOME="$HOME/.config/wakatime"
