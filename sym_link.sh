@@ -49,7 +49,7 @@ function nice_make_link () {
 
 # $1はcopy or force
 files=".bashrc .profile .gitconfig .gitignore_global .hgrc .hgignore_global \
-.emacs.d .inputrc .screenrc .vimrc .config/starship.toml .config/ripgrep.conf"
+.emacs.d .inputrc .vimrc .config/screenrc .config/starship.toml .config/ripgrep.conf"
 for file in ${files}
 do
     nice_make_link ${file} ${1}
