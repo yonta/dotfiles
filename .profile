@@ -152,3 +152,6 @@ export WAKATIME_HOME="$HOME/.config/wakatime"
 
 # screen
 export SCREENRC="$HOME/.config/screenrc"
+
+# PostgreSQL
+export PSQL_HISTORY="$HOME/.cache/psql/history"
