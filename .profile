@@ -156,6 +156,9 @@ if type bat > /dev/null 2>&1 ; then
     }
 fi
 
+# grip
+export GRIPHOME="${XDG_CONFIG_HOME}/grip"
+
 # fzf
 [ -f ~/.fzf.bash ]  && source ~/.fzf.bash
 
