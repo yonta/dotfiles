@@ -8,12 +8,12 @@ set home=e:\home
 set repopath=%current%
 
 mklink %home%\.profile %repopath%\.profile
+mklink %home%\.config\bash\.inputrc %repopath%\.config\bash\.inputrc
 mklink %home%\.gitconfig %repopath%\.gitconfig
 mklink %home%\.gitignore_global %repopath%\.gitignore_global
 mklink %home%\.hgrc %repopath%\.hgrc
 mklink %home%\.hgignore_global %repopath%\.hgignore_global
 mklink /D %home%\.emacs.d %repopath%\.emacs.d
-mklink %home%\.inputrc %repopath%\.inputrc
 mklink %home%\.vimrc %repopath%\.vimrc
 mklink %home%\.config/screenrc %repopath%\.config/screenrc
 mklink %home%\.config\starship.toml %repopath%\.config\starship.toml

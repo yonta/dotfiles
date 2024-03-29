@@ -17,7 +17,8 @@ export XDG_STATE_HOME="$HOME/.local/state"
 # WSLGによって設定済み
 # XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
 
-export HISTFILE="${XDG_CACHE_HOME}/bash/history"
+export HISTFILE="${XDG_CONFIG_HOME}/bash/history"
+export INPUTRC="${XDG_CONFIG_HOME}/bash/inputrc"
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
