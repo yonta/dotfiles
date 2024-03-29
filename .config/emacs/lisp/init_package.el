@@ -318,7 +318,7 @@ targets."
     :req "GitHubリポジトリをクローンする"
     :req "https://github.com/axelf4/hotfuzz"
     :req "READMEに従いhotfuzz-module.soをビルドする"
-    :req "hotfuzz-module.soを.emacs.d/lispに配置する")
+    :req "hotfuzz-module.soを.config/emacs/lispに配置する")
 
   ;; BUG?: consult-lineで2キーを同時押しするとバグが起きる
   ;; 具体的には、consult-lineで検索時に下記エラーがでて、
@@ -713,7 +713,7 @@ targets."
     (company-mlton-modes . '(sml-mode inferior-sml-mode))
     ;; MLtonのbasisを除き、SMLのbasisを使う
     (company-mlton-basis-file
-     . "~/.emacs.d/el-get/company-mlton/sml-basis-lib.basis")
+     . "~/.config/emacs/el-get/company-mlton/sml-basis-lib.basis")
     :config
     (defun my/company-mlton-init ()
       "Set company backends for completion"
@@ -781,8 +781,8 @@ targets."
   ;;   virtualenv -p python3 .python-environment/python3-default
   ;; その後、初回起動時にjedi:install-serverする
   ;; 必要に応じて補完したいライブラリを、activateしてpip installする
-  ;;   source ~/.emacs.d/.python-environments/python3-default/bin/activate
-  ;;   pip install -r ~/.emacs.d/requirements.txt
+  ;;   source ~/.config/emacs/.python-environments/python3-default/bin/activate
+  ;;   pip install -r ~/.config/emacs/requirements.txt
 
   (leaf py-autopep8 :ensure t
     :req "pipでautopep8をいれておく"
@@ -1513,8 +1513,11 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     :custom
     (mozc-candidate-style . 'posframe)))
 
-(leaf keyfreq :ensure t
-  :global-minor-mode t keyfreq-autosave-mode)
+(leaf keyfreq
+  :ensure t
+  :global-minor-mode t keyfreq-autosave-mode
+  :custom (keyfreq-file . "~/.config/emacs/keyfreq")
+  )
 
 (leaf editorconfig :ensure t
   :doc "projectの.editorconfigファイルを読み込む"
@@ -1722,7 +1725,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
     (goto-char (point-min))
     (message "done."))
   :config
-  (setq auto-insert-directory "~/.emacs.d/autoinsert/")
+  (setq auto-insert-directory "~/.config/emacs/autoinsert/")
   (setq auto-insert-alist
         (nconc
          '(("Test\\.\\(cpp\\|cc\\|cxx\\)$" .
@@ -1863,14 +1866,16 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :if (native-comp-available-p)
   :preface
   (defvar my/comp-init-files-list
-    '("~/.emacs.d/init.el" "~/.emacs.d/early-init.el" "~/.emacs.d/lisp"))
+    '("~/.config/emacs/init.el"
+      "~/.config/emacs/early-init.el"
+      "~/.config/emacs/lisp"))
   (defun my/comp-all-files ()
     "Compile configuration files with native compilation."
     (interactive)
     (native-compile-async
      (append
       ;; directories
-      '("~/.emacs.d/lisp" "~/.emacs.d/el-get" "~/.emacs.d/elpa")
+      '("~/.config/emacs/lisp" "~/.config/emacs/el-get" "~/.config/emacs/elpa")
       my/comp-init-files-list)
      'recursively))
   (defun my/comp-init-files ()

@@ -13,7 +13,7 @@ mklink %home%\.config\git\config %repopath%\.config\git\config
 mklink %home%\.config\git\ignore %repopath%\.config\git\ignore
 mklink %home%\.config\hg\hgrc %repopath%\.config\hg\hgrc
 mklink %home%\.config\hg\ignore %repopath%\.config\hg\ignore
-mklink /D %home%\.emacs.d %repopath%\.emacs.d
+mklink /D %home%\.config\emacs %repopath%\.config\emacs
 mklink %home%\.vimrc %repopath%\.vimrc
 mklink %home%\.config\screenrc %repopath%\.config\screenrc
 mklink %home%\.config\starship.toml %repopath%\.config\starship.toml

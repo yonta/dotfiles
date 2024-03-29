@@ -18,7 +18,7 @@
 (setq-default line-spacing 0)
 
 ;;; カラーテーマの設定
-(setq custom-theme-directory "~/.emacs.d/themes")
+(setq custom-theme-directory "~/.config/emacs/themes")
 (if window-system (load-theme 'original t))
 
 ;;; フリンジのサイズを調整する

@@ -48,7 +48,7 @@
 ;; コメントアウトを外し、Emacsを起動して、
 ;; `initchart-visualize-init-sequence'を実行して出力先を指定する。
 ;;
-;; (let ((default-directory  "~/.emacs.d/el-get/initchart"))
+;; (let ((default-directory  "~/.config/emacs/el-get/initchart"))
 ;;   (normal-top-level-add-to-load-path '("."))
 ;;   (normal-top-level-add-subdirs-to-load-path))
 ;; (require 'initchart)
@@ -64,7 +64,7 @@
 
 ;;; 自分のカスタムemacs lispのpath
 ;; 参考： https://www.emacswiki.org/emacs/LoadPath
-(let ((default-directory  "~/.emacs.d/lisp/"))
+(let ((default-directory  "~/.config/emacs/lisp/"))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 
@@ -74,7 +74,7 @@
         "init_behavior" "init_custom"))
 
 ;;; カスタム変数は別ファイルに保存する
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file "~/.config/emacs/custom.el")
 (when (file-exists-p custom-file) (load custom-file))
 
 ;;; 起動処理終了でMagic File Name機能を復元

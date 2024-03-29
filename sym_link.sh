@@ -49,8 +49,8 @@ function nice_make_link () {
 
 # $1はcopy or force
 files="\
-.bashrc .profile .config/bash/inputrc\
-.emacs.d .vimrc \
+.bashrc .profile .config/bash/inputrc .vimrc \
+.config/emacs \
 .config/git/config .config/git/ignore \
 .config/hg/hgrc .config/hg/ignore \
 .config/screenrc .config/starship.toml .config/ripgrep.conf"
