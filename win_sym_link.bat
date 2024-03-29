@@ -9,8 +9,8 @@ set repopath=%current%
 
 mklink %home%\.profile %repopath%\.profile
 mklink %home%\.config\bash\.inputrc %repopath%\.config\bash\.inputrc
-mklink %home%\.gitconfig %repopath%\.gitconfig
-mklink %home%\.gitignore_global %repopath%\.gitignore_global
+mklink %home%\.config\git\config %repopath%\.config\git\config
+mklink %home%\.config\git\ignore %repopath%\.config\git\ignore
 mklink %home%\.hgrc %repopath%\.hgrc
 mklink %home%\.hgignore_global %repopath%\.hgignore_global
 mklink /D %home%\.emacs.d %repopath%\.emacs.d
