@@ -1,7 +1,0 @@
-[submodule ".emacs.d/snippets/sml-mode"]
-	path = .config/emacs/snippets/sml-mode
-	url = git@github.com:yonta/yasnippet-sml-mode.git
-[submodule ".emacs.d/snippets/python-mode"]
-	path = .config/emacs/snippets/python-mode
-	url = git@github.com:marubu/yasnippet-numpy-style.git
-	ignore = dirty
