@@ -27,6 +27,35 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+# set Aliases
+alias ls='ls --color=auto --show-control-chars'
+alias grep='grep --color=auto'
+if type eza > /dev/null 2>&1 ; then
+    # use eza
+    alias l='eza'
+    alias la='eza --all'
+    alias ll='eza --long --classify --group --git --time-style=long-iso'
+    alias lla='ll --all'
+else
+    # use ls
+    alias l='ls'
+    alias la='ls --all'
+    alias ll='ls -l --classify --human-readable'
+    alias lla='ll --all'
+fi
+if type vim > /dev/null 2>&1 ; then
+    alias vi='vim'
+    alias lessv='/usr/share/vim/vim82/macros/less.sh'
+    alias vless='lessv'
+fi
+if type emacs > /dev/null 2>&1 ; then
+    alias spacemacs='env HOME=${HOME}/.spacemacs emacs'
+    alias emacsc='emacs -Q --batch -f batch-byte-compile'
+fi
+if type gitkraken > /dev/null 2>&1 ; then
+    alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
+fi
+
 # GPG
 export GPG_TTY=$(tty)
 
@@ -109,35 +138,6 @@ export TS_NODE_HISTORY="${XDG_CACHE_HOME}/ts-node/history"
 
 # Docker
 PATH="/usr/libexec/docker/cli-plugins:$PATH"
-
-# set Aliases
-alias ls='ls --color=auto --show-control-chars'
-alias grep='grep --color=auto'
-if type eza > /dev/null 2>&1 ; then
-    # use eza
-    alias l='eza'
-    alias la='eza --all'
-    alias ll='eza --long --classify --group --git --time-style=long-iso'
-    alias lla='ll --all'
-else
-    # use ls
-    alias l='ls'
-    alias la='ls --all'
-    alias ll='ls -l --classify --human-readable'
-    alias lla='ll --all'
-fi
-if type vim > /dev/null 2>&1 ; then
-    alias vi='vim'
-    alias lessv='/usr/share/vim/vim82/macros/less.sh'
-    alias vless='lessv'
-fi
-if type emacs > /dev/null 2>&1 ; then
-    alias spacemacs='env HOME=${HOME}/.spacemacs emacs'
-    alias emacsc='emacs -Q --batch -f batch-byte-compile'
-fi
-if type gitkraken > /dev/null 2>&1 ; then
-    alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
-fi
 
 # all pip package upgrade
 if type pip > /dev/null 2>&1 ; then
