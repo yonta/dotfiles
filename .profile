@@ -180,3 +180,6 @@ export SCREENRC="${XDG_CONFIG_HOME}/screenrc"
 
 # PostgreSQL
 export PSQL_HISTORY="${XDG_CACHE_HOME}/psql/history"
+
+# GnuPG
+export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
