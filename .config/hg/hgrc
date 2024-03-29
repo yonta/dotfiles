@@ -1,6 +1,6 @@
 [ui]
 username=SAITOU Keita <keita44.f4@gmail.com>
-ignore=~/.hgignore_global
+ignore=~/.config/hg/ignore
 merge = internal:merge
 editor = emacsclient
 

@@ -50,9 +50,9 @@ function nice_make_link () {
 # $1はcopy or force
 files="\
 .bashrc .profile .config/bash/inputrc\
-.hgrc .hgignore_global \
 .emacs.d .vimrc \
 .config/git/config .config/git/ignore \
+.config/hg/hgrc .config/hg/ignore \
 .config/screenrc .config/starship.toml .config/ripgrep.conf"
 for file in ${files}
 do
