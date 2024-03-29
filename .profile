@@ -8,7 +8,16 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-export HISTFILE="$HOME/.cache/bash/history"
+# XDG Base Directory
+# Default settings
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+# WSLGによって設定済み
+# XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+
+export HISTFILE="${XDG_CACHE_HOME}/bash/history"
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
@@ -27,7 +36,7 @@ if type vim > /dev/null 2>&1 ; then
 fi
 
 # rlwrap home
-export RLWRAP_HOME="$HOME/.cache/rlwrap"
+export RLWRAP_HOME="${XDG_CACHE_HOME}/rlwrap"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
@@ -62,8 +71,8 @@ PATH="$PATH:/mnt/c/Windows"          # for wsl deb package
 PATH="$PATH:/mnt/c/Windows/System32" # for wsl deb package
 
 # Rust and cargo
-export RUSTUP_HOME="$HOME/.local/share/rustup"
-export CARGO_HOME="$HOME/.local/share/cargo"
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 if [ -d "${CARGO_HOME}" ] ; then
     PATH="${CARGO_HOME}/bin:$PATH"
 fi
@@ -82,12 +91,12 @@ fi
 
 
 # Ruby
-export RBENV_ROOT="$HOME/.local/share/rbenv"
+export RBENV_ROOT="${XDG_DATA_HOME}/rbenv"
 if [ -d "$RBENV_ROOT" ] ; then
     PATH="$RBENV_ROOT/bin:$PATH"
     eval "$(rbenv init -)"
 fi
-export SOLARGRAPH_CACHE="$HOME/.cache/solargraph"
+export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
@@ -96,7 +105,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # ts-node
-export TS_NODE_HISTORY="$HOME/.cache/ts-node/history"
+export TS_NODE_HISTORY="${XDG_CACHE_HOME}/ts-node/history"
 
 # Docker
 PATH="/usr/libexec/docker/cli-plugins:$PATH"
@@ -145,13 +154,13 @@ fi
 [ -f ~/.fzf.bash ]  && source ~/.fzf.bash
 
 # ripgrep
-export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf"
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep.conf"
 
 # Wakatime
-export WAKATIME_HOME="$HOME/.config/wakatime"
+export WAKATIME_HOME="${XDG_CONFIG_HOME}/wakatime"
 
 # screen
-export SCREENRC="$HOME/.config/screenrc"
+export SCREENRC="${XDG_CONFIG_HOME}/screenrc"
 
 # PostgreSQL
-export PSQL_HISTORY="$HOME/.cache/psql/history"
+export PSQL_HISTORY="${XDG_CACHE_HOME}/psql/history"
