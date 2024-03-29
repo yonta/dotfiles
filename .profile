@@ -126,6 +126,7 @@ if [ -d "$RBENV_ROOT" ] ; then
     PATH="$RBENV_ROOT/bin:$PATH"
     eval "$(rbenv init -)"
 fi
+export BUNDLE_USER_HOME="${XDG_CONFIG_HOME}/bundle"
 export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 
 # nvm
