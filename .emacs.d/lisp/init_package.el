@@ -1053,9 +1053,14 @@ targets."
 
 (leaf git-modes :ensure t)
 
-(leaf wakatime-mode :ensure t
+(defvar my/wakatime-cli-path
+  (concat (getenv "XDG_CONFIG_HOME") "/wakatime/wakatime-cli-linux-amd64"))
+(leaf wakatime-mode
+  :ensure t
+  :if (executable-find my/wakatime-cli-path)
   :global-minor-mode global-wakatime-mode
-  :diminish t)
+  :diminish t
+  :custom (wakatime-cli-path . my/wakatime-cli-path))
 
 ;;; Face
 
