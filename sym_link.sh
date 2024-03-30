@@ -49,9 +49,10 @@ function nice_make_link () {
 
 # $1はcopy or force
 files="\
-.bashrc .profile .vimrc \
 .config/bash .config/emacs .config/git .config/hg \
-.config/screenrc .config/starship.toml .config/ripgrep.conf"
+.bashrc .profile .vimrc \
+.config/screenrc .config/starship.toml .config/ripgrep.conf \
+"
 for file in ${files}
 do
     nice_make_link ${file} ${1}

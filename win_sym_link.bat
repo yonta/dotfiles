@@ -9,11 +9,12 @@ set repopath=%current%
 
 rem directories
 mklink /D %home%\.config\bash %repopath%\.config\bash
+mklink /D %home%\.config\emacs %repopath%\.config\emacs
 mklink /D %home%\.config\git %repopath%\.config\git
 mklink /D %home%\.config\hg %repopath%\.config\hg
-mklink /D %home%\.config\emacs %repopath%\.config\emacs
 
 rem files
+mklink %home%\.bashrc %repopath%\.bashrc
 mklink %home%\.profile %repopath%\.profile
 mklink %home%\.vimrc %repopath%\.vimrc
 mklink %home%\.config\screenrc %repopath%\.config\screenrc
