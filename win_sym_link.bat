@@ -8,13 +8,13 @@ set home=e:\home
 set repopath=%current%
 
 rem directories
+mklink /D %home%\.config\bash %repopath%\.config\bash
 mklink /D %home%\.config\git %repopath%\.config\git
 mklink /D %home%\.config\hg %repopath%\.config\hg
 mklink /D %home%\.config\emacs %repopath%\.config\emacs
 
 rem files
 mklink %home%\.profile %repopath%\.profile
-mklink %home%\.config\bash\.inputrc %repopath%\.config\bash\.inputrc
 mklink %home%\.vimrc %repopath%\.vimrc
 mklink %home%\.config\screenrc %repopath%\.config\screenrc
 mklink %home%\.config\starship.toml %repopath%\.config\starship.toml

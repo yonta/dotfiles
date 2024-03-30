@@ -7,6 +7,9 @@ flycheck_*.el
 # hotfuzz binary
 .config/emacs/lisp/hotfuzz-module.so
 
+# Bash history
+.config/bash/history
+
 # Emacs auto generated directories
 .config/emacs/auto-save-list/
 .config/emacs/elpa/
