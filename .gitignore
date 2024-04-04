@@ -4,6 +4,9 @@
 # Flycheck temp files
 flycheck_*.el
 
+# gitk
+.config/git/gitk
+
 # hotfuzz binary
 .config/emacs/lisp/hotfuzz-module.so
 
