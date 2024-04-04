@@ -186,3 +186,6 @@ export PSQL_HISTORY="${XDG_CACHE_HOME}/psql/history"
 
 # GnuPG
 export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+
+# aptitude
+export APT_CONFIG="${XDG_CONFIG_HOME}/aptitude/config"
