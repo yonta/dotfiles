@@ -79,8 +79,9 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # OPAM configuration
-if [ -f "$HOME/.opam/opam-init/init.sh" ] ; then
-    . /home/kei/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+export OPAMROOT="${XDG_DATA_HOME}/opam"
+if [ -f "${OPAMROOT}/opam-init/init.sh" ] ; then
+    . ${OPAMROOT}/opam-init/init.sh > /dev/null 2> /dev/null || true
 fi
 
 # OchaCaml
