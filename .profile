@@ -140,6 +140,9 @@ export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
 # export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npmrc"
 export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
 
+# node
+export NODE_REPL_HISTORY="${XDG_CACHE_HOME}/node/history"
+
 # ts-node
 export TS_NODE_HISTORY="${XDG_CACHE_HOME}/ts-node/history"
 
