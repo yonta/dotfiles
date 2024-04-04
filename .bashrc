@@ -170,8 +170,11 @@ if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
         export NO_AT_BRIDGE=1
         xset -r 49              # 全角半角キーが連打されるのを防ぐ
         # fcitxが起動してなければ
-        if ! ps aux | grep "fcitx" | grep -v "grep" > /dev/null 2>&1 ; then
-            fcitx-autostart > /dev/null 2>&1
+        if ! ps aux | grep "fcitx5" | grep -v "grep" > /dev/null 2>&1 ; then
+            # ログなしで起動する
+            # 現状のWSL Ubuntuでは、waylandプラグインありで起動できない
+            # https://github.com/microsoft/wslg/issues/117
+            fcitx5 --disable=wayland --verbose '*'=0 &
         fi
         # Scale for High DPI Display
         # export GDK_SCALE=2
