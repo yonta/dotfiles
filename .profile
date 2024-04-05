@@ -135,9 +135,9 @@ export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 # nvm
 export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
 # This loads nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
 # This loads nvm bash_completion
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
 
 # npm
 # export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npmrc"
