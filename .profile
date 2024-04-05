@@ -167,8 +167,8 @@ fi
 export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 
 # fzf
-if [[ ! "$PATH" == */home/kei/git/fzf/bin* ]]; then
-    PATH="${PATH:+${PATH}:}/home/kei/git/fzf/bin"
+if [ -d "/home/kei/git/fzf" ]; then
+    PATH="$PATH:/home/kei/git/fzf/bin"
     # Auto-completion
     source "/home/kei/git/fzf/shell/completion.bash"
     # Key bindings
