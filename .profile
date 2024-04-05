@@ -110,14 +110,16 @@ fi
 
 # Starship
 # cargo install starship
-if [ -n "$INSIDE_EMACS" ] ; then # Emacs shell
-    # Emacs内ではTERM=dumpでシェルが開かれる
-    # これにより、starshipがdumpモードで起動するのを防ぐ
-    export TERM=xterm-256color
-    eval "$(starship init bash)"
-    export TERM=dump
-else
-    eval "$(starship init bash)"
+if type starship > /dev/null 2>&1 ; then
+    if [ -n "$INSIDE_EMACS" ] ; then # Emacs shell
+        # Emacs内ではTERM=dumpでシェルが開かれる
+        # これにより、starshipがdumpモードで起動するのを防ぐ
+        export TERM=xterm-256color
+        eval "$(starship init bash)"
+        export TERM=dump
+    else
+        eval "$(starship init bash)"
+    fi
 fi
 
 
