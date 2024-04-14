@@ -148,6 +148,12 @@ export NODE_REPL_HISTORY="${XDG_CACHE_HOME}/node/history"
 # ts-node
 export TS_NODE_HISTORY="${XDG_CACHE_HOME}/ts-node/history"
 
+# bun
+export BUN_INSTALL="${XDG_DATA_HOME}/bun"
+if [ -d "${BUN_INSTALL}" ] ; then
+    export PATH="${BUN_INSTALL}/bin:$PATH"
+fi
+
 # all pip package upgrade
 if type pip > /dev/null 2>&1 ; then
     alias pip-upgrade-all="pip list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip install -U"
