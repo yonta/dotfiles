@@ -1005,6 +1005,8 @@ targets."
 
   (leaf prettier-js :ensure t
     :diminish prettier-js-mode
+    ;; prettierのエラー内容をbufferに表示しない
+    :custom (prettier-js-show-errors . 'echo)
     :hook (html-mode-hook
            css-base-mode-hook
            scss-mode-hook
