@@ -160,28 +160,13 @@ fi
 # WSL1 or WSL2
 if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
        [ -z "$SSH_CLIENT" ]; then
+    # WSL2のGUIでキーボード配列がUSになる暫定対処
+    setxkbmap -layout jp -model pc105
+    export BROWSER=wslview
+
     # ディスプレイが存在しVSCode WSLじゃない
     if xrandr > /dev/null 2>&1 &&
-           echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
-        export GTK_IM_MODULE=fcitx
-        export QT_IM_MODULE=fcitx
-        export XMODIFIERS=@im=fcitx
-        export DefaultIMModule=fcitx
-        export NO_AT_BRIDGE=1
+            echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
         xset -r 49              # 全角半角キーが連打されるのを防ぐ
-        # fcitxが起動してなければ
-        if ! ps aux | grep "fcitx5" | grep -v "grep" > /dev/null 2>&1 ; then
-            # ログなしで起動する
-            # 現状のWSL Ubuntuでは、waylandプラグインありで起動できない
-            # https://github.com/microsoft/wslg/issues/117
-            fcitx5 --disable=wayland --verbose '*'=0 &
-        fi
-        # Scale for High DPI Display
-        # export GDK_SCALE=2
-        # export GDK_DPI_SCALE=2
-        # export QT_AUTO_SCREEN_SCALE_FACTOR=1
-        # WSL2のGUIでキーボード配列がUSになる暫定対処
-        setxkbmap -layout jp -model pc105
-        export BROWSER=wslview
     fi
 fi

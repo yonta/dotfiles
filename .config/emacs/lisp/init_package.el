@@ -1484,15 +1484,16 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 (leaf mozc
   :leaf-path nil
   :preface
-  (leaf mozc :ensure t
+  (leaf mozc
     :req "予め${HOME}/bin/mozc_emacs_helperを用意するか、"
     :req "aptでemacs-mozc-binを入れておく。"
     :url "https://w.atwiki.jp/ntemacs/pages/61.html"
     :url "https://github.com/smzht/mozc_emacs_helper"
+    :ensure t
     :defun mozc-session-sendkey
     :if (executable-find "mozc_emacs_helper")
     ;; mozcモードで一部キーバインドが外れるので再設定
-    :bind* ("C-\\" . mozc-mode)
+    :bind* ("<zenkaku-hankaku>" . mozc-mode)
     :bind (:mozc-mode-map
            ("C-x C-s" . save-buffer)
            ("C-x h" . mark-hole-buffer))
