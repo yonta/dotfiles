@@ -80,7 +80,7 @@
     (progn
       ;; TODO: MELPAからインストールなので、バージョンアップで壊れる
       ;;       どうする？ファイルを固定で置く？
-      (add-to-list 'load-path "~/.config/emacs/elpa/auto-compile-20240311.1746")
+      (add-to-list 'load-path "~/.config/emacs/elpa/auto-compile-20240415.1533")
       (require 'auto-compile)
       (auto-compile-on-load-mode)))
 
