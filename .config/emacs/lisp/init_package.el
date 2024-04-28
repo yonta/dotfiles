@@ -469,6 +469,7 @@ targets."
   :custom
   (lsp-bridge-find-def-fallback-function . #'smart-jump-go)
   (lsp-bridge-find-ref-fallback-function . #'smart-jump-references)
+  (lsp-bridge-enable-with-tramp . nil)
   (acm-doc-frame-max-lines . 30)
   (acm-candidate-match-function . 'orderless-flex)
   (acm-backend-search-file-words-enable-fuzzy-match . t)
