@@ -1507,10 +1507,10 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     (default-input-method . "japanese-mozc")
     (mozc-mode-string . " [も]")
     ;; WindowsのGoogle日本語入力を使う
-    :advice (:after mozc-session-execute-command
-                    (lambda (&rest args)
-                      (when (eq (nth 0 args) 'CreateSession)
-                        (mozc-session-sendkey '(Hankaku/Zenkaku)))))
+    ;; :advice (:after mozc-session-execute-command
+    ;;                 (lambda (&rest args)
+    ;;                   (when (eq (nth 0 args) 'CreateSession)
+    ;;                     (mozc-session-sendkey '(Hankaku/Zenkaku)))))
     :defer-config
     (set-language-environment "Japanese")
     (prefer-coding-system 'utf-8))
