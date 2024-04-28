@@ -178,13 +178,18 @@
     :ensure t
     :defun migemo-init
     :if (executable-find "cmigemo")
+    ;; TODO: 起動直後にfind-fileするとmigemoが読み込まれていないため
+    ;;       fileで指定しているorderless+migemoがエラーする
+    ;;       switch-bufferやconsult-line後ならmigemoが読み込まれるため大丈夫
+    ;;       :after verticoで修正可能だが、
+    ;;       migemoとその関連で総起動時間が100msほど起動時間が変わるので悩みどころ
     :after consult
     :require t
     :custom
     (migemo-user-dictionary . nil)
     (migemo-regex-dictionary . nil)
     (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
-    :defer-config (migemo-init))
+    :config (migemo-init))
 
   (leaf orderless
     :doc "保管候補を順番関係なし、空白区切りで複数検索可能にする"
