@@ -198,6 +198,8 @@
    `(rainbow-delimiters-depth-9-face ((t (:foreground ,dark-blue))))
    `(show-paren-match ((t (:foreground ,dark1 :background ,blue1))))
    `(show-paren-mismatch ((t (:foreground ,dark1 :background ,red1))))
+   '(Man-overstrike ((t (:foreground "DeepPink3" :bold t))))
+   '(Man-underline ((t (:foreground "Blue" :underline t))))
    )
   ;; カーソル位置ハイライトは1段階のみ、背景色blue2のみを設定
   (customize-set-variable 'highlight-parentheses-colors nil)
