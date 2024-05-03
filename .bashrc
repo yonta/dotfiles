@@ -56,20 +56,10 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-# git/hg ps1 function
-function show_branch {
-    if [ -n "$(__git_ps1)" ]
-    then
-        echo "$(__git_ps1)"
-    else
-        vcprompt -f "(%b%u%m)"
-    fi
-}
-
 if [ "$color_prompt" = yes ]; then
     PS1_1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h'
     OSNAME=''
-    PS1_2='\[\033[00m\]:\[\033[01;34m\]\w\[\033[35m\]$(show_branch)\[\033[00m\]\$ '
+    PS1_2='\[\033[00m\]:\[\033[01;34m\]\w\[\033[35m\]$(__git_ps1)\[\033[00m\]\$ '
     # WSLでubuntu/openSUSEの両方がある場合、OS名をいれる
     if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
            type "ubuntu.exe" > /dev/null 2>&1 &&
