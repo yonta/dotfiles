@@ -616,7 +616,8 @@ targets."
     (rainbow-html-colors . t)             ; html color listを使う
     :hook (c++-mode-hook arduino-mode-hook)))
 
-(leaf tuareg :ensure t
+(leaf tuareg :disabled t
+  :ensure t
   :doc "ocaml mode"
   :req "opam install tuareg")
 
