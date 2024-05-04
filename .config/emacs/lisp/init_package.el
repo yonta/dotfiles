@@ -95,7 +95,11 @@
   ;; なぜかconsult-narrowでエラーがでる
   ;; なぜか:defunとrequireの2つで消せる
   ;;   the function 'consult-narrow' might not be defined at runtime.
-  (eval-when-compile (require 'consult))
+  ;;
+  ;; MEMO: 初回起動時にpackageがない状況ではrequireがエラーする。
+  ;;       コンパイル警告を消すためだけなので、requireしないで回避。
+  (when (package-installed-p 'consult)
+    (eval-when-compile (require 'consult)))
   (leaf consult
     :doc "便利コマンドを提供する"
     :ensure t
@@ -191,6 +195,10 @@
     (migemo-dictionary . "/usr/local/share/migemo/utf-8/migemo-dict")
     :config (migemo-init))
 
+  ;; MEMO: 初回起動時にpackageがない状況ではrequireがエラーする。
+  ;;       マクロを使うため、強制インストールする。
+  (when (not (package-installed-p 'orderless))
+    (package-install 'orderless))
   (leaf orderless
     :doc "保管候補を順番関係なし、空白区切りで複数検索可能にする"
     :doc "migemo化の参考"
@@ -1091,6 +1099,10 @@ targets."
           . (lambda () (setq-local whitespace-line-column 120)))
          (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))))
 
+;; MEMO: 初回起動時にpackageがない状況ではrequireエラーする。
+;;       マクロが実際に必要なので、強制インストールする。
+(when (not (package-installed-p 'smartparens))
+  (package-install 'smartparens))
 (leaf parens
   :leaf-path nil
   :preface
