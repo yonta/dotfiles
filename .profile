@@ -57,6 +57,14 @@ if type gitkraken > /dev/null 2>&1 ; then
     alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
 fi
 
+# apt package bat/fd alias
+if ! type bat > /dev/null 2>&1 && dpkg -l bat > /dev/null 2>&1 ; then
+    alias bat='batcat'
+fi
+if ! type fd > /dev/null 2>&1 && dpkg -l fd-find > /dev/null 2>&1 ; then
+    alias fd='fdfind'
+fi
+
 # GPG
 export GPG_TTY=$(tty)
 
