@@ -178,12 +178,8 @@ fi
 export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 
 # fzf
-if [ -d "/home/kei/git/fzf" ]; then
-    PATH="$PATH:/home/kei/git/fzf/bin"
-    # Auto-completion
-    source "/home/kei/git/fzf/shell/completion.bash"
-    # Key bindings
-    source "/home/kei/git/fzf/shell/key-bindings.bash"
+if [ -f "${XDG_CONFIG_HOME}/fzf/fzf.bash" ]; then
+    source "${XDG_CONFIG_HOME}/fzf/fzf.bash"
 fi
 
 # ripgrep
