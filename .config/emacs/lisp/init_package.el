@@ -1294,6 +1294,13 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   ("M-s r" . ripgrep-regexp)
   ("C-c f" . ripgrep-regexp))
 
+(leaf grep-context
+  :doc "grep系コマンドにて+e/-を使って周りの行を展開する"
+  :el-get (grep-context
+           :url "https://github.com/emacs-pe/grep-context.git")
+  :hook (compilation-mode-hook . grep-context-mode)
+  :bind (:grep-context-mode-map ("e" . grep-context-mode-around-point)))
+
 (leaf popper :ensure t
   :global-minor-mode t popper-echo-mode
   :custom
