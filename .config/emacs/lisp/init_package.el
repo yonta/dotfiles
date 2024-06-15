@@ -662,12 +662,12 @@ targets."
     (markdown-command . "markdown")
     ;; style sheetは生成HTMLと同フォルダにあるstyle.cssにする
     (markdown-css-paths . '("style.css"))
-    :config
-    ;; markdown-outline-next-same-level
-    (unbind-key "C-c C-f" markdown-mode-map)
     :bind
-    ;; originalはC-c'にマッピングされているcode block編集
-    (:markdown-mode-map ("C-c `" . markdown-edit-code-block))
+    (:markdown-mode-map
+     ;; markdown-outline-next-same-level
+     ("C-c C-f" . nil)
+     ;; originalはC-c'にマッピングされているcode block編集
+     ("C-c `" . markdown-edit-code-block))
     (:gfm-mode-map ("C-c `" . markdown-edit-code-block)))
 
   (leaf grip-mode
@@ -928,7 +928,6 @@ targets."
     ;; https://github.com/fxbois/web-mode/issues/119a
     (web-mode-display-table . nil)
     :config
-    (unbind-key "C-c C-f" web-mode-map)
     (defun my/web-mode-init ()
       "Set company backends for completion"
       (setq-local completion-at-point-functions
@@ -940,7 +939,8 @@ targets."
                     (cape-company-to-capf #'company-dabbrev-code))
                    #'cape-dabbrev
                    #'cape-file)))
-    :hook (web-mode-hook . my/web-mode-init))
+    :hook (web-mode-hook . my/web-mode-init)
+    :bind (:web-mode-map ("C-c C-f" . nil)))
 
   (leaf impatient-mode :ensure t
     :doc "HTMLのライブプレビューモード")
@@ -1361,11 +1361,11 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   (leaf sh-script
     :mode (("Procfile" . sh-mode)
            ("dotenv" . sh-mode))
-    :defer-config
-    (unbind-key "C-c C-d" sh-mode-map)
     :hook (sh-mode-hook
            . (lambda () (setq-local flycheck-checker 'sh-posix-bash)))
-    :bind (:sh-mode-map ("C-c C-p" . sh-cd-here)))
+    :bind (:sh-mode-map
+           ("C-c C-d" . nil)
+           ("C-c C-p" . sh-cd-here)))
 
   (leaf shell
     :custom
@@ -1400,9 +1400,9 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
              (image-diredx-adjust-mode 1)))
   ;; lrでサムネイルが回転するのを削除
   (if (version<= "26" emacs-version) (unbind-key "r" image-map)) ; Emacs26以上
-  (unbind-key "r" image-dired-thumbnail-mode-map)
   :bind ((:image-dired-thumbnail-mode-map
           :package image-dired
+          ("r" . nil)
           ("C-n" . image-diredx-next-line)
           ("C-p" . image-diredx-previous-line)
           ("<down>" . image-diredx-next-line)
