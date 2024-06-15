@@ -1333,6 +1333,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
                                 "\\*ripgrep-search\\*"
                                 "\\*Google Translate\\*"
                                 "\\*robe-doc\\*"
+                                "\\*lsp-bridge-doc\\*"
                                 " \\*undo-tree\\*"
                                 " \\*tip\\*"
                                 " \\*eglot doc\\*"
@@ -1341,6 +1342,10 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   ;; popper-echoでk/^コマンドを有効化
   (popper-echo-dispatch-actions . t)
   (popper-echo-dispatch-keys . '("1" "2" "3" "4" "5" "6" "7" "8" "9" "0"))
+  :config
+  ;; popperの対象としつつ、フォーカスしない
+  (add-to-list 'display-buffer-alist
+               '("\\*lsp-bridge-doc\\*" (popper-display-popup-at-bottom)))
   :bind
   ("C-^" . popper-toggle-type)
   :bind*
