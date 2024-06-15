@@ -465,6 +465,7 @@ targets."
 
 (leaf lsp-bridge
   :req "pip install epc orjson sexpdata six setuptools paramiko rapidfuzz"
+  :defun lsp-bridge-show-documentation
   :ensure markdown-mode yasnippet
   :diminish t
   :el-get (lsp-bridge
@@ -474,6 +475,12 @@ targets."
   ;; lsp-bridgeではacmを使うため、prog-mode全体でのcorfuをオフ
   (remove-hook 'prog-mode-hook 'my/corfu-mode)
   (global-lsp-bridge-mode)
+  (defun my/helpful-at-point ()
+    "Show documentation lsp-bridge or lisp help."
+    (interactive)
+    (if (derived-mode-p 'emacs-lisp-mode)
+        (helpful-at-point)
+      (lsp-bridge-show-documentation)))
   :custom
   (lsp-bridge-find-def-fallback-function . #'smart-jump-go)
   (lsp-bridge-find-ref-fallback-function . #'smart-jump-references)
@@ -491,7 +498,8 @@ targets."
   ;; lsp-bridgeではcorfuがオンになっておらずcape-emojiが使いづらい
   (:lsp-bridge-mode-map
    ("C-c i :" . isearch-emoji-by-name)
-   ("C-M-i" . nil))
+   ("C-M-i" . nil)
+   ("C-c C-d" . my/helpful-at-point))
   (:acm-mode-map
    :package acm
    ("C-f" . acm-complete)
