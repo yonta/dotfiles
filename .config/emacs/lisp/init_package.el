@@ -1532,7 +1532,19 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     :defun mozc-session-sendkey
     :if (executable-find "mozc_emacs_helper")
     ;; mozcモードで一部キーバインドが外れるので再設定
-    :bind* ("<zenkaku-hankaku>" . mozc-mode)
+    :init
+    (defun my/mozc-mode-enable ()
+      "Enable mozc mode"
+      (interactive)
+      (mozc-mode 1))
+    (defun my/mozc-mode-disable ()
+      "Disable mozc mode"
+      (interactive)
+      (mozc-mode -1))
+    :bind*
+    ("<zenkaku-hankaku>" . mozc-mode)
+    ("<henkan>" . my/mozc-mode-enable)
+    ("<muhenkan>" . my/mozc-mode-disable)
     :bind (:mozc-mode-map
            ("C-x C-s" . save-buffer)
            ("C-x h" . mark-hole-buffer))
