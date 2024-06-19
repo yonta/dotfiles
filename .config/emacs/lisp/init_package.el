@@ -1189,6 +1189,7 @@ targets."
     (hl-line-when-idle-interval 4)))
 
 (leaf git-gutter
+  :disabled t
   :ensure t
   :global-minor-mode global-git-gutter-mode
   :diminish git-gutter-mode
@@ -1200,6 +1201,21 @@ targets."
   (git-gutter:modified . '((t (:background "#fad987"))))
   (git-gutter:added . '((t (:background "#95fa87"))))
   (git-gutter:deleted . '((t (:background "#fa8d87")))))
+
+(leaf diff-hl
+  :ensure t
+  :global-minor-mode global-diff-hl-mode diff-hl-margin-mode
+  :custom
+  (diff-hl-margin-symbols-alist . '((insert . " ")
+                                    (delete . " ")
+                                    (change . " ")
+                                    (unknown . "?")
+                                    (ignored . "i")))
+  :custom-face
+  (diff-hl-change . '((t (:background "#fad987"))))
+  (diff-hl-insert . '((t (:background "#95fa87"))))
+  (diff-hl-delete . '((t (:background "#fa8d87"))))
+  :hook (dired-mode-hook . diff-hl-dired-mode))
 
 (leaf hiwin :ensure t
   :doc "アクティブかどうかでバッファーのモードラインの色を変える")
