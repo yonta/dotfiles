@@ -165,7 +165,7 @@
     ("M-s f" . consult-fd)
     ("M-s g" . consult-git-grep)
     ("M-s C" . consult-ripgrep-including-hidden)
-    ("C-c C-s" . cunsult-ripgrep)
+    ("C-c C-s" . consult-ripgrep)
     ("C-x b" . consult-buffer)
     ("C-x f" . consult-recent-file)
     ("M-g M-g" . consult-goto-line)
