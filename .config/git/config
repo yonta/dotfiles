@@ -52,7 +52,7 @@
 [commit]
 	verbose = true
 [diff]
-	algorithm = histogram
+	algorithm = patience
 	submodule = log
 	context = 7
 [pull]
