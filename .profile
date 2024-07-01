@@ -28,17 +28,25 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+# Rust and cargo
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+if [ -d "${CARGO_HOME}" ] ; then
+    PATH="${CARGO_HOME}/bin:$PATH"
+fi
+
 # set Aliases
-alias ls='ls --color=auto --show-control-chars'
 alias grep='grep --color=auto'
 if type eza > /dev/null 2>&1 ; then
     # use eza
+    alias ls='eza'
     alias l='eza'
     alias la='eza --all'
     alias ll='eza --long --classify --group --git --time-style=long-iso'
     alias lla='ll --all'
 else
     # use ls
+    alias ls='ls --color=auto --show-control-chars'
     alias l='ls'
     alias la='ls --all'
     alias ll='ls -l --classify --human-readable'
@@ -108,13 +116,6 @@ if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
 fi
 PATH="$PATH:/mnt/c/Windows"          # for wsl deb package
 PATH="$PATH:/mnt/c/Windows/System32" # for wsl deb package
-
-# Rust and cargo
-export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
-export CARGO_HOME="${XDG_DATA_HOME}/cargo"
-if [ -d "${CARGO_HOME}" ] ; then
-    PATH="${CARGO_HOME}/bin:$PATH"
-fi
 
 # Starship
 # cargo install starship
