@@ -566,7 +566,13 @@ targets."
   (leaf flycheck-eglot
     :ensure t
     :after eglot
-    :global-minor-mode global-flycheck-eglot-mode))
+    :global-minor-mode global-flycheck-eglot-mode)
+
+  (leaf eglot-booster
+    :req "cargoやgithubからemacs-lsp-boosterを入れておく"
+    :el-get (eglot-booster
+             :url "https://github.com/jdtsmith/eglot-booster.git")
+    :config (eglot-booster-mode)))
 
 ;;; MODE
 
