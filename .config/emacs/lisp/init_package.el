@@ -464,6 +464,7 @@ targets."
 ;;; LSP
 
 (leaf lsp-bridge
+  :disabled t
   :req "pip install epc orjson sexpdata six setuptools paramiko rapidfuzz"
   :defun lsp-bridge-show-documentation
   :ensure markdown-mode yasnippet
@@ -512,7 +513,6 @@ targets."
 
 (defvar-local my/flycheck-local-cache nil)
 (leaf eglot
-  :disabled t
   :leaf-path nil
   :preface
   ;; メジャーモードによってlspの次のcheckerを切り替える
