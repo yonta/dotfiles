@@ -12,6 +12,7 @@ mklink /D %home%\.config\bash %repopath%\.config\bash
 mklink /D %home%\.config\emacs %repopath%\.config\emacs
 mklink /D %home%\.config\git %repopath%\.config\git
 mklink /D %home%\.config\hg %repopath%\.config\hg
+mklink /D %home%\.config\solargraph %repopath%\.config\solargraph
 
 rem files
 mklink %home%\.bashrc %repopath%\.bashrc

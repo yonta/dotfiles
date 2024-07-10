@@ -528,11 +528,6 @@ targets."
     :hook
     ((eglot-managed-mode-hook
       . (lambda ()
-          (when (derived-mode-p 'ruby-base-mode)
-            (setq my/flycheck-local-cache
-                  '((eglot-check . ((next-checkers . (ruby-rubocop)))))))))
-     (eglot-managed-mode-hook
-      . (lambda ()
           (when (derived-mode-p 'js-base-mode)
             (setq my/flycheck-local-cache
                   '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
@@ -545,6 +540,7 @@ targets."
 
   (leaf eglot
     :defun eglot-completion-at-point
+    :defvar eglot-server-programs
     ;; debug出力なしでスピードアップ
     :custom (eglot-events-buffer-size . 0)
     :config
@@ -553,6 +549,16 @@ targets."
       (cape-wrap-super #'eglot-completion-at-point
                        #'cape-file
                        #'cape-dabbrev))
+    ;; solargraphの出力がされていない不具合に対処
+    ;; これがないと、例えばrubocopの結果がflycheckに出力されない
+    ;; https://github.com/castwide/solargraph/issues/709
+    ;;
+    ;; eglotデフォルトではautoportを使っているが、stdioに変更
+    ;; これによりeglot-boosterが動くようになる
+    (add-to-list 'eglot-server-programs
+                 '((ruby-mode ruby-ts-mode)
+                   . ("solargraph" "stdio" :initializationOptions
+                      (:diagnostics t))))
     :hook
     ((ruby-base-mode-hook js-base-mode-hook typescript-ts-base-mode-hook)
      . eglot-ensure)
