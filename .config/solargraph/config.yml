@@ -2,7 +2,6 @@
 include:
   - "**/*.rb"
 exclude:
-  # - spec/**/*
   - test/**/*
   - vendor/**/*
   - ".bundle/**/*"
@@ -24,4 +23,5 @@ require_paths: []
 plugins:
   - solargraph-rails
   - solargraph-rails-patch-for-rails71
+  - solargraph-rspec
 max_files: 5000
