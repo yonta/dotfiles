@@ -576,8 +576,12 @@ targets."
 
   (leaf eglot-booster
     :req "cargoやgithubからemacs-lsp-boosterを入れておく"
+    :req "git clone --depth 1 https://github.com/blahgeek/emacs-lsp-booster.git"
+    :req "cargo build --release"
+    :req "cp target/release/emacs-lsp-booster ~/bin/"
     :el-get (eglot-booster
              :url "https://github.com/jdtsmith/eglot-booster.git")
+    :if (executable-find "emacs-lsp-booster")
     :config (eglot-booster-mode)))
 
 ;;; MODE
