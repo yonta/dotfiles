@@ -903,13 +903,11 @@ targets."
 
   (leaf ruby-mode
     :req "gemでsolargraphを入れる"
-    :req "gem install solargraph"
-    :req "solargraph download-core"
+    :req "gem install --version 0.49.0 solargraph"
+    :req "gem install solargraph-rails solargraph-rails-patch-for-rails71 solargraph-rspec"
     :req "yard gems"
     :doc "yard config --gem-install-yriでgem install時に自動生成する設定が便利"
     :req "プロジェクトルートでsolargraph bundleを実行"
-    :req "プロジェクトにマジックコメントのファイルを設置"
-    :url "https://solargraph.org/guides/rails"
     :custom
     (ruby-insert-encoding-magic-comment . nil)
     :hook (ruby-base-mode-hook
