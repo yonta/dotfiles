@@ -1551,6 +1551,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   (leaf github-modern-theme :ensure t :disabled t))
 
 (leaf mozc
+  :if (getenv "WSLENV")
   :leaf-path nil
   :preface
   (leaf mozc
@@ -1917,9 +1918,10 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :url "https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4"
   :leaf-path nil
   :emacs>= 29
-  :if (and (executable-find "wl-copy") (executable-find "wl-paste"))
+  :if (and (getenv "WSLENV")
+           (executable-find "wl-copy") (executable-find "wl-paste"))
   :defvar wl-copy-process
-  :preface
+  :init
   (setq wl-copy-process nil)
   (defun wl-copy (text)
     (setq wl-copy-process (make-process :name "wl-copy"
