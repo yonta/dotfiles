@@ -1156,7 +1156,11 @@ targets."
     ;; ｛の後にEnterすると｝の前に改行をつける
     (sp-with-modes
         '(web-mode js-base-mode css-base-mode typescript-ts-base-mode)
-      (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+      (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET"))))
+    ;; $で{}を補完する
+    (sp-with-modes '(sh-mode bash-ts-mode)
+      (sp-local-pair "$" "" :post-handlers '(:add "{|}")))
+    )
 
   (leaf rainbow-delimiters
     :doc "デフォルトの色合いがだいぶ淡い"
