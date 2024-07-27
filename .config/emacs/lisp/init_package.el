@@ -865,6 +865,7 @@ targets."
     :if (executable-find "rubocop"))
 
   (leaf rufo
+    :disabled t
     :req "gemでrufoを入れておく"
     :req "gem install rufo"
     :doc "TODO: rufoやめてrubocop -aに移行したい"
@@ -874,8 +875,8 @@ targets."
     :hook (ruby-base-mode-hook . rufo-minor-mode))
 
   (leaf rubocopfmt
+    ;; :disabled t
     :ensure t
-    :disabled t
     :if (executable-find "rubocop")
     :diminish rubocopfmt-mode
     :hook (ruby-base-mode-hook . rubocopfmt-mode))
