@@ -92,6 +92,13 @@
     (vertico-cycle . t)
     (vertico-count . 15))
 
+  (leaf vertico-directory
+    :doc "find-fileにおけるBackspaceをディレクトリ単位で削除にする"
+    :bind
+    (:vertico-map
+     :package vertico
+     ("<backspace>" . vertico-directory-delete-char)))
+
   ;; なぜかconsult-narrowでエラーがでる
   ;; なぜか:defunとrequireの2つで消せる
   ;;   the function 'consult-narrow' might not be defined at runtime.
