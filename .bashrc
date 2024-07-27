@@ -13,7 +13,12 @@ esac
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
-shopt -s histappend
+# shopt -s histappend
+
+# プロンプト表示前に、コマンド履歴をファイルにセーブ・ロードする
+PROMPT_COMMAND='history -a; history -c; history -r'
+# bash終了時に履歴保存をしない
+shopt -u histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
