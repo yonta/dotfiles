@@ -29,8 +29,7 @@
 
 (eval-and-compile
   (leaf leaf-keywords
-    ;; :diminishを有効にし、モードラインをスッキリさせる
-    :ensure t diminish
+    :ensure t
     :config
     (leaf el-get :ensure t
       :custom (el-get-git-shallow-clone . t))
@@ -494,7 +493,6 @@ targets."
   :req "pip install epc orjson sexpdata six setuptools paramiko rapidfuzz"
   :defun lsp-bridge-show-documentation
   :ensure markdown-mode yasnippet
-  :diminish t
   :el-get (lsp-bridge
            :url "https://github.com/manateelazycat/lsp-bridge.git")
   :defun global-lsp-bridge-mode
@@ -628,7 +626,6 @@ targets."
     :bind ((:lisp-mode-shared-map ("C-c C-r" . my-eval-region-or-line))))
 
   (leaf eldoc
-    :diminish eldoc-mode
     :custom (eldoc-idle-delay . 0.3))
 
   (leaf auto-async-byte-compile
@@ -673,7 +670,6 @@ targets."
 
   (leaf rainbow-mode :ensure t
     :doc "#ff0000などに色をつける"
-    :diminish t
     :custom
     (rainbow-r-colors . t)                ; R color listを使う
     (rainbow-html-colors . t)             ; html color listを使う
@@ -861,7 +857,6 @@ targets."
     :hook (python-mode-hook . py-autopep8-enable-on-save))
 
   (leaf highlight-indentation :ensure t
-    :diminish highlight-indentation-mode
     ;; インデントに意味のあるPythonでとりあえず使う
     :hook (python-mode-hook . highlight-indentation-mode))
 
@@ -903,27 +898,23 @@ targets."
     :doc "TODO: rufoやめてrubocop -aに移行したい"
     :ensure t
     :if (executable-find "rufo")
-    :diminish rufo-minor-mode
     :hook (ruby-base-mode-hook . rufo-minor-mode))
 
   (leaf rubocopfmt
     ;; :disabled t
     :ensure t
     :if (executable-find "rubocop")
-    :diminish rubocopfmt-mode
     :hook (ruby-base-mode-hook . rubocopfmt-mode))
 
   (leaf rspec-mode :ensure t :diminish t)
 
   (leaf yard-mode
     :ensure t
-    :diminish t
     :hook (ruby-base-mode-hook . yard-mode))
 
   (leaf ruby-tools
     :doc "Rubyでダブルクオート・シングルクオート・シンボルを自動切り替え"
     :ensure t
-    :diminish t
     :hook (ruby-base-mode-hook . ruby-tools-mode))
 
   (leaf seeing-is-believing
@@ -1076,7 +1067,6 @@ targets."
     (typescript-indent-level . 2))
 
   (leaf prettier-js :ensure t
-    :diminish prettier-js-mode
     ;; prettierのエラー内容をbufferに表示しない
     :custom (prettier-js-show-errors . 'echo)
     :hook (html-mode-hook
@@ -1133,7 +1123,6 @@ targets."
   :ensure t
   :if (executable-find my/wakatime-cli-path)
   :global-minor-mode global-wakatime-mode
-  :diminish t
   :custom (wakatime-cli-path . my/wakatime-cli-path))
 
 ;;; Face
@@ -1141,7 +1130,6 @@ targets."
 (leaf whitespace
   :defvar whitespace-line-column whitespace-style
   :global-minor-mode global-whitespace-mode
-  :diminish global-whitespace-mode
   :custom
   ;; 空白などの可視化
   ;; 対象はタブ文字、80文字超え部、行末の空白、全角スペース、空白のみ行
@@ -1169,7 +1157,6 @@ targets."
     :ensure t
     :defun sp-local-pair
     :global-minor-mode smartparens-global-mode
-    :diminish smartparens-mode
     :config
     (require 'smartparens-config)
     ;; SML
@@ -1206,7 +1193,6 @@ targets."
   (leaf highlight-parentheses
     :doc "カーソル位置をくくるカッコをハイライトする"
     :ensure t
-    :diminish highlight-parentheses-mode
     :hook (prog-mode-hook . highlight-parentheses-mode)))
 
 (leaf highlight
@@ -1216,7 +1202,6 @@ targets."
     :leaf-defer nil
     :defvar ahs-modes
     :global-minor-mode global-auto-highlight-symbol-mode
-    :diminish auto-highlight-symbol-mode
     :custom
     (ahs-default-range . 'ahs-range-whole-buffer)
     (ahs-disabled-minor-modes . '(iedit-mode))
@@ -1227,7 +1212,6 @@ targets."
     :defvar vhl/.installed-extensions
     :ensure t
     :require t
-    :diminish volatile-highlights-mode
     :config
     ;; etags.elcのロードに100msecほどかかるのでオフ
     (cl-delete 'etags vhl/.installed-extensions)
@@ -1245,7 +1229,6 @@ targets."
   :disabled t
   :ensure t
   :global-minor-mode global-git-gutter-mode
-  :diminish git-gutter-mode
   :custom
   (git-gutter:modified-sign . " ")
   (git-gutter:added-sign . " ")
@@ -1284,7 +1267,6 @@ targets."
   :doc "Emacs29では同梱されるようになった"
   :emacs< 29
   :ensure t tree-sitter-langs
-  :diminish tree-sitter-mode
   :global-minor-mode global-tree-sitter-mode
   :custom (tsc-dyn-get-from . '(:compilation))
   :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
@@ -1306,7 +1288,6 @@ targets."
 
   (leaf nerd-icons-dired
     :ensure t
-    :diminish t
     :hook (dired-mode-hook . nerd-icons-dired-mode))
 
   (leaf nerd-icons-ibuffer
@@ -1358,6 +1339,13 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
          ("C-<iso-lefttab>" . tab-line-switch-to-prev-tab)
          ;; ブラウザのタブ復元風ショートカット
          ("C-S-t" . recentf-open-most-recent-file)))
+
+(leaf minions
+  :doc "minor modeをハンバーガーメニューで表示する"
+  :ensure t
+  :global-minor-mode t
+  ;; flycheckの状態はつねに表示する
+  :custom (minions-prominent-modes . '(flycheck-mode)))
 
 ;;; OTHER
 
@@ -1542,7 +1530,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 
 (leaf which-key :ensure t
   :global-minor-mode t
-  :diminish which-key-mode
   :custom
   (which-key-side-window-max-height . 0.4)
   (which-key-max-description-length . 50)
@@ -1646,7 +1633,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 
 (leaf editorconfig :ensure t
   :doc "projectの.editorconfigファイルを読み込む"
-  :diminish t
   :global-minor-mode t)
 
 (leaf imenu
@@ -1668,7 +1654,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :preface
   (leaf flyspell
     :req "aptでaspell-enをいれておく"
-    :diminish flyspell-mode
     ;; :hook (text-mode-hook . flyspell-mode)
     :custom
     (ispell-local-dictionary . "en_US")
@@ -1680,7 +1665,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     :hook (flyspell-mode-hook . flyspell-popup-auto-correct-mode)))
 
 (leaf aggressive-indent :ensure t
-  :diminish aggressive-indent-mode
   :global-minor-mode global-aggressive-indent-mode
   :defvar aggressive-indent-excluded-modes
   ;; まずい動きをするときはに除外モードを追加する
@@ -1875,8 +1859,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
     :after recentf))
 
 (leaf subword
-  :global-minor-mode global-subword-mode
-  :diminish subword-mode)
+  :global-minor-mode global-subword-mode)
 
 (leaf windmove
   :config
