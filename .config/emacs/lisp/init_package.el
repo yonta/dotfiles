@@ -1373,6 +1373,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
                                 "\\*robe-doc\\*"
                                 "\\*lsp-bridge-doc\\*"
                                 " \\*undo-tree\\*"
+                                " \\*vundo tree\\*"
                                 " \\*tip\\*"
                                 " \\*eglot doc\\*"
                                 "^ \\*Rubocop.*\\*$"
@@ -1524,8 +1525,10 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 (leaf async :ensure t
   :hook (emacs-lisp-mode-hook . async-bytecomp-package-mode))
 
-(leaf undo-tree :ensure t
-  :bind ("C-c C-/" . undo-tree-visualize))
+(leaf vundo
+  :doc "モダンなundo-tree"
+  :ensure t
+  :bind ("C-c C-/" . vundo))
 
 (leaf activities
   :doc "activities-modeは自動保存を行うグローバルモード"
