@@ -429,7 +429,24 @@ targets."
     :custom
     (company-dabbrev-ignore-case . t)
     (company-dabbrev-code-ignore-case . t)
-    (company-etags-ignore-case . t)))
+    (company-etags-ignore-case . t))
+
+  (leaf tabnine :disabled t
+    :ensure t
+    :global-minor-mode globa-tabnine-mode
+    :config
+    ;; (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point)
+    (tabnine-start-process)
+    :hook
+    ;; (prog-mode-hook . tabnine-mode)
+    (kill-emacs-hook . tabnine-kill-process)
+    :bind (:tabnine-completion-map ("<tab>" . nil)))
+
+  (leaf company-tabnine :ensure t
+    :doc "company-tabnine-install-binaryを実行する"
+    :require t
+    :custom
+    (company-tabnine-binaries-folder . "~/.config/tabnine")))
 
 ;;; Flycheck
 
@@ -546,7 +563,8 @@ targets."
     :config
     (defun my/eglot-completion-at-point-with-cape ()
       "Completion function by `eglot-completion-at-point` with cape"
-      (cape-wrap-super #'eglot-completion-at-point
+      (cape-wrap-super (cape-company-to-capf #'company-tabnine)
+                       #'eglot-completion-at-point
                        #'cape-file
                        #'cape-dabbrev))
     ;; solargraphの出力がされていない不具合に対処
@@ -763,6 +781,7 @@ targets."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
+                    (cape-company-to-capf #'company-tabnine)
                     ;; company-mlton系だけcase sensitiveになる
                     (cape-company-to-capf #'company-mlton-basis)
                     (cape-company-to-capf #'company-mlton-keyword)
@@ -960,6 +979,7 @@ targets."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
+                    (cape-company-to-capf #'company-tabnine)
                     (cape-company-to-capf #'company-web-html)
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-bootstrap-icons)
@@ -1001,6 +1021,7 @@ targets."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
+                    (cape-company-to-capf #'company-tabnine)
                     (cape-company-to-capf #'company-css)
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-dabbrev-code))
