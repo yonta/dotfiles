@@ -582,7 +582,11 @@ targets."
     :el-get (eglot-booster
              :url "https://github.com/jdtsmith/eglot-booster.git")
     :if (executable-find "emacs-lsp-booster")
-    :config (eglot-booster-mode)))
+    :config (eglot-booster-mode))
+
+  (leaf consult-eglot
+    :ensure t
+    :bind (:eglot-mode-map ("M-s s" . consult-eglot-symbols))))
 
 ;;; MODE
 
