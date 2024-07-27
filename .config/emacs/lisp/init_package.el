@@ -431,6 +431,15 @@ targets."
     (company-dabbrev-code-ignore-case . t)
     (company-etags-ignore-case . t))
 
+  (leaf tempel
+    :doc "モダンなsnippet補完"
+    :ensure t
+    :hook ("C-M-o" . tempel-insert))
+
+  (leaf tempel-collection
+    :ensure t
+    :after tempel)
+
   (leaf tabnine :disabled t
     :ensure t
     :global-minor-mode globa-tabnine-mode
