@@ -1505,8 +1505,10 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
          ("M-," . smart-jump-back)
          ("M-/" . smart-jump-references)))
 
-(leaf expand-region :ensure t
-  :bind ("C-`" . er/expand-region))
+(leaf expreg
+  :doc "モダンなexpand-region"
+  :ensure t
+  :bind ("C-`" . expreg-expand))
 
 (leaf which-key :ensure t
   :global-minor-mode t
