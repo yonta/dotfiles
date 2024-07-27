@@ -161,11 +161,11 @@
     ("C-s" . consult-line)
     ("C-S-s" . consult-line-symbol-at-point)
     ("C-M-s" . consult-line-multi)
-    ("M-s c" . consult-ripgrep)
+    ("M-s C" . consult-ripgrep)
     ("M-s f" . consult-fd)
     ("M-s g" . consult-git-grep)
-    ("M-s C" . consult-ripgrep-including-hidden)
-    ("C-c C-s" . consult-ripgrep)
+    ("M-s c" . consult-ripgrep-including-hidden)
+    ("C-c f" . consult-ripgrep)
     ("C-x b" . consult-buffer)
     ("C-x f" . consult-recent-file)
     ("M-g M-g" . consult-goto-line)
@@ -1334,8 +1334,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 (leaf ripgrep
   :ensure t
   :bind
-  ("M-s r" . ripgrep-regexp)
-  ("C-c f" . ripgrep-regexp))
+  ("M-s r" . ripgrep-regexp))
 
 (leaf grep-context
   :doc "grep系コマンドにて+e/-を使って周りの行を展開する"
