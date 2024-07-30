@@ -1147,6 +1147,91 @@ targets."
 
 ;;; Face
 
+(leaf fontaine
+  :doc "Font設定をまとめて行う"
+  :req "IBM Plex Sans JPを.local/share/fontsにインストールする"
+  :req "apt install fonts-noto-cjk-extra"
+  :ensure t
+  :require t
+  :global-minor-mode t
+  :config
+  ;; 前回の設定を復元する
+  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
+  :custom
+  (fontaine-presets
+   . '(
+       (small
+        :default-height 190)
+       (regular) ; like this it uses all the fallback values and is named `regular'
+       (medium
+        :default-weight semilight
+        :default-height 250
+        :bold-weight extrabold)
+       (large
+        :inherit medium
+        :default-height 270)
+       (presentation
+        :default-height 300)
+       (t
+        ;; I keep all properties for didactic purposes, but most can be
+        ;; omitted.  See the fontaine manual for the technicalities:
+        ;; <https://protesilaos.com/emacs/fontaine>.
+        :default-family "VL Gothic"
+        :default-weight regular
+        :default-height 230
+
+        :fixed-pitch-family "VL Gothic"
+        :fixed-pitch-weight nil ; falls back to :default-weight
+        :fixed-pitch-height 1.0
+
+        :fixed-pitch-serif-family "Noto Serif CJK JP"
+        ;; :fixed-pitch-serif-family "IBM Plex Sans JP"
+        :fixed-pitch-serif-weight nil ; falls back to :default-weight
+        :fixed-pitch-serif-height 1.0
+
+        ;; :variable-pitch-family "VL PGothic"
+        ;; :variable-pitch-family "Noto Sans CJK JP"
+        :variable-pitch-family "IBM Plex Sans JP"
+        :variable-pitch-weight nil
+        :variable-pitch-height 1.0
+
+        :mode-line-active-family nil ; falls back to :default-family
+        :mode-line-active-weight nil ; falls back to :default-weight
+        :mode-line-active-height 1.0
+
+        :mode-line-inactive-family nil ; falls back to :default-family
+        :mode-line-inactive-weight nil ; falls back to :default-weight
+        :mode-line-inactive-height 1.0
+
+        :header-line-family nil ; falls back to :default-family
+        :header-line-weight nil ; falls back to :default-weight
+        :header-line-height 0.9
+
+        :line-number-family nil ; falls back to :default-family
+        :line-number-weight nil ; falls back to :default-weight
+        :line-number-height 0.95
+
+        :tab-bar-family nil ; falls back to :default-family
+        :tab-bar-weight nil ; falls back to :default-weight
+        :tab-bar-height 0.9
+
+        :tab-line-family nil ; falls back to :default-family
+        :tab-line-weight nil ; falls back to :default-weight
+        :tab-line-height 0.9
+
+        :bold-family nil ; use whatever the underlying face has
+        :bold-weight bold
+
+        :italic-family nil
+        :italic-slant italic
+
+        :line-spacing nil
+        )))
+  ;; :hook
+  ;; テーマ切り替え時にフォントを維持する
+  ;; (enable-theme-functions . fontaine-apply-current-preset)
+  )
+
 (leaf whitespace
   :defvar whitespace-line-column whitespace-style
   :global-minor-mode global-whitespace-mode

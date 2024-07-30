@@ -54,3 +54,4 @@ flycheck_*.el
 .config/emacs/bookmarks
 .config/emacs/history
 .config/emacs/keyfreq
+.config/emacs/fontaine-latest-state.eld
