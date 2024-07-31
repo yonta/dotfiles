@@ -14,7 +14,7 @@
 (push '(height . 114) default-frame-alist)
 
 ;; フレームの最大化
-;; (push '(fullscreen . 'maximized) default-frame-alist)
+;; (push '(fullscreen . maximized) default-frame-alist)
 ;; (push '(fullscreen . 'fullboth) default-frame-alist)
 
 ;;; メニューバーを表示しない
