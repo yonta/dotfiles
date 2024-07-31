@@ -402,6 +402,15 @@ targets."
     :ensure t
     :doc "バックエンド合成やcompanyバックエンドの変換を提供する"
     :init
+    ;; デフォルトのelisp-completion-at-pointは関数・変数を区別する
+    ;; そのため:hook (corfu-mode-hookのような補完ができない
+    ;; そこでEmacs Lispの補完にcape-elisp-symbolを使う
+    (defun my/elisp-mode-init ()
+      "Set completion function to cape"
+      (setq completion-at-point-functions
+            (list (cape-capf-inside-code #'cape-elisp-symbol))))
+    :hook (emacs-lisp-mode-hook . my/elisp-mode-init)
+    :init
     ;; リスト先頭のほうが優先
     ;; ここでいうと下ほど優先
     ;; (add-to-list 'completion-at-point-functions #'cape-file)
