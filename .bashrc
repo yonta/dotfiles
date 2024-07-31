@@ -129,17 +129,6 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# fzf-tab-completion
-# https://github.com/lincheney/fzf-tab-completion
-#
-# tab補完にfzfを利用する
-# GitHubからbash用ファイルを取得した
-source ~/.config/bash/fzf-bash-completion.sh
-# TABに割り当て
-bind -x '"\t": fzf_bash_completion'
-# Shift TABに割り当て
-# bind -x '"\e[Z": fzf_bash_completion'
-
 # --RAW-CONTROL-CHARS: カラーシーケンスを処理する
 # --no-init: less終了時に画面をクリアしない
 # --quiet: lessでビープ音を鳴らさない
