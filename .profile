@@ -174,6 +174,7 @@ if type bat > /dev/null 2>&1 ; then
         "$@" --help 2>&1 | bat --plain --language=help
     }
 fi
+alias h='help'
 
 # grip
 export GRIPHOME="${XDG_CONFIG_HOME}/grip"
