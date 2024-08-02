@@ -585,6 +585,11 @@ targets."
                      . ((next-checkers . (javascript-eslint)))))))))))
 
   (leaf eglot
+    :req "gem install solargraph -v 0.49.0"
+    :req "npm install -g typescript-language-server"
+    :doc "html, css, json, eslint"
+    :req "npm install -g vscode-langservers-extracted"
+    :req "npm install -g bash-language-server"
     :defun eglot-completion-at-point
     :defvar eglot-server-programs
     ;; debug出力なしでスピードアップ
@@ -607,7 +612,10 @@ targets."
                    . ("solargraph" "stdio" :initializationOptions
                       (:diagnostics t))))
     :hook
-    ((ruby-base-mode-hook js-base-mode-hook typescript-ts-base-mode-hook)
+    ((ruby-base-mode-hook
+      js-base-mode-hook
+      typescript-ts-base-mode-hook
+      bash-ts-mode-hook)
      . eglot-ensure)
     ;; Eglotがlocal変数でcompletion-at-point-functionsを上書きする
     ;; capeと組み合わせを手動で設定する
