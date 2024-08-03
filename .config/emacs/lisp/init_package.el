@@ -454,7 +454,7 @@ targets."
   (leaf tempel
     :doc "モダンなsnippet補完"
     :ensure t
-    :hook ("C-M-o" . tempel-insert))
+    :bind ("C-M-o" . tempel-insert))
 
   (leaf tempel-collection
     :ensure t
