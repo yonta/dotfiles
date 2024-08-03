@@ -407,8 +407,8 @@ targets."
     ;; そこでEmacs Lispの補完にcape-elisp-symbolを使う
     (defun my/elisp-mode-init ()
       "Set completion function to cape"
-      (setq completion-at-point-functions
-            (list (cape-capf-inside-code #'cape-elisp-symbol))))
+      (setq-local completion-at-point-functions
+                  (list (cape-capf-inside-code #'cape-elisp-symbol))))
     :hook (emacs-lisp-mode-hook . my/elisp-mode-init)
     :init
     ;; リスト先頭のほうが優先
