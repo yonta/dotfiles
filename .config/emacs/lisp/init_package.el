@@ -670,7 +670,8 @@ targets."
     :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
 
   (leaf auto-compile
-    :ensure t
+    :el-get (auto-compile
+             :url "https://github.com/emacscollective/auto-compile.git")
     :doc "設定はearly-init.elに"
     :doc "load時にelcが古ければ自動コンパイルする")
 

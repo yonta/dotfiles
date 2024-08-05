@@ -75,9 +75,7 @@
 (setq load-prefer-newer t)
 (if (package-installed-p 'auto-compile)
     (progn
-      ;; TODO: MELPAからインストールなので、バージョンアップで壊れる
-      ;;       どうする？ファイルを固定で置く？
-      (add-to-list 'load-path "~/.config/emacs/elpa/auto-compile-20240415.1533")
+      (add-to-list 'load-path "~/.config/emacs/el-get/auto-compile/")
       (require 'auto-compile)
       (auto-compile-on-load-mode)))
 
