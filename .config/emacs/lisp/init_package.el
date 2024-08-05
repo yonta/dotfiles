@@ -408,7 +408,10 @@ targets."
     (defun my/elisp-mode-init ()
       "Set completion function to cape"
       (setq-local completion-at-point-functions
-                  (list (cape-capf-inside-code #'cape-elisp-symbol))))
+                  (list (cape-capf-inside-code
+                         (cape-capf-super #'cape-elisp-symbol
+                                          #'cape-dabbrev))
+                        (cape-capf-inside-string #'cape-file))))
     :hook (emacs-lisp-mode-hook . my/elisp-mode-init)
     :init
     ;; リスト先頭のほうが優先
