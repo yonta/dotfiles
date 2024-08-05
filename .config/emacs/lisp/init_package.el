@@ -30,7 +30,7 @@
 (eval-and-compile
   (leaf leaf-keywords
     ;; :diminishを有効にし、モードラインをスッキリさせる
-    :ensure t diminish
+    :ensure t diminish smartrep
     :config
     (leaf el-get :ensure t
       :custom (el-get-git-shallow-clone . t))
@@ -2008,16 +2008,16 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   ;; 画面外への移動はサイクルする
   (windmove-wrap-around . t)
   ;; C-x oの代わりのバッファ移動
-  :bind* (("C-c l" . windmove-right)
-          ("C-c h" . windmove-left)
-          ("C-c j" . windmove-down)
-          ("C-c k" . windmove-up)
-          ;; カーソルのみで分割ウィンドウ間を移動
-          ;; ("<left>" . windmove-right)
-          ;; ("<right>" . windmove-left)
-          ;; ("<down>" . windmove-down)
-          ;; ("<up>" . windmove-up)
-          ))
+  :smartrep* ("C-c"
+              (("l" . windmove-right)
+               ("h" . windmove-left)
+               ("j" . windmove-down)
+               ("k" . windmove-up)
+               ;; ("<left>" . windmove-right)
+               ;; ("<right>" . windmove-left)
+               ;; ("<down>" . windmove-down)
+               ;; ("<up>" . windmove-up)
+               )))
 
 (leaf indent
   :leaf-path nil
