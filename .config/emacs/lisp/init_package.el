@@ -2019,6 +2019,44 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
                ;; ("<up>" . windmove-up)
                )))
 
+(leaf my/window-resizer
+  :doc "分割ウィンドウのサイズを変更するmy/window-resizer"
+  :doc "smartrep用に改変している。"
+  :doc "オリジナルは以下。"
+  :url "https://khiker.hatenablog.jp/entry/20100119/window_resize"
+  :leaf-path nil
+  :leaf-autoload nil
+  :init
+  (defun my/window-resizer-right ()
+    "Resize window by right key"
+    (interactive)
+    (if (<= (nth 2 (window-edges)) (frame-width))
+        (enlarge-window-horizontally 1)
+      (shrink-window-horizontally 1)))  ; 右端frameのとき
+  (defun my/window-resizer-left ()
+    "Resize window by left key"
+    (interactive)
+    (if (<= (nth 2 (window-edges)) (frame-width))
+        (shrink-window-horizontally 1)
+      (enlarge-window-horizontally 1))) ; 右端frameのとき
+  (defun my/window-resizer-down ()
+    "Resize window by down key"
+    (interactive)
+    (if (< (nth 3 (window-edges)) (1- (frame-height))) ; minibuffer分を-1
+        (enlarge-window 1)
+      (shrink-window 1)))               ; 下端frameのとき
+  (defun my/window-resizer-up ()
+    "Resize window by up key"
+    (interactive)
+    (if (< (nth 3 (window-edges)) (1- (frame-height))) ; minibuffer分を-1
+        (shrink-window 1)
+      (enlarge-window 1)))              ; 下端frameのとき
+  :smartrep* ("C-c r"
+              (("l" . my/window-resizer-right)
+               ("h" . my/window-resizer-left)
+               ("j" . my/window-resizer-down)
+               ("k" . my/window-resizer-up))))
+
 (leaf indent
   :leaf-path nil
   :preface

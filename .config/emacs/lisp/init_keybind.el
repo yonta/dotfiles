@@ -29,35 +29,6 @@
     (set-window-buffer thiswin nextbuf)))
 (bind-key "C-x O" #'swap-screen)
 
-;;; 分割ウィンドウのサイズを変更するmy-window-resizer
-;; my-window-resizer関数
-;; https://khiker.hatenablog.jp/entry/20100119/window_resize
-(defun my-window-resizer ()
-  "Control window size and position."
-  (interactive)
-  (let ((dx (if (= (nth 0 (window-edges)) 0) 1 -1))
-        (dy (if (= (nth 1 (window-edges)) 0) 1 -1))
-        action
-        c)
-    (catch 'end-flag
-      (while t
-        (setq action
-              (read-key-sequence-vector
-               (format "size[%dx%d]" (window-width) (window-height))))
-        (setq c (aref action 0))
-        (cond ((= c ?l) (enlarge-window-horizontally dx))
-              ((= c ?h) (shrink-window-horizontally dx))
-              ((= c ?j) (enlarge-window dy))
-              ((= c ?k) (shrink-window dy))
-              ;; otherwise
-              (t
-               (let ((command (key-binding action)))
-                 (when command (call-interactively command)))
-               (message "Quit")
-               (throw 'end-flag t)))))))
-;; my-window-resizerをC-crにセット
-(bind-key "C-c r" #'my-window-resizer)
-
 ;;; C-M-:に連番Evalを割り当て、ただしterminalならC-c M-:
 (defun my-insert-repeat-numbers ()
   "Insert ordered number with formatt.
