@@ -2061,6 +2061,20 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
                ("j" . my/window-resizer-down)
                ("k" . my/window-resizer-up))))
 
+(leaf my/swap-window
+  :doc "現在のウィンドウと次のウィンドウを入れ替えする"
+  :leaf-path nil
+  :leaf-autoload nil
+  :init
+  (defun my/swap-window ()
+    "Swap two screen, leaving cursor at current window."
+    (interactive)
+    (let ((thiswin (selected-window))
+          (nextwin (window-buffer (next-window))))
+      (set-window-buffer (next-window) (window-buffer))
+      (set-window-buffer thiswin nextwin)))
+  :smartrep* ("C-x" (("O" . my/swap-window))))
+
 (leaf indent
   :leaf-path nil
   :preface

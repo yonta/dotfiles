@@ -19,16 +19,6 @@
 ;;; terminal(-nw)で起動した場合は、C-SPCが使えないので、C-]にする
 (if (not window-system) (bind-key "C-]" #'set-mark-command))
 
-;;; swap-screenで上下や左右のバッファを入れ替え，これをC-Oにする
-(defun swap-screen()
-  "Swap two screen, leaving cursor at current window."
-  (interactive)
-  (let ((thiswin (selected-window))
-        (nextbuf (window-buffer (next-window))))
-    (set-window-buffer (next-window) (window-buffer))
-    (set-window-buffer thiswin nextbuf)))
-(bind-key "C-x O" #'swap-screen)
-
 ;;; C-M-:に連番Evalを割り当て、ただしterminalならC-c M-:
 (defun my-insert-repeat-numbers ()
   "Insert ordered number with formatt.
