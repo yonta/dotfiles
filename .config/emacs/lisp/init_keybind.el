@@ -14,7 +14,8 @@
 ;;; M-hをバックスペース＆インデント削除にする
 (bind-key "M-h" #'delete-indentation)
 ;;; C-c dでカーソル位置のシンボルのヘルプを表示
-(bind-key "C-c d" #'describe-symbol)
+(bind-key "C-c d" #'describe-symbol 'emacs-lisp-mode-map)
+(bind-key "C-c d" #'describe-symbol 'lisp-interaction-mode-map)
 
 ;;; terminal(-nw)で起動した場合は、C-SPCが使えないので、C-]にする
 (if (not window-system) (bind-key "C-]" #'set-mark-command))
