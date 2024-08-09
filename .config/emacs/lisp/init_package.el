@@ -482,6 +482,7 @@ targets."
 
 ;;; Flycheck
 
+(defvar-local my/flycheck-next-local-cache nil)
 (leaf flycheck
   :leaf-path nil
   :preface
@@ -508,7 +509,31 @@ targets."
     :after flycheck
     :hook (flycheck-mode-hook . flycheck-color-mode-line-mode))
 
-  (leaf flycheck-ocaml :ensure t))
+  (leaf my/flycheck-next
+    :doc "メジャーモードによってflycheckのnext-checkerを設定する"
+    :url "https://github.com/flycheck/flycheck/issues/1762"
+    :leaf-autoload nil
+    :leaf-path nil
+    :defun my/flycheck-next-checker-get
+    :preface
+    (defun my/flycheck-next-checker-get (fn checker property)
+      (or (alist-get property (alist-get checker my/flycheck-next-local-cache))
+          (funcall fn checker property)))
+    :advice (:around flycheck-checker-get my/flycheck-next-checker-get))
+
+  (leaf flycheck-ocaml :ensure t)
+
+  (leaf flycheck-docker-build-checks
+    :defun flycheck-docker-build-checks-setup
+    :el-get (flycheck-docker-build-checks
+             :url "https://github.com/yonta/flycheck-docker-build-checks.git")
+    :init (flycheck-docker-build-checks-setup)
+    :hook
+    ((dockerfile-ts-mode-hook dockerfile-mode-hook)
+     . (lambda ()
+         (setq my/flycheck-next-local-cache
+               '((docker-build-checks
+                  . ((next-checkers . (dockerfile-hadolint))))))))))
 
 ;;; LSP
 
@@ -560,32 +585,9 @@ targets."
    ("M-<up>" . acm-doc-scroll-up)
    ("M-<down>" . acm-doc-scroll-down)))
 
-(defvar-local my/flycheck-local-cache nil)
 (leaf eglot
   :leaf-path nil
   :preface
-  ;; メジャーモードによってlspの次のcheckerを切り替える
-  ;; https://github.com/flycheck/flycheck/issues/1762
-  (leaf my/flycheck
-    :leaf-autoload nil
-    :leaf-path nil
-    :preface
-    (defun my/flycheck-checker-get (fn checker property)
-      (or (alist-get property (alist-get checker my/flycheck-local-cache))
-          (funcall fn checker property)))
-    :advice (:around flycheck-checker-get my/flycheck-checker-get)
-    :hook
-    ((eglot-managed-mode-hook
-      . (lambda ()
-          (when (derived-mode-p 'js-base-mode)
-            (setq my/flycheck-local-cache
-                  '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
-     (eglot-managed-mode-hook
-      . (lambda ()
-          (when (derived-mode-p 'typescript-ts-base-mode)
-            (setq my/flycheck-local-cache
-                  '((eglot-check
-                     . ((next-checkers . (javascript-eslint)))))))))))
 
   (leaf eglot
     :req "gem install solargraph -v 0.49.0"
@@ -625,7 +627,13 @@ targets."
     (eglot-managed-mode-hook
      . (lambda ()
          (setq-local completion-at-point-functions
-                     '(my/eglot-completion-at-point-with-cape)))))
+                     '(my/eglot-completion-at-point-with-cape))))
+    ;; Eglot checkの後に既存checkを追加
+    (eglot-managed-mode-hook
+     . (lambda ()
+         (when (derived-mode-p 'js-base-mode 'typescript-ts-base-mode)
+           (setq my/flycheck-next-local-cache
+                 '((eglot-check . ((next-checkers . (javascript-eslint))))))))))
 
   (leaf flycheck-eglot
     :ensure t
