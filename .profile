@@ -96,11 +96,6 @@ if [ -f "${OPAMROOT}/opam-init/init.sh" ] ; then
     . ${OPAMROOT}/opam-init/init.sh > /dev/null 2> /dev/null || true
 fi
 
-# OchaCaml
-if [ -d "${HOME}/.ochacaml" ]; then
-    PATH="${PATH}:${HOME}/.ochacaml/OchaCaml"
-fi
-
 # SML/NJ PATH
 if [ -d "${HOME}/.smlnj" ] ; then
     PATH="${HOME}/.smlnj/bin:${PATH}"
