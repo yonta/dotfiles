@@ -61,7 +61,7 @@ fi
 if type emacs > /dev/null 2>&1 ; then
     alias emacsc='emacs -Q --batch -f batch-byte-compile'
 fi
-if type gitkraken > /dev/null 2>&1 ; then
+if [ -n "${WSLENV}" ] && type gitkraken > /dev/null 2>&1 ; then
     alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
 fi
 
