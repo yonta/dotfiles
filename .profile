@@ -58,7 +58,6 @@ if type vim > /dev/null 2>&1 ; then
     alias vless='lessv'
 fi
 if type emacs > /dev/null 2>&1 ; then
-    alias spacemacs='env HOME=${HOME}/.spacemacs emacs'
     alias emacsc='emacs -Q --batch -f batch-byte-compile'
 fi
 if type gitkraken > /dev/null 2>&1 ; then
