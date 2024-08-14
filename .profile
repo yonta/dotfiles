@@ -192,10 +192,14 @@ if [ -f "${XDG_CONFIG_HOME}/fzf/fzf.bash" ]; then
     # tab補完にfzfを利用する
     # GitHubからbash用ファイルを取得した
     source ~/.config/bash/fzf-bash-completion.sh
-    # TABに割り当て
-    bind -x '"\t": fzf_bash_completion'
-    # Shift TABに割り当て
-    # bind -x '"\e[Z": fzf_bash_completion'
+
+    # 端末のときのみ
+    if [ -t 1 ] ; then
+        # TABに割り当て
+        bind -x '"\t": fzf_bash_completion'
+        # Shift TABに割り当て
+        # bind -x '"\e[Z": fzf_bash_completion'
+    fi
 fi
 
 # ripgrep
