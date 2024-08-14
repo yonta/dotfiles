@@ -10,21 +10,21 @@
 
 # XDG Base Directory
 # Default settings
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
 # WSLGによって設定済み
 # XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
 
 # if running bash
-if [ -n "$BASH_VERSION" ]; then
+if [ -n "${BASH_VERSION}" ]; then
     export HISTFILE="${XDG_CONFIG_HOME}/bash/history"
     export INPUTRC="${XDG_CONFIG_HOME}/bash/inputrc"
 
     # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
+    if [ -f "${HOME}/.bashrc" ]; then
+        . "${HOME}/.bashrc"
     fi
 fi
 
@@ -32,7 +32,8 @@ fi
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 if [ -d "${CARGO_HOME}" ] ; then
-    PATH="${CARGO_HOME}/bin:$PATH"
+    # PATH="${CARGO_HOME}/bin:${PATH}"
+    . "/home/kei/.local/share/cargo/env"
 fi
 
 # set Aliases
@@ -84,13 +85,13 @@ fi
 export RLWRAP_HOME="${XDG_CACHE_HOME}/rlwrap"
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+if [ -d "${HOME}/bin" ] ; then
+    PATH="${HOME}/bin:${PATH}"
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
+if [ -d "${HOME}/.local/bin" ] ; then
+    PATH="${HOME}/.local/bin:${PATH}"
 fi
 
 # OPAM configuration
@@ -101,12 +102,12 @@ fi
 
 # OchaCaml
 if [ -d "${HOME}/.ochacaml" ]; then
-    PATH="$PATH:$HOME/.ochacaml/OchaCaml"
+    PATH="${PATH}:${HOME}/.ochacaml/OchaCaml"
 fi
 
 # SML/NJ PATH
-if [ -d "$HOME/.smlnj" ] ; then
-    PATH="$HOME/.smlnj/bin:$PATH"
+if [ -d "${HOME}/.smlnj" ] ; then
+    PATH="${HOME}/.smlnj/bin:${PATH}"
 fi
 
 # WSL
@@ -115,14 +116,14 @@ if [ -n "${WSLENV}" ] ; then
         alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
     fi
     # for wsl tool deb package
-    PATH="$PATH:/mnt/c/Windows"
-    PATH="$PATH:/mnt/c/Windows/System32"
+    PATH="${PATH}:/mnt/c/Windows"
+    PATH="${PATH}:/mnt/c/Windows/System32"
 fi
 
 # Starship
 # cargo install starship
 if type starship > /dev/null 2>&1 ; then
-    if [ -n "$INSIDE_EMACS" ] ; then # Emacs shell
+    if [ -n "${INSIDE_EMACS}" ] ; then # Emacs shell
         # Emacs内ではTERM=dumpでシェルが開かれる
         # これにより、starshipがdumpモードで起動するのを防ぐ
         export TERM=xterm-256color
@@ -135,8 +136,8 @@ fi
 
 # Ruby
 export RBENV_ROOT="${XDG_DATA_HOME}/rbenv"
-if [ -d "$RBENV_ROOT" ] ; then
-    PATH="$RBENV_ROOT/bin:$PATH"
+if [ -d "${RBENV_ROOT}" ] ; then
+    PATH="${RBENV_ROOT}/bin:${PATH}"
     eval "$(rbenv init -)"
 fi
 export BUNDLE_USER_HOME="${XDG_CONFIG_HOME}/bundle"
@@ -162,7 +163,7 @@ export TS_NODE_HISTORY="${XDG_CACHE_HOME}/ts-node/history"
 # bun
 export BUN_INSTALL="${XDG_DATA_HOME}/bun"
 if [ -d "${BUN_INSTALL}" ] ; then
-    export PATH="${BUN_INSTALL}/bin:$PATH"
+    export PATH="${BUN_INSTALL}/bin:${PATH}"
 fi
 
 # all pip package upgrade
