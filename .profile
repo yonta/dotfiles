@@ -111,11 +111,14 @@ if [ -d "$HOME/.smlnj" ] ; then
 fi
 
 # WSL
-if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
-    alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+if [ -n "${WSLENV}" ] ; then
+    if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
+        alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+    fi
+    # for wsl tool deb package
+    PATH="$PATH:/mnt/c/Windows"
+    PATH="$PATH:/mnt/c/Windows/System32"
 fi
-PATH="$PATH:/mnt/c/Windows"          # for wsl deb package
-PATH="$PATH:/mnt/c/Windows/System32" # for wsl deb package
 
 # Starship
 # cargo install starship
