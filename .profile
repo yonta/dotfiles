@@ -61,9 +61,6 @@ fi
 if type emacs > /dev/null 2>&1 ; then
     alias emacsc='emacs -Q --batch -f batch-byte-compile'
 fi
-if [ -n "${WSLENV}" ] && type gitkraken > /dev/null 2>&1 ; then
-    alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
-fi
 
 # apt package bat/fd alias
 if ! type bat > /dev/null 2>&1 && dpkg -l bat > /dev/null 2>&1 ; then
@@ -108,16 +105,6 @@ fi
 # SML/NJ PATH
 if [ -d "${HOME}/.smlnj" ] ; then
     PATH="${HOME}/.smlnj/bin:${PATH}"
-fi
-
-# WSL
-if [ -n "${WSLENV}" ] ; then
-    if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
-        alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
-    fi
-    # for wsl tool deb package
-    PATH="${PATH}:/mnt/c/Windows"
-    PATH="${PATH}:/mnt/c/Windows/System32"
 fi
 
 # Starship
@@ -220,4 +207,41 @@ export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
 # aptitude
 if [ -f "${XDG_CONFIG_HOME}/aptitude/config" ]; then
     export APT_CONFIG="${XDG_CONFIG_HOME}/aptitude/config"
+fi
+
+# WSLのみの設定
+if [ -n "${WSLENV}" ] ; then
+    # for wsl tool deb package
+    PATH="${PATH}:/mnt/c/Windows"
+    PATH="${PATH}:/mnt/c/Windows/System32"
+
+    if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
+        alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
+    fi
+
+    alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
+
+    # SSHログインじゃないとき
+    if [ -z "${SSH_CLIENT}" ] ; then
+        # WSL2のGUIでキーボード配列がUSになる暫定対処
+        setxkbmap -layout jp -model pc105
+        export BROWSER=wslview
+
+        # ディスプレイが存在しVSCode WSLじゃない
+        if xrandr > /dev/null 2>&1 &&
+                echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
+            # 全角半角キーが連打されるのを防ぐ
+            xset -r 49
+        fi
+    fi
+
+    # WSL1のみ
+    if uname -a | grep -e 'Microsoft' > /dev/null 2>&1 ; then
+        # Change default file and directory permission for WSL
+        umask 0022
+        export DOCKER_HOST='tcp://localhost:2375'
+        if [ -z "${SSH_CLIENT}" ]; then # not via ssh
+            export DISPLAY=localhost:0
+        fi
+    fi
 fi

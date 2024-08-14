@@ -139,27 +139,3 @@ GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUPSTREAM=auto
-
-# WSL1
-if uname -a | grep -e 'Microsoft' > /dev/null 2>&1 ; then
-    # Change default file and directory permission for WSL
-    umask 0022
-    export DOCKER_HOST='tcp://localhost:2375'
-    if [ -z "${SSH_CLIENT}" ]; then # not via ssh
-        export DISPLAY=localhost:0
-    fi
-fi
-
-# WSL1 or WSL2
-if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
-        [ -z "${SSH_CLIENT}" ]; then
-    # WSL2のGUIでキーボード配列がUSになる暫定対処
-    setxkbmap -layout jp -model pc105
-    export BROWSER=wslview
-
-    # ディスプレイが存在しVSCode WSLじゃない
-    if xrandr > /dev/null 2>&1 &&
-            echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
-        xset -r 49              # 全角半角キーが連打されるのを防ぐ
-    fi
-fi
