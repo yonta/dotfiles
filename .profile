@@ -32,8 +32,7 @@ fi
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 if [ -d "${CARGO_HOME}" ] ; then
-    # PATH="${CARGO_HOME}/bin:${PATH}"
-    . "/home/kei/.local/share/cargo/env"
+    PATH="${CARGO_HOME}/bin:${PATH}"
 fi
 
 # set Aliases
