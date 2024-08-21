@@ -1730,7 +1730,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 (leaf mozc
   :if (getenv "WSLENV")
   :leaf-path nil
-  :preface
+  :init
   (leaf mozc
     :req "予め${HOME}/bin/mozc_emacs_helperを用意するか、"
     :req "aptでemacs-mozc-binを入れておく。"
