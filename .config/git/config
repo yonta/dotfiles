@@ -36,6 +36,10 @@
 	keep-plus-minus-markers = false
 	hunk-header-style = blue bold ul
 	file-style = yellow
+	plus-style = syntax darkgreen
+	plus-emph-style = syntax forestgreen
+	minus-style = syntax maroon
+	minus-emph-style = syntax crimson
 [push]
 	autoSetupRemote = true
 [merge]
