@@ -332,7 +332,7 @@ targets."
          embark-highlight-indicator
          embark-isearch-highlight-indicator))))
 
-;;; Corfu
+;;; Completion
 
 (leaf corfu
   :leaf-path nil
@@ -479,6 +479,40 @@ targets."
     :require t
     :custom
     (company-tabnine-binaries-folder . "~/.config/tabnine")))
+
+(leaf tabby
+  :url "https://tabby.tabbyml.com/"
+  :doc "tabbyで補完を行う"
+  :doc "---"
+  :req "node v18以上が必要"
+  :req "tabbyバイナリが必要。v14,v15が何故か動かないからv13を入れる。"
+  :url "https://github.com/TabbyML/tabby/releases/tag/v0.13.1"
+  :doc "---"
+  :doc "バックグラウンドでtabbyサーバーを動かす"
+  :doc "Chat無しも可能"
+  :doc "tabby serve --model DeepseekCoder-1.3B --chat-model Qwen2-1.5B-Instruct --device cuda"
+  :doc "tabby serve --model DeepseekCoder-1.3B --device cuda"
+  :doc "---"
+  :doc "他に色々あるが、RTXのメモリが足りずに動かせないものがほとんど"
+  :url "https://tabby.tabbyml.com/docs/models/"
+  :doc "---"
+  :doc "初回はlocahost:8080にログインしてadminアカウントを作成する"
+  :doc "初回は.tabby-client/agent/config.tomlのserver項目を設定する"
+  :doc "tokenはログインした先に書いてある"
+  :doc "---"
+  :doc "利用時は手動でtabby-modeをオンにする"
+  :if (not (getenv "WSLENV"))
+  :el-get (tabby
+           :url "https://github.com/alan-w-255/tabby.el.git")
+  ;; 消極的な補完、手動でC-c <tab>で補完候補を出す
+  ;; :custom (tabby-idle-delay . 5)
+  ;; :bind (:tabby-mode-map
+  ;;        ("C-c <tab>" . tabby-complete)
+  ;;        ("C-<return>" . tabby-accept-completion))
+  ;; 積極的な補完、どんどんゴースト補完を提案する
+  :custom (tabby-idle-delay . 0.6)
+  :bind (:tabby-mode-map
+         ("C-<return>" . tabby-accept-completion)))
 
 ;;; Flycheck
 
