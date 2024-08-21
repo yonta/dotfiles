@@ -15,7 +15,7 @@
 
 ;; フレームの最大化
 ;; (push '(fullscreen . maximized) default-frame-alist)
-;; (push '(fullscreen . 'fullboth) default-frame-alist)
+;; (push '(fullscreen . fullboth) default-frame-alist)
 
 ;;; メニューバーを表示しない
 (push '(menu-bar-lines . 0) default-frame-alist)
