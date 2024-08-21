@@ -501,7 +501,7 @@ targets."
   :doc "tokenはログインした先に書いてある"
   :doc "---"
   :doc "利用時は手動でtabby-modeをオンにする"
-  :if (not (getenv "WSLENV"))
+  :if (executable-find "tabby")
   :el-get (tabby
            :url "https://github.com/alan-w-255/tabby.el.git")
   ;; 消極的な補完、手動でC-c <tab>で補完候補を出す
