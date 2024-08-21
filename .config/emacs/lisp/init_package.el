@@ -2235,4 +2235,43 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :leaf-path nil
   :global-minor-mode t)
 
+(eval-when-compile (require 'llm-ollama))
+(leaf ellama
+  :if (not (getenv "WSLENV"))
+  :ensure t
+  :defer-config
+  (require 'llm-ollama)
+  :custom
+  (ellama-language . "Japanese")
+  (ellama-major-mode . 'markdown-mode)
+  ;; `(ellama-provider
+  ;;   . ,(make-llm-ollama :chat-model "starcoder2:7b"
+  ;;                       :embedding-model "starcoder2:7b"))
+  ;; `(ellama-provider
+  ;;   . ,(make-llm-ollama :chat-model "deepseek-coder:6.7b"
+  ;;                       :embedding-model "deepseek-coder:6.7b"))
+  `(ellama-provider
+    . ,(make-llm-ollama :chat-model "deepseek-coder-v2:16b"
+                        :embedding-model "deepseek-coder-v2:16b"))
+  (ellama-define-word-prompt-template . "%s の定義を教えて")
+  (ellama-summarize-prompt-template . "Text:\n%s\n要約して")
+  (ellama-code-review-prompt-template . "以下のコードのレビューと改善案をだして:\n```\n%s\n```")
+  (ellama-change-prompt-template . "以下のテキストを「%s」と変更して、引用符なしで出力して:\n%s")
+  (ellama-improve-grammar-prompt-template . "誤字脱字・文法を校正して")
+  (ellama-improve-wording-prompt-template . "語句を推敲して")
+  (ellama-improve-conciseness-prompt-template . "できるだけ簡潔にして")
+  (ellama-code-edit-prompt-template
+   . "以下のコードを「%s」と変更して、プロンプト無しでコードだけを\n```language\n...\n```\nの形式で出力して:\n```\n%s\n```\n")
+  (ellama-code-improve-prompt-template
+   . "以下のコードを改善して、プロンプト無しでコードだけを\n```language\n...\n```の形式で出力して:\n```\n%s\n```\n")
+  (ellama-code-complete-prompt-template
+   . "以下のコードの続きを書いて、プロンプト無しでコードだけを\n```language\n...\n```の形式で出力して:\n```\n%s\n```\n")
+  (ellama-code-add-prompt-template
+   . "Context: \n```\n%s\n```\nこのコードを文脈として、%s、プロンプト無しでコードだけを\n```\n...\n```\nの形式で出力して\n")
+  (ellama-generate-commit-message-template
+   . "あなたは熟練プログラマーです。後の変更点をもとに簡潔なコミットメッセージを書いてください。コミットメッセージの形式は、1行目は変更点の要約、2行目は空行、それ以降の行は変更全体の詳細な説明、です。出力はプロンプト無しで最終的なコミットメッセージだけにしてください。\n\n変更点:\n%s\n")
+  (ellama-make-format-prompt-template . "以下のテキストを%sの形式に変換して:\n%s")
+  (ellama-make-list-prompt-template . "Markdownのリスト形式にして")
+  (ellama-make-table-prompt-template . "Markdownのテーブル形式にして"))
+
 ;;; init_package.el ends here

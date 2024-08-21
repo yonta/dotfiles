@@ -27,6 +27,7 @@ flycheck_*.el
 .config/emacs/tree-sitter/
 .config/emacs/persist/
 .config/emacs/multisession/
+.config/emacs/ellama-sessions/
 
 # Emacsa auto generated files
 .config/emacs/abbrev_defs
@@ -55,3 +56,4 @@ flycheck_*.el
 .config/emacs/history
 .config/emacs/keyfreq
 .config/emacs/fontaine-latest-state.eld
+.config/emacs/session.*
