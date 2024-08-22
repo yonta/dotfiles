@@ -2237,7 +2237,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
 (eval-when-compile (require 'llm-ollama))
 (leaf ellama
-  :if (not (getenv "WSLENV"))
+  :if (executable-find "ollama")
   :ensure t
   :defer-config
   (require 'llm-ollama)
