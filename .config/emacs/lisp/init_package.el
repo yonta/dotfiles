@@ -2244,6 +2244,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :custom
   (ellama-language . "Japanese")
   (ellama-major-mode . 'markdown-mode)
+  (ellama-naming-scheme . 'ellama-generate-name-by-time)
   ;; `(ellama-provider
   ;;   . ,(make-llm-ollama :chat-model "starcoder2:7b"
   ;;                       :embedding-model "starcoder2:7b"))
