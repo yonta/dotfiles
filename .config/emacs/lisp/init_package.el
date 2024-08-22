@@ -2235,7 +2235,6 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :leaf-path nil
   :global-minor-mode t)
 
-(eval-when-compile (require 'llm-ollama))
 (leaf ellama
   :if (executable-find "ollama")
   :ensure t
@@ -2248,12 +2247,19 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   ;; `(ellama-provider
   ;;   . ,(make-llm-ollama :chat-model "starcoder2:7b"
   ;;                       :embedding-model "starcoder2:7b"))
+  ;; (ellama-provider
+  ;;  . #s(llm-ollama nil nil nil "http" "localhost" 11434
+  ;;                  "starcoder2:7b" "starcoder2:7b"))
   ;; `(ellama-provider
   ;;   . ,(make-llm-ollama :chat-model "deepseek-coder:6.7b"
   ;;                       :embedding-model "deepseek-coder:6.7b"))
-  `(ellama-provider
-    . ,(make-llm-ollama :chat-model "deepseek-coder-v2:16b"
-                        :embedding-model "deepseek-coder-v2:16b"))
+  ;; `(ellama-provider
+  ;;   . ,(make-llm-ollama :chat-model "deepseek-coder-v2:16b"
+  ;;                       :embedding-model "deepseek-coder-v2:16b"))
+  ;; cl-defstructのmake-llm-ollama展開後
+  (ellama-provider
+   . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                   "deepseek-coder-v2:16b" "deepseek-coder-v2:16b"))
   (ellama-define-word-prompt-template . "%s の定義を教えて")
   (ellama-summarize-prompt-template . "Text:\n%s\n要約して")
   (ellama-code-review-prompt-template . "以下のコードのレビューと改善案をだして:\n```\n%s\n```")
