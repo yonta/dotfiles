@@ -477,6 +477,8 @@ targets."
   :ensure t
   :commands
   tabnine-start-process
+  ;; うまくオートロードされてないコマンドたち
+  tabnine-chat
   tabnine-chat-explain-code
   tabnine-chat-generate-test-for-code
   tabnine-chat-document-code
