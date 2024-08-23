@@ -484,10 +484,10 @@ targets."
   :diminish "⌬"
   :custom
   (tabnine-chat-prompt-alist
-   . '((explain-code . "このコードを説明して")
-       (generate-test-for-code . "このコードのテストコードを書いて")
-       (document-code . "このコードのドキュメントを書いて")
-       (fix-code . "このコードの間違いを指摘して修正したコードを出力して")))
+   . '((explain-code . "このコードを日本語で説明して")
+       (generate-test-for-code . "このコードのテストコードを書いて、日本語で説明して")
+       (document-code . "このコードのドキュメントを、日本語で生成して")
+       (fix-code . "このコードの間違いを指摘して日本語で出力して、また、修正したコードも一緒に出力して")))
   (tabnine-minimum-prefix-length . 0)
   (tabnine-idle-delay . 0.6)
   (tabnine-binaries-folder . "~/.config/tabnine")
