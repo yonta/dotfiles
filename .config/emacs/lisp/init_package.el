@@ -474,6 +474,10 @@ targets."
 (leaf tabnine
   :req "M-x tabnine-install-binary"
   :req "M-x tabnine-login"
+  :doc "現在のtabnine-chatは自動でバッファモードやバッファ内容すべてを送る。"
+  :doc "そのためすぐにチャット量の限界を超えたり、"
+  :doc "変な英語プロンプトが足され回答が英語になる。"
+  :doc "あまり使わず、ellamaやChat-GPTを使うほうがよい。"
   :ensure t
   :commands
   tabnine-start-process
