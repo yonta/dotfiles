@@ -463,41 +463,6 @@ targets."
     :ensure t
     :after tempel)
 
-  (leaf tabnine
-    :req "M-x tabnine-install-binary"
-    :req "M-x tabnine-login"
-    :ensure t
-    :commands
-    tabnine-start-process
-    tabnine-chat-explain-code
-    tabnine-chat-generate-test-for-code
-    tabnine-chat-document-code
-    tabnine-chat-fix-code
-    :diminish "⌬"
-    :custom
-    (tabnine-chat-prompt-alist
-     . '((explain-code . "このコードを説明して")
-         (generate-test-for-code . "このコードのテストコードを書いて")
-         (document-code . "このコードのドキュメントを書いて")
-         (fix-code . "このコードの間違いを指摘して修正したコードを出力して")))
-    (tabnine-minimum-prefix-length . 0)
-    (tabnine-binaries-folder . "~/.config/tabnine")
-    :config
-    (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point)
-    (tabnine-start-process)
-    :hook
-    (prog-mode-hook . tabnine-mode)
-    (kill-emacs-hook . tabnine-kill-process)
-    :bind
-    (:tabnine-completion-map
-     :package tabnine-core
-     ("<tab>" . nil)
-     ("TAB" . nil)
-     ("C-<return>" . tabnine-accept-completion))
-    (:tabnine-chat-mode-map
-     :package tabnine-chat
-     ("C-<return>" . tabnine-chat-send)))
-
   (leaf company-tabnine
     :disabled t
     :ensure t
@@ -505,6 +470,41 @@ targets."
     :require t
     :custom
     (company-tabnine-binaries-folder . "~/.config/tabnine")))
+
+(leaf tabnine
+  :req "M-x tabnine-install-binary"
+  :req "M-x tabnine-login"
+  :ensure t
+  :commands
+  tabnine-start-process
+  tabnine-chat-explain-code
+  tabnine-chat-generate-test-for-code
+  tabnine-chat-document-code
+  tabnine-chat-fix-code
+  :diminish "⌬"
+  :custom
+  (tabnine-chat-prompt-alist
+   . '((explain-code . "このコードを説明して")
+       (generate-test-for-code . "このコードのテストコードを書いて")
+       (document-code . "このコードのドキュメントを書いて")
+       (fix-code . "このコードの間違いを指摘して修正したコードを出力して")))
+  (tabnine-minimum-prefix-length . 0)
+  (tabnine-binaries-folder . "~/.config/tabnine")
+  :config
+  (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point)
+  (tabnine-start-process)
+  :hook
+  (prog-mode-hook . tabnine-mode)
+  (kill-emacs-hook . tabnine-kill-process)
+  :bind
+  (:tabnine-completion-map
+   :package tabnine-core
+   ("<tab>" . nil)
+   ("TAB" . nil)
+   ("C-<return>" . tabnine-accept-completion))
+  (:tabnine-chat-mode-map
+   :package tabnine-chat
+   ("C-<return>" . tabnine-chat-send)))
 
 (leaf tabby
   :disabled t
