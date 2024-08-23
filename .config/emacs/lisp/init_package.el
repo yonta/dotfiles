@@ -507,6 +507,7 @@ targets."
     (company-tabnine-binaries-folder . "~/.config/tabnine")))
 
 (leaf tabby
+  :disabled t
   :url "https://tabby.tabbyml.com/"
   :doc "tabbyで補完を行う"
   :doc "---"
