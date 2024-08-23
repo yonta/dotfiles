@@ -491,7 +491,6 @@ targets."
   (tabnine-minimum-prefix-length . 0)
   (tabnine-binaries-folder . "~/.config/tabnine")
   :config
-  (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point)
   (tabnine-start-process)
   :hook
   (prog-mode-hook . tabnine-mode)
@@ -670,7 +669,7 @@ targets."
     :config
     (defun my/eglot-completion-at-point-with-cape ()
       "Completion function by `eglot-completion-at-point` with cape"
-      (cape-wrap-super (cape-company-to-capf #'company-tabnine)
+      (cape-wrap-super #'tabnine-completion-at-point
                        #'eglot-completion-at-point
                        #'cape-file
                        #'cape-dabbrev))
@@ -900,7 +899,7 @@ targets."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
-                    (cape-company-to-capf #'company-tabnine)
+                    #'tabnine-completion-at-point
                     ;; company-mlton系だけcase sensitiveになる
                     (cape-company-to-capf #'company-mlton-basis)
                     (cape-company-to-capf #'company-mlton-keyword)
@@ -1105,7 +1104,7 @@ targets."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
-                    (cape-company-to-capf #'company-tabnine)
+                    #'tabnine-completion-at-point
                     (cape-company-to-capf #'company-web-html)
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-bootstrap-icons)
@@ -1147,7 +1146,7 @@ targets."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
-                    (cape-company-to-capf #'company-tabnine)
+                    #'tabnine-completion-at-point
                     (cape-company-to-capf #'company-css)
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-dabbrev-code))
