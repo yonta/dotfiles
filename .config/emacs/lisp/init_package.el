@@ -489,6 +489,7 @@ targets."
        (document-code . "このコードのドキュメントを書いて")
        (fix-code . "このコードの間違いを指摘して修正したコードを出力して")))
   (tabnine-minimum-prefix-length . 0)
+  (tabnine-idle-delay . 0.6)
   (tabnine-binaries-folder . "~/.config/tabnine")
   :config
   (tabnine-start-process)
