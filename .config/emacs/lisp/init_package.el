@@ -49,8 +49,7 @@
 (leaf util :defun call-with-region-or-line) ; dummy, init_util.el
 
 (leaf initchart
-  :el-get (initchart
-           :url "https://github.com/yuttie/initchart.git"))
+  :vc (:url "https://github.com/yuttie/initchart.git"))
 
 ;;; Vertico
 
@@ -542,8 +541,7 @@ targets."
   :doc "---"
   :doc "利用時は手動でtabby-modeをオンにする"
   :if (executable-find "tabby")
-  :el-get (tabby
-           :url "https://github.com/alan-w-255/tabby.el.git")
+  :vc (:url "https://github.com/alan-w-255/tabby.el.git")
   ;; 消極的な補完、手動でC-c <tab>で補完候補を出す
   ;; :custom (tabby-idle-delay . 5)
   ;; :bind (:tabby-mode-map
@@ -599,8 +597,7 @@ targets."
 
   (leaf flycheck-docker-build-checks
     :defun flycheck-docker-build-checks-setup
-    :el-get (flycheck-docker-build-checks
-             :url "https://github.com/yonta/flycheck-docker-build-checks.git")
+    :vc (:url "https://github.com/yonta/flycheck-docker-build-checks.git")
     :init (flycheck-docker-build-checks-setup)
     :hook
     ((dockerfile-ts-mode-hook dockerfile-mode-hook)
@@ -617,8 +614,7 @@ targets."
   :defun lsp-bridge-show-documentation
   :ensure markdown-mode yasnippet
   :diminish t
-  :el-get (lsp-bridge
-           :url "https://github.com/manateelazycat/lsp-bridge.git")
+  :vc (:url "https://github.com/manateelazycat/lsp-bridge.git")
   :defun global-lsp-bridge-mode
   :init
   ;; lsp-bridgeではacmを使うため、prog-mode全体でのcorfuをオフ
@@ -720,8 +716,7 @@ targets."
     :req "cargo build --release"
     :req "cp target/release/emacs-lsp-booster ~/bin/"
     :defun eglot-booster-mode
-    :el-get (eglot-booster
-             :url "https://github.com/jdtsmith/eglot-booster.git")
+    :vc (:url "https://github.com/jdtsmith/eglot-booster.git")
     :if (executable-find "emacs-lsp-booster")
     :global-minor-mode t
     :after eglot)
@@ -752,9 +747,9 @@ targets."
     :hook (emacs-lisp-mode-hook . enable-auto-async-byte-compile-mode))
 
   (leaf auto-compile
-    :el-get (auto-compile
-             :url "https://github.com/emacscollective/auto-compile.git")
-    :doc "設定はearly-init.elに"
+    :vc (:url "https://github.com/emacscollective/auto-compile.git")
+    :doc "ロードの設定はearly-init.elにある"
+    :doc "ディレクトリ名にバージョン番号を入れないようpackage-vcを使う"
     :doc "load時にelcが古ければ自動コンパイルする")
 
   (leaf lispxmp :ensure t
@@ -859,9 +854,8 @@ targets."
   :leaf-path nil
   :preface
   (leaf sml-mode
-    :el-get (sml-mode
-             :url "https://github.com/yonta/sml-mode.git"
-             :branch "add-smlsharp")
+    :vc ( :url "https://github.com/yonta/sml-mode.git"
+          :branch "add-smlsharp")
     :mode ("\\.smi\\'" "\\.ppg\\'")
     :interpreter "smlsharp"
     :defun (sml-prog-proc-proc
@@ -889,9 +883,8 @@ targets."
            ("C-c C-p" . sml-run)))
 
   (leaf company-mlton
-    :el-get (company-mlton
-             :url "https://github.com/yonta/company-mlton.git"
-             :branch "add-smlsharp")
+    :vc ( :url "https://github.com/yonta/company-mlton.git"
+          :branch "add-smlsharp")
     :defun
     company-mlton-basis
     company-mlton-keyword
@@ -899,7 +892,7 @@ targets."
     (company-mlton-modes . '(sml-mode inferior-sml-mode))
     ;; MLtonのbasisを除き、SMLのbasisを使う
     (company-mlton-basis-file
-     . "~/.config/emacs/el-get/company-mlton/sml-basis-lib.basis")
+     . "~/.config/emacs/elpa/company-mlton/sml-basis-lib.basis")
     :config
     (defun my/company-mlton-init ()
       "Set company backends for completion"
@@ -918,18 +911,16 @@ targets."
     (sml-mode-hook . my/company-mlton-init))
 
   (leaf flycheck-smlsharp
-    :el-get (flycheck-smlsharp
-             :url "https://github.com/yonta/flycheck-smlsharp.git")
+    :vc (:url "https://github.com/yonta/flycheck-smlsharp.git")
     :after sml-mode
     :require t)
 
   (leaf flycheck-mlton
-    :el-get gist:80c938a54f4d14a1b75146e9c0b76fc2:flycheck-mlton
+    :vc (:url "https://gist.github.com/80c938a54f4d14a1b75146e9c0b76fc2.git")
     :hook (sml-mode-hook . (lambda () (require 'flycheck-mlton))))
 
   (leaf sml-eldoc :disabled t
-    :el-get (sml-eldoc
-             :url "https://raw.githubusercontent.com/xuchunyang/emacs.d/master/lisp/sml-eldoc.el")
+    :vc (:url "https://raw.githubusercontent.com/xuchunyang/emacs.d/master/lisp/sml-eldoc.el")
     :hook (sml-mode-hook . sml-eldoc-turn-on)))
 
 (leaf python
@@ -1078,12 +1069,10 @@ targets."
   :preface
   (leaf company-bootstrap5
     :defun company-bootstrap5
-    :el-get (company-bootstrap5
-             :url "https://github.com/yonta/company-bootstrap5.git"))
+    :vc (:url "https://github.com/yonta/company-bootstrap5.git"))
 
   (leaf company-bootstrap-icons
-    :el-get (company-bootstrap-icons
-             :url "https://github.com/yonta/company-bootstrap-icons.git"))
+    :vc (:url "https://github.com/yonta/company-bootstrap-icons.git"))
 
   (leaf company-web :ensure t)
 
@@ -1124,12 +1113,8 @@ targets."
   (leaf impatient-mode :ensure t
     :doc "HTMLのライブプレビューモード")
 
-  (leaf reformatter :ensure t
-    :doc "el-getでいれるhtmlbeautifierが依存")
-
   (leaf htmlbeautifier
-    :el-get (htmlbeautifier
-             :url "https://github.com/yonta/htmlbeautifier.el.git")
+    :vc (:url "https://github.com/yonta/htmlbeautifier.el.git")
     :hook (web-mode-hook . htmlbeautifier-format-on-save-mode)
     :custom (htmlbeautifier-keep-blank-lines . 1))
 
@@ -1138,8 +1123,7 @@ targets."
     (erblint-check-command . "erblint --lint-all"))
 
   (leaf flycheck-markuplint
-    :el-get (flycheck-markuplint
-             :url "https://github.com/yonta/flycheck-markuplint.git")
+    :vc (:url "https://github.com/yonta/flycheck-markuplint.git")
     :hook ((web-mode-hook . flycheck-markuplint-setup)
            (html-mode-hook . flycheck-markuplint-setup)
            (mhtml-mode-hook . flycheck-markuplint-setup)))
@@ -1442,8 +1426,7 @@ targets."
     (volatile-highlights-mode t))
 
   (leaf hl-line+
-    :el-get (hl-line+
-             :url "https://github.com/emacsmirror/hl-line-plus.git")
+    :vc (:url "https://github.com/emacsmirror/hl-line-plus.git")
     :defun (toggle-hl-line-when-idle hl-line-when-idle-interval)
     :config
     (toggle-hl-line-when-idle 1)
@@ -1580,8 +1563,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 
 (leaf grep-context
   :doc "grep系コマンドにて+e/-を使って周りの行を展開する"
-  :el-get (grep-context
-           :url "https://github.com/emacs-pe/grep-context.git")
+  :vc (:url "https://github.com/emacs-pe/grep-context.git")
   :hook (compilation-mode-hook . grep-context-mode)
   :bind (:grep-context-mode-map ("e" . grep-context-mode-around-point)))
 

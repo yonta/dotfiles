@@ -75,7 +75,7 @@
 (setq load-prefer-newer t)
 (if (package-installed-p 'auto-compile)
     (progn
-      (add-to-list 'load-path "~/.config/emacs/el-get/auto-compile/")
+      (add-to-list 'load-path "~/.config/emacs/elpa/auto-compile/")
       (require 'auto-compile)
       (auto-compile-on-load-mode)))
 

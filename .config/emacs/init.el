@@ -48,7 +48,7 @@
 ;; コメントアウトを外し、Emacsを起動して、
 ;; `initchart-visualize-init-sequence'を実行して出力先を指定する。
 ;;
-;; (let ((default-directory  "~/.config/emacs/el-get/initchart"))
+;; (let ((default-directory  "~/.config/emacs/elpa/initchart"))
 ;;   (normal-top-level-add-to-load-path '("."))
 ;;   (normal-top-level-add-subdirs-to-load-path))
 ;; (require 'initchart)
