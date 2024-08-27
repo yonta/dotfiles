@@ -2299,7 +2299,8 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   ;; cl-defstructのmake-llm-ollama展開後
   (ellama-provider
    . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                   "deepseek-coder-v2:16b" "deepseek-coder-v2:16b"))
+                   "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
+                   "deepseek-coder-v2:16b-lite-instruct-q4_K_S"))
   (ellama-define-word-prompt-template . "%s の定義を教えて")
   (ellama-summarize-prompt-template . "Text:\n%s\n要約して")
   (ellama-code-review-prompt-template . "以下のコードのレビューと改善案をだして:\n```\n%s\n```")
