@@ -2276,6 +2276,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :global-minor-mode t)
 
 (leaf ellama
+  :doc "cl-defstruct生成make-llm-ollamaを手動展開しコンパイル可にした"
   :if (executable-find "ollama")
   :ensure t
   :defer-config
@@ -2284,19 +2285,15 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   (ellama-language . "Japanese")
   (ellama-major-mode . 'markdown-mode)
   (ellama-naming-scheme . 'ellama-generate-name-by-time)
-  ;; `(ellama-provider
-  ;;   . ,(make-llm-ollama :chat-model "starcoder2:7b"
-  ;;                       :embedding-model "starcoder2:7b"))
-  ;; (ellama-provider
-  ;;  . #s(llm-ollama nil nil nil "http" "localhost" 11434
-  ;;                  "starcoder2:7b" "starcoder2:7b"))
-  ;; `(ellama-provider
-  ;;   . ,(make-llm-ollama :chat-model "deepseek-coder:6.7b"
-  ;;                       :embedding-model "deepseek-coder:6.7b"))
-  ;; `(ellama-provider
-  ;;   . ,(make-llm-ollama :chat-model "deepseek-coder-v2:16b"
-  ;;                       :embedding-model "deepseek-coder-v2:16b"))
-  ;; cl-defstructのmake-llm-ollama展開後
+  (ellama-providers
+   . '(("deepseek-coder-v2"
+        . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                        "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
+                        "deepseek-coder-v2:16b-lite-instruct-q4_K_S"))
+       ("gemma2"
+        . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                        "gemma2:2b-instruct-q4_K_S"
+                        "gemma2:2b-instruct-q4_K_S"))))
   (ellama-provider
    . #s(llm-ollama nil nil nil "http" "localhost" 11434
                    "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
