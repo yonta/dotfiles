@@ -2282,7 +2282,6 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :defer-config
   (require 'llm-ollama)
   :custom
-  (ellama-language . "Japanese")
   (ellama-major-mode . 'markdown-mode)
   (ellama-naming-scheme . 'ellama-generate-name-by-time)
   (ellama-providers
@@ -2294,6 +2293,14 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
         . #s(llm-ollama nil nil nil "http" "localhost" 11434
                         "gemma2:2b-instruct-q4_K_S"
                         "gemma2:2b-instruct-q4_K_S"))))
+  ;; translation
+  (ellama-language . "日本語")
+  (ellama-translation-provider
+   . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                   "gemma2:2b-instruct-q4_K_S"
+                   "gemma2:2b-instruct-q4_K_S"))
+  (ellama-translation-template . "%s で話して。%s 、を %s に翻訳して。")
+  ;; code generation
   (ellama-provider
    . #s(llm-ollama nil nil nil "http" "localhost" 11434
                    "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
