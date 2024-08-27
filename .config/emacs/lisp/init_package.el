@@ -32,8 +32,6 @@
     ;; :diminishを有効にし、モードラインをスッキリさせる
     :ensure t diminish smartrep
     :config
-    (leaf el-get :ensure t
-      :custom (el-get-git-shallow-clone . t))
     (leaf diminish :ensure t)
     (leaf-keywords-init)))
 
@@ -2243,7 +2241,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
     (native-compile-async
      (append
       ;; directories
-      '("~/.config/emacs/lisp" "~/.config/emacs/el-get" "~/.config/emacs/elpa")
+      '("~/.config/emacs/lisp" "~/.config/emacs/elpa")
       my/comp-init-files-list)
      'recursively))
   (defun my/comp-init-files ()
