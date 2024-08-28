@@ -2191,7 +2191,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   (browse-url-generic-program . "wslview"))
 
 (leaf clipboard
-  :doc "emacs29でクリップボードが文字化けする問題を対処"
+  :doc "emacs29 + pureGTKでクリップボードが文字化けする問題を対処"
   :doc "credit: yorickvP on Github"
   :req "wl-clipboardをインストールしておく"
   :req "sudo apt install wl-clipboard"
@@ -2200,7 +2200,9 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :leaf-path nil
   :emacs>= 29
   :if (and (getenv "WSLENV")
-           (executable-find "wl-copy") (executable-find "wl-paste"))
+           (executable-find "wl-copy")
+           (executable-find "wl-paste")
+           (string-match "--with-pgtk" system-configuration-options))
   :defvar wl-copy-process
   :init
   (setq wl-copy-process nil)
