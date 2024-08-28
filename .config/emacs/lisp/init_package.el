@@ -500,8 +500,9 @@ targets."
   :bind
   (:tabnine-completion-map
    :package tabnine-core
-   ("<tab>" . nil)
-   ("TAB" . nil)
+   ("<tab>" . nil) ;; tabnine-accept-completion
+   ("TAB" . nil)   ;; tabnine-accept-completion
+   ("M-f" . nil)   ;; tabnine-accept-completion-by-word
    ("C-<return>" . tabnine-accept-completion))
   (:tabnine-chat-mode-map
    :package tabnine-chat
