@@ -50,6 +50,7 @@ function nice_make_link () {
 # $1はcopy or force
 files="\
 .config/bash .config/emacs .config/git .config/hg .config/solargraph \
+.config/bat \
 .bashrc .profile .vimrc \
 .config/screenrc .config/starship.toml .config/ripgrep.conf \
 "
