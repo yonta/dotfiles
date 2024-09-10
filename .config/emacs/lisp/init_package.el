@@ -2285,7 +2285,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
    . #s(llm-ollama nil nil nil "http" "localhost" 11434
                    "gemma2:2b-instruct-q4_K_S"
                    "gemma2:2b-instruct-q4_K_S"))
-  (ellama-translation-template . "%s で話して。%s 、を %s に翻訳して。")
+  (ellama-translation-template . "%sで話して。「%s」を%sに翻訳して。")
   ;; code generation
   (ellama-provider
    . #s(llm-ollama nil nil nil "http" "localhost" 11434
