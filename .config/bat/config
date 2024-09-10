@@ -28,3 +28,4 @@
 --map-syntax "*.rbs:Ruby"
 --map-syntax "Steepfile:Ruby"
 --map-syntax ".emacs:Lisp"
+--map-syntax ".dockerignore:Git Ignore"
