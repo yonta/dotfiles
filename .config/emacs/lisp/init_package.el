@@ -476,6 +476,7 @@ targets."
   :ensure t
   :commands
   tabnine-start-process
+  tabnine-kill-process
   ;; うまくオートロードされてないコマンドたち
   tabnine-chat
   tabnine-chat-explain-code
@@ -495,8 +496,13 @@ targets."
   :config
   (tabnine-start-process)
   :hook
-  (prog-mode-hook . tabnine-mode)
-  (kill-emacs-hook . tabnine-kill-process)
+  ;; (prog-mode-hook . tabnine-mode)
+  ;; (kill-emacs-hook . tabnine-kill-process)
+  ;; tabnine-modeが起動していないときにEmacsを終了すると、
+  ;; tabnine-kill-processが呼ばれ、そこから:config設定で
+  ;; tabnine-start-processが呼び出されてしまうのを対処
+  (kill-emacs-hook
+   . (lambda () (when (boundp 'tabnine--process) (tabnine-kill-process))))
   :bind
   (:tabnine-completion-map
    :package tabnine-core
