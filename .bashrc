@@ -67,8 +67,8 @@ if [ "$color_prompt" = yes ]; then
     PS1_2='\[\033[00m\]:\[\033[01;34m\]\w\[\033[35m\]$(__git_ps1)\[\033[00m\]\$ '
     # WSLでubuntu/openSUSEの両方がある場合、OS名をいれる
     if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 &&
-           type "ubuntu.exe" > /dev/null 2>&1 &&
-           type "openSUSE-42.exe" > /dev/null 2>&1 ; then
+            type "ubuntu.exe" > /dev/null 2>&1 &&
+            type "openSUSE-42.exe" > /dev/null 2>&1 ; then
         if grep 'Ubuntu' /etc/os-release > /dev/null 2>&1; then
             OSNAME='-ubuntu'
         elif grep 'openSUSE' /etc/os-release > /dev/null 2>&1; then
