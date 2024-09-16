@@ -18,6 +18,7 @@ mklink /D %home%\.config\bat %repopath%\.config\bat
 rem files
 mklink %home%\.bashrc %repopath%\.bashrc
 mklink %home%\.bash_profile %repopath%\.bash_profile
+mklink %home%\.bash_aliases %repopath%\.bash_aliases
 mklink %home%\.vimrc %repopath%\.vimrc
 mklink %home%\.config\screenrc %repopath%\.config\screenrc
 mklink %home%\.config\starship.toml %repopath%\.config\starship.toml

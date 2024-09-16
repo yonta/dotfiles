@@ -17,56 +17,11 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 # WSLGによって設定済み
 # XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
 
-# if running bash
-if [ -n "${BASH_VERSION}" ]; then
-    export HISTFILE="${XDG_CONFIG_HOME}/bash/history"
-    export INPUTRC="${XDG_CONFIG_HOME}/bash/inputrc"
-
-    # include .bashrc if it exists
-    if [ -f "${HOME}/.bashrc" ]; then
-        . "${HOME}/.bashrc"
-    fi
-fi
-
 # Rust and cargo
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 if [ -d "${CARGO_HOME}" ] ; then
     PATH="${CARGO_HOME}/bin:${PATH}"
-fi
-
-# set Aliases
-alias grep='grep --color=auto'
-if type eza > /dev/null 2>&1 ; then
-    # use eza
-    alias ls='eza'
-    alias l='eza'
-    alias la='eza --all'
-    alias ll='eza --long --classify --group --git --time-style=long-iso'
-    alias lla='ll --all'
-else
-    # use ls
-    alias ls='ls --color=auto --show-control-chars'
-    alias l='ls'
-    alias la='ls --all'
-    alias ll='ls -l --classify --human-readable'
-    alias lla='ll --all'
-fi
-if type vim > /dev/null 2>&1 ; then
-    alias vi='vim'
-    alias lessv='/usr/share/vim/vim82/macros/less.sh'
-    alias vless='lessv'
-fi
-if type emacs > /dev/null 2>&1 ; then
-    alias emacsc='emacs -Q --batch -f batch-byte-compile'
-fi
-
-# apt package bat/fd alias
-if ! type bat > /dev/null 2>&1 && dpkg -l bat > /dev/null 2>&1 ; then
-    alias bat='batcat'
-fi
-if ! type fd > /dev/null 2>&1 && dpkg -l fd-find > /dev/null 2>&1 ; then
-    alias fd='fdfind'
 fi
 
 # GPG
@@ -147,18 +102,12 @@ if [ -d "${BUN_INSTALL}" ] ; then
     export PATH="${BUN_INSTALL}/bin:${PATH}"
 fi
 
-# all pip package upgrade
-if type pip > /dev/null 2>&1 ; then
-    alias pip-upgrade-all="pip list -o | tail -n +3 | awk '{ print \$1 }' | xargs pip install -U"
-fi
-
 # bat help
 if type bat > /dev/null 2>&1 ; then
     help() {
         "$@" --help 2>&1 | bat --plain --language=help
     }
 fi
-alias h='help'
 
 # grip
 export GRIPHOME="${XDG_CONFIG_HOME}/grip"
@@ -209,12 +158,6 @@ if [ -n "${WSLENV}" ] ; then
     PATH="${PATH}:/mnt/c/Windows"
     PATH="${PATH}:/mnt/c/Windows/System32"
 
-    if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
-        alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
-    fi
-
-    alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
-
     # SSHログインじゃないとき
     if [ -z "${SSH_CLIENT}" ] ; then
         # WSL2のGUIでキーボード配列がUSになる暫定対処
@@ -237,5 +180,16 @@ if [ -n "${WSLENV}" ] ; then
         if [ -z "${SSH_CLIENT}" ]; then # not via ssh
             export DISPLAY=localhost:0
         fi
+    fi
+fi
+
+# if running bash
+if [ -n "${BASH_VERSION}" ]; then
+    export HISTFILE="${XDG_CONFIG_HOME}/bash/history"
+    export INPUTRC="${XDG_CONFIG_HOME}/bash/inputrc"
+
+    # include .bashrc if it exists
+    if [ -f "${HOME}/.bashrc" ]; then
+        . "${HOME}/.bashrc"
     fi
 fi
