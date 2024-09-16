@@ -1645,11 +1645,17 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     ;; (explicit-shell-file-name . my-shell-file-name)
     (explicit-bash-args . '("--login" "-i"))
     ;; shell-modeでのファイル名補完
-    (shell-file-name-chars . "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")))
-;; :hook (shell-mode-hook . (lambda ()
-;;                            ;; SHELL で ^M が付く場合は ^M を削除する
-;;                            (set-process-coding-system
-;;                             'undecided-dos 'sjis-unix)))
+    (shell-file-name-chars . "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
+    ;; :hook
+    ;; (shell-mode-hook
+    ;;  . (lambda ()
+    ;;      ;; SHELL で ^M が付く場合は ^M を削除する
+    ;;      (set-process-coding-system
+    ;;       'undecided-dos 'sjis-unix)))
+    )
+
+  (leaf bash-ts-mode
+    :mode ("\\.bash_aliases\\'" . bash-ts-mode)))
 
 (leaf image-dired+ :ensure t
   :doc "非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ"
