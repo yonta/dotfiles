@@ -1118,6 +1118,8 @@ targets."
     :doc "HTMLのライブプレビューモード")
 
   (leaf htmlbeautifier
+    :req "gem install htmlbeautifier"
+    :if (executable-find "htmlbeautifier")
     :vc (:url "https://github.com/yonta/htmlbeautifier.el.git")
     :hook (web-mode-hook . htmlbeautifier-format-on-save-mode)
     :custom (htmlbeautifier-keep-blank-lines . 1))
