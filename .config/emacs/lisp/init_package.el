@@ -1124,9 +1124,21 @@ targets."
     :hook (web-mode-hook . htmlbeautifier-format-on-save-mode)
     :custom (htmlbeautifier-keep-blank-lines . 1))
 
-  (leaf erblint :ensure t
+  (leaf erblint
+    :ensure t
+    :defun erblint-command-prefix
     :custom
-    (erblint-check-command . "erblint --lint-all"))
+    ;; ファイル名、ライン、カラムを認識できるフォーマットにする
+    (erblint-check-command . "erblint --format compact")
+    :defer-config
+    ;; pathが"\~/git/sakazuki"のようにバックスラッシュされるのを防ぐため
+    ;; 修正した関数を定義する
+    (defun erblint-build-command (command path)
+      "Build the full command to be run based on COMMAND and PATH.
+The command will be prefixed with `bundle exec` if Erblint is bundled."
+      (mapconcat 'identity
+                 (list (erblint-command-prefix) command path)
+                 " ")))
 
   (leaf flycheck-markuplint
     :vc (:url "https://github.com/yonta/flycheck-markuplint.git")
