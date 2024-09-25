@@ -122,6 +122,8 @@ if [ -f "${XDG_CONFIG_HOME}/fzf/fzf.bash" ]; then
     # tab補完にfzfを利用する
     # GitHubからbash用ファイルを取得した
     source ~/.config/bash/fzf-bash-completion.sh
+    FZF_COMPLETION_AUTO_COMMON_PREFIX="true"
+    FZF_COMPLETION_AUTO_COMMON_PREFIX_PART="true"
 
     # 端末のときのみ
     if [ -t 1 ] ; then
