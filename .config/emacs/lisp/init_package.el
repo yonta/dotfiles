@@ -1574,10 +1574,16 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :doc "C-x pにコマンドがまとまっている"
   :bind* ("C-c C-f" . project-find-file))
 
-(leaf ripgrep
+(leaf ripgrep :disabled t
   :ensure t
   :bind
   ("M-s r" . ripgrep-regexp))
+
+(leaf rg
+  :ensure t
+  :bind
+  ("M-s r" . rg)
+  ("M-s p" . rg-project))
 
 (leaf grep-context
   :doc "grep系コマンドにて+e/-を使って周りの行を展開する"
@@ -1607,6 +1613,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
                                 "\\*xref\\*"
                                 "\\*Backtrace\\*"
                                 "\\*ripgrep-search\\*"
+                                "\\*rg\\*"
                                 "\\*Google Translate\\*"
                                 "\\*robe-doc\\*"
                                 "\\*lsp-bridge-doc\\*"
