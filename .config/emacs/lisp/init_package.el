@@ -1117,7 +1117,12 @@ targets."
   (leaf impatient-mode :ensure t
     :doc "HTMLのライブプレビューモード")
 
+  (leaf reformatter
+    :doc "htmlbeautifierに必要"
+    :ensure t)
+
   (leaf htmlbeautifier
+    :req "reformatter"
     :req "gem install htmlbeautifier"
     :if (executable-find "htmlbeautifier")
     :vc (:url "https://github.com/yonta/htmlbeautifier.el.git")
