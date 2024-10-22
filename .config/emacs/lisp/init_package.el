@@ -1438,15 +1438,16 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :config
     (push 'sml-mode ahs-modes))
 
-  (leaf volatile-highlights
-    :defvar vhl/.installed-extensions
+  (leaf goggles
+    :doc "変更箇所を強調する"
     :ensure t
-    :require t
-    :diminish volatile-highlights-mode
-    :config
-    ;; etags.elcのロードに100msecほどかかるのでオフ
-    (cl-delete 'etags vhl/.installed-extensions)
-    (volatile-highlights-mode t))
+    :diminish t
+    :hook prog-mode-hook text-mode-hook
+    :custom
+    ;; 色を薄くする回数、1で即消える
+    (goggles-pulse-iterations . 10)
+    ;; 色を薄くする1回ごとの秒数
+    (goggles-pulse-delay . 0.2))
 
   (leaf hl-line+
     :vc (:url "https://github.com/emacsmirror/hl-line-plus.git")

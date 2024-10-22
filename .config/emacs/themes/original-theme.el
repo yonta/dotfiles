@@ -200,6 +200,9 @@
    `(show-paren-mismatch ((t (:foreground ,dark1 :background ,red1))))
    '(Man-overstrike ((t (:foreground "DeepPink3" :bold t))))
    '(Man-underline ((t (:foreground "Blue" :underline t))))
+   `(goggles-added ((t (:background ,green2))))
+   `(goggles-changed ((t (:background ,yellow2))))
+   `(goggles-removed ((t (:background ,red2))))
    )
   ;; カーソル位置ハイライトは1段階のみ、背景色blue2のみを設定
   (customize-set-variable 'highlight-parentheses-colors nil)
