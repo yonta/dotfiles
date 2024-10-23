@@ -16,7 +16,7 @@ HISTCONTROL=ignoredups
 # shopt -s histappend
 
 # プロンプト表示前に、コマンド履歴をファイルにセーブ・ロードする
-PROMPT_COMMAND="${PROMPT_COMMAND}; history -a; history -c; history -r"
+PROMPT_COMMAND="${PROMPT_COMMAND+${PROMPT_COMMAND}; }history -a; history -c; history -r"
 # bash終了時に履歴保存をしない
 shopt -u histappend
 
