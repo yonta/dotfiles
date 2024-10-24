@@ -1189,6 +1189,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
            (typescript-ts-base-mode-hook . add-node-modules-path)
            (markdown-mode-hook . add-node-modules-path)
            (css-base-mode-hook . add-node-modules-path)
+           (html-mode-hook . add-node-modules-path)
            (web-mode-hook . add-node-modules-path))))
 
 (leaf typescript
