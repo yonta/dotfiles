@@ -1272,6 +1272,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 (leaf fontaine
   :doc "Font設定をまとめて行う"
   :req "IBM Plex Sans JPを.local/share/fontsにインストールする"
+  :url "https://fonts.google.com/specimen/IBM+Plex+Sans+JP"
   :req "apt install fonts-noto-cjk-extra"
   :ensure t
   :require t
@@ -2226,7 +2227,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
 
 (leaf browse-url
   :doc "WSLでのブラウザ設定"
-  :req "aptでubuntu-wslをいれておく"
+  :req "aptでwsluをいれておく"
   :if (getenv "WSLENV") (executable-find "wslview")
   :custom
   (browse-url-browser-function . #'browse-url-generic)
