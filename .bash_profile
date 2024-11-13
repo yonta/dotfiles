@@ -162,8 +162,6 @@ if [ -n "${WSLENV}" ] ; then
 
     # SSHログインじゃないとき
     if [ -z "${SSH_CLIENT}" ] ; then
-        # WSL2のGUIでキーボード配列がUSになる暫定対処
-        setxkbmap -layout jp -model pc105
         export BROWSER=wslview
 
         # ディスプレイが存在しVSCode WSLじゃない
