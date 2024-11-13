@@ -69,3 +69,5 @@
 	recurse = true
 [branch]
 	sort = -committerdate
+[credential]
+	helper = store --file ~/.config/git/credentials
