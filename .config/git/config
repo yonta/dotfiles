@@ -27,6 +27,7 @@
 	cp = cherry-pick
 	rbi = rebase --interactive
 	tags = tag --list
+	fetch1 = !git branch --show-current | xargs -I '{}' git fetch --depth 1 origin '{}'
 [core]
 	editor = emacsclient
 	pager = delta --color-only
