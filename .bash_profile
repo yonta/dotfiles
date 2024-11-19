@@ -113,6 +113,15 @@ fi
 export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 
 # fzf
+
+# 補完の大文字小文字を無視
+#
+# MEMO:
+# fzfはinputrcのキーバインド設定などと競合する
+#   https://github.com/junegunn/fzf/issues/2365
+# そのため、inputrcファイルではなく、bindで設定する必要がある
+bind "set completion-ignore-case on"
+
 if [ -f "${XDG_CONFIG_HOME}/fzf/fzf.bash" ]; then
     source "${XDG_CONFIG_HOME}/fzf/fzf.bash"
 
