@@ -676,8 +676,7 @@ targets."
     :config
     (defun my/eglot-completion-at-point-with-cape ()
       "Completion function by `eglot-completion-at-point` with cape"
-      (cape-wrap-super #'tabnine-completion-at-point
-                       #'eglot-completion-at-point
+      (cape-wrap-super #'eglot-completion-at-point
                        #'cape-file
                        #'cape-dabbrev))
     ;; solargraphの出力がされていない不具合に対処
@@ -901,7 +900,6 @@ targets."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
-                    #'tabnine-completion-at-point
                     ;; company-mlton系だけcase sensitiveになる
                     (cape-company-to-capf #'company-mlton-basis)
                     (cape-company-to-capf #'company-mlton-keyword)
@@ -1102,7 +1100,6 @@ targets."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
-                    #'tabnine-completion-at-point
                     (cape-company-to-capf #'company-web-html)
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-bootstrap-icons)
@@ -1158,7 +1155,6 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
       (setq-local completion-at-point-functions
                   (list
                    (cape-capf-super
-                    #'tabnine-completion-at-point
                     (cape-company-to-capf #'company-css)
                     (cape-company-to-capf #'company-bootstrap5)
                     (cape-company-to-capf #'company-dabbrev-code))
