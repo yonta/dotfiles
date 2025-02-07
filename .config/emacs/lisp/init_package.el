@@ -1760,6 +1760,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :defer-config
   ;; dump-jump対応言語はすべて登録する
   (require 'dumb-jump)
+  (eval-when-compile (require 'dash))
   (let* ((languages-dup (--map (plist-get it :language) dumb-jump-find-rules))
          (languages (delete-dups languages-dup))
          (modes-str (--map (concat it "-mode") languages))
