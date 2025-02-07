@@ -1587,6 +1587,22 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   ("M-s r" . rg)
   ("M-s p" . rg-project))
 
+(leaf super-hint
+  :doc "rg/xrefの検索結果にwhich-funcによる関数名やクラス名を追加表示する"
+  :preface
+  (leaf which-func
+    :global-minor-mode which-function-mode
+    :custom
+    ;; mode line表示をしない
+    (which-func-format . ""))
+
+  :vc (:url "https://github.com/eval-exec/super-hint.el")
+  :after rg
+  :global-minor-mode super-hint-rg-mode super-hint-xref-mode
+  :diminish super-hint-rg-mode super-hint-xref-mode
+  :custom
+  (super-hint-hint-width . 20))
+
 (leaf grep-context
   :doc "grep系コマンドにて+e/-を使って周りの行を展開する"
   :vc (:url "https://github.com/emacs-pe/grep-context.git")
