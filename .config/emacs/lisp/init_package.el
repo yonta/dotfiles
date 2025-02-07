@@ -841,13 +841,11 @@ targets."
     (:gfm-mode-map ("C-c `" . markdown-edit-code-block)))
 
   (leaf grip-mode
-    :req "pip install grip"
-    :req "GitHubのSettings/Developer settings/Personal access tokensでつくった"
-    :req "空権限のtokenをcustom.elのgrip-github-passwordに書き込む"
+    :req "cargo install mdopen"
     :doc "GitHub flavoredなスタイルシートによるMarkdownプレビューを行う"
     :ensure t
-    :if (executable-find "grip")
-    :custom (grip-github-password . "")
+    :if (executable-find "mdopen")
+    :custom (grip-use-mdopen . t)
     ;; gfm-modeのときは自動でgrip-mode
     ;; :hook (gfm-mode-hook . grip-mode)
     ))
