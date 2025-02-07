@@ -109,7 +109,7 @@
   (leaf consult
     :doc "便利コマンドを提供する"
     :ensure t
-    :defvar consult-ripgrep-args
+    :defvar consult-ripgrep-args consult--narrow-keys
     :defun consult-narrow
     :config
     ;; 隠しファイル込みでのconsult-ripgrep
