@@ -579,7 +579,8 @@ targets."
   (leaf flycheck-posframe
     :ensure t
     :after flycheck
-    :hook (flycheck-mode-hook . flycheck-posframe-mode))
+    :hook (flycheck-mode-hook . flycheck-posframe-mode)
+    :custom (flycheck-posframe-position . 'window-bottom-right-corner))
 
   (leaf flycheck-color-mode-line :ensure t
     :after flycheck
