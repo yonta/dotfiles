@@ -1085,7 +1085,7 @@ targets."
     :mode "\\.erb\\'"
     :custom
     (web-mode-enable-comment-interpolation . t)
-    (web-mode-enable-auto-pairing . nil)
+    (web-mode-enable-auto-pairing . t)
     (web-mode-enable-auto-quoting . t)
     (web-mode-enable-auto-expanding . t)
     (web-mode-enable-current-element-highlight . t)
@@ -1370,14 +1370,14 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 
 ;; MEMO: 初回起動時にpackageがない状況ではrequireエラーする。
 ;;       マクロが実際に必要なので、強制インストールする。
-(when (not (package-installed-p 'smartparens))
-  (package-install 'smartparens))
+;; (when (not (package-installed-p 'smartparens))
+;;   (package-install 'smartparens))
 (leaf parens
   :leaf-path nil
   :preface
   ;; sp-with-modesマクロの読み込み
   (eval-when-compile (require 'smartparens))
-  (leaf smartparens
+  (leaf smartparens :disabled t
     :ensure t
     :defun sp-local-pair
     :global-minor-mode smartparens-global-mode
@@ -1408,6 +1408,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     (sp-with-modes '(sh-mode bash-ts-mode)
       (sp-local-pair "$" "" :post-handlers '(:add "{|}")))
     )
+
+  (leaf electric-pair-mode :global-minor-mode t)
 
   (leaf rainbow-delimiters
     :doc "デフォルトの色合いがだいぶ淡い"
