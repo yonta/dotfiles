@@ -930,56 +930,58 @@ targets."
   (leaf python
     :leaf-path nil
     :defun python-shell-send-region
+    :req "ruff, pyright, (mypy)"
+    :req "*: pip install ruff pyright"
     :defer-config
     (defun my-python-shell-send-region-or-line ()
       "Call REPL with active region or current line."
       (interactive) (call-with-region-or-line #'python-shell-send-region))
-    ;; 「変数の再定義が禁止」など、pepに従ったflake8よりエラーが厳しい
-    ;; 必要なときにだけflycheck-select-checkerで利用する
-    ;; :hook (python-mode-hook
-    ;;        . (lambda () (setq-local flycheck-checker 'python-mypy))))
-    :bind (:python-mode-map
+    :hook
+    (python-base-mode-hook . eglot-ensure)
+    ;; eglot-checkの後にpython-ruffによるチェックを追加
+    ;; なお、python-ruffのnextにpython-mypyがセットされている
+    (eglot-managed-mode-hook
+     . (lambda ()
+         (when (derived-mode-p 'python-base-mode)
+           (setq my/flycheck-next-local-cache
+                 '((eglot-check . ((next-checkers . (python-ruff)))))))))
+    :bind (:python-ts-mode-map
            ("C-c C-r" . my-python-shell-send-region-or-line)
            ("<backtab>" . python-indent-shift-left))
     :custom
     (python-shell-interpreter . "python3")
     (python-indent-offset . 4))
 
-  (leaf pip-requirements :ensure t)
+  (leaf ruff-format
+    :doc "Rust制ruffでフォーマットする"
+    :req "reformatter.el"
+    :req "ruff: pip install ruff"
+    :ensure t
+    :diminish ruff-format-on-save-mode
+    :hook (python-base-mode-hook . ruff-format-on-save-mode))
 
-  (leaf jedi-core :ensure t
-    :hook (python-mode-hook . jedi:setup)
-    ;; 関数の引数の情報が便利なので、ミニバッファに表示する
-    :custom ((jedi:tooltip-method . nil)
-             (jedi:use-shortcuts . t) ; M-,/M-.にjediを使う
-             (jedi:environment-root . "python3-default")))
+  (leaf pip-requirements
+    :ensure t
+    :doc "requirements.txt用メジャーモード")
 
-  ;; pipでvirtualenvを入れておく
-  ;; Ubuntu bionicのpythonは2.7なので、予め以下コマンドでPython3の環境を作る
-  ;; Ubuntu focalではpython3なので必要ない
-  ;;   virtualenv -p python3 .python-environment/python3-default
-  ;; その後、初回起動時にjedi:install-serverする
-  ;; 必要に応じて補完したいライブラリを、activateしてpip installする
-  ;;   source ~/.config/emacs/.python-environments/python3-default/bin/activate
-  ;;   pip install -r ~/.config/emacs/requirements.txt
-
-  (leaf py-autopep8 :ensure t
-    :req "pipでautopep8をいれておく"
-    :if (executable-find "autopep8")
-    :hook (python-mode-hook . py-autopep8-enable-on-save))
-
-  (leaf highlight-indentation :ensure t
+  (leaf highlight-indentation
+    :ensure t
     :diminish highlight-indentation-mode
     ;; インデントに意味のあるPythonでとりあえず使う
-    :hook (python-mode-hook . highlight-indentation-mode))
+    :hook (python-base-mode-hook . highlight-indentation-mode))
 
-  (leaf importmagic :ensure t
-    :req "pipでimportmagic3とepcをいれておく"
-    :hook (python-mode-hook . importmagic-mode))
+  (leaf pyvenv
+    :doc "pyvenv-activate pyvenv-deactivateで便利にvenv管理できる"
+    :req "venv: apt install python3-venv"
+    :ensure t
+    :hook python-base-mode-hook)
 
-  (leaf py-isort :ensure t
-    :req "pipでisortをいれておく"
-    :hook (before-save-hook . py-isort-before-save)))
+  (leaf pyvenv-auto
+    :doc "vnev .venvディレクトリがあると自動でactivateする"
+    :doc "別な複数のvenv環境のpythonファイルを開くとうまく行かない"
+    :doc "そのときは手動でvenv-activate venv-deactivateする"
+    :ensure t
+    :hook (python-base-mode-hook . pyvenv-auto-run)))
 
 (leaf ruby
   :leaf-path nil
@@ -1933,6 +1935,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   (add-to-list 'aggressive-indent-excluded-modes 'dockerfile-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'js-base-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'typescript-ts-base-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'python-base-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'compilation-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'inferior-sml-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'shell-mode))
