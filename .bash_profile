@@ -25,7 +25,8 @@ if [ -d "${CARGO_HOME}" ] ; then
 fi
 
 # GPG
-export GPG_TTY=$(tty)
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # EDITOR
 if type vim > /dev/null 2>&1 ; then
@@ -48,7 +49,8 @@ fi
 # OPAM configuration
 export OPAMROOT="${XDG_DATA_HOME}/opam"
 if [ -f "${OPAMROOT}/opam-init/init.sh" ] ; then
-    . ${OPAMROOT}/opam-init/init.sh > /dev/null 2> /dev/null || true
+    # shellcheck disable=SC1091
+    ". ${OPAMROOT}/opam-init/init.sh" > /dev/null 2> /dev/null || true
 fi
 
 # SML/NJ PATH
@@ -82,8 +84,10 @@ export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 # nvm
 export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
 # This loads nvm
+# shellcheck disable=SC1091
 [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
 # This loads nvm bash_completion
+# shellcheck disable=SC1091
 [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
 
 # npm
@@ -109,6 +113,20 @@ if type bat > /dev/null 2>&1 ; then
     }
 fi
 
+# Python
+eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+
+# pip
+_pip_completion()
+{
+    # pip completion --bashで自動生成なのでshellcheckを無効にしている
+    # shellcheck disable=SC2207
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                             COMP_CWORD=$COMP_CWORD \
+                             PIP_AUTO_COMPLETE=1 $1 2>/dev/null ) )
+}
+complete -o default -F _pip_completion pip
+
 # grip
 export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 
@@ -123,6 +141,7 @@ export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 bind "set completion-ignore-case on"
 
 if [ -f "${XDG_CONFIG_HOME}/fzf/fzf.bash" ]; then
+    # shellcheck disable=SC1091
     source "${XDG_CONFIG_HOME}/fzf/fzf.bash"
 
     # fzf-tab-completion
