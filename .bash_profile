@@ -163,6 +163,9 @@ if [ -f "${XDG_CONFIG_HOME}/aptitude/config" ]; then
     export APT_CONFIG="${XDG_CONFIG_HOME}/aptitude/config"
 fi
 
+# direnv
+eval "$(direnv hook bash)"
+
 # WSLのみの設定
 if [ -n "${WSLENV}" ] ; then
     # for wsl tool deb package
