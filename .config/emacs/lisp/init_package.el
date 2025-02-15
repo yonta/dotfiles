@@ -691,23 +691,12 @@ targets."
                    . ("solargraph" "stdio" :initializationOptions
                       (:diagnostics t))))
     :hook
-    ((ruby-base-mode-hook
-      js-base-mode-hook
-      typescript-ts-base-mode-hook
-      bash-ts-mode-hook)
-     . eglot-ensure)
     ;; Eglotがlocal変数でcompletion-at-point-functionsを上書きする
     ;; capeと組み合わせを手動で設定する
     (eglot-managed-mode-hook
      . (lambda ()
          (setq-local completion-at-point-functions
-                     '(my/eglot-completion-at-point-with-cape))))
-    ;; Eglot checkの後に既存checkを追加
-    (eglot-managed-mode-hook
-     . (lambda ()
-         (when (derived-mode-p 'js-base-mode 'typescript-ts-base-mode)
-           (setq my/flycheck-next-local-cache
-                 '((eglot-check . ((next-checkers . (javascript-eslint))))))))))
+                     '(my/eglot-completion-at-point-with-cape)))))
 
   (leaf flycheck-eglot
     :ensure t
@@ -1060,10 +1049,12 @@ targets."
     :req "プロジェクトルートでsolargraph bundleを実行"
     :custom
     (ruby-insert-encoding-magic-comment . nil)
-    :hook (ruby-base-mode-hook
-           . (lambda ()
-               ;; ruby symbol
-               (setq-local dabbrev-abbrev-skip-leading-regexp ":"))))
+    :hook
+    (ruby-base-mode-hook . eglot-ensure)
+    (ruby-base-mode-hook
+     . (lambda ()
+         ;; ruby symbol
+         (setq-local dabbrev-abbrev-skip-leading-regexp ":"))))
 
   (leaf rbs-mode :ensure t))
 
@@ -1169,8 +1160,15 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :leaf-path nil
   :preface
   (leaf js
-    :custom
-    (js-indent-level . 2))
+    :custom (js-indent-level . 2)
+    :hook
+    (js-base-mode-hook . eglot-ensure)
+    ;; eglot-checkの後にjavascript-eslintによるチェックを追加
+    (eglot-managed-mode-hook
+     . (lambda ()
+         (when (derived-mode-p 'js-base-mode)
+           (setq my/flycheck-next-local-cache
+                 '((eglot-check . ((next-checkers . (javascript-eslint))))))))))
 
   (leaf add-node-modules-path
     :ensure t
@@ -1192,14 +1190,23 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 (leaf typescript
   :leaf-path nil
   :preface
-  (leaf typescript-mode :ensure t
+  (leaf typescript-mode
+    :ensure t
     :req "npmでtypescript-language-serverとtypescriptを入れておく"
     :req "npm install -g typescript-language-server typescript"
     :defvar flycheck-check-syntax-automatically
-    :hook (typescript-ts-base-mode-hook
-           . (lambda ()
-               (setq-local flycheck-check-syntax-automatically
-                           '(save mode-enabled))))
+    :hook
+    (typescript-ts-base-mode-hook . eglot-ensure)
+    (typescript-ts-base-mode-hook
+     . (lambda ()
+         (setq-local flycheck-check-syntax-automatically
+                     '(save mode-enabled))))
+    ;; eglot-checkの後にjavascript-eslintによるチェックを追加
+    (eglot-managed-mode-hook
+     . (lambda ()
+         (when (derived-mode-p 'typescript-ts-base-mode)
+           (setq my/flycheck-next-local-cache
+                 '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
     :custom
     (typescript-indent-level . 2))
 
@@ -1705,7 +1712,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     )
 
   (leaf bash-ts-mode
-    :mode ("\\.bash_aliases\\'" . bash-ts-mode)))
+    :mode ("\\.bash_aliases\\'" . bash-ts-mode)
+    :hook (bash-ts-mode-hook . eglot-ensure)))
 
 (leaf image-dired+ :ensure t
   :doc "非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ"
