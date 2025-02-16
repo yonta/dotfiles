@@ -191,6 +191,29 @@ fi
 # direnv
 eval "$(direnv hook bash)"
 
+# sshやsu後に端末タイトルを戻す
+# https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
+function resettitle()
+{
+    # change the title to default of the current window or tab
+    (source /etc/lsb-release; echo -ne "\033]0;${DISTRIB_DESCRIPTION}\007")
+}
+
+function ssh()
+{
+    /usr/bin/ssh "$@"
+    # revert the window title after the ssh command
+    resettitle
+}
+
+function su()
+{
+    # shellcheck disable=SC2117
+    /bin/su "$@"
+    # revert the window title after the su command
+    resettitle
+}
+
 # WSLのみの設定
 if [ -n "${WSLENV}" ] ; then
     # for wsl tool deb package
