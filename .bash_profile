@@ -129,9 +129,9 @@ complete -o default -F _pip_completion pip
 
 # Ruff
 # 以下コマンドにて生成したファイルを読み込む
-# ruff generate-shell-completion bash > ~/.config/bash/ruff-completion.bash
+# ruff generate-shell-completion bash > ~/.config/bash/completions/ruff
 # shellcheck disable=SC1091
-source "${XDG_CONFIG_HOME}/bash/ruff-completion.bash"
+source "${XDG_CONFIG_HOME}/bash/completions/ruff"
 
 # grip
 export GRIPHOME="${XDG_CONFIG_HOME}/grip"
@@ -155,7 +155,7 @@ if [ -f "${XDG_CONFIG_HOME}/fzf/fzf.bash" ]; then
     #
     # tab補完にfzfを利用する
     # GitHubからbash用ファイルを取得した
-    source "${HOME}/.config/bash/fzf-bash-completion.sh"
+    source "${HOME}/.config/bash/completions/fzf-bash-completion.sh"
     FZF_COMPLETION_AUTO_COMMON_PREFIX="true"
     FZF_COMPLETION_AUTO_COMMON_PREFIX_PART="true"
 
