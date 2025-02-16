@@ -24,6 +24,19 @@ if [ -d "${CARGO_HOME}" ] ; then
     PATH="${CARGO_HOME}/bin:${PATH}"
 fi
 
+# rustup completions
+# 以下コマンドにて生成したファイルを読み込む
+# rustup completions bash > ~/.config/bash/completions/rustup
+# shellcheck disable=SC1091
+source "${XDG_CONFIG_HOME}/bash/completions/rustup"
+
+# cargo completions
+# 以下コマンドにて生成したファイルを読み込む
+# rustup completions bash carog > ~/.config/bash/completions/rustup
+# shellcheck disable=SC1091
+# shellcheck disable=SC1091
+source "${XDG_CONFIG_HOME}/bash/completions/cargo"
+
 # GPG
 GPG_TTY=$(tty)
 export GPG_TTY
