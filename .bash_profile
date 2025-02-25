@@ -94,6 +94,9 @@ fi
 export BUNDLE_USER_HOME="${XDG_CONFIG_HOME}/bundle"
 export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 
+# Bundler completions
+eval "$(complete_bundle_bash_command init)"
+
 # nvm
 export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
 # This loads nvm
