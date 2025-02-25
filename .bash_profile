@@ -32,7 +32,7 @@ source "${XDG_CONFIG_HOME}/bash/completions/rustup"
 
 # cargo completions
 # 以下コマンドにて生成したファイルを読み込む
-# rustup completions bash carog > ~/.config/bash/completions/rustup
+# rustup completions bash cargo > ~/.config/bash/completions/cargo
 # shellcheck disable=SC1091
 # shellcheck disable=SC1091
 source "${XDG_CONFIG_HOME}/bash/completions/cargo"
