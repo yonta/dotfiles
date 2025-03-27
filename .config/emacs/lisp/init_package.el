@@ -565,6 +565,7 @@ targets."
   (leaf flycheck :ensure t
     :req "pipでflake8とmypyをいれておく"
     :defvar (flycheck-checker
+             flycheck-checkers
              flycheck-gcc-language-standard
              flycheck-clang-language-standard)
     :global-minor-mode global-flycheck-mode
@@ -1271,6 +1272,67 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :diminish t
   :custom (wakatime-cli-path . my/wakatime-cli-path))
 
+(leaf rust-lang
+  :leaf-path nil
+  :preface
+  (leaf rust-mode
+    :ensure t
+    :doc "flycheckが/dev/XXXXに書き込もうとしてパーミッションエラーすることがある"
+    :doc "現在調査中で、以下URLにあるようにflycheckを変更する必要がある"
+    :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2377422002"
+    :custom
+    ;; Tree Sitter統合
+    ;; 動いていない気がする
+    (rust-mode-treesitter-derive . t))
+
+  (leaf rustic
+    :ensure t
+    :custom
+    (rustic-format-on-save . t)
+    ;; (rustic-cargo-use-last-stored-arguments . t)
+    (rustic-lsp-client . 'eglot)
+    :config
+    (push 'rustic-clippy flycheck-checkers)
+    :hook
+    (rustic-mode-hook
+     . (lambda ()
+         (when (derived-mode-p 'rustic-mode)
+           (setq my/flycheck-next-local-cache
+                 '((eglot-check . ((next-checkers . (rustic-clippy)))))))))
+    :bind (:rustic-mode-map
+           ("C-c C-c <return>" . rustic-cargo-comint-run))))
+
+(leaf rust :disabled t
+  :leaf-path nil
+  :preface
+  (leaf rust-mode
+    :ensure t
+    :doc "flycheckが/dev/XXXXに書き込もうとしてパーミッションエラーすることがある"
+    :doc "現在調査中で、以下URLにあるようにflycheckを変更する必要がある"
+    :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2377422002"
+    :mode ("\\.rs\\'")
+    :after eglot
+    :custom
+    (rust-format-on-save . t)
+    (rust-mode-treesitter-derive . t)
+    :config
+    (add-to-list 'eglot-server-programs
+                 '((rust-ts-mode rust-mode) .
+                   ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
+    :hook (rust-ts-mode-hook . eglot-ensure))
+
+  (leaf flycheck-rust :disabled t
+    :ensure t
+    :doc "flycheckでrust-cargが101エラーを返すときに使う"
+    :doc "必要な変数設定をしてくれるらしい"
+    :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2378864669"
+    :after rust-mode
+    :hook (flycheck-mode-hook . flycheck-rust-setup))
+
+  (leaf cargo
+    :ensure t
+    :hook (rust-ts-mode-hook . cargo-minor-mode)))
+
 ;;; Face
 
 (leaf fontaine
@@ -1372,10 +1434,13 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   ;; spacesの対象は全角スペースのみ
   (whitespace-space-regexp . "\\(　+\\)")
   ;; 一部モードで1行の最大文字数を変更する
-  :hook ((java-mode-hook . (lambda () (setq-local whitespace-line-column 100)))
-         (ruby-base-mode-hook
-          . (lambda () (setq-local whitespace-line-column 120)))
-         (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))))
+  :hook
+  ((java-mode-hook . (lambda () (setq-local whitespace-line-column 100)))
+   (ruby-base-mode-hook
+    . (lambda () (setq-local whitespace-line-column 120)))
+   (web-mode-hook . (lambda () (setq-local whitespace-line-column 120)))
+   (rust-mode-hook . (lambda () (setq-local whitespace-line-column 100)))
+   ))
 
 ;; MEMO: 初回起動時にpackageがない状況ではrequireエラーする。
 ;;       マクロが実際に必要なので、強制インストールする。
@@ -1632,6 +1697,10 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
                                 ;; not hide
                                 compilation-mode
                                 completion-list-mode ; 全completionを対象
+                                ;; rustic-compilation-mode
+                                ;; rustic-format-mode
+                                ;; "\\*cargo-run-comint\\*"
+                                ;; "\\*cargo-run\\*"
                                 help-mode
                                 helpful-mode
                                 man-mode
