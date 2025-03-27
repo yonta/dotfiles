@@ -930,7 +930,7 @@ targets."
     (python-base-mode-hook . eglot-ensure)
     ;; eglot-checkの後にpython-ruffによるチェックを追加
     ;; なお、python-ruffのnextにpython-mypyがセットされている
-    (eglot-managed-mode-hook
+    (python-base-mode-hook
      . (lambda ()
          (when (derived-mode-p 'python-base-mode)
            (setq my/flycheck-next-local-cache
@@ -1166,7 +1166,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :hook
     (js-base-mode-hook . eglot-ensure)
     ;; eglot-checkの後にjavascript-eslintによるチェックを追加
-    (eglot-managed-mode-hook
+    (js-base-mode-hook
      . (lambda ()
          (when (derived-mode-p 'js-base-mode)
            (setq my/flycheck-next-local-cache
@@ -1204,7 +1204,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
          (setq-local flycheck-check-syntax-automatically
                      '(save mode-enabled))))
     ;; eglot-checkの後にjavascript-eslintによるチェックを追加
-    (eglot-managed-mode-hook
+    (typescript-ts-base-mode-hook
      . (lambda ()
          (when (derived-mode-p 'typescript-ts-base-mode)
            (setq my/flycheck-next-local-cache
