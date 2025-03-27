@@ -44,4 +44,9 @@ A default format is start with 1, end with 10, and only number string."
   (forward-line -5))
 (bind-key "M-<up>" #'my/previous-lines)
 
+;;; suspend-frameを無効化
+;; WSLやemコマンドでは復帰できなくなる
+(bind-key "C-z" nil)
+(bind-key "C-x z" nil)
+
 ;;; init_keybind.el ends here
