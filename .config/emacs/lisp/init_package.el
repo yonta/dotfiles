@@ -1161,6 +1161,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :leaf-path nil
   :preface
   (leaf js
+    :mode ("\\.mjs\\'" . js-ts-mode)
     :custom (js-indent-level . 2)
     :hook
     (js-base-mode-hook . eglot-ensure)
