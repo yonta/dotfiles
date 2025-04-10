@@ -1451,7 +1451,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :leaf-path nil
   :preface
   ;; sp-with-modesマクロの読み込み
-  (eval-when-compile (require 'smartparens))
+  ;; (eval-when-compile (require 'smartparens))
   (leaf smartparens :disabled t
     :ensure t
     :defun sp-local-pair
