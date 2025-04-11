@@ -3,10 +3,8 @@
 
 (custom-theme-set-faces
  'rebecca-custom
- '(default ((t (:family "VL ゴシック" :foundry "VL  " :width normal :height 121 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil :inverse-video nil :foreground "#f1eff8" :background "#292a44" :stipple nil :inherit nil))))
+ '(default ((t (:foreground "#f1eff8" :background "#292a44"))))
  '(cursor ((t (:background "#8eaee0"))))
- '(fixed-pitch ((t (:family "Monospace"))))
- '(variable-pitch ((((type w32)) (:foundry "outline" :family "Arial")) (t (:family "Sans Serif"))))
  '(escape-glyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
  '(homoglyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
  '(minibuffer-prompt ((t (:weight bold :foreground "#ccccff"))))
