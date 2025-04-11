@@ -95,7 +95,9 @@ export BUNDLE_USER_HOME="${XDG_CONFIG_HOME}/bundle"
 export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 
 # Bundler completions
-eval "$(complete_bundle_bash_command init)"
+if type complete_bundle_bash_command > /dev/null 2>&1 ; then
+    eval "$(complete_bundle_bash_command init)"
+fi
 
 # nvm
 export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
@@ -130,18 +132,22 @@ if type bat > /dev/null 2>&1 ; then
 fi
 
 # Python
-eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+if type pipenv > /dev/null 2>&1 ; then
+    eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+fi
 
 # pip
-_pip_completion()
-{
-    # pip completion --bashで自動生成なのでshellcheckを無効にしている
-    # shellcheck disable=SC2207
-    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-                             COMP_CWORD=$COMP_CWORD \
-                             PIP_AUTO_COMPLETE=1 $1 2>/dev/null ) )
-}
-complete -o default -F _pip_completion pip
+if type pip > /dev/null 2>&1 ; then
+    _pip_completion()
+    {
+        # pip completion --bashで自動生成なのでshellcheckを無効にしている
+        # shellcheck disable=SC2207
+        COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                                 COMP_CWORD=$COMP_CWORD \
+                                 PIP_AUTO_COMPLETE=1 $1 2>/dev/null ) )
+    }
+    complete -o default -F _pip_completion pip
+fi
 
 # Ruff
 # 以下コマンドにて生成したファイルを読み込む
@@ -205,7 +211,9 @@ if [ -f "${XDG_CONFIG_HOME}/aptitude/config" ]; then
 fi
 
 # direnv
-eval "$(direnv hook bash)"
+if type direnv > /dev/null 2>&1 ; then
+    eval "$(direnv hook bash)"
+fi
 
 # sshやsu後に端末タイトルを戻す
 # https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
