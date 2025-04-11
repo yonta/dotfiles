@@ -2084,7 +2084,9 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   (leaf dired-sort-map :require t
     :after dired)
 
-  (leaf dired-single :ensure t
+  (leaf dired-single
+    :doc "diredバッファが複数開くのを防ぐ"
+    :vc (:url "https://github.com/emacsattic/dired-single.git")
     :bind (:dired-mode-map
            :package dired
            ("C-m" . dired-single-buffer)
