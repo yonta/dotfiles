@@ -24,18 +24,11 @@ if [ -d "${CARGO_HOME}" ] ; then
     PATH="${CARGO_HOME}/bin:${PATH}"
 fi
 
-# rustup completions
-# 以下コマンドにて生成したファイルを読み込む
-# rustup completions bash > ~/.config/bash/completions/rustup
-# shellcheck disable=SC1091
-source "${XDG_CONFIG_HOME}/bash/completions/rustup"
-
-# cargo completions
-# 以下コマンドにて生成したファイルを読み込む
-# rustup completions bash cargo > ~/.config/bash/completions/cargo
-# shellcheck disable=SC1091
-# shellcheck disable=SC1091
-source "${XDG_CONFIG_HOME}/bash/completions/cargo"
+# rustup/cargo completions
+if type rustup > /dev/null 2>&1 ; then
+    eval "$(rustup completions bash)"
+    eval "$(rustup completions bash cargo)"
+fi
 
 # GPG
 GPG_TTY=$(tty)
@@ -101,9 +94,11 @@ fi
 
 # nvm
 export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
+
 # This loads nvm
 # shellcheck disable=SC1091
 [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
+
 # This loads nvm bash_completion
 # shellcheck disable=SC1091
 [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
@@ -136,21 +131,15 @@ if type pipenv > /dev/null 2>&1 ; then
     eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
 fi
 
-# pip
+# pip completions
 if type pip > /dev/null 2>&1 ; then
-    _pip_completion()
-    {
-        # pip completion --bashで自動生成なのでshellcheckを無効にしている
-        # shellcheck disable=SC2207
-        COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
-                                 COMP_CWORD=$COMP_CWORD \
-                                 PIP_AUTO_COMPLETE=1 $1 2>/dev/null ) )
-    }
-    complete -o default -F _pip_completion pip
+    eval "$(pip completion --bash)"
 fi
 
-# Ruff
-# 以下コマンドにて生成したファイルを読み込む
+# Ruff completions
+#
+# venvやpipenv環境のため、コマンドをevalで評価できない。
+# 以下コマンドにて事前に生成したファイルを読み込む
 # ruff generate-shell-completion bash > ~/.config/bash/completions/ruff
 # shellcheck disable=SC1091
 source "${XDG_CONFIG_HOME}/bash/completions/ruff"
@@ -222,10 +211,7 @@ if type flyctl > /dev/null 2>&1 ; then
     export FLY_CONFIG_DIR="${XDG_CONFIG_HOME}/fly"
 
     # fly completions
-    # 以下コマンドにて生成したファイルを読み込む
-    # fly completions bash > ~/.config/bash/completions/fly
-    # shellcheck disable=SC1091
-    source "${XDG_CONFIG_HOME}/bash/completions/fly"
+    eval "$(fly completions bash)"
 fi
 
 # sshやsu後に端末タイトルを戻す
