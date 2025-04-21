@@ -47,6 +47,6 @@ A default format is start with 1, end with 10, and only number string."
 ;;; suspend-frameを無効化
 ;; WSLやemコマンドでは復帰できなくなる
 (bind-key "C-z" nil)
-(bind-key "C-x z" nil)
+(bind-key "C-x C-z" nil)
 
 ;;; init_keybind.el ends here
