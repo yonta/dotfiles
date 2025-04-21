@@ -116,7 +116,7 @@ export TS_NODE_HISTORY="${XDG_CACHE_HOME}/ts-node/history"
 # bun
 export BUN_INSTALL="${XDG_DATA_HOME}/bun"
 if [ -d "${BUN_INSTALL}" ] ; then
-    export PATH="${BUN_INSTALL}/bin:${PATH}"
+    PATH="${BUN_INSTALL}/bin:${PATH}"
 fi
 
 # bat help
