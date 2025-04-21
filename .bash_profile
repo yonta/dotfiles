@@ -215,6 +215,19 @@ if type direnv > /dev/null 2>&1 ; then
     eval "$(direnv hook bash)"
 fi
 
+# flyctl
+if type flyctl > /dev/null 2>&1 ; then
+    export FLYCTL_INSTALL="/home/kei/.local/share/fly"
+    export PATH="$FLYCTL_INSTALL/bin:$PATH"
+    export FLY_CONFIG_DIR="${XDG_CONFIG_HOME}/fly"
+
+    # fly completions
+    # 以下コマンドにて生成したファイルを読み込む
+    # fly completions bash > ~/.config/bash/completions/fly
+    # shellcheck disable=SC1091
+    source "${XDG_CONFIG_HOME}/bash/completions/fly"
+fi
+
 # sshやsu後に端末タイトルを戻す
 # https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
 function resettitle()
