@@ -13,6 +13,7 @@ Thumbs.db
 
 # Hivemind
 Procfile.dev.mine
+my.Procfile.dev
 
 # Browsersync
 bs-config.js
