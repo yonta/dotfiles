@@ -205,13 +205,15 @@ if type direnv > /dev/null 2>&1 ; then
 fi
 
 # flyctl
-if type flyctl > /dev/null 2>&1 ; then
-    export FLYCTL_INSTALL="/home/kei/.local/share/fly"
-    export PATH="$FLYCTL_INSTALL/bin:$PATH"
-    export FLY_CONFIG_DIR="${XDG_CONFIG_HOME}/fly"
+export FLYCTL_INSTALL="${XDG_DATA_HOME}/fly"
+export FLY_CONFIG_DIR="${XDG_CONFIG_HOME}/fly"
+if [ -d "${FLYCTL_INSTALL}" ] ; then
+    PATH="${FLYCTL_INSTALL}/bin:${PATH}"
+fi
 
-    # fly completions
-    eval "$(fly completions bash)"
+# fly completions
+if type flyctl > /dev/null 2>&1 ; then
+    eval "$(fly completion bash)"
 fi
 
 # sshやsu後に端末タイトルを戻す
