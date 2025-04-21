@@ -29,3 +29,4 @@
 --map-syntax "Steepfile:Ruby"
 --map-syntax ".emacs:Lisp"
 --map-syntax ".dockerignore:Git Ignore"
+--map-syntax "*Procfile*:DotENV"
