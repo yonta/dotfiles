@@ -216,6 +216,12 @@ if type flyctl > /dev/null 2>&1 ; then
     eval "$(fly completion bash)"
 fi
 
+# ollama completions
+if type ollama > /dev/null 2>&1 ; then
+    # shellcheck disable=SC1091
+    source "${XDG_CONFIG_HOME}/bash/completions/ollama"
+fi
+
 # sshやsu後に端末タイトルを戻す
 # https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
 function resettitle()
