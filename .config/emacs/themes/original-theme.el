@@ -63,6 +63,7 @@
    ;; 基本色、HSVでH203 S46 V98
    `(mode-line ((t (:box (:line-width -1 :color nil :style released-button)
                          :foreground ,dark1 :background ,blue1))))
+   '(mode-line-active ((t (:inherit (mode-line)))))
    '(mode-line-buffer-id ((t (:weight bold))))
    '(mode-line-emphasis ((t (:weight bold))))
    `(mode-line-highlight

@@ -35,7 +35,7 @@
  '(header-line ((t (:foreground "#ccccff"))))
  '(tooltip ((t (:foreground "#ccccff" :background "#383a62"))))
  '(mode-line ((t (:foreground "#ae81ff" :background "#663399"))))
- '(mode-line-active ((t (:foreground "#ae81ff" :background "#663399"))))
+ '(mode-line-active ((t (:inherit (mode-line)))))
  '(mode-line-buffer-id ((t (:foreground "#f1eff8"))))
  '(mode-line-emphasis ((t (:weight bold))))
  '(mode-line-highlight ((((class color) (min-colors 88)) (:box (:line-width 2 :color "grey40" :style released-button))) (t (:inherit (highlight)))))
