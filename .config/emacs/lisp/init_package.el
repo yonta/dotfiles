@@ -1841,7 +1841,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :doc "またはデフォルトのripgrepを使う場合は、"
   :doc "custom値を設定してpcre2を使わないようにする"
   :doc ":custom (dumb-jump-rg-search-args . \"\")"
-  :ensure t dumb-jump rg
+  :ensure t dumb-jump
   :defvar dumb-jump-find-rules
   :defun smart-jump-simple-find-references smart-jump-find-references-with-rg
   :custom
