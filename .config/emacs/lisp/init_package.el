@@ -774,15 +774,7 @@ targets."
       "Setting for c++-mode."
       (setq-local flycheck-gcc-language-standard "c++11")
       (setq-local flycheck-clang-language-standard "c++11"))
-    :hook (c++-mode-hook . my-c++-mode-hook))
-
-  (leaf rainbow-mode :ensure t
-    :doc "#ff0000などに色をつける"
-    :diminish t
-    :custom
-    (rainbow-r-colors . t)                ; R color listを使う
-    (rainbow-html-colors . t)             ; html color listを使う
-    :hook (c++-mode-hook arduino-mode-hook)))
+    :hook (c++-mode-hook . my-c++-mode-hook)))
 
 (leaf tuareg :disabled t
   :ensure t
@@ -1421,6 +1413,24 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   ;; テーマ切り替え時にフォントを維持する
   ;; (enable-theme-functions . fontaine-apply-current-preset)
   )
+
+(leaf color
+  :leaf-path nil
+  :preface
+  (leaf rainbow-mode
+    :doc "#ff0000などに色をつける"
+    :ensure t
+    :diminish t
+    :custom
+    (rainbow-r-colors . t)                ; R color listを使う
+    (rainbow-html-colors . t)             ; html color listを使う
+    :hook (c++-mode-hook arduino-mode-hook))
+
+  (leaf colorful-mode
+    :doc "#ff0000などの前に色見本をつける"
+    :ensure t
+    :custom
+    (colorful-use-prefix . t)))
 
 (leaf whitespace
   :defvar whitespace-line-column whitespace-style
