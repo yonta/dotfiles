@@ -1871,7 +1871,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 (leaf expreg
   :doc "モダンなexpand-region"
   :ensure t
-  :bind ("C-`" . expreg-expand))
+  :bind (("C-`" . expreg-expand)
+         ("C-{" . expreg-contract)))
 
 (leaf which-key :ensure t
   :global-minor-mode t
