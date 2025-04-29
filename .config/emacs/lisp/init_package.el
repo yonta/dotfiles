@@ -1435,7 +1435,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 (leaf whitespace
   :defvar whitespace-line-column whitespace-style
   :global-minor-mode global-whitespace-mode
-  :diminish t
+  :diminish global-whitespace-mode
   :custom
   ;; 空白などの可視化
   ;; 対象はタブ文字、80文字超え部、行末の空白、全角スペース、空白のみ行
