@@ -310,6 +310,7 @@ Must be one of `mocha`, `macchiato`, `frappe`, or `latte`."
                (menu :background ,ctp-current :inverse-video nil :foreground ,ctp-text)
                (minibuffer-prompt :weight normal :foreground ,ctp-subtext0)
                (mode-line :background ,ctp-mantle nil :foreground ,ctp-text)
+               (mode-line-active :inherit mode-line)
                (mode-line-inactive
                 :background ,ctp-crust :inverse-video nil :foreground ,ctp-overlay0)
                (read-multiple-choice-face :inherit completions-first-difference)
