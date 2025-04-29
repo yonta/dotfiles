@@ -69,9 +69,11 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 ;;; 設定ファイルの読み込み
+;; packageで使うsmartrepが先にテーマ色を設定している前提になっている
+;; そのため、custom -> packageの順で読み込む
 (mapc #'load
-      '("init_util" "init_package" "init_display" "init_keybind"
-        "init_behavior" "init_custom"))
+      '("init_util" "init_custom" "init_package" "init_display" "init_keybind"
+        "init_behavior"))
 
 ;;; カスタム変数は別ファイルに保存する
 (setq custom-file "~/.config/emacs/custom.el")
