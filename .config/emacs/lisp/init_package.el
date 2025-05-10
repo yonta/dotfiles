@@ -2051,6 +2051,15 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 (leaf demap :ensure t
   :bind* ("M-m" . demap-toggle))
 
+(leaf ialign
+  :doc "テーブルなどスペース区切りで自動揃えを行う"
+  :doc "リージョン選択してM-x ialignで実行する"
+  :ensure t
+  :bind (:ialign-minibuffer-keymap
+         ("C-.". ialign-increment-spacing)
+         ("C-," . ialign-decrement-spacing)
+         ("C-r" . ialign-toggle-repeat)))
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
