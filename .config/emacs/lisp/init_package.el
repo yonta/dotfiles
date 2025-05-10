@@ -1326,6 +1326,12 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :ensure t
     :hook (rust-ts-mode-hook . cargo-minor-mode)))
 
+(leaf elm-mode
+  :ensure t
+  :req "npm install -g @elm-tooling/elm-language-server"
+  :doc "npm install -g elm-format elm-review elm-test なんかも便利そう"
+  :hook (elm-mode-hook . eglot-ensure))
+
 ;;; Face
 
 (leaf fontaine
