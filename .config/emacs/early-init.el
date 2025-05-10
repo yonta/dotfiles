@@ -6,8 +6,9 @@
 ;;; Code:
 
 ;;; フレーム位置、上から・左から
+;; (set-frame-position (selected-frame) 0 0)などでいい位置を調べるとよい
 (push '(top . 0) default-frame-alist)
-(push '(left . 0) default-frame-alist)
+(push '(left . 3842) default-frame-alist)
 
 ;; フレームサイズ、、幅、高さ
 (push '(width . 421) default-frame-alist)
