@@ -562,7 +562,8 @@ targets."
 (leaf flycheck
   :leaf-path nil
   :preface
-  (leaf flycheck :ensure t
+  (leaf flycheck
+    :ensure t
     :req "pipでflake8とmypyをいれておく"
     :defvar (flycheck-checker
              flycheck-checkers
@@ -583,7 +584,8 @@ targets."
     :hook (flycheck-mode-hook . flycheck-posframe-mode)
     :custom (flycheck-posframe-position . 'window-bottom-right-corner))
 
-  (leaf flycheck-color-mode-line :ensure t
+  (leaf flycheck-color-mode-line
+    :ensure t
     :after flycheck
     :hook (flycheck-mode-hook . flycheck-color-mode-line-mode))
 
@@ -746,7 +748,8 @@ targets."
     :doc "ディレクトリ名にバージョン番号を入れないようpackage-vcを使う"
     :doc "load時にelcが古ければ自動コンパイルする")
 
-  (leaf lispxmp :ensure t
+  (leaf lispxmp
+    :ensure t
     :bind (:lisp-mode-shared-map
            :package elisp-mode
            ("C-M-;" . lispxmp)))
@@ -776,15 +779,19 @@ targets."
       (setq-local flycheck-clang-language-standard "c++11"))
     :hook (c++-mode-hook . my-c++-mode-hook)))
 
-(leaf tuareg :disabled t
+(leaf tuareg
+  :disabled t
   :ensure t
   :doc "ocaml mode"
   :req "opam install tuareg")
 
-(leaf arduino-mode :ensure t :disabled t
+(leaf arduino-mode
+  :disabled t
+  :ensure t
   :doc "TODO: set compiler and libraries path by environment")
 
-(leaf quickrun :ensure t
+(leaf quickrun
+  :ensure t
   :custom
   (quickrun-timeout-seconds . -1)       ; タイムアウトで処理を中止させない
   :defer-config
@@ -902,7 +909,8 @@ targets."
     :vc (:url "https://gist.github.com/80c938a54f4d14a1b75146e9c0b76fc2.git")
     :hook (sml-mode-hook . (lambda () (require 'flycheck-mlton))))
 
-  (leaf sml-eldoc :disabled t
+  (leaf sml-eldoc
+    :disabled t
     :vc (:url "https://raw.githubusercontent.com/xuchunyang/emacs.d/master/lisp/sml-eldoc.el")
     :hook (sml-mode-hook . sml-eldoc-turn-on)))
 
@@ -1063,7 +1071,8 @@ targets."
 
   (leaf company-web :ensure t)
 
-  (leaf web-mode :ensure t
+  (leaf web-mode
+    :ensure t
     :defun
     (company-web-html . company-web)
     (company-bootstrap5 . company-bootstrap5)
@@ -1096,7 +1105,8 @@ targets."
     :hook (web-mode-hook . my/web-mode-init)
     :bind (:web-mode-map ("C-c C-f" . nil)))
 
-  (leaf impatient-mode :ensure t
+  (leaf impatient-mode
+    :ensure t
     :doc "HTMLのライブプレビューモード")
 
   (leaf reformatter
@@ -1204,7 +1214,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :custom
     (typescript-indent-level . 2))
 
-  (leaf prettier-js :ensure t
+  (leaf prettier-js
+    :ensure t
     :diminish prettier-js-mode
     ;; prettierのエラー内容をbufferに表示しない
     :custom (prettier-js-show-errors . 'echo)
@@ -1218,7 +1229,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
            yaml-ts-mode-hook
            . prettier-js-mode))
 
-  (leaf ts-comint :ensure t
+  (leaf ts-comint
+    :ensure t
     :if (executable-find "ts-node")
     :custom
     (ts-comint-program-command . "ts-node")
@@ -1241,14 +1253,16 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 
 (leaf jenkinsfile-mode :ensure t)
 
-(leaf haxe-mode :ensure t
+(leaf haxe-mode
+  :ensure t
   :custom
   (tab-width . 4)
   (fill-column . 80))
 
 (leaf proof-general :ensure t :disabled t)
 
-(leaf gnuplot-mode :ensure t
+(leaf gnuplot-mode
+  :ensure t
   :doc ".gpl .plt、.gp .gnuplotはautoloadで登録済み"
   :mode ("\\.gpl\\'" "\\.plt\\'"))
 
@@ -1295,7 +1309,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :bind (:rustic-mode-map
            ("C-c C-c <return>" . rustic-cargo-comint-run))))
 
-(leaf rust :disabled t
+(leaf rust
+  :disabled t
   :leaf-path nil
   :preface
   (leaf rust-mode
@@ -1314,7 +1329,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
                    ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
     :hook (rust-ts-mode-hook . eglot-ensure))
 
-  (leaf flycheck-rust :disabled t
+  (leaf flycheck-rust
+    :disabled t
     :ensure t
     :doc "flycheckでrust-cargが101エラーを返すときに使う"
     :doc "必要な変数設定をしてくれるらしい"
@@ -1468,7 +1484,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :preface
   ;; sp-with-modesマクロの読み込み
   ;; (eval-when-compile (require 'smartparens))
-  (leaf smartparens :disabled t
+  (leaf smartparens
+    :disabled t
     :ensure t
     :defun sp-local-pair
     :global-minor-mode smartparens-global-mode
@@ -1517,7 +1534,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 (leaf highlight
   :leaf-path nil
   :preface
-  (leaf auto-highlight-symbol :ensure t
+  (leaf auto-highlight-symbol
+    :ensure t
     :leaf-defer nil
     :defvar ahs-modes
     :global-minor-mode global-auto-highlight-symbol-mode
@@ -1575,11 +1593,14 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   (diff-hl-delete . '((t (:background "#fa8d87"))))
   :hook (dired-mode-hook . diff-hl-dired-mode))
 
-(leaf hiwin :ensure t
+(leaf hiwin
+  :ensure t
   :doc "アクティブかどうかでバッファーのモードラインの色を変える")
 
 ;; GitHubの絵文字をよく使うようなら有効にする
-(leaf emojify :ensure t :disabled t
+(leaf emojify
+  :disabled t
+  :ensure t
   :hook (after-init-hook . global-emojify-mode)
   :custom (emojify-emoji-styles . (ascii github)))
 
@@ -1670,7 +1691,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :doc "C-x pにコマンドがまとまっている"
   :bind* ("C-c C-f" . project-find-file))
 
-(leaf ripgrep :disabled t
+(leaf ripgrep
+  :disabled t
   :ensure t
   :bind
   ("M-s r" . ripgrep-regexp))
@@ -1703,7 +1725,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :hook (compilation-mode-hook . grep-context-mode)
   :bind (:grep-context-mode-map ("e" . grep-context-mode-around-point)))
 
-(leaf popper :ensure t
+(leaf popper
+  :ensure t
   :global-minor-mode t popper-echo-mode
   :custom
   (popper-reference-buffers . '(;; hide
@@ -1801,7 +1824,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     :mode ("\\.bash_aliases\\'" . bash-ts-mode)
     :hook (bash-ts-mode-hook . eglot-ensure)))
 
-(leaf image-dired+ :ensure t
+(leaf image-dired+
+  :ensure t
   :doc "非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ"
   :req "ImageMagickをaptでいれておく"
   ;; BUG: ディレクトリを開く初回時にサムネイル作成に失敗する。
@@ -1837,7 +1861,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
           ("f" . image-transform-reset-to-original)
           ("0" . image-mode-fit-frame))))
 
-(leaf helpful :ensure t
+(leaf helpful
+  :ensure t
   :bind* ("<f1> k" . helpful-key)
   :bind ("C-c C-d" . helpful-at-point))
 
@@ -1880,7 +1905,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :bind (("C-`" . expreg-expand)
          ("C-{" . expreg-contract)))
 
-(leaf which-key :ensure t
+(leaf which-key
+  :ensure t
   :global-minor-mode t
   :diminish which-key-mode
   :custom
@@ -1891,10 +1917,12 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 
 (leaf sudo-edit :ensure t)
 
-(leaf visual-regexp :ensure t
+(leaf visual-regexp
+  :ensure t
   :bind ("M-&" . vr/query-replace))
 
-(leaf async :ensure t
+(leaf async
+  :ensure t
   :hook (emacs-lisp-mode-hook . async-bytecomp-package-mode))
 
 (leaf vundo
@@ -1924,8 +1952,10 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :preface
   (leaf rebecca-theme :ensure t :disabled t)
 
-  (leaf solo-jazz-theme :disabled t
-    :ensure t :require t
+  (leaf solo-jazz-theme
+    :disabled t
+    :ensure t
+    :require t
     :config
     (load-theme 'solo-jazz t))
 
@@ -1984,7 +2014,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :custom (keyfreq-file . "~/.config/emacs/keyfreq")
   )
 
-(leaf editorconfig :ensure t
+(leaf editorconfig
+  :ensure t
   :doc "projectの.editorconfigファイルを読み込む"
   :diminish t
   :global-minor-mode t)
@@ -1992,12 +2023,14 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 (leaf imenu
   :leaf-path nil
   :preface
-  (leaf imenu-list :ensure t
+  (leaf imenu-list
+    :ensure t
     :bind ("C->" . imenu-list-smart-toggle)
     :custom
     (imenu-list-focus-after-activation . t)))
 
-(leaf buffer-move :ensure t
+(leaf buffer-move
+  :ensure t
   :bind* (("C-S-h" . buf-move-left)
           ("C-S-j" . buf-move-down)
           ("C-S-k" . buf-move-up)
@@ -2016,10 +2049,12 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     ;; 日本語まじりをチェック対象外にする
     (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
 
-  (leaf flyspell-popup :ensure t
+  (leaf flyspell-popup
+    :ensure t
     :hook (flyspell-mode-hook . flyspell-popup-auto-correct-mode)))
 
-(leaf aggressive-indent :ensure t
+(leaf aggressive-indent
+  :ensure t
   :diminish aggressive-indent-mode
   :global-minor-mode global-aggressive-indent-mode
   :defvar aggressive-indent-excluded-modes
@@ -2035,20 +2070,24 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   (add-to-list 'aggressive-indent-excluded-modes 'inferior-sml-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'shell-mode))
 
-(leaf git-timemachine :ensure t
+(leaf git-timemachine
+  :ensure t
   :bind ("C-c C-x t" . git-timemachine))
 
-(leaf vc-msg :ensure t
+(leaf vc-msg
+  :ensure t
   :bind ("C-c C-x b" . vc-msg-show))
 
-(leaf ace-window :ensure t
+(leaf ace-window
+  :ensure t
   :custom
   ;; 参考: https://github.com/abo-abo/ace-window/wiki/display-buffer
   (aw-keys . '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
   (display-buffer-base-action
    . '((display-buffer-reuse-window ace-display-buffer))))
 
-(leaf demap :ensure t
+(leaf demap
+  :ensure t
   :bind* ("M-m" . demap-toggle))
 
 (leaf ialign
@@ -2104,11 +2143,11 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
            ("C-." . my-toggle-dired-listing-switches)
            ("r" . wdired-change-to-wdired-mode)))
 
-  (leaf dired-collapse :ensure t
+  (leaf dired-collapse
+    :ensure t
     :hook (dired-mode-hook . dired-collapse-mode))
 
-  (leaf dired-sort-map :require t
-    :after dired)
+  (leaf dired-sort-map :require t :after dired)
 
   (leaf dired-single
     :doc "diredバッファが複数開くのを防ぐ"
@@ -2223,8 +2262,7 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
     (recentf-max-saved-items . 1000)
     (recentf-auto-cleanup . 'never))
 
-  (leaf recentf-ext :ensure t :require t
-    :after recentf))
+  (leaf recentf-ext :ensure t :require t :after recentf))
 
 (leaf subword
   :global-minor-mode global-subword-mode
