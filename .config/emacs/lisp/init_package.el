@@ -786,6 +786,26 @@ targets."
   (ellama-make-list-prompt-template . "Markdownのリスト形式にして")
   (ellama-make-table-prompt-template . "Markdownのテーブル形式にして"))
 
+(leaf copilot
+  :doc "普段はオフなので、自分で明示的にcopilot-modeを呼び出してオンにする"
+  :doc "custom.elでwarningsuppress-typesに((comp) (copilot))のようにcopilotを追加するとよい"
+  :ensure t
+  :diminish " 🛩️"
+  ;; :hook (prog-mode-hook . copilot-mode)
+  :bind
+  (:copilot-mode-map
+   ("C-<return>" . copilot-accept-completion)))
+
+(leaf copilot-chat
+  :ensure t
+  :diminish ( copilot-chat-prompt-mode copilot-chat-markdown-prompt-mode
+              copilot-chat-list-mode copilot-chat-org-prompt-mode)
+  :custom
+  (copilot-chat-frontend . 'markdown)
+  :bind (:copilot-chat-prompt-mode-map
+         ;; MEMO: デフォルトで設定されているが効かないので再設定
+         ("C-<return>" . copilot-chat-prompt-send)))
+
 ;;; MODE
 
 (leaf tree-sitter
