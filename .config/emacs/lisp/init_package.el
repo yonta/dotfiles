@@ -817,7 +817,8 @@ targets."
 
   (leaf git-commit
     :doc "magitに同梱されているマイナーモード"
-    :mode "\\COMMIT_EDITMSG\\'")
+    :commands git-commit-mode
+    :hook (git-commit-ts-mode-hook . git-commit-mode))
 
   (leaf git-commit-ts-mode
     :req "M-x treesit-install-language-grammar [RET] gitcommit"
