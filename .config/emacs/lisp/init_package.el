@@ -788,6 +788,25 @@ targets."
 
 ;;; MODE
 
+(leaf tree-sitter
+  :doc "GitHubがAtom用に開発したインクリメンタルパーサ"
+  :doc "高速で正確なsyntax highlightingを提供する"
+  :doc "Emacs29では同梱されるようになった"
+  :emacs< 29
+  :ensure t tree-sitter-langs
+  :diminish tree-sitter-mode
+  :global-minor-mode global-tree-sitter-mode
+  :custom (tsc-dyn-get-from . '(:compilation))
+  :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
+
+(leaf treesit
+  :emacs>= 29
+  :ensure treesit-auto
+  :global-minor-mode (global-treesit-auto-mode . treesit-auto)
+  :custom
+  (treesit-font-lock-level . 4)
+  (treesit-auto-install . 'prompt))
+
 (leaf git
   :leaf-path nil
   :preface
@@ -802,11 +821,14 @@ targets."
 
   (leaf git-commit-ts-mode
     :req "M-x treesit-install-language-grammar [RET] gitcommit"
+    :defvar treesit-language-source-alist
     :ensure t
     :mode "\\COMMIT_EDITMSG\\'"
-    :init
-    (add-to-list 'treesit-language-source-alist
-                 '(gitcommit . ("https://github.com/gbprod/tree-sitter-gitcommit")))))
+    :preface
+    (add-to-list
+     'treesit-language-source-alist
+     '(gitcommit . ("https://github.com/gbprod/tree-sitter-gitcommit"))))
+  )
 
 (leaf emacs-lisp
   :leaf-path nil
@@ -1709,25 +1731,6 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :ensure t
   :hook (after-init-hook . global-emojify-mode)
   :custom (emojify-emoji-styles . (ascii github)))
-
-(leaf tree-sitter
-  :doc "GitHubがAtom用に開発したインクリメンタルパーサ"
-  :doc "高速で正確なsyntax highlightingを提供する"
-  :doc "Emacs29では同梱されるようになった"
-  :emacs< 29
-  :ensure t tree-sitter-langs
-  :diminish tree-sitter-mode
-  :global-minor-mode global-tree-sitter-mode
-  :custom (tsc-dyn-get-from . '(:compilation))
-  :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
-
-(leaf treesit
-  :emacs>= 29
-  :ensure treesit-auto
-  :global-minor-mode (global-treesit-auto-mode . treesit-auto)
-  :custom
-  (treesit-font-lock-level . 4)
-  (treesit-auto-install . 'prompt))
 
 (leaf nerd-icons
   :leaf-path nil
