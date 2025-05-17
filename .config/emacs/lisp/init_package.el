@@ -1545,6 +1545,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :leaf-path nil
   :preface
   (leaf auto-highlight-symbol
+    :disabled t
     :ensure t
     :leaf-defer nil
     :defvar ahs-modes
@@ -1555,6 +1556,16 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     (ahs-disabled-minor-modes . '(iedit-mode))
     :config
     (push 'sml-mode ahs-modes))
+
+  (leaf idle-highlight-mode
+    :doc "シンプルなシンボルハイライト"
+    :ensure t
+    :global-minor-mode idle-highlight-global-mode
+    :custom
+    (idle-highlight-idle-time . 0.5)
+    ;; ハイライトしないモードのリスト
+    ;; (idle-highlight-ignore-modes . '(org-mode))
+    )
 
   (leaf goggles
     :doc "変更箇所を強調する"
