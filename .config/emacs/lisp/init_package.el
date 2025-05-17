@@ -1493,28 +1493,38 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :config
     (require 'smartparens-config)
     ;; SML
-    (sp-with-modes '(sml-mode inferior-sml-mode)
-      (sp-local-pair "'" nil :actions nil)
-      (sp-local-pair "`" nil :actions nil)
-      (sp-local-pair "sig" "end")
-      (sp-local-pair "struct" "end")
-      (sp-local-pair "(*" "*)" :post-handlers '(("|| " "SPC")
-                                                ("* [i]||\n[i]" "RET"))))
+    (sp-with-modes
+     '(sml-mode inferior-sml-mode)
+     (sp-local-pair "'" nil :actions nil)
+     (sp-local-pair "`" nil :actions nil)
+     (sp-local-pair "sig" "end")
+     (sp-local-pair "struct" "end")
+     (sp-local-pair "(*" "*)"
+                    :post-handlers
+                    '(("|| " "SPC") ("* [i]||\n[i]" "RET"))))
     ;; <%に%>を対応させる
-    (sp-with-modes '(web-mode)
-      (sp-local-pair
-       "<%" "%>" :post-handlers '(("|| " "SPC") (" || " "=") (" || " "#"))))
+    (sp-with-modes
+     '(web-mode)
+     (sp-local-pair "<%" "%>"
+                    :post-handlers
+                    '(("|| " "SPC") (" || " "=") (" || " "#"))))
     ;; /*の後をいい感じにする
-    (sp-with-modes '(js-base-mode typescript-ts-base-mode)
-      (sp-local-pair "/*" "*/" :post-handlers '(("|| " "SPC")
-                                                ("* [i]||\n[i]" "RET"))))
+    (sp-with-modes
+     '(js-base-mode typescript-ts-base-mode)
+     (sp-local-pair "/*" "*/"
+                    :post-handlers
+                    '(("|| " "SPC")
+                      ("* [i]||\n[i]" "RET"))))
     ;; ｛の後にEnterすると｝の前に改行をつける
     (sp-with-modes
-        '(web-mode js-base-mode css-base-mode typescript-ts-base-mode)
-      (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET"))))
+     '(web-mode js-base-mode css-base-mode typescript-ts-base-mode)
+     (sp-local-pair "{" nil
+                    :post-handlers '(("||\n[i]" "RET"))))
     ;; $で{}を補完する
-    (sp-with-modes '(sh-mode bash-ts-mode)
-      (sp-local-pair "$" "" :post-handlers '(:add "{|}")))
+    (sp-with-modes
+     '(sh-mode bash-ts-mode)
+     (sp-local-pair "$" ""
+                    :post-handlers '(:add "{|}")))
     )
 
   (leaf electric-pair-mode :global-minor-mode t)
