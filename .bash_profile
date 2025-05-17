@@ -284,3 +284,26 @@ if [ -n "${BASH_VERSION}" ]; then
         . "${HOME}/.bashrc"
     fi
 fi
+
+if type aws > /dev/null 2>&1 ; then
+    # aws-cliはXDG CONFIGに対応していない
+    # 暫定で環境変数をセットする
+    # https://github.com/aws/aws-cli/issues/9031#issuecomment-2448119520
+    # aws config
+    export AWS_CONFIG_FILE="${XDG_CONFIG_HOME}/aws/config"
+    # aws cache
+    AWS_DATA_HOME="${XDG_DATA_HOME}/aws"
+    export AWS_CLI_HISTORY_FILE="${AWS_DATA_HOME}/history"
+    export AWS_CREDENTIALS_FILE="${AWS_DATA_HOME}/credentials"
+    export AWS_WEB_IDENTITY_TOKEN_FILE="${AWS_DATA_HOME}/token"
+    export AWS_SHARED_CREDENTIALS_FILE="${AWS_DATA_HOME}/shared-credentials"
+fi
+
+if type aws-vault > /dev/null 2>&1 ; then
+    # 認証バックエンドにpassを使う
+    export AWS_VAULT_BACKEND=pass
+    # 認証バックエンドのキー保存先の名前
+    export AWS_VAULT_PASS_PREFIX=aws-vault
+    # 認証期限切れ時間、デフォルトは1h、最大12hらしい
+    export AWS_SESSION_TOKEN_TTL=3h
+fi
