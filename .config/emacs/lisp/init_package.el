@@ -466,96 +466,6 @@ targets."
     :custom
     (company-tabnine-binaries-folder . "~/.config/tabnine")))
 
-(leaf tabnine
-  :req "M-x tabnine-install-binary"
-  :req "M-x tabnine-login"
-  :doc "現在のtabnine-chatは自動でバッファモードやバッファ内容すべてを送る。"
-  :doc "そのためすぐにチャット量の限界を超えたり、"
-  :doc "変な英語プロンプトが足され回答が英語になる。"
-  :doc "あまり使わず、ellamaやChat-GPTを使うほうがよい。"
-  :ensure t
-  :commands
-  tabnine-start-process
-  tabnine-kill-process
-  ;; うまくオートロードされてないコマンドたち
-  tabnine-chat
-  tabnine-chat-explain-code
-  tabnine-chat-generate-test-for-code
-  tabnine-chat-document-code
-  tabnine-chat-fix-code
-  :diminish "⌬"
-  :custom
-  (tabnine-chat-prompt-alist
-   . '((explain-code . "このコードを日本語で説明して")
-       (generate-test-for-code . "このコードのテストコードを書いて、日本語で説明して")
-       (document-code . "このコードのドキュメントを、日本語で生成して")
-       (fix-code . "このコードの間違いを指摘して日本語で出力して、また、修正したコードも一緒に出力して")))
-  (tabnine-minimum-prefix-length . 0)
-  (tabnine-idle-delay . 0.6)
-  (tabnine-binaries-folder . "~/.config/tabnine")
-  :config
-  (tabnine-start-process)
-  :hook
-  ;; (prog-mode-hook . tabnine-mode)
-  ;; (kill-emacs-hook . tabnine-kill-process)
-  ;; tabnine-modeが起動していないときにEmacsを終了すると、
-  ;; tabnine-kill-processが呼ばれ、そこから:config設定で
-  ;; tabnine-start-processが呼び出されてしまうのを対処
-  (kill-emacs-hook
-   . (lambda () (when (boundp 'tabnine--process) (tabnine-kill-process))))
-  :bind
-  (:tabnine-completion-map
-   :package tabnine-core
-   ("<tab>" . nil) ;; tabnine-accept-completion
-   ("TAB" . nil)   ;; tabnine-accept-completion
-   ("M-f" . nil)   ;; tabnine-accept-completion-by-word
-   ("C-<return>" . tabnine-accept-completion))
-  (:tabnine-chat-mode-map
-   :package tabnine-chat
-   ("C-<return>" . tabnine-chat-send)))
-
-(leaf tabby
-  :disabled t
-  :url "https://tabby.tabbyml.com/"
-  :doc "tabbyで補完を行う"
-  :doc "---"
-  :req "node v18以上が必要"
-  :req "tabbyバイナリが必要"
-  :doc "Ubuntu 22.04 LTSだとv13までしか動かない"
-  :url "https://github.com/TabbyML/tabby/releases"
-  :doc "---"
-  :doc "バックグラウンドでtabbyサーバーを動かす"
-  :doc "Chat無しも可能"
-  :doc "tabby serve --model DeepseekCoder-1.3B --chat-model Qwen2-1.5B-Instruct --device cuda"
-  :doc "tabby serve --model DeepseekCoder-1.3B --device cuda"
-  :doc "tabby serve --device cuda"
-  :doc "---"
-  :doc "他に色々あるが、RTXのメモリが足りずに動かせないものがほとんど"
-  :url "https://tabby.tabbyml.com/docs/models/"
-  :doc "---"
-  :doc "初回はlocahost:8080にログインしてadminアカウントを作成する"
-  :doc "初回は~/.tabby-client/agent/config.tomlのserver項目を設定する"
-  :doc "tokenはログインした先に書いてある"
-  :doc "---"
-  :doc "Ollamaを使う場合は、~/.tabby/config.tomlに設定する"
-  :url "https://tabby.tabbyml.com/docs/references/models-http-api/ollama/"
-  :doc "model_nameはdeepseek-coder:1.3bなど"
-  :doc "api_endpointはhttp://localhost:11434"
-  :doc "prompt_templateは設定しなくてよい"
-  :doc "---"
-  :doc "利用時は手動でtabby-modeをオンにする"
-  :if (executable-find "tabby")
-  :vc (:url "https://github.com/alan-w-255/tabby.el.git")
-  ;; 消極的な補完、手動でC-c <tab>で補完候補を出す
-  ;; :custom (tabby-idle-delay . 5)
-  ;; :bind (:tabby-mode-map
-  ;;        ("C-c <tab>" . tabby-complete)
-  ;;        ("C-<return>" . tabby-accept-completion))
-  ;; 積極的な補完、どんどんゴースト補完を提案する
-  :custom (tabby-idle-delay . 0.6)
-  :bind (:tabby-mode-map
-         ("C-<return>" . tabby-accept-completion)))
-
 ;;; Flycheck
 
 (defvar-local my/flycheck-next-local-cache nil)
@@ -720,6 +630,157 @@ targets."
   (leaf consult-eglot
     :ensure t
     :bind (:eglot-mode-map ("M-s s" . consult-eglot-symbols))))
+
+;;; AI
+
+(leaf tabnine
+  :req "M-x tabnine-install-binary"
+  :req "M-x tabnine-login"
+  :doc "現在のtabnine-chatは自動でバッファモードやバッファ内容すべてを送る。"
+  :doc "そのためすぐにチャット量の限界を超えたり、"
+  :doc "変な英語プロンプトが足され回答が英語になる。"
+  :doc "あまり使わず、ellamaやChat-GPTを使うほうがよい。"
+  :ensure t
+  :commands
+  tabnine-start-process
+  tabnine-kill-process
+  ;; うまくオートロードされてないコマンドたち
+  tabnine-chat
+  tabnine-chat-explain-code
+  tabnine-chat-generate-test-for-code
+  tabnine-chat-document-code
+  tabnine-chat-fix-code
+  :diminish "⌬"
+  :custom
+  (tabnine-chat-prompt-alist
+   . '((explain-code . "このコードを日本語で説明して")
+       (generate-test-for-code . "このコードのテストコードを書いて、日本語で説明して")
+       (document-code . "このコードのドキュメントを、日本語で生成して")
+       (fix-code . "このコードの間違いを指摘して日本語で出力して、また、修正したコードも一緒に出力して")))
+  (tabnine-minimum-prefix-length . 0)
+  (tabnine-idle-delay . 0.6)
+  (tabnine-binaries-folder . "~/.config/tabnine")
+  :config
+  (tabnine-start-process)
+  :hook
+  ;; (prog-mode-hook . tabnine-mode)
+  ;; (kill-emacs-hook . tabnine-kill-process)
+  ;; tabnine-modeが起動していないときにEmacsを終了すると、
+  ;; tabnine-kill-processが呼ばれ、そこから:config設定で
+  ;; tabnine-start-processが呼び出されてしまうのを対処
+  (kill-emacs-hook
+   . (lambda () (when (boundp 'tabnine--process) (tabnine-kill-process))))
+  :bind
+  (:tabnine-completion-map
+   :package tabnine-core
+   ("<tab>" . nil) ;; tabnine-accept-completion
+   ("TAB" . nil)   ;; tabnine-accept-completion
+   ("M-f" . nil)   ;; tabnine-accept-completion-by-word
+   ("C-<return>" . tabnine-accept-completion))
+  (:tabnine-chat-mode-map
+   :package tabnine-chat
+   ("C-<return>" . tabnine-chat-send)))
+
+(leaf tabby
+  :disabled t
+  :url "https://tabby.tabbyml.com/"
+  :doc "tabbyで補完を行う"
+  :doc "---"
+  :req "node v18以上が必要"
+  :req "tabbyバイナリが必要"
+  :doc "Ubuntu 22.04 LTSだとv13までしか動かない"
+  :url "https://github.com/TabbyML/tabby/releases"
+  :doc "---"
+  :doc "バックグラウンドでtabbyサーバーを動かす"
+  :doc "Chat無しも可能"
+  :doc "tabby serve --model DeepseekCoder-1.3B --chat-model Qwen2-1.5B-Instruct --device cuda"
+  :doc "tabby serve --model DeepseekCoder-1.3B --device cuda"
+  :doc "tabby serve --device cuda"
+  :doc "---"
+  :doc "他に色々あるが、RTXのメモリが足りずに動かせないものがほとんど"
+  :url "https://tabby.tabbyml.com/docs/models/"
+  :doc "---"
+  :doc "初回はlocahost:8080にログインしてadminアカウントを作成する"
+  :doc "初回は~/.tabby-client/agent/config.tomlのserver項目を設定する"
+  :doc "tokenはログインした先に書いてある"
+  :doc "---"
+  :doc "Ollamaを使う場合は、~/.tabby/config.tomlに設定する"
+  :url "https://tabby.tabbyml.com/docs/references/models-http-api/ollama/"
+  :doc "model_nameはdeepseek-coder:1.3bなど"
+  :doc "api_endpointはhttp://localhost:11434"
+  :doc "prompt_templateは設定しなくてよい"
+  :doc "---"
+  :doc "利用時は手動でtabby-modeをオンにする"
+  :if (executable-find "tabby")
+  :vc (:url "https://github.com/alan-w-255/tabby.el.git")
+  ;; 消極的な補完、手動でC-c <tab>で補完候補を出す
+  ;; :custom (tabby-idle-delay . 5)
+  ;; :bind (:tabby-mode-map
+  ;;        ("C-c <tab>" . tabby-complete)
+  ;;        ("C-<return>" . tabby-accept-completion))
+  ;; 積極的な補完、どんどんゴースト補完を提案する
+  :custom (tabby-idle-delay . 0.6)
+  :bind (:tabby-mode-map
+         ("C-<return>" . tabby-accept-completion)))
+
+(leaf ellama
+  :doc "cl-defstruct生成make-llm-ollamaを手動展開しコンパイル可にした"
+  :if (executable-find "ollama")
+  :ensure t
+  :defer-config
+  (require 'llm-ollama)
+  :custom
+  (ellama-major-mode . 'markdown-mode)
+  (ellama-naming-scheme . 'ellama-generate-name-by-time)
+  (ellama-providers
+   . '(("deepseek-coder-v2"
+        . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                        "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
+                        "deepseek-coder-v2:16b-lite-instruct-q4_K_S"))
+       ("gemma2"
+        . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                        "gemma2:2b-instruct-q4_K_S"
+                        "gemma2:2b-instruct-q4_K_S"))
+       ("gemma2-baku"
+        . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                        "lucas2024/gemma-2-baku-2b-it:q8_0"
+                        "lucas2024/gemma-2-baku-2b-it:q8_0"))
+       ("codeqwen1.5"
+        . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                        "codeqwen:7b-chat-v1.5-q4_K_S"
+                        "codeqwen:7b-chat-v1.5-q4_K_S"))))
+  ;; translation
+  (ellama-language . "日本語")
+  (ellama-translation-provider
+   . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                   "lucas2024/gemma-2-baku-2b-it:q8_0"
+                   "lucas2024/gemma-2-baku-2b-it:q8_0"))
+  (ellama-translation-template . "%sで話して。「%s」を%sに翻訳して。")
+  ;; code generation
+  (ellama-provider
+   . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                   "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
+                   "deepseek-coder-v2:16b-lite-instruct-q4_K_S"))
+  (ellama-define-word-prompt-template . "%s の定義を教えて")
+  (ellama-summarize-prompt-template . "Text:\n%s\n要約して")
+  (ellama-code-review-prompt-template . "以下のコードのレビューと改善案をだして:\n```\n%s\n```")
+  (ellama-change-prompt-template . "以下のテキストを「%s」と変更して、引用符なしで出力して:\n%s")
+  (ellama-improve-grammar-prompt-template . "誤字脱字・文法を校正して")
+  (ellama-improve-wording-prompt-template . "語句を推敲して")
+  (ellama-improve-conciseness-prompt-template . "できるだけ簡潔にして")
+  (ellama-code-edit-prompt-template
+   . "以下のコードを「%s」と変更して、プロンプト無しでコードだけを\n```language\n...\n```\nの形式で出力して:\n```\n%s\n```\n")
+  (ellama-code-improve-prompt-template
+   . "以下のコードを改善して、プロンプト無しでコードだけを\n```language\n...\n```の形式で出力して:\n```\n%s\n```\n")
+  (ellama-code-complete-prompt-template
+   . "以下のコードの続きを書いて、プロンプト無しでコードだけを\n```language\n...\n```の形式で出力して:\n```\n%s\n```\n")
+  (ellama-code-add-prompt-template
+   . "Context: \n```\n%s\n```\nこのコードを文脈として、%s、プロンプト無しでコードだけを\n```\n...\n```\nの形式で出力して\n")
+  (ellama-generate-commit-message-template
+   . "あなたは熟練プログラマーです。後の変更点をもとに簡潔なコミットメッセージを書いてください。コミットメッセージの形式は、1行目は変更点の要約、2行目は空行、それ以降の行は変更全体の詳細な説明、です。出力はプロンプト無しで最終的なコミットメッセージだけにしてください。\n\n変更点:\n%s\n")
+  (ellama-make-format-prompt-template . "以下のテキストを%sの形式に変換して:\n%s")
+  (ellama-make-list-prompt-template . "Markdownのリスト形式にして")
+  (ellama-make-table-prompt-template . "Markdownのテーブル形式にして"))
 
 ;;; MODE
 
@@ -2479,64 +2540,5 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   :doc "minibufferの履歴を保存する"
   :leaf-path nil
   :global-minor-mode t)
-
-(leaf ellama
-  :doc "cl-defstruct生成make-llm-ollamaを手動展開しコンパイル可にした"
-  :if (executable-find "ollama")
-  :ensure t
-  :defer-config
-  (require 'llm-ollama)
-  :custom
-  (ellama-major-mode . 'markdown-mode)
-  (ellama-naming-scheme . 'ellama-generate-name-by-time)
-  (ellama-providers
-   . '(("deepseek-coder-v2"
-        . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                        "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
-                        "deepseek-coder-v2:16b-lite-instruct-q4_K_S"))
-       ("gemma2"
-        . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                        "gemma2:2b-instruct-q4_K_S"
-                        "gemma2:2b-instruct-q4_K_S"))
-       ("gemma2-baku"
-        . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                        "lucas2024/gemma-2-baku-2b-it:q8_0"
-                        "lucas2024/gemma-2-baku-2b-it:q8_0"))
-       ("codeqwen1.5"
-        . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                        "codeqwen:7b-chat-v1.5-q4_K_S"
-                        "codeqwen:7b-chat-v1.5-q4_K_S"))))
-  ;; translation
-  (ellama-language . "日本語")
-  (ellama-translation-provider
-   . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                   "lucas2024/gemma-2-baku-2b-it:q8_0"
-                   "lucas2024/gemma-2-baku-2b-it:q8_0"))
-  (ellama-translation-template . "%sで話して。「%s」を%sに翻訳して。")
-  ;; code generation
-  (ellama-provider
-   . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                   "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
-                   "deepseek-coder-v2:16b-lite-instruct-q4_K_S"))
-  (ellama-define-word-prompt-template . "%s の定義を教えて")
-  (ellama-summarize-prompt-template . "Text:\n%s\n要約して")
-  (ellama-code-review-prompt-template . "以下のコードのレビューと改善案をだして:\n```\n%s\n```")
-  (ellama-change-prompt-template . "以下のテキストを「%s」と変更して、引用符なしで出力して:\n%s")
-  (ellama-improve-grammar-prompt-template . "誤字脱字・文法を校正して")
-  (ellama-improve-wording-prompt-template . "語句を推敲して")
-  (ellama-improve-conciseness-prompt-template . "できるだけ簡潔にして")
-  (ellama-code-edit-prompt-template
-   . "以下のコードを「%s」と変更して、プロンプト無しでコードだけを\n```language\n...\n```\nの形式で出力して:\n```\n%s\n```\n")
-  (ellama-code-improve-prompt-template
-   . "以下のコードを改善して、プロンプト無しでコードだけを\n```language\n...\n```の形式で出力して:\n```\n%s\n```\n")
-  (ellama-code-complete-prompt-template
-   . "以下のコードの続きを書いて、プロンプト無しでコードだけを\n```language\n...\n```の形式で出力して:\n```\n%s\n```\n")
-  (ellama-code-add-prompt-template
-   . "Context: \n```\n%s\n```\nこのコードを文脈として、%s、プロンプト無しでコードだけを\n```\n...\n```\nの形式で出力して\n")
-  (ellama-generate-commit-message-template
-   . "あなたは熟練プログラマーです。後の変更点をもとに簡潔なコミットメッセージを書いてください。コミットメッセージの形式は、1行目は変更点の要約、2行目は空行、それ以降の行は変更全体の詳細な説明、です。出力はプロンプト無しで最終的なコミットメッセージだけにしてください。\n\n変更点:\n%s\n")
-  (ellama-make-format-prompt-template . "以下のテキストを%sの形式に変換して:\n%s")
-  (ellama-make-list-prompt-template . "Markdownのリスト形式にして")
-  (ellama-make-table-prompt-template . "Markdownのテーブル形式にして"))
 
 ;;; init_package.el ends here
