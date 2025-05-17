@@ -17,3 +17,6 @@ my.Procfile.dev
 
 # Browsersync
 bs-config.js
+
+# aider
+.aider.*

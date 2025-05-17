@@ -806,6 +806,26 @@ targets."
          ;; MEMO: デフォルトで設定されているが効かないので再設定
          ("C-<return>" . copilot-chat-prompt-send)))
 
+(leaf aider
+  :disabled t
+  :doc "copilot-chat.elを起動してログインしていれば、OAuthトークンは"
+  :doc "~/.config/copilot-chat/github-token あたりにある"
+  :init
+  ;;-- Ollama
+  (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434")
+  :custom
+  (aider-args . '("--model" "ollama_chat/gemma3:4b-it-qat"))
+  ;;-- GitHub Copilot
+  ;; (setenv "OPENAI_API_BASE" "https://api.githubcopilot.com")
+  ;; (setenv "OPENAI_API_KEY" "<your-openai-api-key>")
+  ;; :custom
+  ;; (aider-args . '("--model" "gpt-4o"))
+  ;;-- OpenAI
+  ;; (setenv "OPENAI_API_KEY" "<your-openai-api-key>")
+  ;; :custom
+  ;; (aider-args . '("--model" "openai/gpt-4o"))
+  )
+
 ;;; MODE
 
 (leaf tree-sitter
