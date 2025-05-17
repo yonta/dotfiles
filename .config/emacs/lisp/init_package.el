@@ -745,6 +745,10 @@ targets."
         . #s(llm-ollama nil nil nil "http" "localhost" 11434
                         "lucas2024/gemma-2-baku-2b-it:q8_0"
                         "lucas2024/gemma-2-baku-2b-it:q8_0"))
+       ("gemma3"
+        . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                        "gemma3:4b-it-qat"
+                        "gemma3:4b-it-qat"))
        ("codeqwen1.5"
         . #s(llm-ollama nil nil nil "http" "localhost" 11434
                         "codeqwen:7b-chat-v1.5-q4_K_S"
@@ -753,14 +757,14 @@ targets."
   (ellama-language . "日本語")
   (ellama-translation-provider
    . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                   "lucas2024/gemma-2-baku-2b-it:q8_0"
-                   "lucas2024/gemma-2-baku-2b-it:q8_0"))
+                   "gemma3:4b-it-qat"
+                   "gemma3:4b-it-qat"                   ))
   (ellama-translation-template . "%sで話して。「%s」を%sに翻訳して。")
   ;; code generation
   (ellama-provider
    . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                   "deepseek-coder-v2:16b-lite-instruct-q4_K_S"
-                   "deepseek-coder-v2:16b-lite-instruct-q4_K_S"))
+                   "gemma3:4b-it-qat"
+                   "gemma3:4b-it-qat"))
   (ellama-define-word-prompt-template . "%s の定義を教えて")
   (ellama-summarize-prompt-template . "Text:\n%s\n要約して")
   (ellama-code-review-prompt-template . "以下のコードのレビューと改善案をだして:\n```\n%s\n```")
