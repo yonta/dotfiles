@@ -788,6 +788,26 @@ targets."
 
 ;;; MODE
 
+(leaf git
+  :leaf-path nil
+  :preface
+
+  (leaf magit
+    :doc "使わないが便利なgit系modeが同梱されているためインストールだけする"
+    :ensure t)
+
+  (leaf git-commit
+    :doc "magitに同梱されているマイナーモード"
+    :mode "\\COMMIT_EDITMSG\\'")
+
+  (leaf git-commit-ts-mode
+    :req "M-x treesit-install-language-grammar [RET] gitcommit"
+    :ensure t
+    :mode "\\COMMIT_EDITMSG\\'"
+    :init
+    (add-to-list 'treesit-language-source-alist
+                 '(gitcommit . ("https://github.com/gbprod/tree-sitter-gitcommit")))))
+
 (leaf emacs-lisp
   :leaf-path nil
   :preface
