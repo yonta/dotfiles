@@ -2498,6 +2498,10 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
         . #s(llm-ollama nil nil nil "http" "localhost" 11434
                         "gemma2:2b-instruct-q4_K_S"
                         "gemma2:2b-instruct-q4_K_S"))
+       ("gemma2-baku"
+        . #s(llm-ollama nil nil nil "http" "localhost" 11434
+                        "lucas2024/gemma-2-baku-2b-it:q8_0"
+                        "lucas2024/gemma-2-baku-2b-it:q8_0"))
        ("codeqwen1.5"
         . #s(llm-ollama nil nil nil "http" "localhost" 11434
                         "codeqwen:7b-chat-v1.5-q4_K_S"
@@ -2506,8 +2510,8 @@ Rewrite `dired-listing-switches' variable between with and without 'A'"
   (ellama-language . "日本語")
   (ellama-translation-provider
    . #s(llm-ollama nil nil nil "http" "localhost" 11434
-                   "gemma2:2b-instruct-q4_K_S"
-                   "gemma2:2b-instruct-q4_K_S"))
+                   "lucas2024/gemma-2-baku-2b-it:q8_0"
+                   "lucas2024/gemma-2-baku-2b-it:q8_0"))
   (ellama-translation-template . "%sで話して。「%s」を%sに翻訳して。")
   ;; code generation
   (ellama-provider
