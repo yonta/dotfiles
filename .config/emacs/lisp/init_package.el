@@ -807,6 +807,33 @@ targets."
          ;; MEMO: デフォルトで設定されているが効かないので再設定
          ("C-<return>" . copilot-chat-prompt-send)))
 
+(leaf mcp
+  :doc "gptelで使えるmcpサーバー"
+  :doc "TODO"
+  :vc (:url "https://github.com/lizqwerscott/mcp.el.git")
+  :custom
+  (mcp-hub-servers
+   . '(("filesystem"
+        . ( :command "npx"
+            :args ("-y"
+                   "@modelcontextprotocol/server-filesystem"
+                   "/home/kei/")))
+       ;; ("github" . (:command "github-mcp-server" :args ("stdio")))
+       )))
+
+(leaf gptel
+  :doc "TODO: MCPが使えてるかよくわからない"
+  :req ".authinfoにChatGPTのAPIキーを記述する"
+  :ensure t
+  :config
+  (require 'gptel-integrations)
+  ;; (gptel-make-ollama "Ollama"
+  ;;   :host "localhost:11434"
+  ;;   :stream t
+  ;;   :modes '(gemma3:4b-it-qat))
+  (gptel-make-gh-copilot "Copilot")
+  :bind (:gptel-mode-map ("C-<return>" . gptel-send)))
+
 (leaf aider
   :disabled t
   :doc "copilot-chat.elを起動してログインしていれば、OAuthトークンは"
