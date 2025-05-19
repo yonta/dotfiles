@@ -788,6 +788,7 @@ targets."
 
 (leaf copilot
   :doc "普段はオフなので、自分で明示的にcopilot-modeを呼び出してオンにする"
+  :doc "文法エラーがあるとcopilotがカーソル移動のたびに警告を出してしまう"
   :doc "custom.elでwarningsuppress-typesに((comp) (copilot))のようにcopilotを追加するとよい"
   :ensure t
   :diminish " 🛩️"
