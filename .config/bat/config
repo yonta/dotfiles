@@ -30,3 +30,4 @@
 --map-syntax ".emacs:Lisp"
 --map-syntax ".dockerignore:Git Ignore"
 --map-syntax "*Procfile*:DotENV"
+--map-syntax "**/aws/config:INI"
