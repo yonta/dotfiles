@@ -53,6 +53,7 @@ fi
 
 # bat help
 alias h='help'
+alias hh='batman'
 
 # all pip package upgrade
 if type pip > /dev/null 2>&1 ; then
