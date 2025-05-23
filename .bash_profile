@@ -287,6 +287,9 @@ if [ -n "${BASH_VERSION}" ]; then
 fi
 
 if type aws > /dev/null 2>&1 ; then
+    # completionの設定
+    complete -C '/usr/local/bin/aws_completer' aws
+
     # aws-cliはXDG CONFIGに対応していない
     # 暫定で環境変数をセットする
     # https://github.com/aws/aws-cli/issues/9031#issuecomment-2448119520
