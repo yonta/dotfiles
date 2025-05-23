@@ -879,6 +879,32 @@ targets."
   :leaf-path nil
   :preface
 
+  (leaf git-timemachine
+    :ensure t
+    :bind ("C-c C-x t" . git-timemachine))
+
+  (leaf vc-msg
+    :ensure t
+    :bind ("C-c C-x b" . vc-msg-show))
+
+  (leaf git-modes
+    :doc "gitconfig gitignore gitattributes用のmodeセット"
+    :ensure t)
+
+  (leaf git-gutter
+    :disabled t
+    :ensure t
+    :global-minor-mode global-git-gutter-mode
+    :diminish git-gutter-mode
+    :custom
+    (git-gutter:modified-sign . " ")
+    (git-gutter:added-sign . " ")
+    (git-gutter:deleted-sign . " ")
+    :custom-face
+    (git-gutter:modified . '((t (:background "#fad987"))))
+    (git-gutter:added . '((t (:background "#95fa87"))))
+    (git-gutter:deleted . '((t (:background "#fa8d87")))))
+
   (leaf magit
     :doc "使わないが便利なgit系modeが同梱されているためインストールだけする"
     :ensure t)
@@ -1444,8 +1470,6 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 
 (leaf graphviz-dot-mode :ensure t)
 
-(leaf git-modes :ensure t)
-
 (defvar my/wakatime-cli-path
   (concat (getenv "XDG_CONFIG_HOME") "/wakatime/wakatime-cli-linux-amd64"))
 (leaf wakatime-mode
@@ -1760,20 +1784,6 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :config
     (toggle-hl-line-when-idle 1)
     (hl-line-when-idle-interval 4)))
-
-(leaf git-gutter
-  :disabled t
-  :ensure t
-  :global-minor-mode global-git-gutter-mode
-  :diminish git-gutter-mode
-  :custom
-  (git-gutter:modified-sign . " ")
-  (git-gutter:added-sign . " ")
-  (git-gutter:deleted-sign . " ")
-  :custom-face
-  (git-gutter:modified . '((t (:background "#fad987"))))
-  (git-gutter:added . '((t (:background "#95fa87"))))
-  (git-gutter:deleted . '((t (:background "#fa8d87")))))
 
 (leaf diff-hl
   :ensure t
@@ -2247,14 +2257,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   (add-to-list 'aggressive-indent-excluded-modes 'compilation-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'inferior-sml-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'shell-mode))
-
-(leaf git-timemachine
-  :ensure t
-  :bind ("C-c C-x t" . git-timemachine))
-
-(leaf vc-msg
-  :ensure t
-  :bind ("C-c C-x b" . vc-msg-show))
 
 (leaf ace-window
   :ensure t
