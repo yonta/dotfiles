@@ -301,6 +301,12 @@ if type aws > /dev/null 2>&1 ; then
 fi
 
 if type aws-vault > /dev/null 2>&1 ; then
+    # completionの設定
+    # なんと、curlでとってこいとあった
+    # トラブルがおきたらローカルにライセンスとともにコピーも考える
+    # https://github.com/99designs/aws-vault/blob/master/USAGE.md#shell-completion
+    eval "$(curl -fs https://raw.githubusercontent.com/99designs/aws-vault/master/contrib/completions/bash/aws-vault.bash)"
+
     # 認証バックエンドにpassを使う
     export AWS_VAULT_BACKEND=pass
     # 認証バックエンドのキー保存先の名前
