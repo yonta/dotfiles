@@ -317,3 +317,19 @@ if type aws-vault > /dev/null 2>&1 ; then
     # 認証期限切れ時間、デフォルトは1h、最大12hらしい
     export AWS_SESSION_TOKEN_TTL=3h
 fi
+
+if type terraform > /dev/null 2>&1 ; then
+    # completionの設定
+    complete -C /usr/bin/terraform terraform
+fi
+
+# AWS copilot
+if type copilot > /dev/null 2>&1 ; then
+    # completionの設定
+    eval "$(copilot completion bash)"
+fi
+
+if type diesel > /dev/null 2>&1 ; then
+    # completionの設定
+    eval "$(diesel completions bash)"
+fi
