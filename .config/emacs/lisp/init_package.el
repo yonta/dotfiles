@@ -1548,6 +1548,14 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :doc "npm install -g elm-format elm-review elm-test なんかも便利そう"
   :hook (elm-mode-hook . eglot-ensure))
 
+(leaf terraform-mode
+  :req "hashcorpレポジトリを追加してCLIとLSPサーバーをインストールする"
+  :req "https://github.com/hashicorp/terraform-ls/blob/main/docs/installation.md"
+  :req "apt install terraform terraform-ls"
+  :ensure t
+  :custom (terraform-format-on-save . t)
+  :hook (terraform-mode-hook . eglot-ensure))
+
 ;;; Face
 
 (leaf fontaine
