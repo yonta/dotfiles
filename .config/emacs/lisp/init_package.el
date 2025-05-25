@@ -2439,7 +2439,7 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
   :config
   (setq auto-insert-directory "~/.config/emacs/autoinsert/")
   (setq auto-insert-alist
-        (nconc
+        (append
          '(("Test\\.\\(cpp\\|cc\\|cxx\\)$" .
             ["templateTest.cpp" my-replace-template])
            ("\\.\\(cpp\\|cc\\|cxx\\)$" . ["template.cpp" my-replace-template])
