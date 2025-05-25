@@ -2323,7 +2323,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     (defun my-toggle-dired-listing-switches ()
       "Toggle `dired-mode' option to show or hide dot files.
 
-Rewrite `dired-listing-switches' variable between with and without 'A'"
+Rewrite `dired-listing-switches' variable between with and without -A option"
       (interactive)
       (progn
         (if (string-match "[Aa]" dired-listing-switches)
