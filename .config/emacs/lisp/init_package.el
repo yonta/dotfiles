@@ -1396,6 +1396,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     (setq add-node-modules-path-command '("echo \"$(npm root)/.bin\""))
     :hook ((js-base-mode-hook . add-node-modules-path)
            (typescript-ts-base-mode-hook . add-node-modules-path)
+           (elm-mode-hook . add-node-modules-path)
            (markdown-mode-hook . add-node-modules-path)
            (css-base-mode-hook . add-node-modules-path)
            (html-mode-hook . add-node-modules-path)
@@ -1554,6 +1555,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :ensure t
   :req "npm install -g @elm-tooling/elm-language-server"
   :doc "npm install -g elm-format elm-review elm-test なんかも便利そう"
+  :custom (elm-format-on-save . t)
   :hook (elm-mode-hook . eglot-ensure))
 
 (leaf terraform-mode
