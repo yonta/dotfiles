@@ -107,6 +107,11 @@ export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
 # export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npmrc"
 export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
 
+# npm completion
+if type npm > /dev/null 2>&1 ; then
+    eval "$(npm completion)"
+fi
+
 # node
 export NODE_REPL_HISTORY="${XDG_CACHE_HOME}/node/history"
 
