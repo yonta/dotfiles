@@ -73,3 +73,5 @@
 	sort = -committerdate
 [credential]
 	helper = store --file ~/.config/git/credentials
+[url "https://github.com/"]
+	insteadOf = git@github.com:
