@@ -954,7 +954,7 @@ targets."
     (defun my-eval-region-or-line ()
       "Eval active region or current line."
       (interactive) (call-with-region-or-line #'eval-region))
-    :bind ((:lisp-mode-shared-map ("C-c C-r" . my-eval-region-or-line))))
+    :bind (:lisp-mode-shared-map ("C-c C-r" . my-eval-region-or-line)))
 
   (leaf eldoc
     :diminish eldoc-mode
@@ -1209,14 +1209,15 @@ targets."
   (leaf inf-ruby
     :ensure t
     :hook (ruby-base-mode-hook . inf-ruby-minor-mode)
-    :bind ((:ruby-mode-map
-            :package ruby-mode
-            ("C-c C-p" . inf-ruby)
-            ("C-c p" . inf-ruby-console-auto))
-           (:web-mode-map
-            :package web-mode
-            ("C-c C-p" . inf-ruby)
-            ("C-c p" . inf-ruby-console-auto)))
+    :bind
+    ((:ruby-mode-map
+      :package ruby-mode
+      ("C-c C-p" . inf-ruby)
+      ("C-c p" . inf-ruby-console-auto))
+     (:web-mode-map
+      :package web-mode
+      ("C-c C-p" . inf-ruby)
+      ("C-c p" . inf-ruby-console-auto)))
     :custom
     (inf-ruby-console-environment . "development"))
 
