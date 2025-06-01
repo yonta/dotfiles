@@ -927,6 +927,30 @@ targets."
          'append)
         (font-lock-flush)))
     :hook (git-commit-ts-mode-hook . my/git-commit-diff-highlighting))
+
+  (leaf git-rebase-todo-mode
+    :doc "git-rebase-todoで簡易色付け"
+    :doc "ChatGPTでつくった"
+    :leaf-path nil
+    :mode "git-rebase-todo\\'"
+    :preface
+    (define-derived-mode git-rebase-todo-mode fundamental-mode "Git-Rebase-Todo"
+      "Major mode for editing git rebase todo files."
+      ;; Syntax table, Comment recognition
+      (modify-syntax-entry ?# "<" git-rebase-todo-mode-syntax-table)
+      (modify-syntax-entry ?\n ">" git-rebase-todo-mode-syntax-table)
+      (setq-local comment-start "#")
+      (setq-local comment-start-skip "#+\\s-*")
+      ;; Highlighting
+      (setq font-lock-defaults
+            '((;; Rebase commands
+               ("^\\(pick\\|reword\\|edit\\|squash\\|fixup\\|exec\\|drop\\)\\>"
+                . font-lock-keyword-face)
+               ;; SHA1
+               ("^[a-z]+ \\([0-9a-f]+\\)" 1 font-lock-constant-face)
+               ;; Commit message
+               ("^[a-z]+ [0-9a-f]+ \\(.*\\)$" 1 font-lock-string-face)
+               )))))
   )
 
 (leaf emacs-lisp
