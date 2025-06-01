@@ -930,7 +930,20 @@ targets."
     :preface
     (add-to-list
      'treesit-language-source-alist
-     '(gitcommit . ("https://github.com/gbprod/tree-sitter-gitcommit"))))
+     '(gitcommit . ("https://github.com/gbprod/tree-sitter-gitcommit")))
+    :config
+    ;; COMMIT_EDITMSGの+-に色をつける
+    (defun my/git-commit-diff-highlighting ()
+      "Highlight diff-style + and - lines in COMMIT_EDITMSG."
+      (when (and buffer-file-name
+                 (string-match-p "COMMIT_EDITMSG\\'" buffer-file-name))
+        (font-lock-add-keywords
+         nil
+         '(("^+.*" . 'diff-added)
+           ("^-.*" . 'diff-removed))
+         'append)
+        (font-lock-flush)))
+    :hook (git-commit-ts-mode-hook . my/git-commit-diff-highlighting))
   )
 
 (leaf emacs-lisp
