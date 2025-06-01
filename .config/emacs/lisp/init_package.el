@@ -905,28 +905,11 @@ targets."
     (git-gutter:added . '((t (:background "#95fa87"))))
     (git-gutter:deleted . '((t (:background "#fa8d87")))))
 
-  (leaf magit
-    :doc "使わないが便利なgit系modeが同梱されているためインストールだけする"
-    :ensure t)
-
-  (leaf git-commit
-    :doc "magitに同梱されているマイナーモード"
-    :mode "/COMMIT_EDITMSG\\'"
-    :custom (git-commit-major-mode . 'git-commit-ts-mode)
-    )
-
-  ;; MEMO: git-commit-ts-mode内ではgit-commitの併用をうまく設定できない
-  ;;       例えば
-  ;;         :hook (git-commit-ts-mode-hook . git-commit-mode)
-  ;;         :mode "/COMMIT_EDITMSG\\'"
-  ;;       などをgit-commit-ts-mode内で設定すると、
-  ;;       マイナーモードgit-commit-modeがうまく起動しない
-  ;;       git-commitに:modeをセットしgit-commit-major-modeをカスタムするのがよい
-
   (leaf git-commit-ts-mode
     :req "M-x treesit-install-language-grammar [RET] gitcommit"
     :defvar treesit-language-source-alist
     :ensure t
+    :mode "COMMIT_EDITMSG\\'"
     :preface
     (add-to-list
      'treesit-language-source-alist
