@@ -2656,23 +2656,23 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
   :doc "native compile"
   :if (native-comp-available-p)
   :preface
-  (defvar my/comp-init-files-list
+
+  (defvar my/native-compile-init-files-list
     '("~/.config/emacs/init.el"
       "~/.config/emacs/early-init.el"
-      "~/.config/emacs/lisp"))
-  (defun my/comp-all-files ()
+      "~/.config/emacs/lisp")
+    "native compile対象のファイル・ディレクトリ")
+  (defun my/native-compile-init-files ()
+    "Compile configuration files with native compilation."
+    (interactive)
+    (native-compile-async my/native-compile-init-files-list 'recursively))
+  (defun my/native-compile-all-files ()
     "Compile configuration files with native compilation."
     (interactive)
     (native-compile-async
-     (append
-      ;; directories
-      '("~/.config/emacs/lisp" "~/.config/emacs/elpa")
-      my/comp-init-files-list)
+     ;; 追加ディレクトリ
+     (append '("~/.config/emacs/elpa") my/native-compile-init-files-list)
      'recursively))
-  (defun my/comp-init-files ()
-    "Compile configuration files with native compilation."
-    (interactive)
-    (native-compile-async my/comp-init-files-list 'recursively))
   :custom (native-comp-async-jobs-number . 3))
 
 (leaf savehist
