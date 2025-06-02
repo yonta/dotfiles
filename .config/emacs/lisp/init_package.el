@@ -1960,7 +1960,8 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
                                 ("\\*Warnings\\*" . hide)
                                 (" \\*auto-async-byte-compile\\*" . hide)
                                 ("\\*Compile-Log\\*" . hide)
-                                ("[lL]og\\*$" . hide) ; log終わり
+                                ("[lL]og\\*$" . hide) ;; XXXlog or XXXLog
+                                ("\\*elm-format errors\\*" . hide)
                                 ;; not hide
                                 compilation-mode
                                 completion-list-mode ; 全completionを対象
@@ -1974,6 +1975,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
                                 inf-ruby-mode
                                 ts-comint-mode
                                 inferior-sml-mode
+                                comint-mode
                                 "\\*scratch\\*"
                                 "\\*quickrun\\*"
                                 "\\*xref\\*"
