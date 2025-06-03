@@ -126,9 +126,12 @@ fi
 
 # bat help
 if type bat > /dev/null 2>&1 ; then
-    help() {
+    bathelp() {
         "$@" --help 2>&1 | bat --plain --language=help
     }
+    # command completionをきかせる
+    complete -A command bathelp
+    complete -A command batman
 fi
 
 # Python

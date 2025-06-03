@@ -52,7 +52,7 @@ if ! type fd > /dev/null 2>&1 && dpkg -l fd-find > /dev/null 2>&1 ; then
 fi
 
 # bat help
-alias h='help'
+alias h='bathelp'
 alias hh='batman'
 
 # all pip package upgrade
