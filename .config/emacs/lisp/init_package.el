@@ -2334,6 +2334,24 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
    ;; 使いつつ考える
    ("." . treemacs-toggle-show-dotfiles)))
 
+(leaf origami
+  :doc "コードの閉じ開き"
+  :doc "hs-modeやoutline-modeが標準だが、yaml非対応のためこちらを使う"
+  :doc "hs-modeに従い、C-c @系にショートカットを割り当てる"
+  :ensure t
+  :global-minor-mode global-origami-mode
+  :bind
+  ("C-c @ C-a" . origami-open-all-nodes)
+  ("C-c @ C-t" . origami-close-all-nodes)
+  ("C-c @ C-a" . origami-open-all-nodes)
+  ("C-c @ C-l" . origami-open-node-recursively)
+  ("C-c @ C-h" . origami-close-node-recursively)
+  ("C-c @ l" . origami-open-node)
+  ("C-c @ h" . origami-close-node)
+  ("C-c @ t" . origami-toggle-node)
+  ("C-c @ o" . origami-show-only-node)
+  )
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
