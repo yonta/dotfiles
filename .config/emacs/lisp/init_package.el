@@ -2316,6 +2316,24 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
          ("C-," . ialign-decrement-spacing)
          ("C-r" . ialign-toggle-repeat)))
 
+(leaf treemacs
+  :ensure t
+  :defun treemacs-visit-node-ace
+  :custom
+  (treemacs-indentation . 1)
+  (treemacs-hide-dot-git-directory . nil)
+  (treemacs-width-is-initially-locked . nil)
+  ;; ace-windowで開く
+  (treemacs-default-visit-action . #'treemacs-visit-node-ace)
+  :bind
+  ("M-t" . treemacs)
+  (:treemacs-mode-map
+   ("j" . treemacs-next-line)
+   ("k" . treemacs-previous-line)
+   ;; toggle系はt-にまとまってあるのでいらないかも
+   ;; 使いつつ考える
+   ("." . treemacs-toggle-show-dotfiles)))
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
@@ -2335,7 +2353,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     ;; (setq dired-listing-switches "-gGhFA")
     (dired-listing-switches . "--time-style=long-iso -lgGhF")
     :defer-config
-    ;; C-.でドットファイルの表示と非表示を切り替える
+    ;; .でドットファイルの表示と非表示を切り替える
     (defun my-reload-current-dired-buffer ()
       "Reload current `dired-mode' buffer."
       (let* ((dir (dired-current-directory)))
@@ -2357,7 +2375,7 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
          (setq-local whitespace-style (delete 'lines-tail whitespace-style))
          (setq-local truncate-partial-width-windows t)))
     :bind (:dired-mode-map
-           ("C-." . my-toggle-dired-listing-switches)
+           ("." . my-toggle-dired-listing-switches)
            ("r" . wdired-change-to-wdired-mode)))
 
   (leaf dired-collapse
