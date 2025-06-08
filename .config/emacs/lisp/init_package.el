@@ -2020,8 +2020,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     :hook (shell-mode-hook . ansi-color-for-comint-mode-on))
 
   (leaf sh-script
-    :mode (("Procfile" . sh-mode)
-           ("dotenv" . sh-mode))
+    :mode ("Procfile" . sh-mode)
     :hook (sh-mode-hook
            . (lambda () (setq-local flycheck-checker 'sh-posix-bash)))
     :bind (:sh-mode-map
@@ -2048,6 +2047,10 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   (leaf bash-ts-mode
     :mode ("\\.bash_aliases\\'" . bash-ts-mode)
     :hook (bash-ts-mode-hook . eglot-ensure)))
+
+(leaf conf-mode
+  :doc "Emacs標準のconfig用モード"
+  :mode ("\\.env\\'" "dotenv"))
 
 (leaf image-dired+
   :ensure t
