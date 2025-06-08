@@ -1985,6 +1985,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
                                 " \\*tip\\*"
                                 " \\*eglot doc\\*"
                                 "^ \\*Rubocop.*\\*$"
+                                "\\*ruff-format errors\\*"
                                 ))
   ;; popper-echoでk/^コマンドを有効化
   (popper-echo-dispatch-actions . t)
