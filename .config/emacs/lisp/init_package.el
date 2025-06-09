@@ -2412,7 +2412,6 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
            :package dired
            ("C-m" . dired-single-buffer)
            ("^" . dired-single-up-directory)
-           ("C-." . my-toggle-dired-listing-switches)
            ("r" . wdired-change-to-wdired-mode)))
 
   (leaf dired-subtree
