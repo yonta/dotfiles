@@ -2400,8 +2400,11 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
            ("r" . wdired-change-to-wdired-mode)))
 
   (leaf dired-collapse
+    :doc "diredで1要素しかないディレクトリを連続パスにする"
     :ensure t
-    :hook (dired-mode-hook . dired-collapse-mode))
+    :hook (dired-mode-hook . dired-collapse-mode)
+    :custom-face
+    (dired-collapse-shadow . '((t (:inherit dired-directory)))))
 
   (leaf dired-sort-map :require t :after dired)
 
