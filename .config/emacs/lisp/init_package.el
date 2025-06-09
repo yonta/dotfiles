@@ -1456,6 +1456,25 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
            yaml-ts-mode-hook
            . prettier-js-mode))
 
+  (leaf biomejs-format
+    :ensure t
+    :init
+    (defun my/prettier-biome-toggle ()
+      "Toggle minor mode between prettier and biome."
+      (interactive)
+      (cond
+       ((bound-and-true-p prettier-js-mode)
+        (prettier-js-mode -1)
+        (biomejs-format-mode 1)
+        (message "Biomejs-Format mode enabled in current buffer"))
+       ((bound-and-true-p biomejs-format-mode)
+        (biomejs-format-mode -1)
+        (prettier-js-mode 1)
+        (message "Prettier-Js mode enabled in current buffer"))
+       (t
+        (message
+         "Both Prettier or Biome mode are not enabled in current buffer")))))
+
   (leaf ts-comint
     :ensure t
     :if (executable-find "ts-node")
