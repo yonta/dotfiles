@@ -1516,6 +1516,10 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   (concat (getenv "XDG_CONFIG_HOME") "/wakatime/wakatime-cli-linux-amd64"))
 (leaf wakatime-mode
   :ensure t
+  :req "GitHubからリリースバイナリwakatime-cli-linux-amd64が必要"
+  :url "https://wakatime.com/emacs"
+  :req "wakatimeのapi keyをcustom.elに配置する"
+  :req "'(wakatime-api-key \"waka_XXXXXXXXXXXXXXXXXX\")"
   :if (executable-find my/wakatime-cli-path)
   :global-minor-mode global-wakatime-mode
   :diminish t
