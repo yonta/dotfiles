@@ -1429,9 +1429,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :hook
     (typescript-ts-base-mode-hook . eglot-ensure)
     (typescript-ts-base-mode-hook
-     . (lambda ()
-         (setq-local flycheck-check-syntax-automatically
-                     '(save mode-enabled))))
+     . (lambda () (setq-local flycheck-idle-change-delay 3)))
     ;; eglot-checkの後にjavascript-eslintによるチェックを追加
     (typescript-ts-base-mode-hook
      . (lambda ()
