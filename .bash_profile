@@ -264,6 +264,8 @@ if [ -n "${WSLENV}" ] ; then
     # SSHログインじゃないとき
     if [ -z "${SSH_CLIENT}" ] ; then
         export BROWSER=wslview
+        # WSLg用にHi-DPIに対応させる
+        export GDK_SCALE=2
 
         # ディスプレイが存在しVSCode WSLじゃない
         if xrandr > /dev/null 2>&1 &&
