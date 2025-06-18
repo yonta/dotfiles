@@ -21,8 +21,8 @@ PROMPT_COMMAND="${PROMPT_COMMAND+${PROMPT_COMMAND}; }history -a; history -c; his
 shopt -u histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
-HISTFILESIZE=10000
+HISTSIZE=20000
+HISTFILESIZE=20000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
