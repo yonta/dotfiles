@@ -1530,12 +1530,23 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :preface
   (leaf rust-mode
     :ensure t
+    :req "rustup"
+    :url "https://www.rust-lang.org/tools/install"
+    :req "rust-analyzerバイナリ"
+    :url "https://github.com/rust-lang/rust-analyzer"
+    ;;
     :doc "flycheckが/dev/XXXXに書き込もうとしてパーミッションエラーすることがある"
     :doc "現在調査中で、以下URLにあるようにflycheckを変更する必要がある"
     :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2377422002"
+    ;;
+    :doc "Emacs30.1が最新版tree-sitter-rustのABI ver15に未対応"
+    :doc "treesit-autoで入れたlibtree-sitter-rust.soではエラーする"
+    :doc "これは最新版であるv0.25系で起こるようだ"
+    :doc "ソースバージョンv0.23.3をチェックアウトして手動ビルドする必要がある"
+    :doc "他にもc,bash,luaなどで同様のことが起こる"
+    :url "https://github.com/tree-sitter/tree-sitter-rust.git"
     :custom
     ;; Tree Sitter統合
-    ;; 動いていない気がする
     (rust-mode-treesitter-derive . t))
 
   (leaf rustic
