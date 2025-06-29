@@ -785,6 +785,9 @@ targets."
   :doc "普段はオフなので、自分で明示的にcopilot-modeを呼び出してオンにする"
   :doc "文法エラーがあるとcopilotがカーソル移動のたびに警告を出してしまう"
   :doc "custom.elでwarningsuppress-typesに((comp) (copilot))のようにcopilotを追加するとよい"
+  :req "このパッケージのインストール後、"
+  :req "M-x copilot-install-server"
+  :req "M-x copilot-login"
   :ensure t
   :diminish " 🛩️"
   ;; :hook (prog-mode-hook . copilot-mode)
