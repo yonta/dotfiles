@@ -69,18 +69,6 @@ if type vim > /dev/null 2>&1 ; then
     export EDITOR=vim
 fi
 
-# mise
-if type mise > /dev/null 2>&1 ; then
-    eval "$(mise activate bash)"
-
-    # completion の設定
-    if ! type usage > /dev/null 2>&1 ; then
-        # usage がなければ mise でいれる
-        mise use --global usage
-    fi
-    eval "$(mise completions --include-bash-completion-lib bash)"
-fi
-
 # Rust and cargo
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
@@ -92,6 +80,19 @@ fi
 if type rustup > /dev/null 2>&1 ; then
     eval "$(rustup completions bash)"
     eval "$(rustup completions bash cargo)"
+fi
+
+# mise
+# MEMO: rust-analyzerのためにrust/cargo より mise を優先する
+if type mise > /dev/null 2>&1 ; then
+    eval "$(mise activate bash)"
+
+    # completion の設定
+    if ! type usage > /dev/null 2>&1 ; then
+        # usage がなければ mise でいれる
+        mise use --global usage
+    fi
+    eval "$(mise completions --include-bash-completion-lib bash)"
 fi
 
 # rlwrap home
