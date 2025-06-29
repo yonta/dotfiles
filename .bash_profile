@@ -17,6 +17,18 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 # WSLGによって設定済み
 # XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
 
+# mise
+if type mise > /dev/null 2>&1 ; then
+    eval "$(mise activate bash)"
+
+    # completion の設定
+    if ! type usage > /dev/null 2>&1 ; then
+        # usage がなければ mise でいれる
+        mise use --global usage
+    fi
+    eval "$(mise completions --include-bash-completion-lib bash)"
+fi
+
 # Rust and cargo
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
