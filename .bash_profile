@@ -8,6 +8,29 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# sshやsu後に端末タイトルを戻す
+# https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
+function resettitle()
+{
+    # change the title to default of the current window or tab
+    (source /etc/lsb-release; echo -ne "\033]0;${DISTRIB_DESCRIPTION}\007")
+}
+
+function ssh()
+{
+    /usr/bin/ssh "$@"
+    # revert the window title after the ssh command
+    resettitle
+}
+
+function su()
+{
+    # shellcheck disable=SC2117
+    /bin/su "$@"
+    # revert the window title after the su command
+    resettitle
+}
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "${HOME}/bin" ] ; then
     PATH="${HOME}/bin:${PATH}"
@@ -241,29 +264,6 @@ if type ollama > /dev/null 2>&1 ; then
     # shellcheck disable=SC1091
     source "${XDG_CONFIG_HOME}/bash/completions/ollama"
 fi
-
-# sshやsu後に端末タイトルを戻す
-# https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
-function resettitle()
-{
-    # change the title to default of the current window or tab
-    (source /etc/lsb-release; echo -ne "\033]0;${DISTRIB_DESCRIPTION}\007")
-}
-
-function ssh()
-{
-    /usr/bin/ssh "$@"
-    # revert the window title after the ssh command
-    resettitle
-}
-
-function su()
-{
-    # shellcheck disable=SC2117
-    /bin/su "$@"
-    # revert the window title after the su command
-    resettitle
-}
 
 # WSLのみの設定
 if [ -n "${WSLENV}" ] ; then
