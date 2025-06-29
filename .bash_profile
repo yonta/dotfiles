@@ -212,9 +212,8 @@ export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 bind "set completion-ignore-case on"
 bind "set bell-style none"
 
-if [ -f "${XDG_CONFIG_HOME}/fzf/fzf.bash" ]; then
-    # shellcheck disable=SC1091
-    source "${XDG_CONFIG_HOME}/fzf/fzf.bash"
+if type fzf > /dev/null 2>&1 ; then
+    eval "$(fzf --bash)"
 
     # fzf-tab-completion
     # https://github.com/lincheney/fzf-tab-completion
