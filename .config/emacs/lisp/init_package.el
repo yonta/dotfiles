@@ -2082,7 +2082,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 
 (leaf conf-mode
   :doc "Emacs標準のconfig用モード"
-  :mode ("\\.env\\'" "dotenv"))
+  :mode ("\\.env" "dotenv"))
 
 (leaf image-dired+
   :ensure t
