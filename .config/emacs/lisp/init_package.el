@@ -2749,4 +2749,35 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
   :leaf-path nil
   :global-minor-mode t)
 
+(leaf header-line-format
+  :leaf-path nil
+  :doc "ウィンドウの上部に現在のファイルパスと関数を表示"
+  :defun project-roots which-function
+  :preface
+  (which-function-mode 1)
+  (defun my/project-header-breadcrumb ()
+    "Return function name and absolute path from project root."
+    (when-let* ((proj (project-current nil))
+                (root (car (project-roots proj)))
+                (file buffer-file-name))
+      (let* ((rel  (file-relative-name file root))
+             (fn   (which-function)))
+        (concat
+         ;; プロジェクト名（ルートのディレクトリ名）
+         (file-name-nondirectory (directory-file-name root))
+         ;; スラッシュ
+         "/"
+         ;; ファイルの相対パス
+         rel
+         ;; 関数名があれば「 » 関数名」
+         (when fn (format " » %s" fn))))))
+  (setq-default header-line-format
+                '((:eval
+                   (propertize
+                    (my/project-header-breadcrumb)
+                    'face 'font-lock-comment-face))))
+  :custom
+  ;; 全プログラムモードで有効
+  (which-func-modes . t))
+
 ;;; init_package.el ends here
