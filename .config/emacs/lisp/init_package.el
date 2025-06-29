@@ -1636,12 +1636,9 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
        (small
         :default-height 190)
        (regular) ; like this it uses all the fallback values and is named `regular'
-       (medium
-        :default-weight semilight
-        :default-height 250
-        :bold-weight extrabold)
+       (regular+
+        :default-height 250)
        (large
-        :inherit medium
         :default-height 270)
        (presentation
         :default-height 300)
