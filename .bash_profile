@@ -343,3 +343,15 @@ if type diesel > /dev/null 2>&1 ; then
     # completionの設定
     eval "$(diesel completions bash)"
 fi
+
+# zig
+ZIG_HOME="${XDG_DATA_HOME}/zig"
+if [ -d "${ZIG_HOME}" ] ; then
+    PATH="${ZIG_HOME}:${PATH}"
+fi
+
+# mold, which is YA ld linker
+MOLD_HOME="${XDG_DATA_HOME}/mold"
+if [ -d "${MOLD_HOME}" ] ; then
+    PATH="${MOLD_HOME}/bin:${PATH}"
+fi
