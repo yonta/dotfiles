@@ -307,8 +307,8 @@ if [ -n "${BASH_VERSION}" ]; then
 fi
 
 if type aws > /dev/null 2>&1 ; then
-    # completionの設定
-    complete -C '/usr/local/bin/aws_completer' aws
+    # completionの設定、mise のパスを使う
+    complete -C '/home/kei/.local/share/mise/installs/aws-cli/latest/aws/dist/aws_completer' aws
 
     # aws-cliはXDG CONFIGに対応していない
     # 暫定で環境変数をセットする
