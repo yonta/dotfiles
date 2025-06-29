@@ -227,15 +227,13 @@ if type direnv > /dev/null 2>&1 ; then
 fi
 
 # flyctl
-export FLYCTL_INSTALL="${XDG_DATA_HOME}/fly"
 export FLY_CONFIG_DIR="${XDG_CONFIG_HOME}/fly"
-if [ -d "${FLYCTL_INSTALL}" ] ; then
-    PATH="${FLYCTL_INSTALL}/bin:${PATH}"
-fi
 
 # fly completions
 if type flyctl > /dev/null 2>&1 ; then
     eval "$(fly completion bash)"
+    # HACK: 短縮 fly コマンドも補完
+    complete -o default -F __start_flyctl fly
 fi
 
 # ollama completions
