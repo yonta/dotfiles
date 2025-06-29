@@ -4,9 +4,28 @@
 # see /usr/share/doc/bash/examples/startup-files for examples.
 # the files are located in the bash-doc package.
 
+# XDG Base Directory
+# Default settings
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+# WSLGによって設定済み
+# XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
+
+# if running bash
+if [ -n "${BASH_VERSION}" ]; then
+    export HISTFILE="${XDG_CONFIG_HOME}/bash/history"
+
+    # include .bashrc if it exists
+    if [ -f "${HOME}/.bashrc" ]; then
+        . "${HOME}/.bashrc"
+    fi
+fi
 
 # sshやsu後に端末タイトルを戻す
 # https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
@@ -41,14 +60,14 @@ if [ -d "${HOME}/.local/bin" ] ; then
     PATH="${HOME}/.local/bin:${PATH}"
 fi
 
-# XDG Base Directory
-# Default settings
-export XDG_CONFIG_HOME="${HOME}/.config"
-export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_STATE_HOME="${HOME}/.local/state"
-# WSLGによって設定済み
-# XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+# GPG
+GPG_TTY=$(tty)
+export GPG_TTY
+
+# EDITOR
+if type vim > /dev/null 2>&1 ; then
+    export EDITOR=vim
+fi
 
 # mise
 if type mise > /dev/null 2>&1 ; then
@@ -73,15 +92,6 @@ fi
 if type rustup > /dev/null 2>&1 ; then
     eval "$(rustup completions bash)"
     eval "$(rustup completions bash cargo)"
-fi
-
-# GPG
-GPG_TTY=$(tty)
-export GPG_TTY
-
-# EDITOR
-if type vim > /dev/null 2>&1 ; then
-    export EDITOR=vim
 fi
 
 # rlwrap home
@@ -265,47 +275,6 @@ if type ollama > /dev/null 2>&1 ; then
     source "${XDG_CONFIG_HOME}/bash/completions/ollama"
 fi
 
-# WSLのみの設定
-if [ -n "${WSLENV}" ] ; then
-    # for wsl tool deb package
-    PATH="${PATH}:/mnt/c/Windows"
-    PATH="${PATH}:/mnt/c/Windows/System32"
-
-    # SSHログインじゃないとき
-    if [ -z "${SSH_CLIENT}" ] ; then
-        export BROWSER=wslview
-        # WSLg用にHi-DPIに対応させる
-        export GDK_SCALE=2
-
-        # ディスプレイが存在しVSCode WSLじゃない
-        if xrandr > /dev/null 2>&1 &&
-                echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
-            # 全角半角キーが連打されるのを防ぐ
-            xset -r 49
-        fi
-    fi
-
-    # WSL1のみ
-    if uname -a | grep -e 'Microsoft' > /dev/null 2>&1 ; then
-        # Change default file and directory permission for WSL
-        umask 0022
-        export DOCKER_HOST='tcp://localhost:2375'
-        if [ -z "${SSH_CLIENT}" ]; then # not via ssh
-            export DISPLAY=localhost:0
-        fi
-    fi
-fi
-
-# if running bash
-if [ -n "${BASH_VERSION}" ]; then
-    export HISTFILE="${XDG_CONFIG_HOME}/bash/history"
-
-    # include .bashrc if it exists
-    if [ -f "${HOME}/.bashrc" ]; then
-        . "${HOME}/.bashrc"
-    fi
-fi
-
 if type aws > /dev/null 2>&1 ; then
     # completionの設定、mise のパスを使う
     complete -C '/home/kei/.local/share/mise/installs/aws-cli/latest/aws/dist/aws_completer' aws
@@ -364,4 +333,35 @@ fi
 MOLD_HOME="${XDG_DATA_HOME}/mold"
 if [ -d "${MOLD_HOME}" ] ; then
     PATH="${MOLD_HOME}/bin:${PATH}"
+fi
+
+# WSLのみの設定
+if [ -n "${WSLENV}" ] ; then
+    # for wsl tool deb package
+    PATH="${PATH}:/mnt/c/Windows"
+    PATH="${PATH}:/mnt/c/Windows/System32"
+
+    # SSHログインじゃないとき
+    if [ -z "${SSH_CLIENT}" ] ; then
+        export BROWSER=wslview
+        # WSLg用にHi-DPIに対応させる
+        export GDK_SCALE=2
+
+        # ディスプレイが存在しVSCode WSLじゃない
+        if xrandr > /dev/null 2>&1 &&
+                echo "${WSLENV}" | grep -v "VSCODE" > /dev/null 2>&1  ; then
+            # 全角半角キーが連打されるのを防ぐ
+            xset -r 49
+        fi
+    fi
+
+    # WSL1のみ
+    if uname -a | grep -e 'Microsoft' > /dev/null 2>&1 ; then
+        # Change default file and directory permission for WSL
+        umask 0022
+        export DOCKER_HOST='tcp://localhost:2375'
+        if [ -z "${SSH_CLIENT}" ]; then # not via ssh
+            export DISPLAY=localhost:0
+        fi
+    fi
 fi
