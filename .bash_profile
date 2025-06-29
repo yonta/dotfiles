@@ -8,6 +8,16 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "${HOME}/bin" ] ; then
+    PATH="${HOME}/bin:${PATH}"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "${HOME}/.local/bin" ] ; then
+    PATH="${HOME}/.local/bin:${PATH}"
+fi
+
 # XDG Base Directory
 # Default settings
 export XDG_CONFIG_HOME="${HOME}/.config"
@@ -53,16 +63,6 @@ fi
 
 # rlwrap home
 export RLWRAP_HOME="${XDG_CACHE_HOME}/rlwrap"
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "${HOME}/bin" ] ; then
-    PATH="${HOME}/bin:${PATH}"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "${HOME}/.local/bin" ] ; then
-    PATH="${HOME}/.local/bin:${PATH}"
-fi
 
 # OPAM configuration
 export OPAMROOT="${XDG_DATA_HOME}/opam"
