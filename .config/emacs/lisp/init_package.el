@@ -133,27 +133,29 @@
     (defun consult-narrow-cycle-backward ()
       "Cycle backward through the narrowing keys."
       (interactive)
-      (when consult--narrow-keys
-        (consult-narrow
-         (if consult--narrow
-             (let ((idx (seq-position
-                         consult--narrow-keys
-                         (assq consult--narrow consult--narrow-keys))))
-               (unless (eq idx 0)
-                 (car (nth (1- idx) consult--narrow-keys))))
-           (caar (last consult--narrow-keys))))))
+      (let ((consult--narrow-keys (plist-get consult--narrow-config :keys)))
+        (when consult--narrow-keys
+          (consult-narrow
+           (if consult--narrow
+               (let ((idx (seq-position
+                           consult--narrow-keys
+                           (assq consult--narrow consult--narrow-keys))))
+                 (unless (eq idx 0)
+                   (car (nth (1- idx) consult--narrow-keys))))
+             (caar (last consult--narrow-keys)))))))
     (defun consult-narrow-cycle-forward ()
       "Cycle forward through the narrowing keys."
       (interactive)
-      (when consult--narrow-keys
-        (consult-narrow
-         (if consult--narrow
-             (let ((idx (seq-position
-                         consult--narrow-keys
-                         (assq consult--narrow consult--narrow-keys))))
-               (unless (eq idx (1- (length consult--narrow-keys)))
-                 (car (nth (1+ idx) consult--narrow-keys))))
-           (caar consult--narrow-keys)))))
+      (let ((consult--narrow-keys (plist-get consult--narrow-config :keys)))
+        (when consult--narrow-keys
+          (consult-narrow
+           (if consult--narrow
+               (let ((idx (seq-position
+                           consult--narrow-keys
+                           (assq consult--narrow consult--narrow-keys))))
+                 (unless (eq idx (1- (length consult--narrow-keys)))
+                   (car (nth (1+ idx) consult--narrow-keys))))
+             (caar consult--narrow-keys))))))
     ;; カーソル位置のワードを検索する
     ;; https://github.com/minad/consult/wiki#start-consult-line-search-with-symbol-at-point
     (defun consult-line-symbol-at-point ()
