@@ -264,7 +264,7 @@ export FLY_CONFIG_DIR="${XDG_CONFIG_HOME}/fly"
 
 # fly completions
 if type flyctl > /dev/null 2>&1 ; then
-    eval "$(fly completion bash)"
+    eval "$(flyctl completion bash)"
     # HACK: 短縮 fly コマンドも補完
     complete -o default -F __start_flyctl fly
 fi
