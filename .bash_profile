@@ -65,9 +65,8 @@ GPG_TTY=$(tty)
 export GPG_TTY
 
 # EDITOR
-if type vim > /dev/null 2>&1 ; then
-    export EDITOR=vim
-fi
+export EDITOR=vi
+# export EDITOR=emacsclient
 
 # Rust and cargo
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
