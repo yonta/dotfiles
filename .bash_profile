@@ -211,8 +211,13 @@ export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 # これはキーバインディング以外にも影響する
 #   https://github.com/junegunn/fzf/issues/2365
 # そのため、inputrcファイルではなく、bindで設定する必要がある
-bind "set completion-ignore-case on"
-bind "set bell-style none"
+#
+# 端末を使い interactive shell のときのみ設定する
+# claude code などツールが呼び出す際は設定しない
+if [[ $- == *i* ]]; then
+    bind "set completion-ignore-case on"
+    bind "set bell-style none"
+fi
 
 if type fzf > /dev/null 2>&1 ; then
     eval "$(fzf --bash)"
