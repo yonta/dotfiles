@@ -1188,7 +1188,12 @@ targets."
     :ensure t
     :diminish highlight-indentation-mode
     ;; インデントに意味のあるPythonでとりあえず使う
-    :hook (python-base-mode-hook . highlight-indentation-mode))
+    :hook
+    ;; (python-base-mode-hook . highlight-indentation-mode)
+    (python-base-mode-hook
+     . (lambda ()
+         (highlight-indentation-mode +1)
+         (highlight-indentation-set-offset 4))))
 
   (leaf pyvenv
     :doc "pyvenv-activate pyvenv-deactivateで便利にvenv管理できる"
