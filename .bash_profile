@@ -82,7 +82,9 @@ if type rustup > /dev/null 2>&1 ; then
 fi
 
 # mise
-# MEMO: rust-analyzerのためにrust/cargo より mise を優先する
+# MEMO: rust-analyzer と yarn は mise を優先
+#       これを実現するには、mise の設定を一番最後にする
+#       または、mise settings activate_aggressive=true を実行する
 if type mise > /dev/null 2>&1 ; then
     eval "$(mise activate bash)"
 
