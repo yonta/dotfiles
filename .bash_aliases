@@ -65,5 +65,9 @@ if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
     alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 fi
 
+# WSL で Mac の pbcopy/pbpaste を使う
+alias pbcopy='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -command "[Console]::InputEncoding = [System.Text.Encoding]::UTF8; Set-Clipboard -Value ([Console]::In.ReadToEnd())"'
+alias pbpaste='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; Get-Clipboard"'
+
 # gitkraken
 alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
