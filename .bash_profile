@@ -359,3 +359,8 @@ if [ -n "${WSLENV}" ] ; then
         fi
     fi
 fi
+
+if type actdk > /dev/null 2>&1 ; then
+    # completionの設定
+    eval "$(actdk generate shell-completion --shell bash)"
+fi
