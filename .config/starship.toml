@@ -31,5 +31,5 @@ success_symbol = '[\$](bold green)'
 error_symbol = '[\$](bold red)'
 
 [time]
-disabled = false
+# disabled = false
 format = '🕰️ [$time]($style) '
