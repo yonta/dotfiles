@@ -24,3 +24,5 @@ bs-config.js
 # direnv
 .envrc
 
+# Claude
+**/.claude/settings.local.json
