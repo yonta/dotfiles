@@ -3,17 +3,20 @@ defutf8 on
 defencoding utf8
 encoding utf-8 utf-8
 
-# escapeをC-zに
-escape ^z^z
-
-# escapeをC-tに
-# escape ^Ta
+# escape: C-z
+# escape ^z^z
+# escape: C-q
+escape ^Qq
+# escae: C-x
+# escape ^Xx
+# escape: C-t
+# escape ^Tt
 
 # 起動時のメッセージオフ
 startup_message off
 
 # スクロールバックを大きくする
-5000
+10000
 
 # ターミナルが落ちたら自動でデタッチ
 autodetach on
