@@ -203,6 +203,7 @@
    `(goggles-removed ((t (:background ,red2))))
    ;; tab-line
    `(tab-line-tab-current ((t (:background ,blue1))))
+   `(lin-blue  ((t (:background ,blue3))))
    )
   ;; カーソル位置ハイライトは1段階のみ、背景色blue2のみを設定
   (customize-set-variable 'highlight-parentheses-colors nil)
