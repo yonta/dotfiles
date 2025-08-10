@@ -1872,12 +1872,10 @@ x×X Ee€£Ll .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
     ;; 色を薄くする1回ごとの秒数
     (goggles-pulse-delay . 0.2))
 
-  (leaf hl-line+
-    :vc (:url "https://github.com/emacsmirror/hl-line-plus.git")
-    :defun (toggle-hl-line-when-idle hl-line-when-idle-interval)
-    :config
-    (toggle-hl-line-when-idle 1)
-    (hl-line-when-idle-interval 4)))
+  (leaf lin
+    :doc "現在行に色をつける、モダンパッケージ"
+    :ensure t)
+  )
 
 (leaf diff-hl
   :ensure t
