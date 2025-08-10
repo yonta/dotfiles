@@ -1626,87 +1626,108 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 
 ;;; Face
 
-(leaf fontaine
-  :doc "Font設定をまとめて行う"
-  :req "IBM Plex Sans JPを.local/share/fontsにインストールする"
-  :url "https://fonts.google.com/specimen/IBM+Plex+Sans+JP"
-  :req "apt install fonts-noto-cjk-extra"
-  :ensure t
-  :require t
-  :global-minor-mode t
-  :config
-  ;; 前回の設定を復元する
-  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
-  :custom
-  (fontaine-presets
-   . '(
-       (small
-        :default-height 190)
-       (regular) ; like this it uses all the fallback values and is named `regular'
-       (regular+
-        :default-height 250)
-       (large
-        :default-height 270)
-       (presentation
-        :default-height 300)
-       (t
-        ;; I keep all properties for didactic purposes, but most can be
-        ;; omitted.  See the fontaine manual for the technicalities:
-        ;; <https://protesilaos.com/emacs/fontaine>.
-        :default-family "VL Gothic"
-        :default-weight regular
-        :default-height 230
+(leaf font
+  :leaf-path nil
+  :preface
+  (leaf fontaine
+    :doc "Font設定をまとめて行う"
+    :req "IBM Plex Sans JPを.local/share/fontsにインストールする"
+    :url "https://fonts.google.com/specimen/IBM+Plex+Sans+JP"
+    :req "apt install fonts-noto-cjk-extra"
+    :ensure t
+    :require t
+    :global-minor-mode t
+    :config
+    ;; 前回の設定を復元する
+    (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
+    :custom
+    (fontaine-presets
+     . '(
+         (small
+          :default-height 190)
+         (regular) ; like this it uses all the fallback values and is named `regular'
+         (regular+
+          :default-height 250)
+         (large
+          :default-height 270)
+         (presentation
+          :default-height 300)
+         (t
+          ;; I keep all properties for didactic purposes, but most can be
+          ;; omitted.  See the fontaine manual for the technicalities:
+          ;; <https://protesilaos.com/emacs/fontaine>.
+          :default-family "VL Gothic"
+          :default-weight regular
+          :default-height 230
 
-        :fixed-pitch-family "VL Gothic"
-        :fixed-pitch-weight nil ; falls back to :default-weight
-        :fixed-pitch-height 1.0
+          :fixed-pitch-family "VL Gothic"
+          :fixed-pitch-weight nil ; falls back to :default-weight
+          :fixed-pitch-height 1.0
 
-        :fixed-pitch-serif-family "Noto Serif CJK JP"
-        ;; :fixed-pitch-serif-family "IBM Plex Sans JP"
-        :fixed-pitch-serif-weight nil ; falls back to :default-weight
-        :fixed-pitch-serif-height 1.0
+          :fixed-pitch-serif-family "Noto Serif CJK JP"
+          ;; :fixed-pitch-serif-family "IBM Plex Sans JP"
+          :fixed-pitch-serif-weight nil ; falls back to :default-weight
+          :fixed-pitch-serif-height 1.0
 
-        ;; :variable-pitch-family "VL PGothic"
-        ;; :variable-pitch-family "Noto Sans CJK JP"
-        :variable-pitch-family "IBM Plex Sans JP"
-        :variable-pitch-weight nil
-        :variable-pitch-height 1.0
+          ;; :variable-pitch-family "VL PGothic"
+          ;; :variable-pitch-family "Noto Sans CJK JP"
+          :variable-pitch-family "IBM Plex Sans JP"
+          :variable-pitch-weight nil
+          :variable-pitch-height 1.0
 
-        :mode-line-active-family nil ; falls back to :default-family
-        :mode-line-active-weight nil ; falls back to :default-weight
-        :mode-line-active-height 1.0
+          :mode-line-active-family nil ; falls back to :default-family
+          :mode-line-active-weight nil ; falls back to :default-weight
+          :mode-line-active-height 1.0
 
-        :mode-line-inactive-family nil ; falls back to :default-family
-        :mode-line-inactive-weight nil ; falls back to :default-weight
-        :mode-line-inactive-height 1.0
+          :mode-line-inactive-family nil ; falls back to :default-family
+          :mode-line-inactive-weight nil ; falls back to :default-weight
+          :mode-line-inactive-height 1.0
 
-        :header-line-family nil ; falls back to :default-family
-        :header-line-weight nil ; falls back to :default-weight
-        :header-line-height 0.9
+          :header-line-family nil ; falls back to :default-family
+          :header-line-weight nil ; falls back to :default-weight
+          :header-line-height 0.9
 
-        :line-number-family nil ; falls back to :default-family
-        :line-number-weight nil ; falls back to :default-weight
-        :line-number-height 0.95
+          :line-number-family nil ; falls back to :default-family
+          :line-number-weight nil ; falls back to :default-weight
+          :line-number-height 0.95
 
-        :tab-bar-family nil ; falls back to :default-family
-        :tab-bar-weight nil ; falls back to :default-weight
-        :tab-bar-height 0.9
+          :tab-bar-family nil ; falls back to :default-family
+          :tab-bar-weight nil ; falls back to :default-weight
+          :tab-bar-height 0.9
 
-        :tab-line-family nil ; falls back to :default-family
-        :tab-line-weight nil ; falls back to :default-weight
-        :tab-line-height 0.9
+          :tab-line-family nil ; falls back to :default-family
+          :tab-line-weight nil ; falls back to :default-weight
+          :tab-line-height 0.9
 
-        :bold-family nil ; use whatever the underlying face has
-        :bold-weight bold
+          :bold-family nil ; use whatever the underlying face has
+          :bold-weight bold
 
-        :italic-family nil
-        :italic-slant italic
+          :italic-family nil
+          :italic-slant italic
 
-        :line-spacing nil
-        )))
-  ;; :hook
-  ;; テーマ切り替え時にフォントを維持する
-  ;; (enable-theme-functions . fontaine-apply-current-preset)
+          :line-spacing nil
+          )))
+    ;; :hook
+    ;; テーマ切り替え時にフォントを維持する
+    ;; (enable-theme-functions . fontaine-apply-current-preset)
+    )
+
+  (leaf show-font
+    :doc "フォントプレビューをする"
+    :ensure t
+    :custom
+    (show-font-character-sample . "
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+0123456789   !@#$¢%^&*~|
+`'\"‘’“”.,;:  ()[]{}—-_+=<>
+
+()[]{}<>«»‹› 6bB8&0ODdoa 1tiIlL|\/
+!ij c¢ 5$Ss 7Z2z 9gqp nmMNNMW uvvwWuuw
+x×X Ee€£Ll .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
+
+あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。またそのなかでいっしょになったたくさんのひとたち、ファゼーロとロザーロ、羊飼のミーロや、顔の赤いこどもたち、地主のテーモ、山猫博士のボーガント・デストゥパーゴなど、いまこの暗い巨きな石の建物のなかで考えていると、みんなむかし風のなつかしい青い幻燈のように思われます。
+"))
   )
 
 (leaf color
