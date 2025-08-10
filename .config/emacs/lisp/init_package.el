@@ -2781,7 +2781,7 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
   :defun project-roots which-function
   :preface
   (which-function-mode 1)
-  (defun my/project-header-breadcrumb ()
+  (defun my/header-line-format-project-header-breadcrumb ()
     "Return function name and absolute path from project root."
     (when-let* ((proj (project-current nil))
                 (root (car (project-roots proj)))
@@ -2797,13 +2797,13 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
          rel
          ;; 関数名があれば「 » 関数名」
          (when fn (format " » %s" fn))))))
-  (setq-default header-line-format
-                '((:eval
-                   (propertize
-                    (my/project-header-breadcrumb)
-                    'face 'font-lock-comment-face))))
+  (setq-default
+   header-line-format
+   '((:eval
+      (when-let ((s (my/header-line-format-project-header-breadcrumb)))
+        (propertize s 'face 'font-lock-comment-face)))))
   :custom
-  ;; 全プログラムモードで有効
+  ;; 全モードで有効
   (which-func-modes . t))
 
 ;;; init_package.el ends here
