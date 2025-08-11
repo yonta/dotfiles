@@ -600,6 +600,10 @@ targets."
                  '((ruby-mode ruby-ts-mode)
                    . ("solargraph" "stdio" :initializationOptions
                       (:diagnostics t))))
+    ;; eglot 標準では cargo check が使われるので、cargo clippy を強要する
+    '(add-to-list 'eglot-server-programs
+                  '((rust-ts-mode rust-mode) .
+                    ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
     :hook
     ;; Eglotがlocal変数でcompletion-at-point-functionsを上書きする
     ;; capeと組み合わせを手動で設定する
@@ -870,10 +874,29 @@ targets."
 (leaf treesit
   :emacs>= 29
   :ensure treesit-auto
+  :defvar treesit-auto-langs
   :global-minor-mode (global-treesit-auto-mode . treesit-auto)
   :custom
   (treesit-font-lock-level . 4)
-  (treesit-auto-install . 'prompt))
+  (treesit-auto-install . 'prompt)
+  ;;
+  :doc "ADHOCK:"
+  :doc "Emacs30.1が最新版tree-sitter-rustのABI ver15に未対応"
+  :doc "treesit-autoで入れたlibtree-sitter-rust.soではエラーする"
+  :doc "これは最新版であるv0.25系で起こるようだ"
+  :doc "ソースバージョンv0.23.3をチェックアウトして手動ビルドする必要がある"
+  :doc "他にもc,bash,luaなどで同様のことが起こる"
+  :doc "対処として、treesit-auto の対象リストから削除する"
+  :url "https://github.com/tree-sitter/tree-sitter-rust.git"
+  ;;
+  :config
+  ;; (treesit-auto-add-to-auto-mode-alist 'all)
+  ;; .rs の rust-ts-mode 割当を削除
+  ;; (setq auto-mode-alist (assoq-delete-all "\\.rs\\'" auto-mode-alist))
+  ;; diff を取ることで一部言語をリストから削除する
+  (setq treesit-auto-langs
+        (cl-set-difference treesit-auto-langs '(rust c bash lua)))
+  )
 
 (leaf git
   :leaf-path nil
@@ -1535,7 +1558,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :diminish t
   :custom (wakatime-cli-path . my/wakatime-cli-path))
 
-(leaf rust-lang
+(leaf rust
+  :disabled t
   :leaf-path nil
   :preface
   (leaf rust-mode
@@ -1548,13 +1572,6 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :doc "flycheckが/dev/XXXXに書き込もうとしてパーミッションエラーすることがある"
     :doc "現在調査中で、以下URLにあるようにflycheckを変更する必要がある"
     :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2377422002"
-    ;;
-    :doc "Emacs30.1が最新版tree-sitter-rustのABI ver15に未対応"
-    :doc "treesit-autoで入れたlibtree-sitter-rust.soではエラーする"
-    :doc "これは最新版であるv0.25系で起こるようだ"
-    :doc "ソースバージョンv0.23.3をチェックアウトして手動ビルドする必要がある"
-    :doc "他にもc,bash,luaなどで同様のことが起こる"
-    :url "https://github.com/tree-sitter/tree-sitter-rust.git"
     :custom
     ;; Tree Sitter統合
     (rust-mode-treesitter-derive . t))
@@ -1577,37 +1594,56 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
            ("C-c C-c <return>" . rustic-cargo-comint-run))))
 
 (leaf rust
-  :disabled t
+  ;; :disabled t
   :leaf-path nil
   :preface
   (leaf rust-mode
     :ensure t
+    :req "rustup"
+    :url "https://www.rust-lang.org/tools/install"
+    :req "rust-analyzerバイナリ"
+    :url "https://github.com/rust-lang/rust-analyzer"
+    ;;
     :doc "flycheckが/dev/XXXXに書き込もうとしてパーミッションエラーすることがある"
     :doc "現在調査中で、以下URLにあるようにflycheckを変更する必要がある"
     :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2377422002"
-    :mode ("\\.rs\\'")
-    :after eglot
+    ;;
     :custom
     (rust-format-on-save . t)
+    (rust-format-show-buffer . nil)
+    ;;
+    :doc "treesit-auto と相性が悪い"
+    :doc "treesit-auto の自動リストから rust を外し、"
+    :doc "rust-mode の機能で tree-sitter 連携を使う"
+    :url "https://github.com/rust-lang/rust-mode/issues/541"
+    :custom
     (rust-mode-treesitter-derive . t)
-    :config
-    (add-to-list 'eglot-server-programs
-                 '((rust-ts-mode rust-mode) .
-                   ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
-    :hook (rust-ts-mode-hook . eglot-ensure))
+    :hook
+    ;; MEMO
+    ;; flycheck 付属の rust-clippy はなぜか clippy の警告を出してくれない
+    ;; eglot で起動する rust-analyzer で clippy を使うことで対処すｒ
+    ;; ((rust-ts-mode-hook rust-mode-hook)
+    ;;  . (lambda ()
+    ;;      (when (derived-mode-p 'rust-mode)
+    ;;        (setq my/flycheck-next-local-cache
+    ;;              '((eglot-check . ((next-checkers . (rust-clippy)))))))))
+    ((rust-ts-mode-hook rust-mode-hook) . eglot-ensure))
 
   (leaf flycheck-rust
-    :disabled t
     :ensure t
-    :doc "flycheckでrust-cargが101エラーを返すときに使う"
+    :doc "flycheckで rust-cargo が101エラーを返すときに使う"
     :doc "必要な変数設定をしてくれるらしい"
+    :doc "rust-cargo は使っていないが、rust-mode 起動時エラーを消すためいれる"
     :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2378864669"
-    :after rust-mode
+    ;; :after rust-mode
     :hook (flycheck-mode-hook . flycheck-rust-setup))
 
   (leaf cargo
     :ensure t
-    :hook (rust-ts-mode-hook . cargo-minor-mode)))
+    :diminish cargo-minor-mode
+    :hook
+    ((rust-mode-hook rust-ts-mode-hook) . cargo-minor-mode))
+  )
 
 (leaf elm-mode
   :ensure t
