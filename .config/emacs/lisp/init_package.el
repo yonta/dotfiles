@@ -1559,42 +1559,6 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :custom (wakatime-cli-path . my/wakatime-cli-path))
 
 (leaf rust
-  :disabled t
-  :leaf-path nil
-  :preface
-  (leaf rust-mode
-    :ensure t
-    :req "rustup"
-    :url "https://www.rust-lang.org/tools/install"
-    :req "rust-analyzerバイナリ"
-    :url "https://github.com/rust-lang/rust-analyzer"
-    ;;
-    :doc "flycheckが/dev/XXXXに書き込もうとしてパーミッションエラーすることがある"
-    :doc "現在調査中で、以下URLにあるようにflycheckを変更する必要がある"
-    :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2377422002"
-    :custom
-    ;; Tree Sitter統合
-    (rust-mode-treesitter-derive . t))
-
-  (leaf rustic
-    :ensure t
-    :custom
-    (rustic-format-on-save . t)
-    ;; (rustic-cargo-use-last-stored-arguments . t)
-    (rustic-lsp-client . 'eglot)
-    :config
-    (push 'rustic-clippy flycheck-checkers)
-    :hook
-    (rustic-mode-hook
-     . (lambda ()
-         (when (derived-mode-p 'rustic-mode)
-           (setq my/flycheck-next-local-cache
-                 '((eglot-check . ((next-checkers . (rustic-clippy)))))))))
-    :bind (:rustic-mode-map
-           ("C-c C-c <return>" . rustic-cargo-comint-run))))
-
-(leaf rust
-  ;; :disabled t
   :leaf-path nil
   :preface
   (leaf rust-mode
@@ -1617,6 +1581,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :doc "rust-mode の機能で tree-sitter 連携を使う"
     :url "https://github.com/rust-lang/rust-mode/issues/541"
     :custom
+    ;; Tree Sitter統合
     (rust-mode-treesitter-derive . t)
     :hook
     ;; MEMO
@@ -1628,6 +1593,24 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     ;;        (setq my/flycheck-next-local-cache
     ;;              '((eglot-check . ((next-checkers . (rust-clippy)))))))))
     ((rust-ts-mode-hook rust-mode-hook) . eglot-ensure))
+
+  (leaf rustic
+    :disabled t
+    :ensure t
+    :custom
+    (rustic-format-on-save . t)
+    (rustic-lsp-client . 'eglot)
+    ;; (rustic-cargo-use-last-stored-arguments . t)
+    :config
+    (push 'rustic-clippy flycheck-checkers)
+    :hook
+    (rustic-mode-hook
+     . (lambda ()
+         (when (derived-mode-p 'rustic-mode)
+           (setq my/flycheck-next-local-cache
+                 '((eglot-check . ((next-checkers . (rustic-clippy)))))))))
+    :bind (:rustic-mode-map
+           ("C-c C-c <return>" . rustic-cargo-comint-run)))
 
   (leaf flycheck-rust
     :ensure t
