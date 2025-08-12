@@ -5,10 +5,8 @@ encoding utf-8 utf-8
 
 # escape: C-z
 # escape ^z^z
-# escape: C-q
-escape ^Qq
 # escae: C-x
-# escape ^Xx
+escape ^Xx
 # escape: C-t
 # escape ^Tt
 
