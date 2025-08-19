@@ -1576,7 +1576,10 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     ;;
     :custom
     (rust-format-on-save . t)
+    ;; formatエラーをバッファ表示しない
     (rust-format-show-buffer . nil)
+    ;; formatエラー時にエラー箇所に飛ばない
+    (rust-format-goto-problem . nil)
     ;;
     :doc "treesit-auto と相性が悪い"
     :doc "treesit-auto の自動リストから rust を外し、"
