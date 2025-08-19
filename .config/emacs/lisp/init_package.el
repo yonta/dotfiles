@@ -1629,6 +1629,10 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   (leaf cargo
     :ensure t
     :diminish cargo-minor-mode
+    :defer-config
+    ;; HACK: cargo-process-current-test が必要とする rust-beginning-of-defun が
+    ;;       読み込まないため強制的に読み込む
+    (require 'rust-prog-mode)
     :hook
     ((rust-mode-hook rust-ts-mode-hook) . cargo-minor-mode))
   )
