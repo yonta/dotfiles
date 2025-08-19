@@ -2768,12 +2768,6 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
   (setq interprogram-cut-function 'wl-copy)
   (setq interprogram-paste-function 'wl-paste))
 
-(leaf pixel-scroll
-  :doc "スクロールをなめらかにするグローバルマイナーモード"
-  :emacs>= 29
-  :config
-  (pixel-scroll-precision-mode))
-
 (leaf comp
   :leaf-path nil
   :doc "native compile"
