@@ -28,6 +28,7 @@
 	rbi = rebase --interactive
 	tags = tag --list
 	fetch1 = !git branch --show-current | xargs -I '{}' git fetch --depth 1 origin '{}'
+	clean-safe = !git clean -ffdx --exclude=\".env\" --exclude=\".envrc\" --exclude=\".mise.toml\"
 [core]
 	editor = emacsclient
 	pager = delta --color-only
