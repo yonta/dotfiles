@@ -796,10 +796,12 @@ targets."
   :req "M-x copilot-login"
   :ensure t
   :diminish " 🛩️"
-  ;; :hook (prog-mode-hook . copilot-mode)
+  :hook (prog-mode-hook . copilot-mode)
   :bind
   (:copilot-mode-map
-   ("C-<return>" . copilot-accept-completion)))
+   ("C-<return>" . copilot-accept-completion)
+   ("M-[" . copilot-previous-completion)
+   ("M-]" . copilot-next-completion)))
 
 (leaf copilot-chat
   :ensure t
