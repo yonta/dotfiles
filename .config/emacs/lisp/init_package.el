@@ -1591,7 +1591,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :hook
     ;; MEMO
     ;; flycheck 付属の rust-clippy はなぜか clippy の警告を出してくれない
-    ;; eglot で起動する rust-analyzer で clippy を使うことで対処すｒ
+    ;; eglot で起動する rust-analyzer で clippy を使うことで対処する
     ;; ((rust-ts-mode-hook rust-mode-hook)
     ;;  . (lambda ()
     ;;      (when (derived-mode-p 'rust-mode)
