@@ -31,9 +31,9 @@ function remove_original () {
 # arg1: file or dir (full path), arg2: target dir (full path)
 function make_link () {
     if [ -f "${1}" ]; then
-        ln -s ${1} ${2}
+        ln --symbolic ${1} ${2}
     elif [ -d "${1}" ]; then
-        ln -s -d ${1} ${2}
+        ln --symbolic --directory ${1} ${2}
     fi
 }
 
