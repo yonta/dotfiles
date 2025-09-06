@@ -81,6 +81,11 @@ if type rustup > /dev/null 2>&1 ; then
     eval "$(rustup completions bash cargo)"
 fi
 
+# sccache で rustc ビルド結果をキャッシュする
+if type sccache > /dev/null 2>&1 ; then
+    export RUSTC_WRAPPER="sccache"
+fi
+
 # mise
 # MEMO: rust-analyzer と yarn は mise を優先
 #       これを実現するには、mise の設定を一番最後にする
