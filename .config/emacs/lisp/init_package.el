@@ -976,7 +976,22 @@ targets."
                ;; Commit message
                ("^[a-z]+ [0-9a-f]+ \\(.*\\)$" 1 font-lock-string-face)
                )))))
-  )
+
+  (leaf git-link
+    :ensure t
+    :doc "GitHubのURLをクリップボードにコピーする"
+    :defvar git-link-open-in-browser
+    :defer-config
+    (defun git-link-browser ()
+      "Create a URL representing the current buffer's location and
+       call `borse-url' on it."
+      (interactive)
+      (let ((git-link-open-in-browser t))
+        (call-interactively 'git-link))))
+
+  (leaf browse-at-remote
+    :ensure t
+    :doc "GitHubなどのURLをブラウザで開く"))
 
 (leaf emacs-lisp
   :leaf-path nil
