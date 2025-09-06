@@ -8,6 +8,9 @@ qr_*
 # Emacs LSP
 .log
 
+# Emacs local var
+.dir-locals.el
+
 # ignore thumbnails created by windows
 Thumbs.db
 
