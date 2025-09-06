@@ -2235,6 +2235,13 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
          ("M-," . smart-jump-back)
          ("M-/" . smart-jump-references)))
 
+(leaf xref
+  :leaf-path nil
+  :doc "xref にて ENTER/TAB バッファを閉じる・閉じないを入れ替え"
+  :bind (:xref--xref-buffer-mode-map
+         ("<return>" . xref-quit-and-goto-xref)
+         ("<tab>". xref-goto-xref)))
+
 (leaf expreg
   :doc "モダンなexpand-region"
   :ensure t
