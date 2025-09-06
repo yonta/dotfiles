@@ -1233,7 +1233,12 @@ targets."
     (python-base-mode-hook
      . (lambda ()
          (highlight-indentation-mode +1)
-         (highlight-indentation-set-offset 4))))
+         (highlight-indentation-set-offset 4)))
+    (rust-mode-hook
+     . (lambda ()
+         (highlight-indentation-mode +1)
+         (highlight-indentation-set-offset 4)))
+    )
 
   (leaf pyvenv
     :doc "pyvenv-activate pyvenv-deactivateで便利にvenv管理できる"
