@@ -209,8 +209,6 @@ export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 
 # fzf
 
-# 補完の大文字小文字を無視
-#
 # MEMO:
 # fzfはinputrcの設定と競合する
 # これはキーバインディング以外にも影響する
@@ -220,6 +218,7 @@ export GRIPHOME="${XDG_CONFIG_HOME}/grip"
 # 端末を使い interactive shell のときのみ設定する
 # claude code などツールが呼び出す際は設定しない
 if [[ $- == *i* ]]; then
+    # 補完の大文字小文字を無視
     bind "set completion-ignore-case on"
     bind "set bell-style none"
 fi
