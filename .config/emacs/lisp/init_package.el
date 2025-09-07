@@ -2660,43 +2660,88 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
                ;; ("<up>" . windmove-up)
                )))
 
-(leaf my/window-resizer
-  :doc "分割ウィンドウのサイズを変更するmy/window-resizer"
-  :doc "smartrep用に改変している。"
-  :doc "オリジナルは以下。"
-  :url "https://khiker.hatenablog.jp/entry/20100119/window_resize"
+(leaf my/resizer
   :leaf-path nil
   :leaf-autoload nil
-  :init
-  (defun my/window-resizer-right ()
-    "Resize window by right key"
-    (interactive)
-    (if (<= (nth 2 (window-edges)) (frame-width))
-        (enlarge-window-horizontally 1)
-      (shrink-window-horizontally 1)))  ; 右端frameのとき
-  (defun my/window-resizer-left ()
-    "Resize window by left key"
-    (interactive)
-    (if (<= (nth 2 (window-edges)) (frame-width))
-        (shrink-window-horizontally 1)
-      (enlarge-window-horizontally 1))) ; 右端frameのとき
-  (defun my/window-resizer-down ()
-    "Resize window by down key"
-    (interactive)
-    (if (< (nth 3 (window-edges)) (1- (frame-height))) ; minibuffer分を-1
-        (enlarge-window 1)
-      (shrink-window 1)))               ; 下端frameのとき
-  (defun my/window-resizer-up ()
-    "Resize window by up key"
-    (interactive)
-    (if (< (nth 3 (window-edges)) (1- (frame-height))) ; minibuffer分を-1
-        (shrink-window 1)
-      (enlarge-window 1)))              ; 下端frameのとき
-  :smartrep* ("C-c r"
-              (("l" . my/window-resizer-right)
-               ("h" . my/window-resizer-left)
-               ("j" . my/window-resizer-down)
-               ("k" . my/window-resizer-up))))
+  :preface
+  (leaf my/window-resizer
+    :doc "分割ウィンドウのサイズを変更するmy/window-resizer"
+    :doc "smartrep用に改変している。"
+    :doc "オリジナルは以下。"
+    :url "https://khiker.hatenablog.jp/entry/20100119/window_resize"
+    :leaf-path nil
+    :leaf-autoload nil
+    :preface
+    (defun my/window-resizer-right ()
+      "Resize window by right key"
+      (interactive)
+      (if (<= (nth 2 (window-edges)) (frame-width))
+          (enlarge-window-horizontally 1)
+        (shrink-window-horizontally 1)))  ; 右端frameのとき
+    (defun my/window-resizer-left ()
+      "Resize window by left key"
+      (interactive)
+      (if (<= (nth 2 (window-edges)) (frame-width))
+          (shrink-window-horizontally 1)
+        (enlarge-window-horizontally 1))) ; 右端frameのとき
+    (defun my/window-resizer-down ()
+      "Resize window by down key"
+      (interactive)
+      (if (< (nth 3 (window-edges)) (1- (frame-height))) ; minibuffer分を-1
+          (enlarge-window 1)
+        (shrink-window 1)))               ; 下端frameのとき
+    (defun my/window-resizer-up ()
+      "Resize window by up key"
+      (interactive)
+      (if (< (nth 3 (window-edges)) (1- (frame-height))) ; minibuffer分を-1
+          (shrink-window 1)
+        (enlarge-window 1)))              ; 下端frameのとき
+    :smartrep* ("C-c r"
+                (("l" . my/window-resizer-right)
+                 ("h" . my/window-resizer-left)
+                 ("j" . my/window-resizer-down)
+                 ("k" . my/window-resizer-up))))
+
+  (leaf my/frame-resizer
+    :doc "フレームサイズを変更するmy/frame-resizer"
+    :doc "smartrep用に改変している。"
+    :doc "オリジナルは以下。"
+    :url "https://khiker.hatenablog.jp/entry/20100119/window_resize"
+    :leaf-path nil
+    :leaf-autoload nil
+    :defun my/frame-resizer-by
+    :preface
+    (defun my/frame-resizer-by (width-diff height-diff)
+      "現在のフレームサイズに WIDTH-DIFF と HEIGHT-DIFF だけ足し引きする。
+WIDTH-DIFF は横幅の文字数差、HEIGHT-DIFF は縦の行数差。"
+      (interactive "nWidth diff: \nnHeight diff: ")
+      (let* ((frame (selected-frame))
+             (current-width (frame-width frame))
+             (current-height (frame-height frame))
+             (new-width (max 1 (+ current-width width-diff)))
+             (new-height (max 1 (+ current-height height-diff))))
+        (set-frame-size frame new-width new-height)))
+    ;; 使いやすいように増やす・減らす関数も定義
+    ;; HACK: width 方向は 1 origin で 0/2 を指定して縮小・拡大している
+    ;;       おそらく丸め誤差があるせい
+    (defun my/frame-resizer-increase-width ()
+      (interactive)
+      (my/frame-resizer-by 2 0))
+    (defun my/frame-resizer-decrease-width ()
+      (interactive)
+      (my/frame-resizer-by 0 0))
+    (defun my/frame-resizer-increase-height ()
+      (interactive)
+      (my/frame-resizer-by 1 1))
+    (defun my/frame-resizer-decrease-height ()
+      (interactive)
+      (my/frame-resizer-by 1 -1))
+    :smartrep* ("C-c R"
+                (("l" . my/frame-resizer-increase-width)
+                 ("h" . my/frame-resizer-decrease-width)
+                 ("j" . my/frame-resizer-increase-height)
+                 ("k" . my/frame-resizer-decrease-height))))
+  )
 
 (leaf my/swap-window
   :doc "現在のウィンドウと次のウィンドウを入れ替えする"
