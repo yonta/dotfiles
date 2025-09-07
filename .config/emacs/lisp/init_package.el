@@ -803,6 +803,7 @@ targets."
   :bind
   (:copilot-mode-map
    ("C-<return>" . copilot-accept-completion)
+   ("M-<return>" . copilot-accept-completion)
    ("M-[" . copilot-previous-completion)
    ("M-]" . copilot-next-completion)))
 
