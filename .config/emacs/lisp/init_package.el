@@ -2205,6 +2205,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :bind* ("<f1> k" . helpful-key)
   :bind ("C-c C-d" . helpful-at-point))
 
+(eval-when-compile (require 'dash))
 (leaf smart-jump
   :req "ripgrepをpcre2サポートありでインストールしておく"
   :req "cargo install ripgrep --features 'pcre2'"
@@ -2213,17 +2214,21 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :doc ":custom (dumb-jump-rg-search-args . \"\")"
   :ensure t dumb-jump
   :defvar dumb-jump-find-rules
-  :defun smart-jump-simple-find-references smart-jump-find-references-with-rg
+  :defun
+  smart-jump-simple-find-references
+  smart-jump-find-references-with-rg
+  ((eglot-find-declaration eglot-managed-p) . eglot)
   :custom
   ;; ripgrepを使う
   (smart-jump-find-references-fallback-function
    . #'smart-jump-find-references-with-rg)
   ;; xrefをdumb-jumpで行うhook
   ;; :hook (xref-backend-functions . dumb-jump-xref-activate)
+  ;; 勝手にキーバインドを登録しない
+  (smart-jump-bind-keys . nil)
   :defer-config
   ;; dump-jump対応言語はすべて登録する
   (require 'dumb-jump)
-  (eval-when-compile (require 'dash))
   (let* ((languages-dup (--map (plist-get it :language) dumb-jump-find-rules))
          (languages (delete-dups languages-dup))
          (modes-str (--map (concat it "-mode") languages))
@@ -2234,9 +2239,25 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
                          :refs-fn #'smart-jump-simple-find-references
                          :heuristic 'point
                          :order 100))
-  :bind (("M-." . smart-jump-go)
-         ("M-," . smart-jump-back)
-         ("M-/" . smart-jump-references)))
+  ;; TODO: eglot 以外の LSP クライアントも試すようにする
+  ;;
+  ;; 先に eglot を試し、失敗したら smart-jump を試す
+  ;; smart-jump-register での登録はうまく行かないのでこう書く
+  (defun my/smart-jump-prefer-eglot ()
+    "Jump to definition using eglot if available, otherwise fallback to
+smart-jump."
+    (interactive)
+    (condition-case _
+        (call-interactively #'eglot-find-declaration)
+      (error ;; (eglot-managed-p) が nil の場合など
+       (call-interactively #'smart-jump-go))))
+  :bind
+  ;; 他にも eglot-find-typeDefinition があるが設定してない
+  ("M-." . my/smart-jump-prefer-eglot)
+  ("M-C-." . eglot-find-implementation)
+  ("M-," . smart-jump-back)
+  ;; M-? にセットされた xref-find-references にフォールバックされる
+  ("M-/" . smart-jump-references))
 
 (leaf xref
   :leaf-path nil
