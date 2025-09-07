@@ -1960,6 +1960,7 @@ x×X Ee€£Ll .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
     :req "初回に`M-x nerd-icons-install-fonts`を実行する")
 
   (leaf nerd-icons-dired
+    :disabled t
     :ensure t
     :diminish t
     :hook (dired-mode-hook . nerd-icons-dired-mode))
@@ -2471,9 +2472,53 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   ("C-c @ o" . origami-show-only-node)
   )
 
+(leaf dirvish
+  :doc "diredのモダンな代替"
+  ;; HACK:
+  ;; dirvish-subtree が英語しか考慮しておらず「合計 N」の行が出てしまう
+  ;; ハードコーディングされていて簡単には直せない
+  ;; dirvish-subtree.el に以下のパッチを当てる必要がある
+  ;; - (when (looking-at-p "  total used in directory")
+  ;; + (when (looking-at-p "  合計")
+  :ensure t
+  :init (dirvish-override-dired-mode)
+  :custom
+  ;; dirvish は基本 ls を使おうとする
+  ;; -a/-A を外し、デフォルトはドットファイルを非表示
+  ;;
+  (dired-listing-switches . "-l")
+  (dirvish-attributes . '( vc-state nerd-icons collapse     ;; 左側
+                           file-modes file-size file-time)) ;; 右側
+  ;; フォルダ・ファイルは/で区切る
+  (dirvish-collapse-separator . "/")
+  ;; お気に入りリスト
+  (dirvish-quick-access-entries
+   . '(("h" "~/" "Home")
+       ("e" "~/.config/emacs/" "Emacs user directory")
+       ("g" "~/git/" "Git directory")
+       ("t" "~/tmp/" "User tmp directory")))
+  :hook
+  ;; fd などすると長くなり whitespace の赤色付けが邪魔なので off にする
+  (dired-mode-hook . (lambda () (whitespace-mode -1)))
+  :bind (:dirvish-mode-map
+         ;; . でフィルターを帰れる、隠しファイルの表示・非表示もできる
+         ("." . dirvish-ls-switches-menu)
+         ("i" . dirvish-subtree-toggle)
+         ("s" . dirvish-quicksort)
+         ;; 直接編集モードでファイル名などを書き換える
+         ("w" . wdired-change-to-wdired-mode)
+         ;; f で fd モードを新しく開き、F で検索ワードやオプションをセットする
+         ("f" . dirvish-fd)
+         ("F" . dirvish-fd-switches-menu)
+         ;; 登録したお気に入りリストに飛ぶ
+         ("A" . dirvish-quick-access)
+         ;; 履歴に飛ぶ
+         ("a" . dirvish-history-jump)))
+
 ;;; Emacs default (not package.el)
 
 (leaf dired
+  :disabled t
   :leaf-path nil
   :preface
   (leaf dired
