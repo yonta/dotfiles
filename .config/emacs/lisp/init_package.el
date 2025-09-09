@@ -1813,6 +1813,19 @@ x×X Ee€£Ll .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   ;; spacesの対象は全角スペースのみ
   (whitespace-space-regexp . "\\(　+\\)")
   ;; 一部モードで1行の最大文字数を変更する
+  :config
+  (defun my/whitespace-toggle-lines-tail ()
+    "Toggle `lines-tail' in `whitespace-style' for this buffer and refresh
+whitespace-mode."
+    (interactive)
+    (setq-local whitespace-style
+                (if (memq 'lines-tail whitespace-style)
+                    (remove 'lines-tail whitespace-style)
+                  (cons 'lines-tail whitespace-style)))
+    ;; reload whitespace-mode to apply changes
+    (when (fboundp 'whitespace-mode)
+      (whitespace-mode -1)
+      (whitespace-mode 1)))
   :hook
   ((java-mode-hook . (lambda () (setq-local whitespace-line-column 100)))
    (ruby-base-mode-hook
