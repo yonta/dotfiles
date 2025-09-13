@@ -3,10 +3,18 @@ defutf8 on
 defencoding utf8
 encoding utf-8 utf-8
 
+# デフォルトは C-a が prefix
+# 行頭に移動したい祭は C-a a でできる
+# escape ^Aa
+
+# escape の変更
 # escape: C-z
 # escape ^z^z
 # escae: C-x
 escape ^Xx
+# XON/XOFF と干渉する
+# screen 起動後 stty -ixon すると使える
+# escape ^Qq
 # escape: C-t
 # escape ^Tt
 
