@@ -33,3 +33,8 @@ error_symbol = '[\$](bold red)'
 [time]
 # disabled = false
 format = '[$time]($style) '
+
+[custom.screen]
+command = "echo '(SCREEN)'"
+when = '[[ -n "$STY" ]]' # STY がセットされているときだけ表示
+style = "bold red"
