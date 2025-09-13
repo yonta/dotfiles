@@ -32,3 +32,8 @@ caption
 
 # ベルを可視化
 vbell on
+
+# ログインシェルとして起動
+# これをしないと.bashrcが読み込まれ、.bash_profileが読み込まれない
+# .bash_profileを読み込むために設定する
+shell -$SHELL
