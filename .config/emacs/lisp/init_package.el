@@ -30,7 +30,7 @@
 (eval-and-compile
   (leaf leaf-keywords
     ;; :diminishを有効にし、モードラインをスッキリさせる
-    :ensure t diminish smartrep
+    :ensure t diminish
     :config
     (leaf diminish :ensure t)
     (leaf-keywords-init)))
@@ -45,6 +45,9 @@
 (leaf bind-key :ensure t :require t)
 
 (leaf util :defun call-with-region-or-line) ; dummy, init_util.el
+
+;; repeat-mode を使う各種コマンド用に on
+(repeat-mode +1)
 
 (leaf initchart
   :vc (:url "https://github.com/yuttie/initchart.git"))
@@ -2648,21 +2651,33 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
   :custom
   ;; 画面外への移動はサイクルする
   (windmove-wrap-around . t)
+  :preface
+  ;; repeat-mode対応
+  (defvar windmove-repeat-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "l") 'windmove-right)
+      (define-key map (kbd "h") 'windmove-left)
+      (define-key map (kbd "j") 'windmove-down)
+      (define-key map (kbd "k") 'windmove-up)
+      map))
+  (dolist (cmd '(windmove-right windmove-left windmove-down windmove-up))
+    (put cmd 'repeat-map 'windmove-repeat-map))
   ;; C-x oの代わりのバッファ移動
-  :smartrep* ("C-c"
-              (("l" . windmove-right)
-               ("h" . windmove-left)
-               ("j" . windmove-down)
-               ("k" . windmove-up)
-               ;; ("<left>" . windmove-right)
-               ;; ("<right>" . windmove-left)
-               ;; ("<down>" . windmove-down)
-               ;; ("<up>" . windmove-up)
-               )))
+  :bind
+  ("C-c l" . windmove-right)
+  ("C-c h" . windmove-left)
+  ("C-c j" . windmove-down)
+  ("C-c k" . windmove-up)
+  ;; 実は C-c <right>/<left> は winner-undo/redo に使われている
+  ;; ("C-c <left>" . windmove-right)
+  ;; ("C-c <right>" . windmove-left)
+  ;; ("C-c <down>" . windmove-down)
+  ;; ("C-c <up>" . windmove-up)
+  )
 
 (leaf my/window-resizer
   :doc "分割ウィンドウのサイズを変更するmy/window-resizer"
-  :doc "smartrep用に改変している。"
+  :doc "repet-mode用に改変している。"
   :doc "オリジナルは以下。"
   :url "https://khiker.hatenablog.jp/entry/20100119/window_resize"
   :leaf-path nil
@@ -2692,15 +2707,26 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
     (if (< (nth 3 (window-edges)) (1- (frame-height))) ; minibuffer分を-1
         (shrink-window 1)
       (enlarge-window 1)))              ; 下端frameのとき
-  :smartrep* ("C-c r"
-              (("l" . my/window-resizer-right)
-               ("h" . my/window-resizer-left)
-               ("j" . my/window-resizer-down)
-               ("k" . my/window-resizer-up))))
+  ;; repeat-mode対応
+  (defvar my/window-resizer-repeat-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "l") 'my/window-resizer-right)
+      (define-key map (kbd "h") 'my/window-resizer-left)
+      (define-key map (kbd "j") 'my/window-resizer-down)
+      (define-key map (kbd "k") 'my/window-resizer-up)
+      map))
+  (dolist (cmd '( my/window-resizer-right my/window-resizer-left
+                  my/window-resizer-down my/window-resizer-up))
+    (put cmd 'repeat-map 'my/window-resizer-repeat-map))
+  :bind
+  ("C-c r l" . my/window-resizer-right)
+  ("C-c r h" . my/window-resizer-left)
+  ("C-c r j" . my/window-resizer-down)
+  ("C-c r k" . my/window-resizer-up))
 
 (leaf my/frame-resizer
   :doc "フレームサイズを変更するmy/frame-resizer"
-  :doc "smartrep用に改変している。"
+  :doc "repeat-mode用に改変している。"
   :doc "オリジナルは以下。"
   :url "https://khiker.hatenablog.jp/entry/20100119/window_resize"
   :leaf-path nil
@@ -2714,35 +2740,49 @@ WIDTH-DIFF は横幅の文字数差、HEIGHT-DIFF は縦の行数差。"
     (let* ((frame (selected-frame))
            (current-width (frame-width frame))
            (current-height (frame-height frame))
-           (new-width (max 1 (+ current-width width-diff)))
-           (new-height (max 1 (+ current-height height-diff))))
+           ;; 最小サイズは 50x20 とする
+           (new-width (max 50 (+ current-width width-diff)))
+           (new-height (max 20 (+ current-height height-diff))))
       (set-frame-size frame new-width new-height)))
   ;; 使いやすいように増やす・減らす関数も定義
-  ;; HACK: width 方向は 1 origin で 0/2 を指定して縮小・拡大している
-  ;;       おそらく丸め誤差があるせい
+  ;; HACK: 1 origin で縮小・拡大している、おそらく丸め誤差があるせい
+  ;; MEMO: 1回の縮小・拡大幅は使いやすいよう調整した
   (defun my/frame-resizer-increase-width ()
     (interactive)
-    (my/frame-resizer-by 2 1))
+    (my/frame-resizer-by 6 1))
   (defun my/frame-resizer-decrease-width ()
     (interactive)
-    (my/frame-resizer-by 0 1))
+    (my/frame-resizer-by -4 1))
   (defun my/frame-resizer-increase-height ()
     (interactive)
-    (my/frame-resizer-by 1 2))
+    (my/frame-resizer-by 1 3))
   (defun my/frame-resizer-decrease-height ()
     (interactive)
-    (my/frame-resizer-by 1 0))
-  :smartrep* ("C-c R"
-              (("l" . my/frame-resizer-increase-width)
-               ("h" . my/frame-resizer-decrease-width)
-               ("j" . my/frame-resizer-increase-height)
-               ("k" . my/frame-resizer-decrease-height))))
+    (my/frame-resizer-by 1 -1))
+  ;; repeat-mode対応
+  (defvar my/frame-resizer-repeat-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "l") 'my/frame-resizer-increase-width)
+      (define-key map (kbd "h") 'my/frame-resizer-decrease-width)
+      (define-key map (kbd "j") 'my/frame-resizer-increase-height)
+      (define-key map (kbd "k") 'my/frame-resizer-decrease-height)
+      map))
+  (dolist (cmd '( my/frame-resizer-increase-width
+                  my/frame-resizer-decrease-width
+                  my/frame-resizer-increase-height
+                  my/frame-resizer-decrease-height))
+    (put cmd 'repeat-map 'my/frame-resizer-repeat-map))
+  :bind
+  ("C-c R l" . my/frame-resizer-increase-width)
+  ("C-c R h" . my/frame-resizer-decrease-width)
+  ("C-c R j" . my/frame-resizer-increase-height)
+  ("C-c R k" . my/frame-resizer-decrease-height))
 
 (leaf my/swap-window
   :doc "現在のウィンドウと次のウィンドウを入れ替えする"
   :leaf-path nil
   :leaf-autoload nil
-  :init
+  :preface
   (defun my/swap-window ()
     "Swap two screen, leaving cursor at current window."
     (interactive)
@@ -2750,7 +2790,14 @@ WIDTH-DIFF は横幅の文字数差、HEIGHT-DIFF は縦の行数差。"
           (nextwin (window-buffer (next-window))))
       (set-window-buffer (next-window) (window-buffer))
       (set-window-buffer thiswin nextwin)))
-  :smartrep* ("C-x" (("O" . my/swap-window))))
+  ;; repeat-mode対応
+  (defvar my/swap-window-repeat-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "O") 'my/swap-window)
+      map))
+  (dolist (cmd '(my/swap-window))
+    (put cmd 'repeat-map 'my/swap-window-repeat-map))
+  :bind ("C-x O" . my/swap-window))
 
 (leaf indent
   :leaf-path nil
