@@ -12,7 +12,7 @@
 
 ;; フレームサイズ、、幅、高さ
 (push '(width . 421) default-frame-alist)
-(push '(height . 114) default-frame-alist)
+(push '(height . 113) default-frame-alist)
 
 ;; フレームの最大化
 ;; (push '(fullscreen . maximized) default-frame-alist)
