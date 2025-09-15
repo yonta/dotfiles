@@ -1932,11 +1932,9 @@ x×X Ee€£Ll .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   :ensure t
   :global-minor-mode global-diff-hl-mode diff-hl-margin-mode
   :custom
-  (diff-hl-margin-symbols-alist . '((insert . " ")
-                                    (delete . " ")
-                                    (change . " ")
-                                    (unknown . "?")
-                                    (ignored . "i")))
+  (diff-hl-margin-symbols-alist
+   . '((insert . " ") (delete . " ") (change . " ")
+       (unknown . "?") (ignored . "i") (reference . " ")))
   :custom-face
   (diff-hl-change . '((t (:background "#fad987"))))
   (diff-hl-insert . '((t (:background "#95fa87"))))
