@@ -65,6 +65,11 @@ fi
 # gitkraken
 alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
 
+# GitHub Copilot CLI
+# HACK: aws-copilotとgithub-copilotが同じコマンド名でコンフリクトする
+#       mise execをaliasして回避する
+alias github-copilot='mise exec npm:github-copilot -- copilot'
+
 # WSLでWindowsのFirefoxを設定
 if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
     alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
