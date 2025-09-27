@@ -285,6 +285,7 @@ if type ollama > /dev/null 2>&1 ; then
     source "${XDG_CONFIG_HOME}/bash/completions/ollama"
 fi
 
+# AWS CLI
 if type aws > /dev/null 2>&1 ; then
     # completionの設定、mise のパスを使う
     complete -C '/home/kei/.local/share/mise/installs/aws-cli/latest/aws/dist/aws_completer' aws
@@ -302,6 +303,7 @@ if type aws > /dev/null 2>&1 ; then
     export AWS_SHARED_CREDENTIALS_FILE="${AWS_DATA_HOME}/shared-credentials"
 fi
 
+# aws-vault
 if type aws-vault > /dev/null 2>&1 ; then
     # completionの設定
     # なんと、curlでとってこいとあった
@@ -317,6 +319,7 @@ if type aws-vault > /dev/null 2>&1 ; then
     export AWS_SESSION_TOKEN_TTL=3h
 fi
 
+# Terraform
 if type terraform > /dev/null 2>&1 ; then
     # completionの設定
     complete -C /usr/bin/terraform terraform
@@ -328,11 +331,13 @@ if type copilot > /dev/null 2>&1 ; then
     eval "$(copilot completion bash)"
 fi
 
+# Diesel, RustのORMツール
 if type diesel > /dev/null 2>&1 ; then
     # completionの設定
     eval "$(diesel completions bash)"
 fi
 
+# actdk
 if type actdk > /dev/null 2>&1 ; then
     # completionの設定
     eval "$(actdk generate shell-completion --shell bash)"
