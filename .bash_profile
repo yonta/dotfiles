@@ -333,6 +333,11 @@ if type diesel > /dev/null 2>&1 ; then
     eval "$(diesel completions bash)"
 fi
 
+if type actdk > /dev/null 2>&1 ; then
+    # completionの設定
+    eval "$(actdk generate shell-completion --shell bash)"
+fi
+
 # WSLのみの設定
 if [ -n "${WSLENV}" ] ; then
     # for wsl tool deb package
@@ -362,11 +367,6 @@ if [ -n "${WSLENV}" ] ; then
             export DISPLAY=localhost:0
         fi
     fi
-fi
-
-if type actdk > /dev/null 2>&1 ; then
-    # completionの設定
-    eval "$(actdk generate shell-completion --shell bash)"
 fi
 
 # Alias definitions.
