@@ -1809,7 +1809,7 @@ x×X Ee€£Ll .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   :custom
   ;; 空白などの可視化
   ;; 対象はタブ文字、80文字超え部、行末の空白、全角スペース、空白のみ行
-  (whitespace-style . '(face tabs lines-tail trailing spaces empty))
+  (whitespace-style . '(face tabs trailing spaces empty))
   ;; 保存前に自動でクリーンアップ、対象はwhitespace-styleでセットしたもの
   (whitespace-action . '(auto-cleanup))
   ;; spacesの対象は全角スペースのみ
