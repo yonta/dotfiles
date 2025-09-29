@@ -2743,7 +2743,7 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
   (dolist (cmd '(windmove-right windmove-left windmove-down windmove-up))
     (put cmd 'repeat-map 'windmove-repeat-map))
   ;; C-x oの代わりのバッファ移動
-  :bind
+  :bind*
   ("C-c l" . windmove-right)
   ("C-c h" . windmove-left)
   ("C-c j" . windmove-down)
@@ -2798,7 +2798,7 @@ Rewrite `dired-listing-switches' variable between with and without -A option"
   (dolist (cmd '( my/window-resizer-right my/window-resizer-left
                   my/window-resizer-down my/window-resizer-up))
     (put cmd 'repeat-map 'my/window-resizer-repeat-map))
-  :bind
+  :bind*
   ("C-c r l" . my/window-resizer-right)
   ("C-c r h" . my/window-resizer-left)
   ("C-c r j" . my/window-resizer-down)
