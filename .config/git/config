@@ -30,7 +30,7 @@
 	rbi = rebase --interactive
 	tags = tag --list
 	fetch1 = !git branch --show-current | xargs -I '{}' git fetch --depth 1 origin '{}'
-	clean-safe = !git clean -ffdx --exclude=\".env\" --exclude=\".envrc\" --exclude=\".mise.toml\" --exclude=\"my.Procfile.dev\" --exclude=\".dir-locals.el\"
+	clean-safe = !git clean -ffdx --exclude=\".env\" --exclude=\".envrc\" --exclude=\".mise.toml\" --exclude=\"my.Procfile.dev\" --exclude=\".dir-locals.el\" --exclude=\"AGENT.md\" --exclude=\"CLAUDE.md\"
 [core]
 	editor = emacsclient
 	pager = delta --color-only
