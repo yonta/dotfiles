@@ -2366,11 +2366,13 @@ smart-jump."
     :bind*
     ("<zenkaku-hankaku>" . mozc-mode)
     ("<henkan>" . mozc-mode)
-
     ("<muhenkan>" . my/mozc-mode-disable)
     :bind (:mozc-mode-map
+           ;; mozc-modeで効かなくなるやつ
            ("C-x C-s" . save-buffer)
-           ("C-x h" . mark-hole-buffer))
+           ("C-x h" . mark-hole-buffer)
+           ("<f1> m" . describe-mode)
+           )
     :custom
     (default-input-method . "japanese-mozc")
     (mozc-mode-string . " [も]")
