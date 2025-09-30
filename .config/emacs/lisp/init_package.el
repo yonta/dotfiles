@@ -3026,4 +3026,13 @@ WIDTH-DIFF は横幅の文字数差、HEIGHT-DIFF は縦の行数差。"
   ;; 全モードで有効
   (which-func-modes . t))
 
+(leaf coding
+  :doc "モードラインの文字コード表示"
+  :leaf-path nil
+  :custom
+  (eol-mnemonic-dos . ":CRLF")
+  (eol-mnemonic-mac . ":CR")
+  (eol-mnemonic-unix . ":") ; デフォルト
+  (eol-mnemonic-undecided . ":?"))
+
 ;;; init_package.el ends here
