@@ -52,8 +52,9 @@ if ! type fd > /dev/null 2>&1 && dpkg -l fd-find > /dev/null 2>&1 ; then
 fi
 
 # bat help
-alias h='bathelp'
-alias hh='batman'
+alias h='uvx tldr'
+alias hh='bathelp'
+alias hhh='batman'
 
 # all pip package upgrade
 if type pip > /dev/null 2>&1 ; then
