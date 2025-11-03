@@ -1904,7 +1904,16 @@ whitespace-mode."
                     :post-handlers '(:add "{|}")))
     )
 
-  (leaf electric-pair-mode :global-minor-mode t)
+  (leaf electric-pair-mode
+    :global-minor-mode t
+    ;; MEMO
+    ;; "|   ""
+    ;; barのところで"を入力すると
+    ;; "    "|"
+    ;; とカーソル移動になってしまい、"が入力できない
+    ;; この機能をオフにする
+    :custom
+    (electric-pair-skip-whitespace . nil))
 
   (leaf rainbow-delimiters
     :doc "デフォルトの色合いがだいぶ淡い"
