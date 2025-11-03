@@ -30,5 +30,14 @@ bs-config.js
 # mise
 .mise.toml
 
-# Claude
+# LLM
 **/.claude/settings.local.json
+CLAUDE.md
+AGENTS.md
+.serena/
+
+# terraform
+.terraform.lock.hcl
+
+# AWS Lambda
+dist.zip
