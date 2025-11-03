@@ -1597,9 +1597,20 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :doc "flycheckが/dev/XXXXに書き込もうとしてパーミッションエラーすることがある"
     :doc "現在調査中で、以下URLにあるようにflycheckを変更する必要がある"
     :url "https://github.com/flycheck/flycheck/issues/2043#issuecomment-2377422002"
-    ;;
+    :defun (eglot-format-buffer . eglot)
+    :init
+    ;; MEMO
+    ;; rust-mode の rust-format-on-save は Cargo.toml の設定を反映しない
+    ;; そのため、edition = 2021 or 2024 のようなプロジェクト設定が反映されない
+    ;; そこで rust-mode-format-on-save ではなく、
+    ;; eglot-format-buffer を使って cargo fmt を呼び出すことで対応する
+    (defun my/rust-mode-format-on-save-by-eglot ()
+      "Format buffer by eglot."
+      (when (and (derived-mode-p 'rust-mode)
+                 (eglot-managed-p))
+        (eglot-format-buffer)))
+    :hook (before-save-hook . my/rust-mode-format-on-save-by-eglot)
     :custom
-    (rust-format-on-save . t)
     ;; formatエラーをバッファ表示しない
     (rust-format-show-buffer . nil)
     ;; formatエラー時にエラー箇所に飛ばない
