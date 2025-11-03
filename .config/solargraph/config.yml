@@ -9,8 +9,8 @@ require: []
 domains: []
 reporters:
   - rubocop
-  - require_not_found
-  - typecheck
+  # - require_not_found
+  # - typecheck
   - update_errors
   # - all!
 formatter:
