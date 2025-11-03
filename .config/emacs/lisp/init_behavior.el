@@ -36,13 +36,16 @@
 ;;; 同じ内容を重複してkill-ringにいれない
 (setq kill-do-not-save-duplicates t)
 
-;;; カーソル移動時にページ送りを少しずつ行う
-(setq scroll-conservatively 1)
-
-;;; カーソル移動のページ送りを、画面端2行前から行う
+;;; カーソルによる画面スクロールをスムーズにする
+;; MEMO: デフォルトの画面スクロールは、一気にページ送りして
+;;       カーソル位置をバッファ中央にするため、視線移動が大きく使いづらい。
+;; カーソルを中央に戻さない
+(setq scroll-conservatively 100)
+;; カーソル位置が画面端より2行手前からスクロール開始
 (setq scroll-margin 2)
-
-;;; 画面スクロールでカーソル位置を変えないようにする
+;; 1行ずつスクロール
+(setq scroll-step 1)
+;; スクロール時にカーソルの位置を変えない
 (setq scroll-preserve-screen-position :always)
 
 ;;; カーソルとマウスポインタが近づいたらマウスポインタを移動する
