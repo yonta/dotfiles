@@ -3049,7 +3049,9 @@ WIDTH-DIFF は横幅の文字数差、HEIGHT-DIFF は縦の行数差。"
         (propertize s 'face 'font-lock-comment-face)))))
   :custom
   ;; 全モードで有効
-  (which-func-modes . t))
+  (which-func-modes . t)
+  ;; モードラインの which-func 表示を消す
+  (which-func-format . ""))
 
 (leaf coding
   :doc "モードラインの文字コード表示"
