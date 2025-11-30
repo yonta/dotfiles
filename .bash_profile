@@ -88,7 +88,7 @@ fi
 
 # mise
 # MEMO: rust-analyzer と yarn は mise を優先
-#       これを実現するには、mise の設定を一番最後にする
+#       これを実現するには、mise の設定を後にする
 #       または、mise settings activate_aggressive=true を実行する
 if type mise > /dev/null 2>&1 ; then
     eval "$(mise activate bash)"
@@ -145,6 +145,8 @@ if type complete_bundle_bash_command > /dev/null 2>&1 ; then
 fi
 
 # nvm
+#
+# MEMO:mise よりも優先するため、mise の設定よりも後におく
 export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
 
 # This loads nvm
