@@ -187,7 +187,7 @@
     ("M-g SPC" . consult-mark)
     ("C-c C-SPC" . consult-mark)
     ("C-M-y" . consult-yank-pop)
-    ("C-." . consult-imenu)
+    ("M-i" . consult-imenu)
     ("C-c C-." . consult-outline)
     ("M-r" . consult-complex-command))
 
@@ -556,7 +556,8 @@ targets."
   ((sml-mode-hook web-mode-hook css-base-mode-hook) . my/corfu-mode)
   :bind
   ("M-." . lsp-bridge-find-def)
-  ("M-," . lsp-bridge-find-def-return)
+  ;; better jumper に任せる
+  ;; ("M-," . lsp-bridge-find-def-return)
   ("M-/" . lsp-bridge-find-references)
   ;; lsp-bridgeではcorfuがオンになっておらずcape-emojiが使いづらい
   (:lsp-bridge-mode-map
@@ -2245,6 +2246,44 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :bind* ("<f1> k" . helpful-key)
   :bind ("C-c C-d" . helpful-at-point))
 
+(leaf better-jumper
+  :ensure t
+  :doc "ジャンプ履歴を管理するモード"
+  :doc "xref/eglot/lsp のジャンプをまとめて管理できる"
+  :defun my/better-jumper-advice-set
+  :global-minor-mode t
+  :init
+  ;; https://github.com/gilbertw1/better-jumper/issues/23#issuecomment-2567002271
+  (defun my/better-jumper-advice-set (&rest _r)
+    (when (called-interactively-p 'any)
+      (better-jumper-set-jump)))
+  :config
+  (dolist (fn
+           '(eglot-find-declaration
+             eglot-find-typeDefinition
+             eglot-find-implementation
+             smart-jump-go
+             smart-jump-references
+             smart-jump-simple-find-references
+             smart-jump-find-references-with-rg
+             xref-find-definitions
+             xref-find-references
+             xref-find-apropos
+             find-file project-find-file
+             flycheck-next-error flycheck-previous-error
+             ))
+    (advice-add fn :before #'my/better-jumper-advice-set))
+  :bind
+  ;; xref/lsp/smart-jump の backward を better-jumperに任せる
+  ("M-," . better-jumper-jump-backward)
+  ("C-," . better-jumper-jump-backward)
+  ("C-." . better-jumper-jump-forward)
+  )
+
+(leaf consult-better-jumper
+  :vc (:url "https://github.com/NicholasBHubbard/consult-better-jumper.git")
+  :bind ("M-C-," . consult-better-jumper))
+
 (eval-when-compile (require 'dash))
 (leaf smart-jump
   :req "ripgrepをpcre2サポートありでインストールしておく"
@@ -2295,7 +2334,8 @@ smart-jump."
   ;; 他にも eglot-find-typeDefinition があるが設定してない
   ("M-." . my/smart-jump-prefer-eglot)
   ("M-C-." . eglot-find-implementation)
-  ("M-," . smart-jump-back)
+  ;; better jumper に任せる
+  ;; ("M-," . smart-jump-back)
   ;; M-? にセットされた xref-find-references にフォールバックされる
   ("M-/" . smart-jump-references))
 
