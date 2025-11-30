@@ -41,3 +41,11 @@ AGENTS.md
 
 # AWS Lambda
 dist.zip
+
+# diesel, rust ORM
+diesel.toml
+*_diesel_initial_setup/
+
+# rust-analyzer
+rust-analyzer/
+
