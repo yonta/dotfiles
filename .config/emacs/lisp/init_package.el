@@ -2991,6 +2991,12 @@ WIDTH-DIFF は横幅の文字数差、HEIGHT-DIFF は縦の行数差。"
   (setq interprogram-cut-function 'wl-copy)
   (setq interprogram-paste-function 'wl-paste))
 
+(leaf pixel-scroll
+  :doc "スクロールをなめらかにするグローバルマイナーモード"
+  :emacs>= 29
+  :config
+  (pixel-scroll-precision-mode))
+
 (leaf comp
   :leaf-path nil
   :doc "native compile"
