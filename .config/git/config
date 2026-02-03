@@ -13,6 +13,7 @@
 	ci = commit
 	cif = commit --amend --no-edit
 	st = status --short --branch
+	sts = diff --stat
 	br = branch
 	l = log --graph --date=format:'%Y/%m/%d(%a) %T %z'
 	a = add .
