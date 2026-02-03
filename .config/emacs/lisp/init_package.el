@@ -2252,6 +2252,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :doc "xref/eglot/lsp のジャンプをまとめて管理できる"
   :defun my/better-jumper-advice-set
   :global-minor-mode t
+  :diminish better-jumper-local-mode
   :init
   ;; https://github.com/gilbertw1/better-jumper/issues/23#issuecomment-2567002271
   (defun my/better-jumper-advice-set (&rest _r)
@@ -2271,6 +2272,7 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
              xref-find-apropos
              find-file project-find-file
              flycheck-next-error flycheck-previous-error
+             goto-line consult-goto-line
              ))
     (advice-add fn :before #'my/better-jumper-advice-set))
   :bind
