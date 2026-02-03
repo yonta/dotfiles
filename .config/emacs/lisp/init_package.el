@@ -1486,6 +1486,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
     :req "npmでtypescript-language-serverとtypescriptを入れておく"
     :req "npm install -g typescript-language-server typescript"
     :defvar flycheck-check-syntax-automatically
+    :custom
+    (typescript-indent-level . 2)
     :hook
     (typescript-ts-base-mode-hook . eglot-ensure)
     (typescript-ts-base-mode-hook
@@ -1495,9 +1497,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
      . (lambda ()
          (when (derived-mode-p 'typescript-ts-base-mode)
            (setq my/flycheck-next-local-cache
-                 '((eglot-check . ((next-checkers . (javascript-eslint)))))))))
-    :custom
-    (typescript-indent-level . 2))
+                 '((eglot-check . ((next-checkers . (javascript-eslint))))))))))
 
   (leaf prettier-js
     :ensure t
