@@ -32,12 +32,14 @@ bs-config.js
 
 # LLM
 **/.claude/settings.local.json
-CLAUDE.md
-AGENTS.md
+CLAUDE*.md
+AGENTS*.md
 .serena/
 
 # terraform
 .terraform.lock.hcl
+.terraform/
+terraform.tfstate*
 
 # AWS Lambda
 dist.zip
@@ -48,4 +50,3 @@ diesel.toml
 
 # rust-analyzer
 rust-analyzer/
-
