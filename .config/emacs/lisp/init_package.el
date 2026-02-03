@@ -589,11 +589,6 @@ targets."
     ;; debug出力なしでスピードアップ
     :custom (eglot-events-buffer-size . 0)
     :config
-    (defun my/eglot-completion-at-point-with-cape ()
-      "Completion function by `eglot-completion-at-point` with cape"
-      (cape-wrap-super #'eglot-completion-at-point
-                       #'cape-file
-                       #'cape-dabbrev))
     ;; solargraphの出力がされていない不具合に対処
     ;; これがないと、例えばrubocopの結果がflycheckに出力されない
     ;; https://github.com/castwide/solargraph/issues/709
@@ -610,11 +605,11 @@ targets."
                     ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
     :hook
     ;; Eglotがlocal変数でcompletion-at-point-functionsを上書きする
-    ;; capeと組み合わせを手動で設定する
+    ;; eglot, file, dabbrev の優先順位とし、候補は互いに混ぜない
     (eglot-managed-mode-hook
      . (lambda ()
          (setq-local completion-at-point-functions
-                     '(my/eglot-completion-at-point-with-cape)))))
+                     '(eglot-completion-at-point cape-file cape-dabbrev)))))
 
   (leaf flycheck-eglot
     :ensure t
