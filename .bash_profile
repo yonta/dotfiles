@@ -107,8 +107,13 @@ if [ -f "${OPAMROOT}/opam-init/init.sh" ] ; then
 fi
 
 # SML/NJ PATH
-if [ -d "${HOME}/.smlnj" ] ; then
-    PATH="${HOME}/.smlnj/bin:${PATH}"
+if [ -d "${XDG_DATA_HOME}/smlnj" ] ; then
+    PATH="${XDG_DATA_HOME}/smlnj/bin:${PATH}"
+fi
+
+# MLton PATH
+if [ -d "${XDG_DATA_HOME}/mlton" ] ; then
+    PATH="${XDG_DATA_HOME}/mlton/bin:${PATH}"
 fi
 
 # Starship

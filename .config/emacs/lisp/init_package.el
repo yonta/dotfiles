@@ -1176,11 +1176,15 @@ targets."
     (sml-mode-hook . my/company-mlton-init))
 
   (leaf flycheck-smlsharp
+    :if (executable-find "smlsharp")
     :vc (:url "https://github.com/yonta/flycheck-smlsharp.git")
     :after sml-mode
+    :hook (sml-mode-hook
+           . (lambda () (setq-local flycheck-checker 'sml-smlsharp)))
     :require t)
 
   (leaf flycheck-mlton
+    :if (executable-find "mlton")
     :vc (:url "https://gist.github.com/80c938a54f4d14a1b75146e9c0b76fc2.git")
     :hook (sml-mode-hook . (lambda () (require 'flycheck-mlton))))
 
