@@ -2190,12 +2190,19 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     )
 
   (leaf bash-ts-mode
-    :mode ("\\.bash_aliases\\'" . bash-ts-mode)
+    :mode (("\\.bash_aliases\\'" "\\.bash\\'" ) . bash-ts-mode)
     :hook (bash-ts-mode-hook . eglot-ensure)))
 
 (leaf conf-mode
+  :leaf-path nil
   :doc "Emacs標準のconfig用モード"
   :mode ("\\.env\\'" "dotenv"))
+
+(leaf toml-ts-mode
+  :leaf-path nil
+  :doc "Emacs 標準の toml-ts-mode で LSP に tombi を使う"
+  :if (executable-find "tombi")
+  :hook (toml-ts-mode-hook . eglot-ensure))
 
 (leaf direnv :ensure t :global-minor-mode t)
 
