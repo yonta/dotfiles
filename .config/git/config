@@ -46,6 +46,9 @@
 	plus-emph-style = syntax forestgreen
 	minus-style = syntax maroon
 	minus-emph-style = syntax crimson
+# 日本語 diff をうまく扱う設定
+# https://zenn.dev/hnw/articles/b295b0b8c55b0d
+	word-diff-regex = "[a-zA-Z0-9_]+|\\p{Hiragana}+|[\\p{Katakana}ー]+|[\\p{Han}〆]+|."
 [push]
 	autoSetupRemote = true
 [merge]
