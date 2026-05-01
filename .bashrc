@@ -15,16 +15,6 @@ HISTCONTROL=ignoredups
 # append to the history file, don't overwrite it
 # shopt -s histappend
 
-# プロンプト表示前に、コマンド履歴をファイルにセーブ・ロードする
-__sync_history() {
-  history -a
-  history -c
-  history -r
-}
-PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND}; }__sync_history"
-# bash終了時に履歴保存をしない
-shopt -u histappend
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=20000
 HISTFILESIZE=20000

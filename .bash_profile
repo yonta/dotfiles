@@ -271,6 +271,22 @@ if type direnv > /dev/null 2>&1 ; then
     eval "$(direnv hook bash)"
 fi
 
+# bash history を複数 terminal で同期する
+# MEMO: direnv が PROMPT_COMMAND を書き換えるので、そのあとにセットする
+__sync_history() {
+  history -a
+  history -c
+  history -r
+}
+if declare -p PROMPT_COMMAND 2>/dev/null | grep -q 'declare \-a'; then
+  PROMPT_COMMAND+=('__sync_history')
+else
+  PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND}; }__sync_history"
+fi
+# bash 終了時に履歴を追記せず上書き保存する
+# 上記で history 同期しているので追記の必要がない
+shopt -u histappend
+
 # flyctl
 export FLY_CONFIG_DIR="${XDG_CONFIG_HOME}/fly"
 
