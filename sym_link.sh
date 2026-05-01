@@ -30,11 +30,7 @@ function remove_original () {
 
 # arg1: file or dir (full path), arg2: target dir (full path)
 function make_link () {
-    if [ -f "${1}" ]; then
-        ln --symbolic ${1} ${2}
-    elif [ -d "${1}" ]; then
-        ln --symbolic --directory ${1} ${2}
-    fi
+    ln --symbolic ${1} ${2}
 }
 
 # arg1: file (abs path), arg2: "copy" or "force"
