@@ -376,6 +376,11 @@ if type docker > /dev/null 2>&1 ; then
     export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 fi
 
+# Serena MCP
+if type claude > /dev/null 2>&1 ; then
+    export SERENA_HOME="${XDG_CONFIG_HOME}/serena"
+fi
+
 # WSLのみの設定
 if [ -n "${WSLENV}" ] ; then
     # for wsl tool deb package
