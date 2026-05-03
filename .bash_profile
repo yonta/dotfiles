@@ -321,6 +321,11 @@ if type aws > /dev/null 2>&1 ; then
     export AWS_SHARED_CREDENTIALS_FILE="${AWS_DATA_HOME}/shared-credentials"
 fi
 
+# pass
+if type pass > /dev/null 2>&1 ; then
+    export PASSWORD_STORE_DIR="${XDG_CONFIG_HOME}/password-store"
+fi
+
 # aws-vault
 if type aws-vault > /dev/null 2>&1 ; then
     # completionの設定
