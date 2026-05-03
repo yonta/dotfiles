@@ -366,6 +366,16 @@ if type actdk > /dev/null 2>&1 ; then
     eval "$(actdk generate shell-completion --shell bash)"
 fi
 
+# Ansible
+if type ansible > /dev/null 2>&1 ; then
+    export ANSIBLE_HOME="${XDG_DATA_HOME}/ansible"
+fi
+
+# Docker
+if type docker > /dev/null 2>&1 ; then
+    export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
+fi
+
 # WSLのみの設定
 if [ -n "${WSLENV}" ] ; then
     # for wsl tool deb package
