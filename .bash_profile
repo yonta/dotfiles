@@ -249,6 +249,14 @@ fi
 # ripgrep
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep.conf"
 
+# Go lang
+if type go > /dev/null 2>&1 ; then
+    export GOPATH="${XDG_DATA_HOME}/go"
+    # mise 管理なので bin path はいらない
+    # export GOBIN="${XDG_BIN_HOME:-$HOME/.local/bin}"
+    # export PATH="${GOBIN}:${PATH}"
+fi
+
 # Wakatime
 export WAKATIME_HOME="${XDG_CONFIG_HOME}/wakatime"
 
