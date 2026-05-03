@@ -35,6 +35,7 @@ bs-config.js
 CLAUDE*.md
 AGENTS*.md
 .serena/
+.codex
 
 # terraform
 .terraform.lock.hcl
