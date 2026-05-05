@@ -397,7 +397,6 @@ if [ -n "${WSLENV}" ] ; then
 
     # SSHログインじゃないとき
     if [ -z "${SSH_CLIENT}" ] ; then
-        export BROWSER=wslview
         # WSLg用にHi-DPIに対応させる
         export GDK_SCALE=2
 
