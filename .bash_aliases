@@ -1,9 +1,15 @@
+# shellcheck shell=bash
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    if [ -r "${HOME}/.dircolors" ]; then
+        eval "$(dircolors -b "${HOME}/.dircolors")"
+    else
+        eval "$(dircolors -b)"
+    fi
     # alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    # alias dir='dir --color=auto'
+    # alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -12,7 +18,18 @@ fi
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alert() {
+    __alert_status=$?
+    if [ "${__alert_status}" = 0 ]; then
+        __alert_icon=terminal
+    else
+        __alert_icon=error
+    fi
+
+    __alert_command=$(history 1 | sed -e 's/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//')
+    notify-send --urgency=low -i "${__alert_icon}" "${__alert_command}"
+    return "${__alert_status}"
+}
 
 # ls
 if type eza > /dev/null 2>&1 ; then
