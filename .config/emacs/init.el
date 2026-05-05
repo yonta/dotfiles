@@ -55,6 +55,17 @@
 ;; (initchart-record-execution-time-of load file)
 ;; (initchart-record-execution-time-of require feature)
 
+;; package.el が autoloads ファイルを生成していないパッケージがある場合に自動生成する
+;; comment out を外してEmacsを起動すると、autoloadsファイルがないパッケージに対して生成される
+;; (dolist (dir (directory-files (expand-file-name "elpa" user-emacs-directory) t "^[^.]"))
+;;   (when (file-directory-p dir)
+;;     (let* ((name (replace-regexp-in-string "-[0-9.]+\\(\\.signed\\)?\\'" "" (file-name-nondirectory dir)))
+;;            (autoloads (expand-file-name (format "%s-autoloads.el" name) dir)))
+;;       (when (and (file-exists-p (expand-file-name (format "%s-pkg.el" name) dir))
+;;                  (not (file-exists-p autoloads)))
+;;         (require 'package)
+;;         (package-generate-autoloads (intern name) dir)))))
+
 ;; 起動時にのdeprecatedメッセージを隠す
 ;; ときどきオフにして確認したほうがよさそう
 (customize-set-variable 'byte-compile-warnings '(not obsolete))
