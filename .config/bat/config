@@ -31,3 +31,4 @@
 --map-syntax ".dockerignore:Git Ignore"
 --map-syntax "*Procfile*:DotENV"
 --map-syntax "**/aws/config:INI"
+--map-syntax ".bash_env:bash"
