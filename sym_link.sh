@@ -47,7 +47,7 @@ function nice_make_link () {
 files="\
 .config/bash .config/emacs .config/git .config/hg .config/solargraph \
 .config/bat \
-.bashrc .bash_profile .bash_aliases .vimrc \
+.bashrc .bash_profile .bash_aliases .bash_env .vimrc \
 .config/screenrc .config/starship.toml .config/ripgrep.conf \
 "
 for file in ${files}
