@@ -85,6 +85,35 @@ if type starship > /dev/null 2>&1 ; then
             eval "$(starship init bash)"
         fi
     fi
+
+    # 端末タイトルを変更する
+    # https://starship.rs/advanced-config/?utm_source=chatgpt.com#change-window-title
+    __set_terminal_title() {
+        local dir
+        case "$PWD" in
+            "$HOME")
+                dir="~"
+                ;;
+            "/")
+                dir="/"
+                ;;
+            *)
+                dir="$(basename "$PWD")"
+                ;;
+        esac
+        echo -ne "\033]0;${debian_chroot:+($debian_chroot)}${HOSTNAME}: ${dir}\007"
+    }
+    case "$(declare -p PROMPT_COMMAND 2>/dev/null)" in
+        # 配列
+        declare\ -a*)
+            PROMPT_COMMAND+=('__set_terminal_title')
+            ;;
+        # 文字列
+        *)
+            # shellcheck disable=SC2178,SC2128
+            PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND}; }__set_terminal_title"
+            ;;
+    esac
 else
     # set a fancy prompt (non-color, unless we know we "want" color)
     case "$TERM" in
