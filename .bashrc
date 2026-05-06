@@ -182,35 +182,6 @@ else
     esac
 fi
 
-# sshやsu後に端末タイトルを戻す
-# https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
-resettitle()
-{
-    # change the title to default of the current window or tab
-    if [ -r /etc/lsb-release ] ; then
-        (
-            # shellcheck disable=SC1091
-            source /etc/lsb-release
-            echo -ne "\033]0;${DISTRIB_DESCRIPTION}\007"
-        )
-    fi
-}
-
-ssh()
-{
-    /usr/bin/ssh "$@"
-    # revert the window title after the ssh command
-    resettitle
-}
-
-su()
-{
-    # shellcheck disable=SC2117
-    /bin/su "$@"
-    # revert the window title after the su command
-    resettitle
-}
-
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
