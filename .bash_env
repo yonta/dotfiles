@@ -140,23 +140,6 @@ if [ -n "${WSLENV}" ] ; then
     # for wsl tool deb package
     PATH="${PATH}:/mnt/c/Windows"
     PATH="${PATH}:/mnt/c/Windows/System32"
-
-    # SSH ログインじゃない、画面がある、VSCode Remote じゃない
-    if [ -z "${SSH_CLIENT}" ] &&
-           xrandr > /dev/null 2>&1 &&
-           [[ ":${WSLENV:-}:" != "*:VSCODE:*" ]] ; then
-        # WSLg用にHi-DPIに対応させる
-        export GDK_SCALE=2
-    fi
-
-    # WSL1のみ
-    if uname -a | grep -e 'Microsoft' > /dev/null 2>&1 ; then
-        export DOCKER_HOST='tcp://localhost:2375'
-        # SSHログインじゃないとき
-        if [ -z "${SSH_CLIENT}" ]; then
-            export DISPLAY=localhost:0
-        fi
-    fi
 fi
 
 export PATH
