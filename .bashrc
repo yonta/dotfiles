@@ -4,7 +4,6 @@
 # for examples
 
 if [ -f "${HOME}/.bash_env" ]; then
-    # shellcheck disable=SC1091
     source "${HOME}/.bash_env"
 fi
 
@@ -145,7 +144,6 @@ else
     export GIT_PS1_SHOWUNTRACKEDFILES=true
     export GIT_PS1_SHOWSTASHSTATE=true
     export GIT_PS1_SHOWUPSTREAM=auto
-    # shellcheck disable=SC1091
     source /usr/lib/git-core/git-sh-prompt
 
     if [ "$color_prompt" = yes ]; then
@@ -188,7 +186,6 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-# shellcheck disable=SC1091
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
         source /usr/share/bash-completion/bash_completion
@@ -228,14 +225,14 @@ fi
 # MEMO:mise よりも優先するため、mise の設定よりも後におく
 
 # This loads nvm
-# shellcheck disable=SC1091
 if [ -n "${NVM_DIR}" ] && [ -s "${NVM_DIR}/nvm.sh" ] ; then
+    # shellcheck disable=SC1091
     source "${NVM_DIR}/nvm.sh"
 fi
 
 # This loads nvm bash_completion
-# shellcheck disable=SC1091
 if [ -n "${NVM_DIR}" ] && [ -s "${NVM_DIR}/bash_completion" ] ; then
+    # shellcheck disable=SC1091
     source "${NVM_DIR}/bash_completion"
 fi
 
@@ -307,12 +304,9 @@ if type fzf > /dev/null 2>&1 ; then
     # tab補完にfzfを利用する
     # GitHubからbash用ファイルを取得した
     if [ -r "${HOME}/.config/bash/completions/fzf-bash-completion.sh" ] ; then
-        # shellcheck disable=SC1091
         source "${HOME}/.config/bash/completions/fzf-bash-completion.sh"
-        # shellcheck disable=SC2034
-        FZF_COMPLETION_AUTO_COMMON_PREFIX="true"
-        # shellcheck disable=SC2034
-        FZF_COMPLETION_AUTO_COMMON_PREFIX_PART="true"
+        export FZF_COMPLETION_AUTO_COMMON_PREFIX="true"
+        export FZF_COMPLETION_AUTO_COMMON_PREFIX_PART="true"
 
         # 端末のときのみ
         if [ -t 1 ] ; then
@@ -398,6 +392,5 @@ fi
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f "${HOME}/.bash_aliases" ]; then
-    # shellcheck disable=SC1091
-    . "${HOME}/.bash_aliases"
+    source "${HOME}/.bash_aliases"
 fi

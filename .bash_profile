@@ -2,7 +2,6 @@
 # ~/.bash_profile: executed by bash(1) for login shells.
 
 if [ -f "${HOME}/.bash_env" ]; then
-    # shellcheck disable=SC1091
     source "${HOME}/.bash_env"
 fi
 
@@ -37,6 +36,5 @@ fi
 
 # インタラクティブ bash シェルであれば ~/.bashrc を読み込む
 if [ -n "${BASH_VERSION:-}" ] && [[ $- == *i* ]] && [ -f "${HOME}/.bashrc" ] ; then
-    # shellcheck disable=SC1091
     source "${HOME}/.bashrc"
 fi
