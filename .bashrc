@@ -67,63 +67,91 @@ if [ -z "${debian_chroot:-}" ]; then
     fi
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
+# Starship
+# require: cargo install starship
+if type starship > /dev/null 2>&1 ; then
+    if [ -n "${INSIDE_EMACS}" ] ; then
+        if [ "${TERM}" = "dumb" ] ; then
+            # Emacs内ではTERM=dumbでシェルが開かれる
+            # これにより、starshipがdumbモードで起動するのを防ぐ
+            __saved_term="${TERM}"
+            export TERM=xterm-256color
+            eval "$(starship init bash)"
+            export TERM="${__saved_term}"
+            unset __saved_term
+        fi
+    else
+        if [ "${TERM}" != "dumb" ] ; then
+            eval "$(starship init bash)"
+        fi
+    fi
+else
+    # set a fancy prompt (non-color, unless we know we "want" color)
+    case "$TERM" in
+        xterm-color|*-256color) color_prompt=yes;;
+    esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+    # uncomment for a colored prompt, if the terminal has the capability; turned
+    # off by default to not distract the user: the focus in a terminal window
+    # should be on the output of commands, not on the prompt
+    #force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ]; then
-        if tput setaf 1 >&/dev/null; then
-            # We have color support; assume it's compliant with Ecma-48
-            # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-            # a case would tend to support setf rather than setaf.)
-            color_prompt=yes
+    if [ -n "$force_color_prompt" ]; then
+        if [ -x /usr/bin/tput ]; then
+            if tput setaf 1 >&/dev/null; then
+                # We have color support; assume it's compliant with Ecma-48
+                # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+                # a case would tend to support setf rather than setaf.)
+                color_prompt=yes
+            else
+                color_prompt=
+            fi
         else
             color_prompt=
         fi
-    else
-        color_prompt=
     fi
-fi
 
-if [ "$color_prompt" = yes ]; then
-    # shellcheck disable=SC2016
-    PS1_1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h'
-    OSNAME=''
-    # shellcheck disable=SC2016
-    PS1_2='\[\033[00m\]:\[\033[01;34m\]\w\[\033[35m\]$(__git_ps1)\[\033[00m\]\$ '
-    # WSLでubuntu/openSUSEの両方がある場合、OS名をいれる
-    if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 ; then
-        if type "ubuntu.exe" > /dev/null 2>&1 ; then
-            if type "openSUSE-42.exe" > /dev/null 2>&1 ; then
-                if grep 'Ubuntu' /etc/os-release > /dev/null 2>&1; then
-                    OSNAME='-ubuntu'
-                elif grep 'openSUSE' /etc/os-release > /dev/null 2>&1; then
-                    OSNAME='-openSUSE'
+    # git ps1 settings
+    export GIT_PS1_SHOWDIRTYSTATE=true
+    export GIT_PS1_SHOWUNTRACKEDFILES=true
+    export GIT_PS1_SHOWSTASHSTATE=true
+    export GIT_PS1_SHOWUPSTREAM=auto
+    # shellcheck disable=SC1091
+    source /usr/lib/git-core/git-sh-prompt
+
+    if [ "$color_prompt" = yes ]; then
+        # shellcheck disable=SC2016
+        PS1_1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h'
+        OSNAME=''
+        # shellcheck disable=SC2016
+        PS1_2='\[\033[00m\]:\[\033[01;34m\]\w\[\033[35m\]$(__git_ps1)\[\033[00m\]\$ '
+        # WSLでubuntu/openSUSEの両方がある場合、OS名をいれる
+        if uname -a | grep -e 'Microsoft' -e 'microsoft' > /dev/null 2>&1 ; then
+            if type "ubuntu.exe" > /dev/null 2>&1 ; then
+                if type "openSUSE-42.exe" > /dev/null 2>&1 ; then
+                    if grep 'Ubuntu' /etc/os-release > /dev/null 2>&1; then
+                        OSNAME='-ubuntu'
+                    elif grep 'openSUSE' /etc/os-release > /dev/null 2>&1; then
+                        OSNAME='-openSUSE'
+                    fi
                 fi
             fi
         fi
+        PS1="${PS1_1}${OSNAME}${PS1_2}"
+    else
+        PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
     fi
-    PS1="${PS1_1}${OSNAME}${PS1_2}"
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+    unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-    xterm*|rxvt*)
-        PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-        ;;
-    *)
-        ;;
-esac
+    # If this is an xterm set the title to user@host:dir
+    case "$TERM" in
+        xterm*|rxvt*)
+            PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+            ;;
+        *)
+            ;;
+    esac
+fi
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -144,12 +172,6 @@ fi
 # --no-init: less終了時に画面をクリアしない
 # --quiet: lessでビープ音を鳴らさない
 export LESS='--RAW-CONTROL-CHARS --no-init --quiet'
-
-# git ps1 settings
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
-export GIT_PS1_SHOWSTASHSTATE=true
-export GIT_PS1_SHOWUPSTREAM=auto
 
 # GPG
 # -t 0 は標準入力が端末
