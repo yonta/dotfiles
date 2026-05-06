@@ -153,33 +153,6 @@ else
     esac
 fi
 
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-# shellcheck disable=SC1091
-if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-        source /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-        source /etc/bash_completion
-    fi
-fi
-
-# --RAW-CONTROL-CHARS: カラーシーケンスを処理する
-# --no-init: less終了時に画面をクリアしない
-# --quiet: lessでビープ音を鳴らさない
-export LESS='--RAW-CONTROL-CHARS --no-init --quiet'
-
-# GPG
-# -t 0 は標準入力が端末
-if [ -t 0 ] ; then
-    GPG_TTY=$(tty)
-    export GPG_TTY
-fi
-
 # sshやsu後に端末タイトルを戻す
 # https://unix.stackexchange.com/questions/40830/fix-terminal-title-after-ssh-remote-logging-to-another-machine
 resettitle()
@@ -208,6 +181,33 @@ su()
     # revert the window title after the su command
     resettitle
 }
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+# shellcheck disable=SC1091
+if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        source /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        source /etc/bash_completion
+    fi
+fi
+
+# --RAW-CONTROL-CHARS: カラーシーケンスを処理する
+# --no-init: less終了時に画面をクリアしない
+# --quiet: lessでビープ音を鳴らさない
+export LESS='--RAW-CONTROL-CHARS --no-init --quiet'
+
+# GPG
+# -t 0 は標準入力が端末
+if [ -t 0 ] ; then
+    GPG_TTY=$(tty)
+    export GPG_TTY
+fi
 
 # rustup/cargo completions
 if type rustup > /dev/null 2>&1 ; then
