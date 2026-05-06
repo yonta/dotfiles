@@ -281,7 +281,7 @@ fi
 # venvやpipenv環境のため、コマンドをevalで評価できない。
 # 以下コマンドにて事前に生成したファイルを読み込む
 # ruff generate-shell-completion bash > ~/.config/bash/completions/ruff
-if [ -r "${XDG_CONFIG_HOME}/bash/completions/ruff" ] ; then
+if type ruff > /dev/null 2>&1 && [ -r "${XDG_CONFIG_HOME}/bash/completions/ruff" ] ; then
     # shellcheck disable=SC1091
     source "${XDG_CONFIG_HOME}/bash/completions/ruff"
 fi
