@@ -1,0 +1,162 @@
+# shellcheck shell=bash
+# ~/.bash_env: environment variables for bash
+
+# XDG Base Directory
+# Default settings
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-${HOME}/.local/state}"
+# WSLGによって設定済み
+# XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "${HOME}/bin" ] ; then
+    PATH="${HOME}/bin:${PATH}"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "${HOME}/.local/bin" ] ; then
+    PATH="${HOME}/.local/bin:${PATH}"
+fi
+
+# EDITOR
+export EDITOR=vi
+# export EDITOR=emacsclient
+
+# Rust and cargo
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+if [ -d "${CARGO_HOME}/bin" ] ; then
+    PATH="${CARGO_HOME}/bin:${PATH}"
+fi
+
+# rlwrap home
+export RLWRAP_HOME="${XDG_CACHE_HOME}/rlwrap"
+
+# OPAM configuration
+export OPAMROOT="${XDG_DATA_HOME}/opam"
+
+# SML/NJ PATH
+if [ -d "${XDG_DATA_HOME}/smlnj" ] ; then
+    PATH="${XDG_DATA_HOME}/smlnj/bin:${PATH}"
+fi
+
+# MLton PATH
+if [ -d "${XDG_DATA_HOME}/mlton" ] ; then
+    PATH="${XDG_DATA_HOME}/mlton/bin:${PATH}"
+fi
+
+# Ruby
+export RBENV_ROOT="${XDG_DATA_HOME}/rbenv"
+if  [ -d "${RBENV_ROOT}/bin" ] ; then
+    PATH="${RBENV_ROOT}/bin:${PATH}"
+fi
+
+export BUNDLE_USER_HOME="${XDG_CONFIG_HOME}/bundle"
+
+export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
+
+# nvm
+export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
+
+# npm
+# export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npmrc"
+export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
+
+# node
+export NODE_REPL_HISTORY="${XDG_CACHE_HOME}/node/history"
+
+# ts-node
+export TS_NODE_HISTORY="${XDG_CACHE_HOME}/ts-node/history"
+
+# bun
+export BUN_INSTALL="${XDG_DATA_HOME}/bun"
+if [ -d "${BUN_INSTALL}/bin" ] ; then
+    PATH="${BUN_INSTALL}/bin:${PATH}"
+fi
+
+# grip
+export GRIPHOME="${XDG_CONFIG_HOME}/grip"
+
+# ripgrep
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep.conf"
+
+# Go lang
+export GOPATH="${XDG_DATA_HOME}/go"
+
+# Wakatime
+export WAKATIME_HOME="${XDG_CONFIG_HOME}/wakatime"
+
+# screen
+export SCREENRC="${XDG_CONFIG_HOME}/screenrc"
+
+
+# PostgreSQL
+export PSQL_HISTORY="${XDG_CACHE_HOME}/psql/history"
+
+# GnuPG
+export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
+
+# aptitude
+export APT_CONFIG="${XDG_CONFIG_HOME}/aptitude/config"
+
+# flyctl
+export FLY_CONFIG_DIR="${XDG_CONFIG_HOME}/fly"
+
+# AWS CLI
+# aws-cliはXDG CONFIGに対応していない
+# 暫定で環境変数をセットする
+# https://github.com/aws/aws-cli/issues/9031#issuecomment-2448119520
+export AWS_CONFIG_FILE="${XDG_CONFIG_HOME}/aws/config"
+AWS_DATA_HOME="${XDG_DATA_HOME}/aws"
+export AWS_CLI_HISTORY_FILE="${AWS_DATA_HOME}/history"
+export AWS_CREDENTIALS_FILE="${AWS_DATA_HOME}/credentials"
+export AWS_WEB_IDENTITY_TOKEN_FILE="${AWS_DATA_HOME}/token"
+export AWS_SHARED_CREDENTIALS_FILE="${AWS_DATA_HOME}/shared-credentials"
+
+# pass
+export PASSWORD_STORE_DIR="${XDG_CONFIG_HOME}/password-store"
+
+# aws-vault
+# 認証バックエンドにpassを使う
+export AWS_VAULT_BACKEND=pass
+# 認証バックエンドのキー保存先の名前
+export AWS_VAULT_PASS_PREFIX=aws-vault
+# 認証期限切れ時間、デフォルトは1h、最大12hらしい
+export AWS_SESSION_TOKEN_TTL=3h
+
+# Ansible
+export ANSIBLE_HOME="${XDG_DATA_HOME}/ansible"
+
+# Docker
+export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
+
+# Serena MCP
+export SERENA_HOME="${XDG_CONFIG_HOME}/serena"
+
+# WSLのみの設定
+if [ -n "${WSLENV}" ] ; then
+    # for wsl tool deb package
+    PATH="${PATH}:/mnt/c/Windows"
+    PATH="${PATH}:/mnt/c/Windows/System32"
+
+    # SSH ログインじゃない、画面がある、VSCode Remote じゃない
+    if [ -z "${SSH_CLIENT}" ] &&
+           xrandr > /dev/null 2>&1 &&
+           [[ ":${WSLENV:-}:" != "*:VSCODE:*" ]] ; then
+        # WSLg用にHi-DPIに対応させる
+        export GDK_SCALE=2
+    fi
+
+    # WSL1のみ
+    if uname -a | grep -e 'Microsoft' > /dev/null 2>&1 ; then
+        export DOCKER_HOST='tcp://localhost:2375'
+        # SSHログインじゃないとき
+        if [ -z "${SSH_CLIENT}" ]; then
+            export DISPLAY=localhost:0
+        fi
+    fi
+fi
+
+export PATH
