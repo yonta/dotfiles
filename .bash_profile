@@ -1,8 +1,9 @@
 # shellcheck shell=bash
 # ~/.bash_profile: executed by bash(1) for login shells.
 
-if [ -f "$HOME/.bash_env" ]; then
-    source "$HOME/.bash_env"
+if [ -f "${HOME}/.bash_env" ]; then
+    # shellcheck disable=SC1091
+    source "${HOME}/.bash_env"
 fi
 
 # the default umask is set in /etc/profile; for setting the umask
@@ -14,7 +15,7 @@ if [ -n "${WSLENV}" ] ; then
     # SSH ログインじゃない、画面がある、VSCode Remote じゃない
     if [ -z "${SSH_CLIENT}" ] &&
            xrandr > /dev/null 2>&1 &&
-           [[ ":${WSLENV:-}:" != "*:VSCODE:*" ]] ; then
+           [[ ":${WSLENV:-}:" != *:VSCODE:* ]] ; then
         # 全角半角キーが連打されるのを防ぐ
         xset -r 49
     fi
