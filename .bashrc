@@ -209,12 +209,6 @@ if [ -t 0 ] ; then
     export GPG_TTY
 fi
 
-# rustup/cargo completions
-if type rustup > /dev/null 2>&1 ; then
-    eval "$(rustup completions bash)"
-    eval "$(rustup completions bash cargo)"
-fi
-
 # mise
 # MEMO: rust-analyzer と yarn は mise を優先
 #       mise activate を PATH 設定よりも後にする
@@ -228,42 +222,6 @@ if type mise > /dev/null 2>&1 ; then
         mise use --global usage
     fi
     eval "$(mise completions --include-bash-completion-lib bash)"
-fi
-
-# OPAM configuration
-if [ -n "${OPAMROOT}" ] && [ -f "${OPAMROOT}/opam-init/init.sh" ] ; then
-    # shellcheck disable=SC1091
-    source "${OPAMROOT}/opam-init/init.sh" 2>&1 /dev/null
-fi
-
-# Starship
-# require: cargo install starship
-if type starship > /dev/null 2>&1 ; then
-    if [ -n "${INSIDE_EMACS}" ] ; then
-        if [ "${TERM}" = "dumb" ] ; then
-            # Emacs内ではTERM=dumbでシェルが開かれる
-            # これにより、starshipがdumbモードで起動するのを防ぐ
-            __saved_term="${TERM}"
-            export TERM=xterm-256color
-            eval "$(starship init bash)"
-            export TERM="${__saved_term}"
-            unset __saved_term
-        fi
-    else
-        if [ "${TERM}" != "dumb" ] ; then
-            eval "$(starship init bash)"
-        fi
-    fi
-fi
-
-# Ruby
-if type rbenv > /dev/null 2>&1 ; then
-    eval "$(rbenv init -)"
-fi
-
-# Bundler completions
-if type complete_bundle_bash_command > /dev/null 2>&1 ; then
-    eval "$(complete_bundle_bash_command init)"
 fi
 
 # nvm
@@ -286,14 +244,26 @@ if type npm > /dev/null 2>&1 ; then
     eval "$(npm completion)"
 fi
 
-# bat help
-if type bat > /dev/null 2>&1 ; then
-    bathelp() {
-        "$@" --help 2>&1 | bat --plain --language=help
-    }
-    # command completionをきかせる
-    complete -A command bathelp
-    complete -A command batman
+# rustup/cargo completions
+if type rustup > /dev/null 2>&1 ; then
+    eval "$(rustup completions bash)"
+    eval "$(rustup completions bash cargo)"
+fi
+
+# OPAM configuration
+if [ -n "${OPAMROOT}" ] && [ -f "${OPAMROOT}/opam-init/init.sh" ] ; then
+    # shellcheck disable=SC1091
+    source "${OPAMROOT}/opam-init/init.sh" 2>&1 /dev/null
+fi
+
+# Ruby
+if type rbenv > /dev/null 2>&1 ; then
+    eval "$(rbenv init -)"
+fi
+
+# Bundler completions
+if type complete_bundle_bash_command > /dev/null 2>&1 ; then
+    eval "$(complete_bundle_bash_command init)"
 fi
 
 # Python
@@ -352,6 +322,16 @@ if type fzf > /dev/null 2>&1 ; then
             # bind -x '"\e[Z": fzf_bash_completion'
         fi
     fi
+fi
+
+# bat help
+if type bat > /dev/null 2>&1 ; then
+    bathelp() {
+        "$@" --help 2>&1 | bat --plain --language=help
+    }
+    # command completionをきかせる
+    complete -A command bathelp
+    complete -A command batman
 fi
 
 # direnv
