@@ -46,7 +46,6 @@ flycheck_*.el
 .config/emacs/.recentf
 .config/emacs/recentf*
 .config/emacs/tramp
-.config/emacs/custom.el*
 .config/emacs/.perspective
 .config/emacs/projectile-*
 .config/emacs/places
