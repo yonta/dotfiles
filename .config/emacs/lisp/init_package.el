@@ -754,6 +754,7 @@ targets."
 
   (leaf lispxmp
     :ensure t
+    :doc "Emacs Lisp 式の値を; =>というコメントをつけた部分に自動注釈する"
     :bind (:lisp-mode-shared-map
            :package elisp-mode
            ("C-M-;" . lispxmp)))
