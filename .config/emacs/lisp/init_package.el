@@ -614,43 +614,25 @@ targets."
 
 ;;; MODE
 
-(leaf tree-sitter
-  :doc "GitHubがAtom用に開発したインクリメンタルパーサ"
-  :doc "高速で正確なsyntax highlightingを提供する"
-  :doc "Emacs29では同梱されるようになった"
-  :emacs< 29
-  :ensure t tree-sitter-langs
-  :diminish tree-sitter-mode
-  :global-minor-mode global-tree-sitter-mode
-  :custom (tsc-dyn-get-from . '(:compilation))
-  :hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
-
 (leaf treesit
+  :req "M-x treesit-auto-install-all [RET]"
+  :doc "MEMO:"
+  :doc "tree-sitter-XXX が見つからないときは手動で追加すればよい"
+  :doc "現状 bash と gitcommit を追加している"
   :emacs>= 29
   :ensure treesit-auto
-  :defvar treesit-auto-langs
+  :defvar treesit-auto-langs treesit-language-source-alist
+  :defun (treesit-auto-add-to-auto-mode-alist . treesit-auto)
   :global-minor-mode (global-treesit-auto-mode . treesit-auto)
   :custom
   (treesit-font-lock-level . 4)
   (treesit-auto-install . 'prompt)
-  ;;
-  :doc "ADHOCK:"
-  :doc "Emacs30.1が最新版tree-sitter-rustのABI ver15に未対応"
-  :doc "treesit-autoで入れたlibtree-sitter-rust.soではエラーする"
-  :doc "これは最新版であるv0.25系で起こるようだ"
-  :doc "ソースバージョンv0.23.3をチェックアウトして手動ビルドする必要がある"
-  :doc "他にもc,bash,luaなどで同様のことが起こる"
-  :doc "対処として、treesit-auto の対象リストから削除する"
-  :url "https://github.com/tree-sitter/tree-sitter-rust.git"
-  ;;
   :config
-  ;; (treesit-auto-add-to-auto-mode-alist 'all)
-  ;; .rs の rust-ts-mode 割当を削除
-  ;; (setq auto-mode-alist (assoq-delete-all "\\.rs\\'" auto-mode-alist))
-  ;; diff を取ることで一部言語をリストから削除する
-  (setq treesit-auto-langs
-        (cl-set-difference treesit-auto-langs '(rust c bash lua)))
-  )
+  (add-to-list 'treesit-language-source-alist
+               '(gitcommit "https://github.com/gbprod/tree-sitter-gitcommit"))
+  (add-to-list 'treesit-language-source-alist
+               '(bash  "https://github.com/tree-sitter/tree-sitter-bash"))
+  (treesit-auto-add-to-auto-mode-alist 'all))
 
 (leaf git
   :leaf-path nil
@@ -684,13 +666,8 @@ targets."
 
   (leaf git-commit-ts-mode
     :req "M-x treesit-install-language-grammar [RET] gitcommit"
-    :defvar treesit-language-source-alist
     :ensure t
     :mode "COMMIT_EDITMSG\\'"
-    :preface
-    (add-to-list
-     'treesit-language-source-alist
-     '(gitcommit . ("https://github.com/gbprod/tree-sitter-gitcommit")))
     :config
     ;; COMMIT_EDITMSGの+-に色をつける
     (defun my/git-commit-diff-highlighting ()
