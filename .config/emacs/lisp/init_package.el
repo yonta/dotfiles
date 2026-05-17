@@ -829,7 +829,6 @@ targets."
     :doc "GitHub flavoredなスタイルシートによるMarkdownプレビューを行う"
     :ensure t
     :if (executable-find "mdopen")
-    :custom (grip-use-mdopen . t)
     ;; gfm-modeのときは自動でgrip-mode
     ;; :hook (gfm-mode-hook . grip-mode)
     ))
