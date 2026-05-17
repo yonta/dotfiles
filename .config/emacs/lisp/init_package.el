@@ -790,22 +790,12 @@ targets."
   :doc "ocaml mode"
   :req "opam install tuareg")
 
-(leaf arduino-mode
-  :disabled t
-  :ensure t
-  :doc "TODO: set compiler and libraries path by environment")
-
 (leaf quickrun
   :ensure t
   :custom
   (quickrun-timeout-seconds . -1)       ; タイムアウトで処理を中止させない
   :defer-config
   ;; python-modeでpython3を使う
-  (quickrun-add-command "python"
-    '((:command . "python3")
-      (:exec . "%c %s")
-      (:compile-only . "pyflakes %s"))
-    :mode 'python-mode)
   :bind ("C-c c" . quickrun))
 
 (leaf markdown
