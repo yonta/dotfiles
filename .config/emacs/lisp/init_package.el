@@ -526,54 +526,6 @@ targets."
 
 ;;; LSP
 
-(leaf lsp-bridge
-  :disabled t
-  :req "pip install epc orjson sexpdata six setuptools paramiko rapidfuzz"
-  :defun lsp-bridge-show-documentation
-  :ensure markdown-mode yasnippet
-  :diminish t
-  :vc (:url "https://github.com/manateelazycat/lsp-bridge.git")
-  :defun global-lsp-bridge-mode
-  :init
-  ;; lsp-bridgeではacmを使うため、prog-mode全体でのcorfuをオフ
-  (remove-hook 'prog-mode-hook 'my/corfu-mode)
-  (global-lsp-bridge-mode)
-  (defun my/helpful-at-point ()
-    "Show documentation lsp-bridge or lisp help."
-    (interactive)
-    (if (derived-mode-p 'emacs-lisp-mode)
-        (helpful-at-point)
-      (lsp-bridge-show-documentation)))
-  :custom
-  (lsp-bridge-find-def-fallback-function . #'smart-jump-go)
-  (lsp-bridge-find-ref-fallback-function . #'smart-jump-references)
-  (lsp-bridge-enable-with-tramp . nil)
-  (acm-doc-frame-max-lines . 30)
-  (acm-candidate-match-function . 'orderless-flex)
-  (acm-backend-search-file-words-enable-fuzzy-match . t)
-  :hook
-  ;; LSPを使わない言語ではcorfuを使う
-  ((sml-mode-hook web-mode-hook css-base-mode-hook) . my/corfu-mode)
-  :bind
-  ("M-." . lsp-bridge-find-def)
-  ;; better jumper に任せる
-  ;; ("M-," . lsp-bridge-find-def-return)
-  ("M-/" . lsp-bridge-find-references)
-  ;; lsp-bridgeではcorfuがオンになっておらずcape-emojiが使いづらい
-  (:lsp-bridge-mode-map
-   ("C-c i :" . isearch-emoji-by-name)
-   ("C-M-i" . nil)
-   ("C-c C-d" . my/helpful-at-point))
-  (:acm-mode-map
-   :package acm
-   ("C-f" . acm-complete)
-   ("<tab>" . acm-insert-common)
-   ("<backtab>" . acm-select-prev)
-   ("C-s" . acm-filter)
-   ("C-c C-d" . acm-doc-toggle)
-   ("M-<up>" . acm-doc-scroll-up)
-   ("M-<down>" . acm-doc-scroll-down)))
-
 (leaf eglot
   :leaf-path nil
   :preface
