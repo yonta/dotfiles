@@ -2192,6 +2192,7 @@ smart-jump."
   (:treemacs-mode-map
    ("j" . treemacs-next-line)
    ("k" . treemacs-previous-line)
+   ("i" . treemacs-toggle-node)
    ;; toggle系はt-にまとまってあるのでいらないかも
    ;; 使いつつ考える
    ("." . treemacs-toggle-show-dotfiles)))
