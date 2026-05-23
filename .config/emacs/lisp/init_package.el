@@ -1774,12 +1774,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
   :doc "C-x pにコマンドがまとまっている"
   :bind* ("C-c C-f" . project-find-file))
 
-(leaf ripgrep
-  :disabled t
-  :ensure t
-  :bind
-  ("M-s r" . ripgrep-regexp))
-
 (leaf rg
   :ensure t
   :bind
