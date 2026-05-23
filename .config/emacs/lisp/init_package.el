@@ -2258,11 +2258,6 @@ smart-jump."
          ;; 履歴に飛ぶ
          ("a" . dirvish-history-jump)))
 
-(leaf hungry-delete
-  :ensure t
-  :global-minor-mode global-hungry-delete-mode
-  :diminish t)
-
 ;;; Emacs default (not package.el)
 
 (leaf dired
