@@ -988,7 +988,6 @@ targets."
     :if (executable-find "rubocop"))
 
   (leaf rubocopfmt
-    ;; :disabled t
     :ensure t
     :if (executable-find "rubocop")
     :diminish rubocopfmt-mode
