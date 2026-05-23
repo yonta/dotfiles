@@ -1203,23 +1203,23 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
            (setq my/flycheck-next-local-cache
                  '((eglot-check . ((next-checkers . (javascript-eslint))))))))))
 
+  ;; TODO: プロジェクトごとに prettierとbiomeを切り替えられるようにする
+  ;;       おそらく apheleia でできる気がする
+  ;;       https://github.com/radian-software/apheleia
   (leaf prettier-js
     :ensure t
     :diminish prettier-js-mode
     ;; prettierのエラー内容をbufferに表示しない
     :custom (prettier-js-show-errors . 'echo)
-    :hook (html-mode-hook
-           css-base-mode-hook
-           scss-mode-hook
-           js-base-mode-hook
-           json-ts-mode-hook
-           typescript-ts-base-mode-hook
+    :hook (scss-mode-hook
            markdown-mode-hook
            yaml-ts-mode-hook
            . prettier-js-mode))
 
   (leaf biomejs-format
     :ensure t
+    :doc "biome 対応言語は優先して biome を使う"
+    :doc "設定は .config/biome.jsonc"
     :init
     (defun my/prettier-biome-toggle ()
       "Toggle minor mode between prettier and biome."
@@ -1235,7 +1235,13 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
         (message "Prettier-Js mode enabled in current buffer"))
        (t
         (message
-         "Both Prettier or Biome mode are not enabled in current buffer")))))
+         "Both Prettier or Biome mode are not enabled in current buffer"))))
+    :hook (html-mode-hook
+           css-base-mode-hook
+           js-base-mode-hook
+           json-ts-mode-hook
+           typescript-ts-base-mode-hook
+           . biomejs-format-mode))
 
   (leaf ts-comint
     :ensure t
