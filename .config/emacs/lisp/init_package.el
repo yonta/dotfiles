@@ -1735,12 +1735,6 @@ whitespace-mode."
     :ensure t
     :req "初回に`M-x nerd-icons-install-fonts`を実行する")
 
-  (leaf nerd-icons-dired
-    :disabled t
-    :ensure t
-    :diminish t
-    :hook (dired-mode-hook . nerd-icons-dired-mode))
-
   (leaf nerd-icons-ibuffer
     :ensure t
     :hook (ibuffer-mode-hook . nerd-icons-ibuffer-mode)))
