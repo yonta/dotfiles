@@ -636,20 +636,6 @@ targets."
     :doc "gitconfig gitignore gitattributes用のmodeセット"
     :ensure t)
 
-  (leaf git-gutter
-    :disabled t
-    :ensure t
-    :global-minor-mode global-git-gutter-mode
-    :diminish git-gutter-mode
-    :custom
-    (git-gutter:modified-sign . " ")
-    (git-gutter:added-sign . " ")
-    (git-gutter:deleted-sign . " ")
-    :custom-face
-    (git-gutter:modified . '((t (:background "#fad987"))))
-    (git-gutter:added . '((t (:background "#95fa87"))))
-    (git-gutter:deleted . '((t (:background "#fa8d87")))))
-
   (leaf git-commit-ts-mode
     :req "M-x treesit-install-language-grammar [RET] gitcommit"
     :ensure t
@@ -1712,7 +1698,7 @@ whitespace-mode."
 (leaf diff-hl
   :ensure t
   :doc "git 差分をバッファ左に表示する"
-  :doc "dired でのみ使う"
+  :doc "dired では文字で ignore untrack も表示される"
   :global-minor-mode global-diff-hl-mode diff-hl-margin-mode
   :custom
   (diff-hl-margin-symbols-alist
