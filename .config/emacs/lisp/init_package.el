@@ -1695,13 +1695,6 @@ whitespace-mode."
   :ensure t
   :doc "アクティブかどうかでバッファーのモードラインの色を変える")
 
-;; GitHubの絵文字をよく使うようなら有効にする
-(leaf emojify
-  :disabled t
-  :ensure t
-  :hook (after-init-hook . global-emojify-mode)
-  :custom (emojify-emoji-styles . (ascii github)))
-
 (leaf nerd-icons
   :leaf-path nil
   :preface
