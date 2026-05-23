@@ -5,55 +5,58 @@
 flycheck_*.el
 
 # git
-.config/git/gitk
-.config/git/credentials
+/.config/git/gitk
+/.config/git/credentials
 
 # hotfuzz binary
-.config/emacs/lisp/hotfuzz-module.so
+/.config/emacs/lisp/hotfuzz-module.so
 
 # Bash history
-.config/bash/history
+/.config/bash/history
+
+# Emacs credential
+/.config/emacs/.authinfo.gpg
 
 # Emacs auto generated directories
-.config/emacs/auto-save-list/
-.config/emacs/elpa/
-.config/emacs/el-get/
-.config/emacs/url/
-.config/emacs/.persp-confs/
-.config/emacs/request/
-.config/emacs/transient/
-.config/emacs/.cache/
-.config/emacs/eln-cache/
-.config/emacs/eshell/
-.config/emacs/tree-sitter/
-.config/emacs/persist/
-.config/emacs/multisession/
-.config/emacs/ellama-sessions/
+/.config/emacs/auto-save-list/
+/.config/emacs/elpa/
+/.config/emacs/el-get/
+/.config/emacs/url/
+/.config/emacs/.persp-confs/
+/.config/emacs/request/
+/.config/emacs/transient/
+/.config/emacs/.cache/
+/.config/emacs/eln-cache/
+/.config/emacs/eshell/
+/.config/emacs/tree-sitter/
+/.config/emacs/persist/
+/.config/emacs/multisession/
+/.config/emacs/ellama-sessions/
 
 # Emacsa auto generated files
-.config/emacs/abbrev_defs
-.config/emacs/ac-comphist.dat
-.config/emacs/icons.gz
-.config/emacs/server
-.config/emacs/twittering-mode.gpg
-.config/emacs/srecode-map.el
-.config/emacs/network-security.data
-.config/emacs/.python-environments
-.config/emacs/kkcrc
-.config/emacs/.last-package-update-day
-.config/emacs/image-dired
-.config/emacs/.emacs.desktop*
-.config/emacs/.recentf
-.config/emacs/recentf*
-.config/emacs/tramp
-.config/emacs/.perspective
-.config/emacs/projectile-*
-.config/emacs/places
-.config/emacs/.lsp-session-v1
-.config/emacs/package-quickstart.el
-.config/emacs/projects
-.config/emacs/bookmarks
-.config/emacs/history
-.config/emacs/keyfreq
-.config/emacs/fontaine-latest-state.eld
-.config/emacs/session.*
+/.config/emacs/abbrev_defs
+/.config/emacs/ac-comphist.dat
+/.config/emacs/icons.gz
+/.config/emacs/server
+/.config/emacs/twittering-mode.gpg
+/.config/emacs/srecode-map.el
+/.config/emacs/network-security.data
+/.config/emacs/.python-environments
+/.config/emacs/kkcrc
+/.config/emacs/.last-package-update-day
+/.config/emacs/image-dired
+/.config/emacs/.emacs.desktop*
+/.config/emacs/.recentf
+/.config/emacs/recentf*
+/.config/emacs/tramp
+/.config/emacs/.perspective
+/.config/emacs/projectile-*
+/.config/emacs/places
+/.config/emacs/.lsp-session-v1
+/.config/emacs/package-quickstart.el
+/.config/emacs/projects
+/.config/emacs/bookmarks
+/.config/emacs/history
+/.config/emacs/keyfreq
+/.config/emacs/fontaine-latest-state.eld
+/.config/emacs/session.*
