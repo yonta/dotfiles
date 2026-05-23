@@ -2552,11 +2552,11 @@ WIDTH-DIFF は横幅の文字数差、HEIGHT-DIFF は縦の行数差。"
 
 (leaf browse-url
   :doc "WSLでのブラウザ設定"
-  :req "aptでwsluをいれておく"
-  :if (getenv "WSLENV") (executable-find "wslview")
+  :doc "Ubuntu 26.04 からは xdg-open で ok"
+  :if (getenv "WSLENV") (executable-find "xdg-open")
   :custom
   (browse-url-browser-function . #'browse-url-generic)
-  (browse-url-generic-program . "wslview"))
+  (browse-url-generic-program . "xdg-open"))
 
 (leaf clipboard
   :disabled t
