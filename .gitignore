@@ -14,9 +14,6 @@ flycheck_*.el
 # Bash history
 /.config/bash/history
 
-# Emacs credential
-/.config/emacs/.authinfo.gpg
-
 # Emacs auto generated directories
 /.config/emacs/auto-save-list/
 /.config/emacs/elpa/
