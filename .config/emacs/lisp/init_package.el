@@ -1282,6 +1282,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
 
 (leaf graphviz-dot-mode :ensure t)
 
+;; TODO: コンパイル時に XDG_CONFIG_HOME を解決できないので defvar してる
 (defvar my/wakatime-cli-path
   (concat (getenv "XDG_CONFIG_HOME") "/wakatime/wakatime-cli-linux-amd64"))
 (leaf wakatime-mode
