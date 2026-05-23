@@ -1621,19 +1621,6 @@ whitespace-mode."
 (leaf highlight
   :leaf-path nil
   :preface
-  (leaf auto-highlight-symbol
-    :disabled t
-    :ensure t
-    :leaf-defer nil
-    :defvar ahs-modes
-    :global-minor-mode global-auto-highlight-symbol-mode
-    :diminish auto-highlight-symbol-mode
-    :custom
-    (ahs-default-range . 'ahs-range-whole-buffer)
-    (ahs-disabled-minor-modes . '(iedit-mode))
-    :config
-    (push 'sml-mode ahs-modes))
-
   (leaf idle-highlight-mode
     :doc "シンプルなシンボルハイライト"
     :ensure t
