@@ -1397,6 +1397,29 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :custom (terraform-format-on-save . t)
   :hook (terraform-mode-hook . eglot-ensure))
 
+(leaf sh-script
+  :mode ("Procfile" . sh-mode)
+  :hook (sh-mode-hook
+         . (lambda () (setq-local flycheck-checker 'sh-posix-bash)))
+  :bind (:sh-mode-map
+         ("C-c C-d" . nil)
+         ("C-c C-p" . sh-cd-here)))
+
+(leaf bash-ts-mode
+  :mode (("\\.bash_aliases\\'" "\\.bash\\'" ) . bash-ts-mode)
+  :hook (bash-ts-mode-hook . eglot-ensure))
+
+(leaf conf-mode
+  :leaf-path nil
+  :doc "Emacs標準のconfig用モード"
+  :mode ("\\.env\\'" "dotenv"))
+
+(leaf toml-ts-mode
+  :leaf-path nil
+  :doc "Emacs 標準の toml-ts-mode で LSP に tombi を使う"
+  :if (executable-find "tombi")
+  :hook (toml-ts-mode-hook . eglot-ensure))
+
 ;;; Face
 
 (leaf font
@@ -1849,32 +1872,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     (setq google-translate-translation-directions-alist
           '(("en" . "ja") ("ja" . "en")))
     :bind ("C-c C-t" . google-translate-smooth-translate)))
-
-(leaf shell
-  :leaf-path nil
-  :preface
-  (leaf sh-script
-    :mode ("Procfile" . sh-mode)
-    :hook (sh-mode-hook
-           . (lambda () (setq-local flycheck-checker 'sh-posix-bash)))
-    :bind (:sh-mode-map
-           ("C-c C-d" . nil)
-           ("C-c C-p" . sh-cd-here)))
-
-  (leaf bash-ts-mode
-    :mode (("\\.bash_aliases\\'" "\\.bash\\'" ) . bash-ts-mode)
-    :hook (bash-ts-mode-hook . eglot-ensure)))
-
-(leaf conf-mode
-  :leaf-path nil
-  :doc "Emacs標準のconfig用モード"
-  :mode ("\\.env\\'" "dotenv"))
-
-(leaf toml-ts-mode
-  :leaf-path nil
-  :doc "Emacs 標準の toml-ts-mode で LSP に tombi を使う"
-  :if (executable-find "tombi")
-  :hook (toml-ts-mode-hook . eglot-ensure))
 
 (leaf direnv :ensure t :global-minor-mode t)
 
