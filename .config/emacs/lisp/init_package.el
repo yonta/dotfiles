@@ -1853,11 +1853,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 (leaf shell
   :leaf-path nil
   :preface
-  (leaf ansi-color
-    :doc "コマンドラインと同じ色付けを使う"
-    :commands ansi-color-for-comint-mode-on
-    :hook (shell-mode-hook . ansi-color-for-comint-mode-on))
-
   (leaf sh-script
     :mode ("Procfile" . sh-mode)
     :hook (sh-mode-hook
@@ -1865,23 +1860,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
     :bind (:sh-mode-map
            ("C-c C-d" . nil)
            ("C-c C-p" . sh-cd-here)))
-
-  (leaf shell
-    :custom
-    ;; Emacsを起動したshellを使用する（bashからの起動を前提）
-    ;; TODO: バイトコンパイル時でなく起動時に評価するよう変更する
-    `(explicit-shell-file-name . ,(getenv "SHELL"))
-    ;; (explicit-shell-file-name . my-shell-file-name)
-    (explicit-bash-args . '("--login" "-i"))
-    ;; shell-modeでのファイル名補完
-    (shell-file-name-chars . "~/A-Za-z0-9_^$!#%&{}@`'.,:()-")
-    ;; :hook
-    ;; (shell-mode-hook
-    ;;  . (lambda ()
-    ;;      ;; SHELL で ^M が付く場合は ^M を削除する
-    ;;      (set-process-coding-system
-    ;;       'undecided-dos 'sjis-unix)))
-    )
 
   (leaf bash-ts-mode
     :mode (("\\.bash_aliases\\'" "\\.bash\\'" ) . bash-ts-mode)
