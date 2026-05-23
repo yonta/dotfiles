@@ -717,6 +717,17 @@ targets."
   :leaf-path nil
   :preface
   (leaf elisp-mode
+    ;; 保存時にバッファ全体にインデントをかける
+    :defer-config
+    (defun my/elisp-format-buffer ()
+      (interactive)
+      (indent-region (point-min) (point-max)))
+
+    (defun my/elisp-format-on-save ()
+      (add-hook 'before-save-hook #'my/elisp-format-buffer nil t))
+    :hook
+    (emacs-lisp-mode . my/elisp-format-on-save)
+    ;; C-c C-r でリージョンor行を評価する
     :defer-config
     (defun my-eval-region-or-line ()
       "Eval active region or current line."
