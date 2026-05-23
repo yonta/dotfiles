@@ -1677,7 +1677,8 @@ whitespace-mode."
 
   (leaf lin
     :doc "現在行に色をつける、モダンパッケージ"
-    :ensure t)
+    :ensure t
+    :global-minor-mode lin-global-mode)
   )
 
 (leaf diff-hl
