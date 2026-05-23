@@ -469,15 +469,7 @@ targets."
 
   (leaf tempel-collection
     :ensure t
-    :after tempel)
-
-  (leaf company-tabnine
-    :disabled t
-    :ensure t
-    :doc "company-tabnine-install-binaryを実行する"
-    :require t
-    :custom
-    (company-tabnine-binaries-folder . "~/.config/tabnine")))
+    :after tempel))
 
 ;;; Flycheck
 
