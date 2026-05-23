@@ -2559,44 +2559,6 @@ WIDTH-DIFF は横幅の文字数差、HEIGHT-DIFF は縦の行数差。"
   (browse-url-generic-program . "xdg-open"))
 
 (leaf clipboard
-  :disabled t
-  :doc "emacs29 + pureGTKでクリップボードが文字化けする問題を対処"
-  :doc "credit: yorickvP on Github"
-  :req "wl-clipboardをインストールしておく"
-  :req "sudo apt install wl-clipboard"
-  :url "https://zenn.dev/ignorant/scraps/4456a9fb017eb3"
-  :url "https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4"
-  :doc "さらに、copyはclip.exeでWin+V履歴に積む"
-  :defun my/clipboard-wsl-clip-copy my/clipboard-wsl-wl-paste
-  :if (and (getenv "WSLENV")
-           (getenv "WAYLAND_DISPLAY") ; e.g. wayland-0
-           (getenv "WSL_INTEROP")
-           (executable-find "clip.exe")
-           (executable-find "wl-paste")
-           (string-match "--with-pgtk" system-configuration-options))
-  :init
-  ;; Emacs から UTF-16LE に変換して Windows のクリップボード履歴に送る
-  (defun my/clipboard-wsl-clip-copy (text &optional _push)
-    (let ((process-connection-type nil))
-      (let ((proc (make-process
-                   :name "wsl-clip-utf16"
-                   :buffer nil
-                   :command '("bash" "-lc" "iconv -f utf-8 -t utf16 | clip.exe")
-                   :connection-type 'pipe
-                   :coding 'utf-8-unix)))
-        (process-send-string proc text)
-        (process-send-eof proc))))
-  (setq interprogram-cut-function  #'my/clipboard-wsl-clip-copy)
-  ;; Windows から CRLF 対策して Emacs に貼り付ける
-  (defun my/clipboard-wsl-wl-paste ()
-    (let ((s (shell-command-to-string "wl-paste -n")))
-      (replace-regexp-in-string "\r" "" s)))
-  (setq interprogram-paste-function #'my/clipboard-wsl-wl-paste)
-  :custom
-  (select-enable-clipboard . t)
-  (save-interprogram-paste-before-kill . t))
-
-(leaf clipboard
   :doc "emacs29 + pureGTKでクリップボードが文字化けする問題を対処"
   :doc "credit: yorickvP on Github"
   :req "wl-clipboardをインストールしておく"
