@@ -1573,6 +1573,8 @@ whitespace-mode."
   (leaf smartparens
     :disabled t
     :ensure t
+    :doc "複雑で重たいのでいよいよ捨てる準備"
+    :doc "(* *) の補完がないと不便か試している"
     :defun sp-local-pair
     :global-minor-mode smartparens-global-mode
     :diminish smartparens-mode
