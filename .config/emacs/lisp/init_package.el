@@ -52,19 +52,6 @@
 (leaf initchart
   :vc (:url "https://github.com/yuttie/initchart.git"))
 
-;;; Credential
-
-(eval-and-compile
-  (defmacro my/secret (host user)
-    "Get secret for HOST and USER from auth-source."
-    `(auth-source-pick-first-password :host ,host :user ,user)))
-
-(leaf auth-source
-  :leaf-path nil
-  :doc "Emacs 組み込み認証管理機能を使う"
-  :custom
-  (auth-source . `(,(expand-file-name "authinfo.gpg" user-emacs-directory))))
-
 ;;; Vertico
 
 ;; FIXME: 初回起動時にpackageがない状況ではrequireがエラーする。
@@ -1291,14 +1278,13 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :ensure t
   :req "GitHubからリリースバイナリwakatime-cli-linux-amd64が必要"
   :url "https://wakatime.com/emacs"
-  :req "wakatimeのapi keyを.authinfo.gpgに配置する"
-  :req "machine wakatime login api-key password waka_xxxx"
+  :req "wakatimeのapi keyを~/.config/wakatime/.wakatime.cfgに配置する"
+  :url "https://github.com/wakatime/wakatime-cli/blob/develop/USAGE.md#config-file"
   :if (executable-find my/wakatime-cli-path)
   :global-minor-mode global-wakatime-mode
   :diminish t
   :custom
-  (wakatime-cli-path . my/wakatime-cli-path)
-  (wakatime-api-key . (my/secret wakatime api-key)))
+  (wakatime-cli-path . my/wakatime-cli-path))
 
 (leaf rust
   :leaf-path nil
