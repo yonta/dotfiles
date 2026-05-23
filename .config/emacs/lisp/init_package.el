@@ -1875,43 +1875,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
 
 (leaf direnv :ensure t :global-minor-mode t)
 
-(leaf image-dired+
-  :ensure t
-  :doc "非同期でimage-diredを動作させ、大量画像でフリーズしないようにするパッケージ"
-  :req "ImageMagickをaptでいれておく"
-  ;; BUG: ディレクトリを開く初回時にサムネイル作成に失敗する。
-  ;;      diredバッファでimage-dired-create-thumbsを実行して手動でサムネイル
-  ;;      を作ると、image-diredが問題なく動くようになる。
-  ;;      --no-initを使って、image-dired+だけで動かすと問題は起こらない。
-  ;;      何らかの自分のinitファイルが問題を引き起こしている。
-  ;;      Error-log
-  ;;      image-diredx--invoke-process: Wrong type argument: processp, [nil 23723 12045 294055 nil image-dired-thumb-queue-run nil nil 600000]
-  :if (executable-find "convert")
-  :commands image-dired
-  :defer-config
-  ;; Emacs26からは非同期なimage-diredがあり、コンフリクトするのでオンしない
-  (if (version< emacs-version "26") ; Emacs25以下
-      (progn (image-diredx-async-mode 1)
-             (image-diredx-adjust-mode 1)))
-  ;; lrでサムネイルが回転するのを削除
-  (if (version<= "26" emacs-version) (unbind-key "r" image-map)) ; Emacs26以上
-  :bind ((:image-dired-thumbnail-mode-map
-          :package image-dired
-          ("r" . nil)
-          ("C-n" . image-diredx-next-line)
-          ("C-p" . image-diredx-previous-line)
-          ("<down>" . image-diredx-next-line)
-          ("<up>" . image-diredx-previous-line)
-          ("j" . image-diredx-next-line)
-          ("k" . image-diredx-previous-line)
-          ("h" . image-dired-backward-image)
-          ("l" . image-dired-forward-image)
-          ("g" . revert-buffer)) ; 更新
-         (:image-dired-image-mode-map
-          :package image-dired
-          ("f" . image-transform-reset-to-original)
-          ("0" . image-mode-fit-frame))))
-
 (leaf helpful
   :ensure t
   :bind* ("<f1> k" . helpful-key)
