@@ -2116,6 +2116,7 @@ smart-jump."
 
 (leaf buffer-move
   :ensure t
+  :doc "buffer を任意の frame 方向に移動"
   :bind* (("C-S-h" . buf-move-left)
           ("C-S-j" . buf-move-down)
           ("C-S-k" . buf-move-up)
