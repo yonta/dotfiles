@@ -966,13 +966,6 @@ targets."
 (leaf ruby
   :leaf-path nil
   :preface
-  (leaf ruby-lsp
-    :disabled t
-    :req "gem install ruby-lsp ruby-lsp-rspec"
-    :after eglot
-    :config
-    (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
-
   (leaf inf-ruby
     :ensure t
     :hook (ruby-base-mode-hook . inf-ruby-minor-mode)
