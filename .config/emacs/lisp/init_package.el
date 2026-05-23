@@ -2166,6 +2166,7 @@ smart-jump."
 
 (leaf demap
   :ensure t
+  :doc "file の mini map を表示"
   :bind* ("M-m" . demap-toggle))
 
 (leaf ialign
