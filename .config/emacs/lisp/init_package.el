@@ -1678,6 +1678,8 @@ whitespace-mode."
 
 (leaf diff-hl
   :ensure t
+  :doc "git 差分をバッファ左に表示する"
+  :doc "dired でのみ使う"
   :global-minor-mode global-diff-hl-mode diff-hl-margin-mode
   :custom
   (diff-hl-margin-symbols-alist
