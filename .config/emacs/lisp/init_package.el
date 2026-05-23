@@ -536,7 +536,7 @@ targets."
   :preface
 
   (leaf eglot
-    :req "gem install solargraph -v 0.49.0"
+    :req "gem install ruby-lsp ruby-lsp-rspec"
     :req "npm install -g typescript-language-server"
     :doc "html, css, json, eslint"
     :req "npm install -g vscode-langservers-extracted"
@@ -546,20 +546,12 @@ targets."
     ;; debug出力なしでスピードアップ
     :custom (eglot-events-buffer-size . 0)
     :config
-    ;; solargraphの出力がされていない不具合に対処
-    ;; これがないと、例えばrubocopの結果がflycheckに出力されない
-    ;; https://github.com/castwide/solargraph/issues/709
-    ;;
-    ;; eglotデフォルトではautoportを使っているが、stdioに変更
-    ;; これによりeglot-boosterが動くようになる
     (add-to-list 'eglot-server-programs
-                 '((ruby-mode ruby-ts-mode)
-                   . ("solargraph" "stdio" :initializationOptions
-                      (:diagnostics t))))
+                 '((ruby-mode ruby-ts-mode) . ("ruby-lsp")))
     ;; eglot 標準では cargo check が使われるので、cargo clippy を強要する
-    '(add-to-list 'eglot-server-programs
-                  '((rust-ts-mode rust-mode) .
-                    ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
+    (add-to-list 'eglot-server-programs
+                 '((rust-ts-mode rust-mode) .
+                   ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
     :hook
     ;; Eglotがlocal変数でcompletion-at-point-functionsを上書きする
     ;; eglot, file, dabbrev の優先順位とし、候補は互いに混ぜない
@@ -1046,12 +1038,6 @@ targets."
     :hook (ruby-base-mode-hook . seeing-is-believing))
 
   (leaf ruby-mode
-    :req "gemでsolargraphを入れる"
-    :req "gem install --version 0.49.0 solargraph"
-    :req "gem install solargraph-rails solargraph-rails-patch-for-rails71 solargraph-rspec"
-    :req "yard gems"
-    :doc "yard config --gem-install-yriでgem install時に自動生成する設定が便利"
-    :req "プロジェクトルートでsolargraph bundleを実行"
     :custom
     (ruby-insert-encoding-magic-comment . nil)
     :hook
