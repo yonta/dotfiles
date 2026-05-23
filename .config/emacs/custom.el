@@ -1,9 +1,15 @@
+;;; custom.el --- emacs costum variables file -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; This is my custom file.
+
+;;; Code:
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(auth-source-save-behavior nil)
  '(native-comp-async-report-warnings-errors nil)
  '(package-selected-packages
    '(activities add-node-modules-path aggressive-indent async
@@ -38,7 +44,6 @@
  '(savehist-additional-variables '(kill-ring))
  '(warning-suppress-log-types '((comp) (copilot) (nativecomp)))
  '(warning-suppress-types '((comp)))
- '(wakatime-api-key "waka_XXXX")
  )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -53,3 +58,5 @@
  '(tab-line-tab-current ((t (:inherit highlight))) nil "Customized with leaf in `tab-line-mode' block")
  '(tab-line-tab-inactive ((t (:background "gray84"))) nil "Customized with leaf in `tab-line-mode' block")
  '(tab-line-tab-modified ((t (:foreground "red"))) nil "Customized with leaf in `tab-line-mode' block"))
+
+;;; custom.el ends here
