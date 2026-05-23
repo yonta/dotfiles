@@ -1209,7 +1209,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   (leaf prettier-js
     :ensure t
     :diminish prettier-js-mode
-    ;; prettierのエラー内容をbufferに表示しない
+    ;; エラー内容を buffer でなく echo エリアに表示
     :custom (prettier-js-show-errors . 'echo)
     :hook (scss-mode-hook
            markdown-mode-hook
@@ -1236,6 +1236,8 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
        (t
         (message
          "Both Prettier or Biome mode are not enabled in current buffer"))))
+    ;; エラー内容を buffer でなく echo エリアに表示
+    :custom (biomejs-format-show-errors . 'echo)
     :hook (html-mode-hook
            css-base-mode-hook
            js-base-mode-hook
