@@ -536,7 +536,9 @@ targets."
   :preface
 
   (leaf eglot
+    :doc "ruby"
     :req "gem install ruby-lsp ruby-lsp-rspec"
+    :doc "typescript"
     :req "npm install -g typescript-language-server"
     :doc "html, css, json, eslint"
     :req "npm install -g vscode-langservers-extracted"
@@ -1187,8 +1189,6 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
   :preface
   (leaf typescript-mode
     :ensure t
-    :req "npmでtypescript-language-serverとtypescriptを入れておく"
-    :req "npm install -g typescript-language-server typescript"
     :defvar flycheck-check-syntax-automatically
     :custom
     (typescript-indent-level . 2)
