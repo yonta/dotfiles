@@ -2288,13 +2288,6 @@ smart-jump."
     :emacs>= 26
     :global-minor-mode global-display-line-numbers-mode)
 
-  (leaf linum
-    :emacs<= 25
-    :defvar linum-format
-    :global-minor-mode global-linum-mode
-    :init
-    (setq linum-format "%4d "))
-
   ;; 列番号を1オリジンで表示する
   :custom (mode-line-position-column-format . '(" %C")))
 
