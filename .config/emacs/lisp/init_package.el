@@ -1661,8 +1661,17 @@ whitespace-mode."
     ;; 色を薄くする1回ごとの秒数
     (goggles-pulse-delay . 0.2))
 
+  (leaf hl-line
+    :doc "現在行に色をつける、Emacs 組み込みモード"
+    :hook (prog-mode-hook
+           text-mode-hook
+           conf-mode-hook
+           markdown-mode-hook
+           gfm-mode-hook .
+           hl-line-mode))
+
   (leaf lin
-    :doc "現在行に色をつける、モダンパッケージ"
+    :doc "検索結果などで現在行に色をつける hl-line-mode をオンにする"
     :ensure t
     :global-minor-mode lin-global-mode)
   )
