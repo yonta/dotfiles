@@ -37,6 +37,7 @@
 (setq create-lockfiles nil)
 
 ;;; GCの閾値を上げる
+(setq gc-cons-percentage 0.2)
 (setq gc-cons-threshold (eval-when-compile (* 128 1024 1024)))
 
 ;;; ビープ音を消し、画面がフラッシュしないようにする
