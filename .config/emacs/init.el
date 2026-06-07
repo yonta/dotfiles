@@ -86,8 +86,8 @@
       '("init_util" "init_custom" "init_package" "init_display" "init_keybind"
         "init_behavior"))
 
-;;; カスタム変数は別ファイルに保存する
-(setq custom-file "~/.config/emacs/custom.el")
+;;; カスタム変数ファイルの読み込み
+;; early-init.el で custom.el に移動してある
 (when (file-exists-p custom-file) (load custom-file))
 
 ;;; 起動処理終了でMagic File Name機能を復元

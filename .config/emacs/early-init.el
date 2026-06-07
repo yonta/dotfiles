@@ -80,4 +80,7 @@
       (require 'auto-compile)
       (auto-compile-on-load-mode)))
 
+;;; カスタム変数は別ファイルに保存する
+(setq custom-file "~/.config/emacs/custom.el")
+
 ;;; early-init.el ends here
