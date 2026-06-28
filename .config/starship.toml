@@ -38,3 +38,13 @@ format = '[$time]($style) '
 command = "echo '(SCREEN)'"
 when = '[[ -n "$STY" ]]' # STY がセットされているときだけ表示
 style = "bold red"
+
+[gcloud]
+# gcloud コマンドは空の default configuration でも on ☁ が出る
+# 以下のコマンドで明示的に有効・無効を切り替える運用を試す
+#
+# export STARSHIP_GCLOUD=1
+# unset STARSHIP_GCLOUD
+detect_env_vars = ["STARSHIP_GCLOUD"]
+format = 'on [$symbol$project $account(@$domain)(\($region\))]($style) '
+

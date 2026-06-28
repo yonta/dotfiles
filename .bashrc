@@ -386,6 +386,13 @@ if type actdk > /dev/null 2>&1 ; then
     eval "$(actdk generate shell-completion --shell bash)"
 fi
 
+# gcloud
+if type gcloud > /dev/null 2>&1 ; then
+    # completionの設定
+    # shellcheck disable=SC1091
+    source "${XDG_DATA_HOME}/mise/installs/gcloud/latest/completion.bash.inc"
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
