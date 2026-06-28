@@ -36,6 +36,7 @@
 	diff-split = -c diff.external=difft diff
 	show-split = -c diff.external=difft show --ext-diff
 	log-split = -c diff.external=difft l --patch --ext-diff
+	show-files = show --name-status --format=
 [core]
 	editor = emacsclient
 	pager = delta --color-only
