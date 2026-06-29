@@ -273,6 +273,10 @@ if type pip > /dev/null 2>&1 ; then
     eval "$(pip completion --bash)"
 fi
 
+# TODO: .local/share/completions に入れるようにする
+#       venv が絡んでもうまく遅延ロードできるか未検証
+#       mise use -g ruffでグローバルに入れるとそもそも読み込まなくても補完できる
+#
 # Ruff completions
 #
 # venvやpipenv環境のため、コマンドをevalで評価できない。
@@ -350,16 +354,6 @@ fi
 if type aws > /dev/null 2>&1 ; then
     # completionの設定、mise のパスを使う
     complete -C '/home/kei/.local/share/mise/installs/aws-cli/latest/aws/dist/aws_completer' aws
-fi
-
-# aws-vault
-if type aws-vault > /dev/null 2>&1 &&
-        [ -r "${XDG_CONFIG_HOME}/bash/completions/aws-vault.bash" ] ; then
-    # completionの設定
-    # curlで毎回取得せず、必要なら以下に保存したものを読み込む
-    # https://github.com/99designs/aws-vault/blob/master/USAGE.md#shell-completion
-    # shellcheck disable=SC1091
-    source "${XDG_CONFIG_HOME}/bash/completions/aws-vault.bash"
 fi
 
 # Terraform
