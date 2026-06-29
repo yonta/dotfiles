@@ -1023,6 +1023,10 @@ targets."
     (ruby-base-mode-hook . eglot-ensure)
     (ruby-base-mode-hook
      . (lambda ()
+         (setq my/flycheck-next-local-cache
+               '((eglot-check . ((next-checkers . (ruby-rubocop))))))))
+    (ruby-base-mode-hook
+     . (lambda ()
          ;; ruby symbol
          (setq-local dabbrev-abbrev-skip-leading-regexp ":"))))
 
