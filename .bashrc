@@ -359,7 +359,7 @@ fi
 # Terraform
 if type terraform > /dev/null 2>&1 ; then
     # completionの設定
-    complete -C /usr/bin/terraform terraform
+    complete -C "$(mise which terraform)" terraform
 fi
 
 # AWS copilot
