@@ -37,14 +37,19 @@ export RLWRAP_HOME="${XDG_CACHE_HOME}/rlwrap"
 # OPAM configuration
 export OPAMROOT="${XDG_DATA_HOME}/opam"
 
-# SML/NJ PATH
+# SML/NJ
 if [ -d "${XDG_DATA_HOME}/smlnj" ] ; then
     PATH="${XDG_DATA_HOME}/smlnj/bin:${PATH}"
 fi
 
-# MLton PATH
+# MLton
 if [ -d "${XDG_DATA_HOME}/mlton" ] ; then
     PATH="${XDG_DATA_HOME}/mlton/bin:${PATH}"
+fi
+
+# SML#
+if [ -d "/opt/smlsharp/" ] ; then
+    PATH="/opt/smlsharp/bin:${PATH}"
 fi
 
 # Ruby
