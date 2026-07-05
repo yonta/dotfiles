@@ -580,6 +580,8 @@ targets."
   :req "M-x copilot-login"
   :ensure t
   :diminish " 🛩️"
+  :custom
+  (copilot-indent-offset-warning-disable . t)
   :hook
   (prog-mode-hook . copilot-mode)
   (yaml-ts-mode-hook . copilot-mode)
