@@ -45,7 +45,7 @@ function nice_make_link () {
 
 # $1はcopy or force
 files="\
-.config/bash .config/emacs .config/git .config/hg .config/solargraph \
+.config/bash .config/emacs .config/git .config/hg \
 .config/bat \
 .bashrc .bash_profile .bash_aliases .bash_env .vimrc \
 .config/screenrc .config/starship.toml .config/ripgrep.conf \
