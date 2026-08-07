@@ -1374,7 +1374,7 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
          ("C-c C-p" . sh-cd-here)))
 
 (leaf bash-ts-mode
-  :mode (("\\.bash_aliases\\'" "\\.bash\\'" ) . bash-ts-mode)
+  :mode (("\\.bash_" "\\.bash\\'" ) . bash-ts-mode)
   :hook (bash-ts-mode-hook . eglot-ensure))
 
 (leaf conf-mode
