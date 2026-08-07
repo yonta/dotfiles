@@ -42,6 +42,7 @@ AGENTS*.md
 .terraform.lock.hcl
 .terraform/
 terraform.tfstate*
+*.tfvars
 
 # AWS Lambda
 dist.zip
