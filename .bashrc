@@ -387,6 +387,11 @@ if type gcloud > /dev/null 2>&1 ; then
     source "${XDG_DATA_HOME}/mise/installs/gcloud/latest/completion.bash.inc"
 fi
 
+# keychain
+# ssh-agent 管理ツール。使用時1回だけしかパスフレーズを聞かれないようにする
+# .ssh/config 先頭に Host * AddKeysToAgent yes を書く。
+eval "$(keychain --eval --quiet --noask --dir "${XDG_CONFIG_HOME}/keychain")"
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
