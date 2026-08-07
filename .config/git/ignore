@@ -29,6 +29,7 @@ bs-config.js
 
 # mise
 .mise.toml
+mise.toml
 
 # LLM
 **/.claude/settings.local.json
