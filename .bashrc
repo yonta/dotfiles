@@ -325,6 +325,12 @@ if type fzf > /dev/null 2>&1 ; then
     fi
 fi
 
+# zoxide
+# fzf が必要
+if type zoxide > /dev/null 2>&1 && type fzf > /dev/null 2>&1 ; then
+    eval "$(zoxide init bash --cmd cd)"
+fi
+
 # bat help
 if type bat > /dev/null 2>&1 ; then
     bathelp() {
