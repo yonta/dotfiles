@@ -1,0 +1,6 @@
+[Unit]
+Description=Backup Bash history
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'src="${XDG_CONFIG_HOME:-%h/.config}/bash/history"; dst="${XDG_CONFIG_HOME:-%h/.config}/bash/history-backup"; mkdir -p "$dst" && cp -a "$src" "$dst/history.$(date +%%Y-%%m-%%d_%%H-%%M-%%S)"'

@@ -57,3 +57,7 @@ flycheck_*.el
 /.config/emacs/keyfreq
 /.config/emacs/fontaine-latest-state.eld
 /.config/emacs/session.*
+
+# bash history backup
+/.config/systemd/user/timers.target.wants/
+/.config/bash/history-backup/

@@ -13,24 +13,30 @@ case $- in
     *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
+## bash history
+
+# duplicate は保存しない
 HISTCONTROL=ignoredups
-export HISTFILE="${XDG_CONFIG_HOME}/bash/history"
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=20000
-HISTFILESIZE=20000
+# XDG_CONFIG_HOME が未設定でも安全にする
+export HISTFILE="${XDG_CONFIG_HOME:-$HOME/.config}/bash/history"
 
-# bash history を複数 terminal で同期する
-# MEMO: direnv が PROMPT_COMMAND を書き換えるので、そのあとにセットする
+# 履歴サイズ
+HISTSIZE=100000
+HISTFILESIZE=200000
+
+# 複数 shell で history を共有するため、終了時も上書きではなく追記する
+shopt -s histappend
+
+# 各プロンプト表示前に
+# 1. この shell で追加された履歴をファイルへ追記
+# 2. 他の shell が追記した履歴を読み込む
 __sync_history() {
     history -a
-    history -c
-    history -r
+    history -n
 }
+
 # PROMPT_COMMAND が配列か文字列かで追加の仕方が変わる
-# そのため shellcheck をオフにしている
 case "$(declare -p PROMPT_COMMAND 2>/dev/null)" in
     # 配列
     declare\ -a*)
@@ -42,9 +48,6 @@ case "$(declare -p PROMPT_COMMAND 2>/dev/null)" in
         PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND}; }__sync_history"
         ;;
 esac
-# bash 終了時に履歴を追記せず上書き保存する
-# 上記で history 同期しているので追記の必要がない
-shopt -u histappend
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
