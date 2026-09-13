@@ -2044,7 +2044,13 @@ smart-jump."
     :after mozc
     :require t
     :custom
-    (mozc-candidate-style . 'posframe)))
+    (mozc-candidate-style . 'posframe))
+
+  (leaf mozc-modeless
+    :ensure t
+    :global-minor-mode global-mozc-modeless-mode
+    :diminish t)
+  )
 
 (leaf keyfreq
   :ensure t
