@@ -1149,6 +1149,10 @@ The command will be prefixed with `bundle exec` if Erblint is bundled."
            (setq my/flycheck-next-local-cache
                  '((eglot-check . ((next-checkers . (javascript-eslint))))))))))
 
+  (leaf json-ts-mode
+    :leaf-path nil
+    :mode ("\\.jsonc\\'" . json-ts-mode))
+
   (leaf add-node-modules-path
     :ensure t
     :config
