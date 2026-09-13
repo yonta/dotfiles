@@ -341,11 +341,6 @@ if type bat > /dev/null 2>&1 ; then
     complete -A command batman
 fi
 
-# direnv
-if type direnv > /dev/null 2>&1 ; then
-    eval "$(direnv hook bash)"
-fi
-
 # fly completions
 if type flyctl > /dev/null 2>&1 ; then
     eval "$(flyctl completion bash)"

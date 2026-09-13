@@ -1826,8 +1826,6 @@ So this means that scratch buffer breaks Emacs Lisp mode tabs."
           '(("en" . "ja") ("ja" . "en")))
     :bind ("C-c C-t" . google-translate-smooth-translate)))
 
-(leaf direnv :ensure t :global-minor-mode t)
-
 (leaf helpful
   :ensure t
   :bind* ("<f1> k" . helpful-key)
