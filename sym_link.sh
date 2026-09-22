@@ -46,8 +46,8 @@ function nice_make_link () {
 # $1はcopy or force
 files="\
 .config/bash .config/emacs .config/git .config/hg \
-.config/bat .config/systemd \
-.bashrc .bash_profile .bash_aliases .bash_env .vimrc \
+.config/bat .config/systemd .config/vim \
+.bashrc .bash_profile .bash_aliases .bash_env \
 .config/screenrc .config/starship.toml .config/ripgrep.conf \
 "
 for file in ${files}
