@@ -209,6 +209,17 @@ if [ -t 0 ] ; then
     export GPG_TTY
 fi
 
+# Ruby
+# MEMO: mise の yarn を優先するため、mise より先に設定する
+if type rbenv > /dev/null 2>&1 ; then
+    eval "$(rbenv init -)"
+fi
+
+# Bundler completions
+if type complete_bundle_bash_command > /dev/null 2>&1 ; then
+    eval "$(complete_bundle_bash_command init)"
+fi
+
 # mise
 # MEMO: rust-analyzer と yarn は mise を優先
 #       mise activate を PATH 設定よりも後にする
@@ -254,16 +265,6 @@ fi
 if [ -n "${OPAMROOT}" ] && [ -f "${OPAMROOT}/opam-init/init.sh" ] ; then
     # shellcheck disable=SC1091
     source "${OPAMROOT}/opam-init/init.sh" 2>&1 /dev/null
-fi
-
-# Ruby
-if type rbenv > /dev/null 2>&1 ; then
-    eval "$(rbenv init -)"
-fi
-
-# Bundler completions
-if type complete_bundle_bash_command > /dev/null 2>&1 ; then
-    eval "$(complete_bundle_bash_command init)"
 fi
 
 # Python
