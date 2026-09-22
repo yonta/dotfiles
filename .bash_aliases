@@ -88,6 +88,9 @@ alias gitkraken="GDK_SCALE=2 gitkraken 1>/dev/null 2>/dev/null"
 #       mise execをaliasして回避する
 alias github-copilot='mise exec npm:github-copilot -- copilot'
 
+# wget の情報 DB を XDG 管理下に置く
+alias wget="wget --hsts-file=${XDG_STATE_HOME}/wget-hsts"
+
 # WSLでWindowsのFirefoxを設定
 if [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ] ; then
     alias firefox-win="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
