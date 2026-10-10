@@ -586,11 +586,14 @@ targets."
   (prog-mode-hook . copilot-mode)
   (yaml-ts-mode-hook . copilot-mode)
   :bind
-  (:copilot-mode-map
+  (:copilot-completion-map
    ("C-<return>" . copilot-accept-completion)
    ("M-<return>" . copilot-accept-completion)
    ("M-[" . copilot-previous-completion)
-   ("M-]" . copilot-next-completion)))
+   ("M-]" . copilot-next-completion)
+   ("<tab>" . nil)
+   ("TAB" . nil)
+   ))
 
 (leaf copilot-chat
   :ensure t
