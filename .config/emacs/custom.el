@@ -23,8 +23,8 @@
                 eglot-booster elm-mode embark embark-consult erblint expreg
                 flycheck flycheck-color-mode-line flycheck-docker-build-checks
                 flycheck-eglot flycheck-markuplint flycheck-ocaml
-                flycheck-posframe flycheck-rust flyspell-popup fontaine
-                git-commit-ts-mode git-link git-modes git-timemachine
+                flycheck-posframe flycheck-rust flycheck-smlsharp flyspell-popup
+                fontaine git-commit-ts-mode git-link git-modes git-timemachine
                 gnuplot-mode goggles google-translate graphviz-dot-mode
                 grep-context grip-mode haxe-mode helpful highlight-indentation
                 highlight-parentheses hiwin hotfuzz htmlbeautifier
