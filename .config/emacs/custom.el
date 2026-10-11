@@ -30,17 +30,19 @@
                 highlight-parentheses hiwin hotfuzz htmlbeautifier
                 humanoid-themes ialign idle-highlight-mode imenu-list
                 impatient-mode inf-ruby initchart jenkinsfile-mode keyfreq
-                leaf-keywords lin lispxmp macrostep marginalia markdown-mode
-                migemo mozc mozc-cand-posframe nerd-icons nerd-icons-completion
-                nerd-icons-corfu nerd-icons-ibuffer orderless origami
-                pip-requirements popper prettier-js pyvenv pyvenv-auto quickrun
-                rainbow-delimiters rainbow-mode rbs-mode recentf-ext reformatter
-                rg rspec-mode rubocop rubocopfmt ruby-tools ruff-format
-                rust-mode seeing-is-believing show-font smart-jump sml-mode
-                solo-jazz-theme sudo-edit tempel tempel-collection
-                terraform-mode treemacs treesit-auto ts-comint typescript-mode
-                vc-msg vertico visual-regexp vundo wakatime-mode web-mode
-                which-key yaml-mode yard-mode))
+                leaf-keywords lin lispxmp macrostep marginalia markdown-mode mcp
+                migemo mozc mozc-cand-posframe mozc-modeless nerd-icons
+                nerd-icons-completion nerd-icons-corfu nerd-icons-ibuffer
+                orderless origami pip-requirements popper prettier-js pyvenv
+                pyvenv-auto quickrun rainbow-delimiters rainbow-mode rbs-mode
+                recentf-ext reformatter rg rspec-mode rubocop rubocopfmt
+                ruby-tools ruff-format rust-mode seeing-is-believing show-font
+                smart-jump sml-mode solo-jazz-theme sudo-edit tempel
+                tempel-collection terraform-mode treemacs treesit-auto ts-comint
+                typescript-mode vc-msg vertico visual-regexp vundo wakatime-mode
+                web-mode which-key yaml-mode yard-mode))
+ '(package-vc-selected-packages
+   '((sml-mode :url "https://github.com/yonta/sml-mode.git" :branch "add-smlsharp")))
  '(savehist-additional-variables '(kill-ring))
  '(warning-suppress-log-types '((comp) (copilot) (nativecomp)))
  '(warning-suppress-types '((comp))))
