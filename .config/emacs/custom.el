@@ -47,16 +47,17 @@
  '(warning-suppress-log-types '((comp) (copilot) (nativecomp)))
  '(warning-suppress-types '((comp))))
 
-;;; custom.el ends here
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(diff-hl-change ((t (:background "#fad987"))) nil "Customized with leaf in `diff-hl' block at `/tmp/emacs-async-comp-init_package-bbkDGD.el'")
- '(diff-hl-delete ((t (:background "#fa8d87"))) nil "Customized with leaf in `diff-hl' block at `/tmp/emacs-async-comp-init_package-bbkDGD.el'")
- '(diff-hl-insert ((t (:background "#95fa87"))) nil "Customized with leaf in `diff-hl' block at `/tmp/emacs-async-comp-init_package-bbkDGD.el'")
- '(tab-line ((t (:foreground "black" :background "gray90"))) nil "Customized with leaf in `tab-line-mode' block at `/tmp/emacs-async-comp-init_package-bbkDGD.el'")
- '(tab-line-tab-current ((t (:inherit highlight))) nil "Customized with leaf in `tab-line-mode' block at `/tmp/emacs-async-comp-init_package-bbkDGD.el'")
- '(tab-line-tab-inactive ((t (:background "gray84"))) nil "Customized with leaf in `tab-line-mode' block at `/tmp/emacs-async-comp-init_package-bbkDGD.el'")
- '(tab-line-tab-modified ((t (:foreground "red"))) nil "Customized with leaf in `tab-line-mode' block at `/tmp/emacs-async-comp-init_package-bbkDGD.el'"))
+ '(diff-hl-change ((t (:background "#fad987"))))
+ '(diff-hl-delete ((t (:background "#fa8d87"))))
+ '(diff-hl-insert ((t (:background "#95fa87"))))
+ '(tab-line ((t (:foreground "black" :background "gray90"))))
+ '(tab-line-tab-current ((t (:inherit highlight))))
+ '(tab-line-tab-inactive ((t (:background "gray84"))))
+ '(tab-line-tab-modified ((t (:foreground "red")))))
+
+;;; custom.el ends here
