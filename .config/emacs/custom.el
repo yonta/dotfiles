@@ -30,7 +30,7 @@
                 highlight-parentheses hiwin hotfuzz htmlbeautifier
                 humanoid-themes ialign idle-highlight-mode imenu-list
                 impatient-mode inf-ruby initchart jenkinsfile-mode keyfreq
-                leaf-keywords lin lispxmp macrostep marginalia markdown-mode mcp
+                leaf-keywords lin lispxmp macrostep marginalia markdown-mode
                 migemo mozc mozc-cand-posframe mozc-modeless nerd-icons
                 nerd-icons-completion nerd-icons-corfu nerd-icons-ibuffer
                 orderless origami pip-requirements popper prettier-js pyvenv
