@@ -889,7 +889,7 @@ targets."
     :after sml-mode
     :hook (sml-mode-hook
            . (lambda () (setq-local flycheck-checker 'sml-smlsharp)))
-    :config (flycheck-smlsharp-setup))
+    :init (flycheck-smlsharp-setup))
 
   (leaf flycheck-mlton
     :if (executable-find "mlton")
